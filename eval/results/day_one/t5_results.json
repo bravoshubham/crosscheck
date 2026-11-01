@@ -1,0 +1,32 @@
+{
+ "load": "7990 datarefs after 5.2s",
+ "truth_rate_hz": 10.0,
+ "truth_sample": {
+  "latitude": 45.55,
+  "longitude": -122.93,
+  "airspeed_kts_pilot": 180.66,
+  "altitude_ft_pilot": 10489.4,
+  "heading_AHARS_deg_mag_pilot": 75.56
+ },
+ "writes": {
+  "heading_dial_deg_mag_pilot": {
+   "set": 180.0,
+   "read": 180.0
+  },
+  "altitude_dial_ft": {
+   "set": 12000.0,
+   "read": 12000.0
+  },
+  "transponder_code": {
+   "set": 7700,
+   "read": 7700
+  }
+ },
+ "engine_failure": {
+  "rel_engfai0": 6,
+  "N1_eng1_before": 40.6,
+  "N1_eng1_after_8s": 15.5
+ },
+ "b738_datarefs": 481,
+ "all_datarefs": 7990
+}
