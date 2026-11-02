@@ -4,6 +4,9 @@
   "clean": 0.435,
   "raw snr+0": 0.677,
   "raw snr+5": 0.516,
-  "raw snr-5": 0.911
+  "raw snr-5": 0.911,
+  "sam snr+0": 0.702,
+  "sam snr+5": 0.589,
+  "sam snr-5": 0.927
  }
 }

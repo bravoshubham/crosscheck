@@ -2,211 +2,253 @@
  {
   "file": "00_jet_snr+5.wav",
   "ref": "alaska four two one climb and maintain flight level two four zero",
-  "raw": "alaska forth two one clumbed and mantan flight bevil two fors aro"
+  "raw": "alaska forth two one clumbed and mantan flight bevil two fors aro",
+  "sam": "alaska hord two one clumb and mantan flight level two fourc arr"
  },
  {
   "file": "00_jet_snr+0.wav",
   "ref": "alaska four two one climb and maintain flight level two four zero",
-  "raw": "alaska for two one clumbd and mainten white bevel two forser"
+  "raw": "alaska for two one clumbd and mainten white bevel two forser",
+  "sam": "alaska hord to one clum and man blight level to or serum"
  },
  {
   "file": "00_jet_snr-5.wav",
   "ref": "alaska four two one climb and maintain flight level two four zero",
-  "raw": "il ask a for you on grum and mak wite bebbl to ors there"
+  "raw": "il ask a for you on grum and mak wite bebbl to ors there",
+  "sam": "alaska for is to one clum a mank wit vevel to torser"
  },
  {
   "file": "01_jet_snr+5.wav",
   "ref": "alaska four two one turn left heading two seven zero",
-  "raw": "amaska for to one turn lap hiting to seven zerv"
+  "raw": "amaska for to one turn lap hiting to seven zerv",
+  "sam": "alasca fourt two one turn laugh hitting to seven zero"
  },
  {
   "file": "01_jet_snr+0.wav",
   "ref": "alaska four two one turn left heading two seven zero",
-  "raw": "imaska ford to one turn lap hiting to seven zerve"
+  "raw": "imaska ford to one turn lap hiting to seven zerve",
+  "sam": "alaska for to one turn lak aiting to seven zer"
  },
  {
   "file": "01_jet_snr-5.wav",
   "ref": "alaska four two one turn left heading two seven zero",
-  "raw": "i'm ask afor two one term lap hitting two seven serv"
+  "raw": "i'm ask afor two one term lap hitting two seven serv",
+  "sam": "i'v asked af for two ones her a rack eiting trou sven zur"
  },
  {
   "file": "02_jet_snr+5.wav",
   "ref": "alaska four two one descend and maintain one one thousand",
-  "raw": "alaska for two one descend and maintain one one thousand"
+  "raw": "alaska for two one descend and maintain one one thousand",
+  "sam": "alaska four two one descend o maintein one one thousand"
  },
  {
   "file": "02_jet_snr+0.wav",
   "ref": "alaska four two one descend and maintain one one thousand",
-  "raw": "alaste for two one descended maintain one one thousand"
+  "raw": "alaste for two one descended maintain one one thousand",
+  "sam": "alaska four two ones ascend to maintain one one thousand"
  },
  {
   "file": "02_jet_snr-5.wav",
   "ref": "alaska four two one descend and maintain one one thousand",
-  "raw": "a laster for two ontes then tis mainten on one thousand"
+  "raw": "a laster for two ontes then tis mainten on one thousand",
+  "sam": "alaktan poor jew onses and maintain one one abowd"
  },
  {
   "file": "03_jet_snr+5.wav",
   "ref": "alaska four two one contact portland approach one two four point three five",
-  "raw": "alastra four two one contact portland approach one two four point three five"
+  "raw": "alastra four two one contact portland approach one two four point three five",
+  "sam": "alas suport two one contact portland approach o-i for point thr fire"
  },
  {
   "file": "03_jet_snr+0.wav",
   "ref": "alaska four two one contact portland approach one two four point three five",
-  "raw": "alasta four tw one contact portland approach on two four point thr fiv"
+  "raw": "alasta four tw one contact portland approach on two four point thr fiv",
+  "sam": "alaska fr t on contac to portland approach oi for quite three files"
  },
  {
   "file": "03_jet_snr-5.wav",
   "ref": "alaska four two one contact portland approach one two four point three five",
-  "raw": "olanda for tw one con tac portland approach on  fr poin tf"
+  "raw": "olanda for tw one con tac portland approach on  fr poin tf",
+  "sam": "a latsha for two ons in tack a corklath of coach o- f point t fiv"
  },
  {
   "file": "04_jet_snr+5.wav",
   "ref": "alaska four two one reduce speed to two one zero knots",
-  "raw": "alaska four two one reduce speed to two one zerumnots"
+  "raw": "alaska four two one reduce speed to two one zerumnots",
+  "sam": "alaska bor two one reduced speed to two one zero nots"
  },
  {
   "file": "04_jet_snr+0.wav",
   "ref": "alaska four two one reduce speed to two one zero knots",
-  "raw": "alasca four to one reduced feat o two one ther of nots"
+  "raw": "alasca four to one reduced feat o two one ther of nots",
+  "sam": "alapsca por two one reduce speed to two one vira knoleg"
  },
  {
   "file": "04_jet_snr-5.wav",
   "ref": "alaska four two one reduce speed to two one zero knots",
-  "raw": "alasca bor to one reduced feat an two one ther af notin"
+  "raw": "alasca bor to one reduced feat an two one ther af notin",
+  "sam": "alaf ot mor two on  redu  peac i two on ister of noin"
  },
  {
   "file": "05_jet_snr+5.wav",
   "ref": "alaska four two one cleared ils runway one zero right approach",
-  "raw": "alas be for two one clear dills run wi oncer a right approach"
+  "raw": "alas be for two one clear dills run wi oncer a right approach",
+  "sam": "alaska four two one clear dulls run way onc ar a right approach"
  },
  {
   "file": "05_jet_snr+0.wav",
   "ref": "alaska four two one cleared ils runway one zero right approach",
-  "raw": "alas bet for two one clear dills rung wi oncer a right approach"
+  "raw": "alas bet for two one clear dills rung wi oncer a right approach",
+  "sam": "alas before two one clear duls run wy ons ero light a proach"
  },
  {
   "file": "05_jet_snr-5.wav",
   "ref": "alaska four two one cleared ils runway one zero right approach",
-  "raw": "alas bet o'er two one cleer gills run with one zerro right aproach"
+  "raw": "alas bet o'er two one cleer gills run with one zerro right aproach",
+  "sam": "alas wit for to and won a crear ago wer on wait warn er a liger prog"
  },
  {
   "file": "06_piston_snr+5.wav",
   "ref": "cessna three four five charlie papa squawk four three two one",
-  "raw": "sesina tr fur fiv charly pappas qwork four thrtwo one"
+  "raw": "sesina tr fur fiv charly pappas qwork four thrtwo one",
+  "sam": "sessina trfur fiv charly pampas quoke four t oe"
  },
  {
   "file": "06_piston_snr+0.wav",
   "ref": "cessna three four five charlie papa squawk four three two one",
-  "raw": "setin o t ff charly pappis workd for tw oe"
+  "raw": "setin o t ff charly pappis workd for tw oe",
+  "sam": "sesin a fre four five charli's happis quok for or three two once"
  },
  {
   "file": "06_piston_snr-5.wav",
   "ref": "cessna three four five charlie papa squawk four three two one",
-  "raw": "sna t ff charli pappis f f w on"
+  "raw": "sna t ff charli pappis f f w on",
+  "sam": "that'sn'tta three four five charlis hat of s fort for three two on"
  },
  {
   "file": "07_piston_snr+5.wav",
   "ref": "cessna three four five charlie papa maintain three thousand five hundred",
-  "raw": "sesno three four five chabi pappamington three thousand five hundred"
+  "raw": "sesno three four five chabi pappamington three thousand five hundred",
+  "sam": "sesma tff chli pappemington tf"
  },
  {
   "file": "07_piston_snr+0.wav",
   "ref": "cessna three four five charlie papa maintain three thousand five hundred",
-  "raw": "sesna tree fourt five chabi pappamington three thousand five hundred"
+  "raw": "sesna tree fourt five chabi pappamington three thousand five hundred",
+  "sam": "sesna  charti pappemington t"
  },
  {
   "file": "07_piston_snr-5.wav",
   "ref": "cessna three four five charlie papa maintain three thousand five hundred",
-  "raw": "sisa tree fourt five shati pappamington teousfe udrd"
+  "raw": "sisa tree fourt five shati pappamington teousfe udrd",
+  "sam": "sso three fourt five chaly pappalington three thousand fivet hundred"
  },
  {
   "file": "08_jet_snr+5.wav",
   "ref": "flaps fifteen",
-  "raw": "why it's fity"
+  "raw": "why it's fity",
+  "sam": "clads fitty"
  },
  {
   "file": "08_jet_snr+0.wav",
   "ref": "flaps fifteen",
-  "raw": "wy it's fit i"
+  "raw": "wy it's fit i",
+  "sam": "plet fithim"
  },
  {
   "file": "08_jet_snr-5.wav",
   "ref": "flaps fifteen",
-  "raw": "tri its piti"
+  "raw": "tri its piti",
+  "sam": "frangs pit y"
  },
  {
   "file": "09_jet_snr+5.wav",
   "ref": "positive rate gear up",
-  "raw": "pizitive ra jirab"
+  "raw": "pizitive ra jirab",
+  "sam": "positive rat te arab"
  },
  {
   "file": "09_jet_snr+0.wav",
   "ref": "positive rate gear up",
-  "raw": "pisitiv rair a"
+  "raw": "pisitiv rair a",
+  "sam": "bositiv rat gear im"
  },
  {
   "file": "09_jet_snr-5.wav",
   "ref": "positive rate gear up",
-  "raw": "positiv rat  ira"
+  "raw": "positiv rat  ira",
+  "sam": "liset is raifter abi"
  },
  {
   "file": "10_jet_snr+5.wav",
   "ref": "set heading two seven zero",
-  "raw": "set heading two seven zerab"
+  "raw": "set heading two seven zerab",
+  "sam": "sad ketting two seven zer"
  },
  {
   "file": "10_jet_snr+0.wav",
   "ref": "set heading two seven zero",
-  "raw": "set heading two seven zero"
+  "raw": "set heading two seven zero",
+  "sam": "said petting two sellings er"
  },
  {
   "file": "10_jet_snr-5.wav",
   "ref": "set heading two seven zero",
-  "raw": "set heting two sevins er"
+  "raw": "set heting two sevins er",
+  "sam": "zet geta to seven zer"
  },
  {
   "file": "11_jet_snr+5.wav",
   "ref": "climb flight level two four zero alaska four two one",
-  "raw": "plum flight level to be for zeroaska for two ones"
+  "raw": "plum flight level to be for zeroaska for two ones",
+  "sam": "plum white level tutan for zero aska for to one"
  },
  {
   "file": "11_jet_snr+0.wav",
   "ref": "climb flight level two four zero alaska four two one",
-  "raw": "plum quite level to me for zeroaska for two ones"
+  "raw": "plum quite level to me for zeroaska for two ones",
+  "sam": "flum like level totin for zerolaska for two one"
  },
  {
   "file": "11_jet_snr-5.wav",
   "ref": "climb flight level two four zero alaska four two one",
-  "raw": "from wite level tuman por ser askd afford to one"
+  "raw": "from wite level tuman por ser askd afford to one",
+  "sam": "fum plitin level tun you o'er so light be for two ones"
  },
  {
   "file": "12_piston_snr+5.wav",
   "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
-  "raw": "mayday mayday may day sesson a three four five charri pappa inging failure"
+  "raw": "mayday mayday may day sesson a three four five charri pappa inging failure",
+  "sam": "mayday mayday mayday sesson a three four five charri pappa inging failure"
  },
  {
   "file": "12_piston_snr+0.wav",
   "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
-  "raw": "mayday mayday may day sesson o free four five charri pappa inging failure"
+  "raw": "mayday mayday may day sesson o free four five charri pappa inging failure",
+  "sam": "mayday mayday mayday sess in a three four five charri pap a angin failure"
  },
  {
   "file": "12_piston_snr-5.wav",
   "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
-  "raw": "may day ma day may day ses me free four five carri hap a inchin falure"
+  "raw": "may day ma day may day ses me free four five carri hap a inchin falure",
+  "sam": "mayday mayday mayday sessone ree four five charried not by anging padru"
  },
  {
   "file": "13_jet_snr+5.wav",
   "ref": "one thousand stabilized",
-  "raw": "one thousand stav e lized"
+  "raw": "one thousand stav e lized",
+  "sam": "a one thousand stab belis"
  },
  {
   "file": "13_jet_snr+0.wav",
   "ref": "one thousand stabilized",
-  "raw": "one thousand stabed the lives"
+  "raw": "one thousand stabed the lives",
+  "sam": "one thousand stuv relise"
  },
  {
   "file": "13_jet_snr-5.wav",
   "ref": "one thousand stabilized",
-  "raw": "one thousand stabe the lihvs"
+  "raw": "one thousand stabe the lihvs",
+  "sam": "one thousand start peride"
  }
 ]
