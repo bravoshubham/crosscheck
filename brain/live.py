@@ -21,6 +21,8 @@ from brain.rules import Flag, evaluate
 from senses.panel import PanelReading, read_frame
 
 FINAL_BELOW_FT = 2500  # crude phase detection until checklists and the FMS phase are read
+CLEAR_AFTER_S = 4.0    # a flag counts as cleared only after this long absent: one flickering
+                       # reading must not make Crosscheck repeat a callout
 # Region of the screen kept with a recording: every calibrated box plus a margin for view shifts.
 FRAME_ORIGIN = (1240, 1230)
 FRAME_BOX = (1240, 1230, 3180, 2200)
@@ -47,6 +49,7 @@ class Crosscheck:
         self.dir.mkdir(parents=True, exist_ok=True)
         self.ledger = Ledger()
         self.active: dict[tuple[str, str], Flag] = {}
+        self.last_seen: dict[tuple[str, str], float] = {}
         self.log = (out_dir / log_name).open("w")
         self.speak = speak
         self.frames = frames
@@ -82,14 +85,16 @@ class Crosscheck:
         new = []
         current = {(f.rule, f.key): f for f in flags}
         for k, f in current.items():
+            self.last_seen[k] = t
             if k not in self.active:
                 new.append(f)
+                self.active[k] = f
                 self.event("callout", t, **asdict(f))
                 if self.speak:
                     self.speak(f.callout)
-        for k in set(self.active) - set(current):
+        for k in [k for k in self.active if k not in current and t - self.last_seen[k] >= CLEAR_AFTER_S]:
+            del self.active[k]
             self.event("cleared", t, rule=k[0], key=k[1])
-        self.active = current
         return new
 
     def step(self, frame: Image.Image, t: float) -> list[Flag]:

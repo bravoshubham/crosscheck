@@ -85,3 +85,17 @@ def test_correct_setting_with_readings_every_frame_is_silent():
     for i in range(20):
         led.add(Fact("set", "mcp.altitude", 9000 if i < 3 else 11000, 1.0 + i))
     assert evaluate(led, 20.0) == []
+
+
+def test_one_flickering_reading_does_not_repeat_a_callout(tmp_path):
+    from brain.live import Crosscheck
+    from senses.panel import PanelReading
+    cc = Crosscheck(tmp_path)
+    cc.said(Fact("said", "clearance.altitude", 11000, 0.0, "atc", source="test"))
+    said = []
+    for i in range(30):
+        t = 1.0 + i
+        alt = 11000 if i == 15 else 12000  # one misread that matches the clearance
+        cc.observe(PanelReading(selected_altitude=alt), t)
+        said += [f.callout for f in cc.decide(t)]
+    assert said == ["Cleared one-one thousand, set one-two thousand."]

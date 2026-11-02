@@ -1,0 +1,17 @@
+{
+ "variant": "correct",
+ "cleared": 11000,
+ "readback": 11000,
+ "mcp_set": 11000,
+ "false_callouts_before_clearance": [],
+ "callouts": [],
+ "aircraft_passed_cleared_s_after_set": 27.9,
+ "max_altitude_in_run": 11257,
+ "mcp_read_from_screen": [
+  1100,
+  9000,
+  11000
+ ],
+ "paused_during_run": false,
+ "pass": true
+}

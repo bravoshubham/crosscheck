@@ -1,7 +1,8 @@
 """Dismiss the X-Plane 12 demo's own dialogs so scenarios can run unattended.
 
-Only two known dialogs, identified by their titles, and only their harmless button:
+Only three known dialogs, identified by their titles, and only their harmless button:
   "UNLOCK X-PLANE"         -> "Use Demo"   (never "Buy" or "Unlock")
+  "DEMO MODE ACTIVATED"    -> "Understood" (the demo allows 60 minutes of flying at a time)
   "LEAVING THE DEMO AREA"  -> "OK"
 Anything else on screen: do nothing. The button is found by its text with Apple's on-device
 text recognition, and clicked with a synthetic mouse event (X-Plane draws its own UI, so
@@ -17,7 +18,7 @@ import Quartz
 from ocrmac import ocrmac
 from PIL import Image
 
-DIALOGS = {"UNLOCK X-PLANE": "Use Demo", "LEAVING THE DEMO AREA": "OK"}
+DIALOGS = {"UNLOCK X-PLANE": "Use Demo", "DEMO MODE ACTIVATED": "Understood", "LEAVING THE DEMO AREA": "OK"}
 
 
 def _screen() -> Image.Image:

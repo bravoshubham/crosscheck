@@ -63,9 +63,13 @@ uv run python cli.py replay --all
 Replays every recorded scenario in `replay/` from the panel readings saved with it, through the
 same ledger, rules and scorer as the live run, and checks the result matches the live one. No
 simulator, GPU or API key needed. `--recompute` re-reads the saved panel images (macOS).
-*The first recordings are being made now; until they land, `replay/` is empty.*
+Four recordings ship today (2 Nov): `autothrottle_hold`, `altitude_bust`, `altitude_readback`,
+`altitude_correct` — 4/4 pass and match their live runs, both from the saved readings and with
+`--recompute`.
 
-Live scenarios need X-Plane 12 (the free demo works) on the same machine:
+Live scenarios need X-Plane 12 on the same machine. The free demo works; `bridge/demo_dialogs.py`
+clicks the demo's own "Use Demo" / "Understood" / "OK" dialogs so runs can be unattended (macOS
+must allow the app to control the computer):
 
 ```bash
 uv run python eval/scenarios/autothrottle_hold.py --silent

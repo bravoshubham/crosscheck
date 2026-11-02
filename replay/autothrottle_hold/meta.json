@@ -1,0 +1,13 @@
+{
+ "scenario": "autothrottle_hold",
+ "scorer": "autothrottle_hold",
+ "aircraft": "B738",
+ "airport": "KPDX 10R",
+ "t_start": 1793600753.6025898,
+ "t_fault": 1793600778.604204,
+ "target_kt": 145.0,
+ "quiet_s": 25,
+ "fault_s": 45,
+ "speech": "none",
+ "recorded": "2026-11-02 11:57:04 IST"
+}

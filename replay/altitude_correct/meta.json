@@ -1,0 +1,16 @@
+{
+ "scenario": "altitude_correct",
+ "scorer": "altitude",
+ "aircraft": "B738",
+ "area": "Portland",
+ "variant": "correct",
+ "cleared": 11000,
+ "readback": 11000,
+ "mcp_set": 11000,
+ "expect_rule": null,
+ "t_start": 1793600988.0043259,
+ "t_clear": 1793601000.0043259,
+ "t_set": 1793601006.005476,
+ "speech": "scripted (said facts from the scenario script)",
+ "recorded": "2026-11-02 12:00:43 IST"
+}

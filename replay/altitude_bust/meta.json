@@ -1,0 +1,16 @@
+{
+ "scenario": "altitude_bust",
+ "scorer": "altitude",
+ "aircraft": "B738",
+ "area": "Portland",
+ "variant": "bust",
+ "cleared": 11000,
+ "readback": 11000,
+ "mcp_set": 12000,
+ "expect_rule": "clearance_vs_set",
+ "t_start": 1793600841.402347,
+ "t_clear": 1793600853.402347,
+ "t_set": 1793600859.403481,
+ "speech": "scripted (said facts from the scenario script)",
+ "recorded": "2026-11-02 11:58:17 IST"
+}
