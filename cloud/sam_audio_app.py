@@ -4,7 +4,7 @@ Weights live in the private Modal volume `crosscheck-models` (uploaded from a lo
 Hugging Face download, so no token is stored in Modal).
 
 Batch the T2 radio set:
-  uv run modal run modal/sam_audio_app.py --set eval/audio/radio_set --prompt "a person speaking"
+  uv run modal run cloud/sam_audio_app.py --set eval/audio/radio_set --prompt "a person speaking"
 """
 import io
 import json
