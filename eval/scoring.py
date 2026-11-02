@@ -68,7 +68,36 @@ def score_altitude(events: list[dict], truth: list[dict], meta: dict) -> dict:
     return result
 
 
-SCORERS = {"autothrottle_hold": score_autothrottle, "altitude": score_altitude}
+DETENT_OF_RATIO = {0.0: 0, 0.125: 1, 0.25: 2, 0.375: 5, 0.5: 10, 0.625: 15, 0.75: 25, 0.875: 30, 1.0: 40}
+
+
+def score_flaps(events: list[dict], truth: list[dict], meta: dict) -> dict:
+    t_call, want = meta["t_call"], meta["expect_rule"]
+    callouts = [e for e in events if e["kind"] == "callout"]
+    hit = next((c for c in callouts if c["rule"] == want and c["key"] == "flaps"), None) if want else None
+    rows = [r for r in truth if r.get("deploy") is not None]
+    final = rows[-1]["deploy"] if rows else None
+    settled = next((r["t"] for r in rows if r["t"] > meta["t_move"] and abs(r["deploy"] - final) < 0.003), None)
+    gauge = [e for e in events if e["kind"] == "reading" and e.get("flaps") is not None]
+    result = {
+        "variant": meta["variant"], "called": meta["called"], "selected": meta["selected"],
+        "flaps_final_truth": DETENT_OF_RATIO.get(round(final * 8) / 8) if final is not None else None,
+        "flaps_settled_s_after_call": round(settled - t_call, 1) if settled else None,
+        "heard_callout": [e["value"] for e in events if e["kind"] == "said" and e["key"] == "callout.flaps"],
+        "false_callouts_before_call": [c["callout"] for c in callouts if c["t"] < t_call],
+        "callouts": [{"s_after_call": round(c["t"] - t_call, 1), "text": c["callout"]} for c in callouts],
+        "gauge_read": sorted({e["flaps"] for e in gauge}),
+        "paused_during_run": any(r.get("paused") for r in truth),
+    }
+    if want is None:
+        result["pass"] = not callouts and not result["paused_during_run"]
+    else:
+        result["pass"] = (hit is not None and hit["actual"] == result["flaps_final_truth"]
+                          and not result["false_callouts_before_call"] and not result["paused_during_run"])
+    return result
+
+
+SCORERS = {"autothrottle_hold": score_autothrottle, "altitude": score_altitude, "flaps": score_flaps}
 
 
 MIN_READABLE = 0.5  # below this the panel was not on screen (another window in front): not a valid run
@@ -79,7 +108,7 @@ def score(rec_dir: pathlib.Path, events_file: str = "events.jsonl") -> dict:
     events = load_jsonl(rec_dir / events_file)
     result = SCORERS[meta["scorer"]](events, load_jsonl(rec_dir / "truth.jsonl"), meta)
     readings = [e for e in events if e["kind"] == "reading"]
-    readable = sum(e.get("ias") is not None for e in readings) / max(1, len(readings))
+    readable = sum(e.get("ias") is not None or e.get("flaps") is not None for e in readings) / max(1, len(readings))
     result["panel_readable"] = round(readable, 2)
     # a frame much brighter than the dark cockpit means another window was captured (and would
     # be published with the recording); Spark can return numbers for any image, so check pixels

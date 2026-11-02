@@ -19,6 +19,17 @@ measured against.
 | Readback error | Cleared 11,000, read back 12,000 | "Readback one-two thousand, cleared one-one thousand." | Called as soon as the readback was transcribed |
 | Correct setting | Cleared and set 11,000 | (silence) | No callout |
 | Autothrottle not in speed on final (the Asiana 214 pattern) | 737 on approach to Portland 10R; autothrottle drops out, speed decays | "Speed. Autothrottle not in speed." | Called 9.9 s after the fault, 3.1 s before speed was 10 kt below target; no false callouts in the 25 s before |
+| Flaps not set as called (3 variants) | "Flaps fifteen" called; lever to 10 / not moved / to 15 | "Flaps fifteen called, ten set." / "…five set." / silence | Called 17.6 s and 16.2 s after the call; silent while the needle took 13 s to reach 15 |
+
+In the flaps scenarios the camera looks at the centre panel and Muse Spark reads the analog flap
+gauge (text recognition cannot read a needle): Spark says where the needle points, code turns
+that into a detent from a table measured in X-Plane, and the rule waits until the needle has
+stopped — five readings over 5 s — and gives the crew 5 s to move the lever, so a correct
+selection is never flagged mid-travel. That makes it slower than the altitude checks (~16 s).
+The callout itself is spoken in a macOS voice on the intercom and heard by Voice Transcribe.
+The settle rule and the dial table were tuned on a first set of runs (which exposed a false
+alarm on the correct selection and a misread 5-as-2); the recordings shipped are fresh runs,
+one per variant, made after those fixes.
 
 In the altitude scenarios both sides are real. The clearance (radio-filtered) and the readback
 are spoken by a synthetic voice, each streamed on its own channel to Muse Voice Transcribe, and
@@ -86,10 +97,10 @@ same ledger, rules and scorer as the live run, and checks the result matches the
 simulator, GPU or API key needed. `--recompute` re-reads the saved panel images (macOS);
 `--recompute --reader spark` re-reads them with Muse Spark on any OS (needs `MODEL_API_KEY`;
 ~$0.003 a frame, ~$0.60 for all frames of the four on-device recordings).
-Eight recordings ship today (2 Nov): the four scenarios with the on-device panel reader
-(`autothrottle_hold`, `altitude_bust`, `altitude_readback`, `altitude_correct`) and the same four
-with Muse Spark reading the panel live (`*_spark`). All eight replay exactly as they ran live.
-Seven pass; `autothrottle_hold_spark` fails as recorded — Spark's readings arrive ~5 s after
+Eleven recordings ship today (2 Nov): the four scenarios with the on-device panel reader
+(`autothrottle_hold`, `altitude_bust`, `altitude_readback`, `altitude_correct`), the same four
+with Muse Spark reading the panel live (`*_spark`), and the three flap variants (`flaps_*`, flap
+gauge read by Spark). All eleven replay exactly as they ran live. Ten pass; `autothrottle_hold_spark` fails as recorded — Spark's readings arrive ~5 s after
 capture, so the callout came after speed was already 10 kt low — and is kept as evidence. The
 on-device four also match with `--recompute`, and with `--recompute --reader spark`.
 
@@ -101,6 +112,7 @@ must allow the app to control the computer):
 uv run python eval/scenarios/autothrottle_hold.py --silent
 uv run python eval/scenarios/altitude_bust.py bust      # or readback, correct
 # add --spark to read the panel with Muse Spark instead (recorded as *_spark)
+uv run python eval/scenarios/flaps.py wrong             # or forgot, correct
 ```
 
 Tests: `uv run pytest`.

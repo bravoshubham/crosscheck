@@ -120,8 +120,24 @@ def parse_altitude(text: str) -> int | None:
     return shaped.pop() if len(shaped) == 1 else None
 
 
+FLAP_DETENTS = {0, 1, 2, 5, 10, 15, 25, 30, 40}
+
+
+def parse_flaps(text: str) -> int | None:
+    """A flap callout: "flaps fifteen" / "Flaps 15." -> 15, "flaps up" -> 0."""
+    m = re.search(r"\bflaps?\s+(up|\d+)\b", normalise(text))
+    if not m:
+        return None
+    v = 0 if m.group(1) == "up" else int(m.group(1))
+    return v if v in FLAP_DETENTS else None
+
+
 def said_facts(text: str, speaker: str, t: float, own_digits: str) -> list[Fact]:
     """Facts for the ledger from one final transcript on one channel."""
+    if speaker != "atc":
+        flaps = parse_flaps(text)
+        if flaps is not None:  # an intercom callout: our own crew, no callsign
+            return [Fact("said", "callout.flaps", flaps, t, speaker, source="muse-voice-transcribe")]
     alt = parse_altitude(text)
     if alt is None:
         return []

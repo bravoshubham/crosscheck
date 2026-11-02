@@ -77,21 +77,56 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
                  f"Cleared {say.altitude(clr.value)}, set {say.altitude(value)}.")]
 
 
+def _settled_flaps(led: Ledger, after: float, now: float, n: int = 5, span: float = 5.0, spread: float = 1.3):
+    """The flap gauge's detent once the needle has stopped, from the last n needle positions
+    (clock hours, read from the camera) taken after `after`: they must cover at least `span`
+    seconds and lie within `spread`, and the detent is taken from their mean. Spark's reads of a
+    parked needle vary by up to ~1.3 h; the 737's needle moves ~0.39 h/s (~2.3 h in 6 s), so a
+    moving needle does not qualify and a correct selection is not flagged mid-travel."""
+    from senses.flaps_spark import detent
+    clock = [f for f in led.since("doing", "flaps.clock", after) if f.t <= now][-n:]
+    if len(clock) < n or clock[-1].t - clock[0].t < span:
+        return None
+    values = [f.value for f in clock]
+    if max(values) - min(values) > spread:
+        return None
+    return detent(sum(values) / len(values))
+
+
+FLAP_RESPONSE_S = 5.0  # time the crew gets to move the lever after the call is heard: needle
+                      # readings arriving sooner may show the old setting, not a missed one
+
+
+def _flaps_position(led: Ledger, after: float, now: float):
+    """The most recent settled flap detent since `after`. Once the needle has settled it stays
+    the answer until it settles somewhere else, so a jittery read cannot clear a flag."""
+    times = [f.t for f in led.since("doing", "flaps.clock", after) if f.t <= now]
+    for t in reversed(times):
+        v = _settled_flaps(led, after, t)
+        if v is not None:
+            return v
+    return None
+
+
 def callout_vs_set(led: Ledger, now: float, window: float = 6.0) -> list[Flag]:
-    """A flap or gear callout was made but the lever did not reach that position in time."""
+    """A flap or gear callout was made but the lever (or, for flaps, the settled flap gauge)
+    did not reach that position."""
     flags = []
     for item, word in (("flaps", say.flaps), ("gear", str)):
         call = led.latest("said", f"callout.{item}", before=now)
         if call is None or now - call.t < window:
             continue
         lever = led.latest("set", f"lever.{item}", before=now)
-        if lever is None or lever.value == call.value:
+        actual = lever.value if lever is not None else None
+        if lever is None and item == "flaps":
+            actual = _flaps_position(led, call.t + FLAP_RESPONSE_S, now)
+        if actual is None or actual == call.value:
             continue
         if item == "flaps":
-            text = f"Flaps {word(call.value)} called, {word(lever.value)} set."
+            text = f"Flaps {word(call.value)} called, {word(actual)} set."
         else:
-            text = f"Gear {call.value} called, gear still {lever.value}."
-        flags.append(Flag("callout_vs_set", item, call.value, lever.value, call.t + window, text))
+            text = f"Gear {call.value} called, gear still {actual}."
+        flags.append(Flag("callout_vs_set", item, call.value, actual, call.t + window, text))
     return flags
 
 

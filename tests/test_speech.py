@@ -1,4 +1,4 @@
-from senses.speech import normalise, parse_altitude, said_facts
+from senses.speech import normalise, parse_altitude, parse_flaps, said_facts
 
 
 def test_numbers_collapse_to_values():
@@ -34,3 +34,14 @@ def test_said_facts_channel_and_callsign():
     rb = said_facts(" plan and mention one 2000 Alaska 421..", "pm", 2.0, "421")
     assert [(x.key, x.value) for x in rb] == [("readback.altitude", 12000)]
     assert said_facts("One thousand stabilized.", "pm", 3.0, "421") == []  # a callout, not a readback
+
+
+def test_flap_callouts():
+    # Voice Transcribe outputs for the Mac's "Samantha" voice
+    assert parse_flaps("Flaps 15.") == 15
+    assert parse_flaps("Flaps five.") == 5
+    assert parse_flaps("flaps up") == 0
+    assert parse_flaps("Flaps 12") is None  # not a detent
+    assert parse_flaps("Pledge five.") is None
+    f = said_facts("Flaps 15.", "pf", 1.0, "421")
+    assert [(x.key, x.value, x.speaker) for x in f] == [("callout.flaps", 15, "pf")]

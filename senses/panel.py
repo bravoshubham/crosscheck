@@ -55,6 +55,8 @@ class PanelReading:
     fma_armed: list[str] = field(default_factory=list)  # armed line, same columns
     raw: dict[str, list[str]] = field(default_factory=dict)
     alt_base: int | None = None
+    flaps: int | None = None          # flap gauge detent (flaps view only)
+    flaps_clock: float | None = None  # needle position in clock hours, 9 (UP) .. 18 (40)
     roll_labels: list[tuple[int, float]] = field(default_factory=list)  # (label, y in native crop px)
 
 

@@ -32,6 +32,15 @@ FRAME_BOX = (1240, 1230, 3180, 2200)
 SCREEN_SIZE = (3600, 2338)
 READING_FIELDS = [f.name for f in fields(PanelReading) if f.name not in ("raw", "roll_labels")]
 SPARK_PERIOD_S = 1.0  # capture rate with the Muse Spark reader; reads overlap (~3 s each)
+SPARK_READERS = ("spark", "spark-flaps")  # PFD values; flap gauge (flaps view)
+
+
+def _spark_reader(reader: str):
+    if reader == "spark-flaps":
+        from senses.flaps_spark import read_flaps_spark
+        return read_flaps_spark
+    from senses.panel_spark import read_frame_spark
+    return read_frame_spark
 
 
 def capture_screen() -> Image.Image:
@@ -40,16 +49,16 @@ def capture_screen() -> Image.Image:
         return Image.open(f.name).copy()
 
 
-def frame_from_crop(crop: Image.Image) -> Image.Image:
-    """Rebuild a full-screen frame from a recorded crop, so read_frame's calibration applies."""
+def frame_from_crop(crop: Image.Image, origin: tuple[int, int] = FRAME_ORIGIN) -> Image.Image:
+    """Rebuild a full-screen frame from a recorded crop, so the readers' calibration applies."""
     canvas = Image.new("RGB", SCREEN_SIZE)
-    canvas.paste(crop, FRAME_ORIGIN)
+    canvas.paste(crop, origin)
     return canvas
 
 
 class Crosscheck:
     def __init__(self, out_dir: pathlib.Path, speak=None, frames: bool = False, log_name: str = "events.jsonl",
-                 reader: str = "apple"):
+                 reader: str = "apple", frame_box: tuple[int, int, int, int] = FRAME_BOX):
         self.dir = out_dir
         self.dir.mkdir(parents=True, exist_ok=True)
         self.ledger = Ledger()
@@ -59,6 +68,7 @@ class Crosscheck:
         self.speak = speak
         self.frames = frames
         self.reader = reader
+        self.frame_box = frame_box
         self.n = 0
         if frames:
             (out_dir / "frames").mkdir(exist_ok=True)
@@ -77,6 +87,8 @@ class Crosscheck:
         facts = [("doing", "ias", r.ias), ("doing", "altitude", r.altitude),
                  ("doing", "track", r.track_mag), ("set", "mcp.speed", r.selected_speed),
                  ("set", "mcp.altitude", r.selected_altitude)]
+        if r.flaps is not None:
+            facts += [("doing", "flaps", r.flaps), ("doing", "flaps.clock", r.flaps_clock)]
         if r.fma and any(r.fma):
             # the line was read: a blank thrust cell means no engaged thrust mode, not "unknown"
             facts.append(("doing", "fma.thrust", r.fma[0] or "BLANK"))
@@ -108,7 +120,7 @@ class Crosscheck:
         name = None
         if self.frames:
             name = f"frames/{self.n:05d}.jpg"
-            frame.crop(FRAME_BOX).convert("RGB").save(self.dir / name, quality=85)
+            frame.crop(self.frame_box).convert("RGB").save(self.dir / name, quality=85)
         self.n += 1
         return name
 
@@ -118,7 +130,7 @@ class Crosscheck:
 
     def run(self, seconds: float, t0: float | None = None) -> None:
         t0 = t0 or time.time()
-        if self.reader == "spark":
+        if self.reader in SPARK_READERS:
             return self._run_spark(seconds, t0)
         while time.time() - t0 < seconds:
             self.step(capture_screen(), time.time())
@@ -127,7 +139,7 @@ class Crosscheck:
         """Capture every SPARK_PERIOD_S, read on Muse Spark with several calls in flight, and
         apply readings in capture order, timestamped when they arrive: the reader's latency
         is part of the record, so replay reproduces the live run exactly."""
-        from senses.panel_spark import read_frame_spark
+        read = _spark_reader(self.reader)
         pending: collections.deque = collections.deque()
         next_capture = time.time()
         with ThreadPoolExecutor(max_workers=6) as pool:
@@ -136,7 +148,7 @@ class Crosscheck:
                     frame = capture_screen()
                     captured = time.time()
                     name = self._save(frame)
-                    pending.append((captured, name, pool.submit(lambda f=frame: asyncio.run(read_frame_spark(f))[0])))
+                    pending.append((captured, name, pool.submit(lambda f=frame: asyncio.run(read(f))[0])))
                     next_capture = captured + SPARK_PERIOD_S
                 while pending and pending[0][2].done():
                     captured, name, fut = pending.popleft()
@@ -151,17 +163,17 @@ class Crosscheck:
                 time.sleep(0.05)
 
 
-def _spark_readings(rec_dir: pathlib.Path, frames: list[str]) -> dict[str, PanelReading]:
-    import asyncio
+def _spark_readings(rec_dir: pathlib.Path, frames: list[str], reader: str = "spark",
+                    origin: tuple[int, int] = FRAME_ORIGIN) -> dict[str, PanelReading]:
     import httpx
-    from senses.panel_spark import read_frame_spark
+    read_frame_spark = _spark_reader(reader)
 
     async def go():
         sem = asyncio.Semaphore(6)
         async with httpx.AsyncClient(trust_env=False, timeout=90) as client:
             async def one(f):
                 async with sem:
-                    return f, (await read_frame_spark(frame_from_crop(Image.open(rec_dir / f)), client))[0]
+                    return f, (await read_frame_spark(frame_from_crop(Image.open(rec_dir / f), origin), client))[0]
             return dict(await asyncio.gather(*(one(f) for f in frames)))
     return asyncio.run(go())
 
@@ -174,9 +186,14 @@ def replay(rec_dir: pathlib.Path, out_dir: pathlib.Path, recompute: bool = False
     or Muse Spark through the Meta Model API (reader="spark", any OS, needs MODEL_API_KEY).
     """
     events = [json.loads(l) for l in (rec_dir / "events.jsonl").read_text().splitlines()]
+    meta_p = rec_dir / "meta.json"
+    meta = json.loads(meta_p.read_text()) if meta_p.exists() else {}
+    if meta.get("panel_reader") == "muse-spark-flaps":
+        reader = "spark-flaps"  # the flaps view has no PFD calibration; only the gauge reader applies
     spark = None
-    if recompute and reader == "spark":
-        spark = _spark_readings(rec_dir, [e["frame"] for e in events if e["kind"] == "reading" and e.get("frame")])
+    if recompute and reader in SPARK_READERS:
+        frames = [e["frame"] for e in events if e["kind"] == "reading" and e.get("frame")]
+        spark = _spark_readings(rec_dir, frames, reader, tuple(meta.get("frame_box", FRAME_BOX))[:2])
     cc = Crosscheck(out_dir, log_name="replay_events.jsonl")
     for e in sorted((e for e in events if e["kind"] in ("reading", "said")), key=lambda e: (e["t"], e["kind"] != "said")):
         if e["kind"] == "said":

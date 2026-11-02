@@ -95,7 +95,8 @@ body { display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; padding
     <div class="col"><div class="lab">DOING</div>
       <div class="row"><div class="k">Altitude</div><div class="v" id="alt">—</div></div>
       <div class="row"><div class="k">Airspeed</div><div class="v small" id="ias">—</div></div>
-      <div class="row"><div class="k">Track</div><div class="v small" id="trk">—</div></div></div>
+      <div class="row"><div class="k">Track</div><div class="v small" id="trk">—</div></div>
+      <div class="row"><div class="k">Flaps (gauge)</div><div class="v small" id="flp">—</div></div></div>
   </section>
 
   <section class="log"><ol id="log"></ol></section>
@@ -106,13 +107,13 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ft = v => v == null ? "—" : Math.round(v).toLocaleString("en-US");
 const WHO = {atc: "ATC · RADIO", pm: "CREW · INTERCOM", pf: "CREW · INTERCOM"};
-const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback"};
+const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout flaps"};
 let scenario = null, t0 = null, lastT = null, active = new Map(), heard = [], facts = [];
 
 function reset(d) {
   scenario = d.scenario; t0 = null; active.clear(); heard = []; facts = [];
   $("scn").textContent = scenario.replace(/_/g, " ");
-  ["selAlt", "selSpd", "thr", "alt", "ias", "trk"].forEach(id => $(id).textContent = "—");
+  ["selAlt", "selSpd", "thr", "alt", "ias", "trk", "flp"].forEach(id => $(id).textContent = "—");
   $("log").innerHTML = ""; $("cam").hidden = true; renderSaid(); renderStatus();
 }
 const rel = t => t0 == null ? 0 : t - t0;
@@ -127,7 +128,7 @@ function renderSaid() {
   $("said").innerHTML = heard.slice(-3).reverse().map(h => {
     const f = facts.filter(f => Math.abs(f.t - h.t) < 0.05 && f.speaker === h.speaker);
     return `<div class="tx"><div class="who">${WHO[h.speaker] || esc(h.speaker)}</div><div class="q">“${esc(h.transcript.trim())}”</div>
-      ${f.length ? f.map(x => `<div class="f">→ ${KEYS[x.key] || esc(x.key)} ${ft(x.value)} ft</div>`).join("") : `<div class="f" style="color:var(--faint)">no value for us</div>`}</div>`;
+      ${f.length ? f.map(x => `<div class="f">→ ${KEYS[x.key] || esc(x.key)} ${x.key === "callout.flaps" ? x.value : ft(x.value) + " ft"}</div>`).join("") : `<div class="f" style="color:var(--faint)">no value for us</div>`}</div>`;
   }).join(`<div style="height:10px"></div>`);
 }
 function renderStatus(fresh) {
@@ -152,6 +153,7 @@ function onEvent(e) {
     if (e.altitude != null) $("alt").textContent = ft(e.altitude);
     if (e.ias != null) $("ias").textContent = e.ias + " kt";
     if (e.track_mag != null) $("trk").textContent = String(Math.round(e.track_mag)).padStart(3, "0") + "°";
+    if (e.flaps != null) $("flp").textContent = e.flaps === 0 ? "UP" : e.flaps;
     if (e.frame) { $("cam").src = `/frame/${scenario}/${e.frame.split("/").pop()}`; $("cam").hidden = false; }
   } else if (e.kind === "heard") {
     heard.push(e); renderSaid(); logLine("heard", e.t, `${esc(WHO[e.speaker] || e.speaker)}: “${esc(e.transcript.trim())}”`);

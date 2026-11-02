@@ -1,0 +1,22 @@
+{
+ "variant": "correct",
+ "called": 15,
+ "selected": 15,
+ "flaps_final_truth": 15,
+ "flaps_settled_s_after_call": 13.3,
+ "heard_callout": [
+  15
+ ],
+ "false_callouts_before_call": [],
+ "callouts": [],
+ "gauge_read": [
+  2,
+  5,
+  10,
+  15
+ ],
+ "paused_during_run": false,
+ "pass": true,
+ "panel_readable": 1.0,
+ "non_cockpit_frames": 0
+}

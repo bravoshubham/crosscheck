@@ -131,8 +131,8 @@ code { font-family: var(--mono); font-size: .92em; color: var(--text); }
 
     <div class="now">
       <div class="card"><div class="lab k-said">Said <small>Muse Voice Transcribe</small></div><div id="nowSaid"></div></div>
-      <div class="card"><div class="lab k-set">Set <small>read from the panel</small></div><div id="nowSet"></div></div>
-      <div class="card"><div class="lab k-doing">Doing <small>read from the panel</small></div><div id="nowDoing"></div></div>
+      <div class="card"><div class="lab k-set">Set <small id="setSrc">read from the panel</small></div><div id="nowSet"></div></div>
+      <div class="card"><div class="lab k-doing">Doing <small id="doingSrc">read from the panel</small></div><div id="nowDoing"></div></div>
       <div class="card verdict" id="verdictCard"><div class="lab k-call">Crosscheck</div><div id="nowVerdict"></div></div>
     </div>
   </section>
@@ -159,7 +159,11 @@ const $ = id => document.getElementById(id);
 const fmtAlt = v => v == null ? "—" : Math.round(v).toLocaleString("en-US") + " ft";
 const fmtKt = v => v == null ? "—" : Math.round(v) + " kt";
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback"};
+const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout"};
+const DETENTS = [0, 1, 2, 5, 10, 15, 25, 30, 40];
+const flapsOfRatio = r => { if (r == null) return null; const x = r * 8, i = Math.min(7, Math.floor(x)); return DETENTS[i] + (DETENTS[i + 1] - DETENTS[i]) * (x - i); };
+const fmtFlaps = v => v == null ? "—" : v === 0 ? "UP" : String(Math.round(v * 10) / 10);
+const fmtFact = f => f.key === "callout.flaps" ? "flaps " + fmtFlaps(f.value) : fmtAlt(f.value);
 const WHO = {atc: "ATC · radio", pm: "Crew · intercom", pf: "Crew · intercom"};
 
 let rec = null, t = 0, playing = false, rate = 1, lastWall = 0, played = new Set(), audios = [];
@@ -202,6 +206,10 @@ function renderTabs() {
 
 function select(i) {
   stop(); rec = D[i]; t = 0; played = new Set();
+  $("frame").style.aspectRatio = rec.aspect || "1940 / 970";
+  const fl = rec.kind === "flaps";
+  $("setSrc").textContent = fl ? "not in the camera's view" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
+  $("doingSrc").textContent = fl ? "flap gauge, read by Muse Spark" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
   renderTabs(); renderLegend(); renderResult(); drawTimeline(); update();
   rec.readings.forEach(r => { if (r.frame && !preload.has(r.frame)) { const im = new Image(); im.src = r.frame; preload.set(r.frame, im); } });
   try { localStorage.setItem("debrief.tab", rec.id); } catch (e) {}
@@ -231,10 +239,16 @@ function update() {
     $("nowSaid").innerHTML = `<div class="sub">${esc(WHO[heard.speaker] || heard.speaker)} — heard as</div>
       <div class="quote"><q>${esc(heard.transcript.trim())}</q></div>
       ${facts.length ? `<div class="sub" style="margin-top:8px">Into the ledger so far:</div>` : ""}
-      ${facts.map(f => `<div class="fact">→ ${KEYS[f.key] || f.key} ${fmtAlt(f.value)} (${f.speaker === "atc" ? "ATC" : "crew"})</div>`).join("")}`;
+      ${facts.map(f => `<div class="fact">→ ${KEYS[f.key] || f.key} ${fmtFact(f)} (${f.speaker === "atc" ? "ATC" : "crew"})</div>`).join("")}`;
   }
   // SET and DOING
-  if (alt) {
+  if (rec.kind === "flaps") {
+    const g = last(rec.readings.filter(x => x.flaps != null), t);
+    $("nowSet").innerHTML = `<div class="big" style="color:var(--faint)">—</div><div class="sub">Flap lever: the camera does not see it, so Crosscheck judges by the gauge.</div>
+      <div class="sim">X-Plane lever: ${tr.handle != null ? fmtFlaps(flapsOfRatio(tr.handle)) : "—"} (scoring only)</div>`;
+    $("nowDoing").innerHTML = `<div class="big">${g ? "Flaps " + fmtFlaps(g.flaps) : "—"}</div><div class="sub">${g ? `Needle at ${(((g.flaps_clock - 1) % 12) + 1).toFixed(1)} o'clock` : "No reading yet"}</div>
+      <div class="sim">X-Plane: ${tr.deploy != null ? fmtFlaps(flapsOfRatio(tr.deploy)) : "—"} (scoring only)</div>`;
+  } else if (alt) {
     $("nowSet").innerHTML = `<div class="big k-set">${r ? fmtAlt(r.selected_altitude) : "—"}</div><div class="sub">MCP altitude</div>
       <div class="sim">X-Plane: ${tr.sel_alt != null ? fmtAlt(tr.sel_alt) : "—"} (scoring only)</div>`;
     $("nowDoing").innerHTML = `<div class="big">${r ? fmtAlt(r.altitude) : "—"}</div><div class="sub">Altitude</div>
@@ -261,6 +275,7 @@ function update() {
 function ruleText(c) {
   const map = {
     clearance_vs_set: `Panel shows ${fmtAlt(c.actual)}, cleared ${fmtAlt(c.expected)}. Mismatch held from ${c.since.toFixed(1)} s; called at ${c.t.toFixed(1)} s.`,
+    callout_vs_set: `Flaps ${fmtFlaps(c.expected)} were called; the flap gauge settled at ${fmtFlaps(c.actual)}.`,
     readback_vs_clearance: `Readback ${fmtAlt(c.actual)} does not match the clearance, ${fmtAlt(c.expected)}.`,
     mode_vs_phase: `On final, thrust mode is ${c.actual === "BLANK" ? "blank" : c.actual}: nothing is holding speed.`,
   };
@@ -271,7 +286,12 @@ function ruleText(c) {
 function renderResult() {
   const r = rec.result, m = rec.meta;
   let what = [], how = [];
-  if (rec.kind === "altitude") {
+  if (rec.kind === "flaps") {
+    what.push(`“Flaps ${fmtFlaps(r.called)}” called; the lever ${r.selected == null ? "is not moved" : "goes to " + fmtFlaps(r.selected)}.`);
+    how.push(r.callouts.length ? r.callouts.map(c => `“${c.text}” ${c.s_after_call} s after the call`).join("; ") : "No callout — correct, the flaps reached the setting called.");
+    if (r.flaps_settled_s_after_call != null) how.push(`The flaps finished moving ${r.flaps_settled_s_after_call} s after the call (X-Plane).`);
+    how.push(`Heard: ${r.heard_callout.length ? "flaps " + r.heard_callout.map(fmtFlaps).join(", ") : "nothing"} · false callouts before the call: ${r.false_callouts_before_call.length}.`);
+  } else if (rec.kind === "altitude") {
     what.push(`Cleared ${fmtAlt(r.cleared)}, read back ${fmtAlt(r.readback)}, MCP set ${fmtAlt(r.mcp_set)}.`);
     const calls = r.callouts.map(c => `“${c.text}” ${c.s_after_set >= 0 ? c.s_after_set + " s after the MCP was set" : Math.abs(c.s_after_set) + " s before the MCP was set"}`);
     how.push(calls.length ? calls.join("; ") : "No callout — correct, nothing disagreed.");
@@ -292,6 +312,11 @@ function renderResult() {
 
 function renderLegend() {
   const alt = rec.kind === "altitude";
+  if (rec.kind === "flaps") { $("legend").innerHTML = `
+    <span><i style="border-color:var(--said)"></i>Said (transmission → transcribed)</span>
+    <span><i style="border-color:var(--truth);border-top-style:dashed"></i>Set: flap lever, X-Plane (scoring only)</span>
+    <span><i style="border-color:var(--doing)"></i>Doing: flap gauge read by Muse Spark</span>
+    <span><i style="border-color:var(--callout)"></i>Crosscheck callout</span>`; return; }
   $("legend").innerHTML = `
     <span><i style="border-color:var(--said)"></i>Said (transmission → transcribed)</span>
     <span><i style="border-color:var(--set)"></i>Set: ${alt ? "MCP altitude" : "thrust mode"} read from the panel</span>
@@ -308,7 +333,7 @@ const tOf = x => Math.max(0, Math.min(rec.duration, (x - PADL) / (W - PADL - PAD
 
 function drawTimeline() {
   const svg = $("tl"), alt = rec.kind === "altitude";
-  LANES = [{id: "said", h: 54, label: "SAID"}, {id: "set", h: alt ? 96 : 54, label: "SET"},
+  LANES = [{id: "said", h: 54, label: "SAID"}, {id: "set", h: alt ? 96 : rec.kind === "flaps" ? 64 : 54, label: "SET"},
            {id: "doing", h: 120, label: "DOING"}, {id: "call", h: 40, label: "CROSSCHECK"}];
   let y = 8; LANES.forEach(l => { l.y = y; y += l.h + 10; }); H = y + 18;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
@@ -338,7 +363,7 @@ function drawTimeline() {
     const x1 = xOf(h.start), x2 = xOf(h.t), yy = ls.y + 8 + (i % 2) * 22;
     s += `<rect x="${x1}" y="${yy}" width="${Math.max(4, x2 - x1)}" height="16" rx="3" fill="rgba(121,184,255,.18)" stroke="var(--said)"/>`;
     const f = rec.said.find(f => Math.abs(f.t - h.t) < 0.05 && f.speaker === h.speaker);
-    const lab = `${h.speaker === "atc" ? "ATC" : "Crew"}: ${f ? (KEYS[f.key] || f.key) + " " + fmtAlt(f.value) : "no value"}`;
+    const lab = `${h.speaker === "atc" ? "ATC" : "Crew"}: ${f ? (KEYS[f.key] || f.key) + " " + fmtFact(f) : "no value"}`;
     s += `<text x="${x2 + 6}" y="${yy + 12}" fill="var(--said)" font-size="12">${esc(lab)}</text>`;
     s += `<title>${esc(h.transcript)}</title>`;
   });
@@ -365,7 +390,18 @@ function drawTimeline() {
             <line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="#1b232d" stroke-dasharray="2 4"/>`;
   }).join("");
   const R = rec.readings, T = rec.truth;
-  if (alt) {
+  if (rec.kind === "flaps") {
+    const lset = lane("set"), ld = lane("doing"), lo = -2, hi = 42;
+    const fl = [0, 5, 10, 15, 25, 40];
+    s += ticks(lset, lo, hi, [5, 40], v => "flaps " + v);
+    s += series(T.filter(r => r.handle != null).map(r => ({t: r.t, v: flapsOfRatio(r.handle)})), lset, lo, hi, "var(--truth)", true, true);
+    s += ticks(ld, lo, hi, [5, 15, 40], v => "flaps " + v);
+    if (rec.meta.called != null) { const yy = ld.y + ld.h - 6 - (rec.meta.called - lo) / (hi - lo) * (ld.h - 12);
+      s += `<line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="var(--said)" stroke-opacity=".5" stroke-dasharray="6 5"/>`;
+      s += `<text x="${PADL + 6}" y="${yy - 4}" fill="var(--said)" font-size="11">called flaps ${rec.meta.called}</text>`; }
+    s += series(T.filter(r => r.deploy != null).map(r => ({t: r.t, v: flapsOfRatio(r.deploy)})), ld, lo, hi, "var(--truth)", true, false);
+    s += series(R.filter(r => r.flaps != null).map(r => ({t: r.t, v: r.flaps})), ld, lo, hi, "var(--doing)", false, true);
+  } else if (alt) {
     const lset = lane("set"), ld = lane("doing");
     const vals = T.flatMap(r => [r.alt, r.sel_alt]).filter(v => v != null);
     const lo = Math.floor((Math.min(...vals) - 300) / 500) * 500, hi = Math.ceil((Math.max(...vals) + 500) / 500) * 500;

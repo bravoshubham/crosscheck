@@ -1,0 +1,147 @@
+"""Scenario 2: flap callout not matched by the flaps, Boeing 737-800 near Portland.
+
+Level at 3,000 ft, 180 kt, flaps 5. The pilot flying calls "flaps fifteen" on the intercom.
+Variants, for what the pilot monitoring then does with the lever:
+  wrong    - selects 10  -> "Flaps fifteen called, ten set."
+  forgot   - leaves it   -> "Flaps fifteen called, five set."
+  correct  - selects 15  -> silence (the needle travels ~10 s; it must not be flagged on the way)
+
+Speech: the callout is spoken (macOS voice, voice/crew.py) and heard through Muse Voice Transcribe.
+Panel: the camera looks right so it sees the centre panel; Muse Spark reads the analog flap gauge
+(senses/flaps_spark.py). Nothing is read from X-Plane except to score the run.
+
+Run with X-Plane 12 open:  uv run python eval/scenarios/flaps.py [wrong|forgot|correct] [--speak]
+"""
+import asyncio
+import json
+import pathlib
+import subprocess
+import sys
+import tempfile
+import threading
+import time
+
+import soundfile as sf
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from brain.live import Crosscheck  # noqa: E402
+from bridge.xplane import XPlane, bring_to_front  # noqa: E402
+from eval.scoring import score  # noqa: E402
+from senses.flaps_spark import FLAPS_VIEW  # noqa: E402
+from senses.speech import said_facts, transcribe  # noqa: E402
+from voice.crew import CREW, SR, say  # noqa: E402
+
+FLIGHT = {
+    "aircraft": {"path": "Aircraft/Laminar Research/Boeing 737-800/b738.acf"},
+    "lle_air_start": {"latitude": 45.62, "longitude": -122.75, "elevation_in_meters": 914,
+                      "heading_true": 300, "speed_in_meters_per_second": 93},
+    "engine_status": {"all_engines": {"running": True}},
+    "local_time": {"day_of_year": 180, "time_in_24_hours": 12.0},
+}
+RATIO = {0: 0.0, 1: 0.125, 2: 0.25, 5: 0.375, 10: 0.5, 15: 0.625, 25: 0.75, 30: 0.875, 40: 1.0}
+VARIANTS = {"wrong": 10, "forgot": None, "correct": 15}
+EXPECT = {"wrong": "callout_vs_set", "forgot": "callout_vs_set", "correct": None}
+CALLED = 15
+FRAME_BOX = (2300, 250, 2900, 650)  # the flap gauge with the gear and LE flap lights around it
+T_CALL, RUN_S = 8, 42
+TRUTH = {"handle": "sim/cockpit2/controls/flap_ratio", "deploy": "sim/cockpit2/controls/flap_handle_deploy_ratio",
+         "ias": "sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "paused": "sim/time/paused"}
+
+
+def play(pcm, sr: int) -> None:
+    path = pathlib.Path(tempfile.mkstemp(suffix=".wav")[1])
+    sf.write(path, pcm, sr)
+    subprocess.Popen(["afplay", str(path)])
+
+
+async def main(variant: str, speak: bool) -> int:
+    selects = VARIANTS[variant]
+    name = f"flaps_{variant}"
+    out = ROOT / "replay" / name
+    out.mkdir(parents=True, exist_ok=True)
+    line = "flaps fifteen"
+    audio = say(line, CREW)
+
+    xp = XPlane()
+    await xp.ensure_running()
+    await xp.start_flight(FLIGHT)
+    await xp.wait_until_loaded()
+    await asyncio.sleep(4)
+    await xp.set("sim/cockpit2/autopilot/altitude_dial_ft", 3000.0)
+    await xp.set("sim/cockpit2/autopilot/airspeed_dial_kts", 180.0)
+    await xp.set("sim/cockpit2/autopilot/heading_dial_deg_mag_pilot", 285.0)
+    for c in ("cmd_a_press", "speed_press", "hdg_sel_press", "alt_hld_press"):
+        await xp.command("laminar/B738/autopilot/" + c)
+        await asyncio.sleep(0.8)
+    await xp.set("sim/cockpit2/controls/flap_ratio", RATIO[5])
+    for k, v in FLAPS_VIEW.items():
+        await xp.set("sim/graphics/view/" + k, v)
+    t_wait = time.time()  # flaps 0 -> 5 take ~15 s; start only once they are there
+    while abs(await xp.get(TRUTH["deploy"]) - RATIO[5]) > 0.003 and time.time() - t_wait < 40:
+        await asyncio.sleep(0.5)
+    await asyncio.sleep(2)
+
+    say_cc = None
+    if speak:
+        from voice.tts import speak as say_cc
+    cc = Crosscheck(out, speak=say_cc, frames=True, reader="spark-flaps", frame_box=FRAME_BOX)
+    heard, truth_rows = [], []
+    bring_to_front()  # the camera captures the screen
+    t0 = time.time()
+    worker = threading.Thread(target=cc.run, args=(RUN_S, t0), daemon=True)
+    worker.start()
+
+    async def at(seconds: float):
+        await asyncio.sleep(max(0.0, t0 + seconds - time.time()))
+
+    async def sample_truth():
+        while worker.is_alive():
+            truth_rows.append({"t": time.time(), **{k: await xp.get(n) for k, n in TRUTH.items()}})
+            await asyncio.sleep(0.5)
+    sampler = asyncio.create_task(sample_truth())
+
+    await at(T_CALL)
+    t_call = time.time()
+    if speak:
+        play(audio, SR)
+    r = await transcribe(audio)
+    t = time.time()
+    facts = said_facts(r["text"], "pf", t, "421")
+    heard.append({"speaker": "pf", "spoken": line, "transcript": r["text"], "audio_s": r["audio_s"],
+                  "s_from_start": round(t - t_call, 2), "facts": [(f.key, f.value) for f in facts]})
+    cc.event("heard", t, speaker="pf", transcript=r["text"], spoken=line)
+    for f in facts:
+        cc.said(f, transcript=r["text"])
+    await asyncio.sleep(1.0)
+    t_move = time.time()
+    if selects is not None:
+        await xp.set("sim/cockpit2/controls/flap_ratio", RATIO[selects])
+        cc.event("action", t_move, line=f"PM selects flaps {selects}")
+    else:
+        cc.event("action", t_move, line="PM does not move the flap lever")
+    while worker.is_alive():
+        await asyncio.sleep(0.5)
+    await sampler
+    await xp.park()
+    await xp.close()
+
+    with (out / "truth.jsonl").open("w") as f:
+        for row in truth_rows:
+            f.write(json.dumps(row) + "\n")
+    (out / "meta.json").write_text(json.dumps({
+        "scenario": name, "scorer": "flaps", "aircraft": "B738", "area": "Portland", "variant": variant,
+        "called": CALLED, "selected": selects, "expect_rule": EXPECT[variant],
+        "t_start": t0, "t_call": t_call, "t_move": t_move, "frame_box": list(FRAME_BOX),
+        "panel_reader": "muse-spark-flaps", "view": FLAPS_VIEW,
+        "speech": "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
+        "heard": heard, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+    result = score(out)
+    (out / "result.json").write_text(json.dumps(result, indent=1))
+    print(json.dumps(result, indent=1))
+    return 0 if result["pass"] else 1
+
+
+if __name__ == "__main__":
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    sys.exit(asyncio.run(main(args[0] if args else "wrong", speak="--speak" in sys.argv)))

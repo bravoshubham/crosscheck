@@ -117,3 +117,49 @@ def test_grace_starts_at_the_readback():
     led2.add(Fact("said", "readback.altitude", 11000, 25.0, "pm"))
     assert not evaluate(led2, 32.0)
     assert [f.rule for f in evaluate(led2, 33.0)] == ["clearance_vs_set"]
+
+
+def _gauge(led, readings):
+    for t, clock in readings:
+        led.add(Fact("doing", "flaps.clock", clock, t, source="panel"))
+
+
+def test_flaps_from_the_gauge_wait_for_the_needle_to_settle():
+    # 15 called at 0 s; the needle moves at the measured ~0.39 clock-hours a second from 5
+    # (12.25) and stops at 10 (14.0); one reading every 1.5 s
+    led = ledger(("said", "callout.flaps", 15, 0.0, "pf"))
+    _gauge(led, [(1.5, 12.2), (3.0, 12.2), (4.5, 12.6), (6.0, 13.2), (7.5, 13.8), (9.0, 14.0), (10.5, 14.1),
+                 (12.0, 14.0), (13.5, 14.0)])
+    assert evaluate(led, 10.5) == []  # only four readings after the crew's response time
+    assert [f.callout for f in evaluate(led, 12.0)] == ["Flaps fifteen called, ten set."]
+
+
+def test_flaps_travelling_to_the_called_setting_is_silent():
+    led = ledger(("said", "callout.flaps", 15, 0.0, "pf"))
+    for i, clock in enumerate([12.2, 12.8, 13.4, 14.0, 14.6, 15.0, 15.0, 15.0, 15.1, 15.0]):
+        _gauge(led, [(1.5 * (i + 1), clock)])
+        assert evaluate(led, 1.5 * (i + 1)) == [], clock
+
+
+def test_flaps_never_moved():
+    # Spark's reads of a needle parked at 5, as seen live (11.5 .. 12.5)
+    led = ledger(("said", "callout.flaps", 15, 0.0, "pf"))
+    _gauge(led, [(1.5 * (i + 1), c) for i, c in enumerate([12.0, 12.5, 11.5, 11.5, 12.0, 11.5, 12.5, 12.2, 11.7, 11.5])])
+    assert evaluate(led, 10.5) == []  # four readings since the crew's response time
+    assert [f.callout for f in evaluate(led, 12.0)] == ["Flaps fifteen called, five set."]
+
+
+def test_flaps_not_yet_moved_is_not_a_missed_selection():
+    # live, the camera's readings lag ~3.7 s: just after the call they still show the old setting
+    led = ledger(("said", "callout.flaps", 15, 0.0, "pf"))
+    for t, clock in [(1.5, 12.1), (3.0, 12.2), (4.5, 12.1), (6.0, 12.6), (7.5, 13.2), (9.0, 13.8), (10.5, 14.4),
+                     (12.0, 15.0), (13.5, 15.0), (15.0, 15.1), (16.5, 15.0)]:
+        _gauge(led, [(t, clock)])
+        assert evaluate(led, t) == [], t
+
+
+def test_jitter_on_a_settled_needle_does_not_clear_the_flag():
+    led = ledger(("said", "callout.flaps", 15, 0.0, "pf"))
+    _gauge(led, [(6.0 + 1.5 * i, c) for i, c in enumerate([12.0, 11.5, 12.5, 11.5, 12.0, 11.5, 12.8, 11.5, 11.5, 12.5])])
+    for t in (12.0, 15.0, 18.0, 19.5):
+        assert [f.callout for f in evaluate(led, t)] == ["Flaps fifteen called, five set."], t

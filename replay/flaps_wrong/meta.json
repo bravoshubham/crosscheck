@@ -1,0 +1,42 @@
+{
+ "scenario": "flaps_wrong",
+ "scorer": "flaps",
+ "aircraft": "B738",
+ "area": "Portland",
+ "variant": "wrong",
+ "called": 15,
+ "selected": 10,
+ "expect_rule": "callout_vs_set",
+ "t_start": 1793618228.11792,
+ "t_call": 1793618236.120118,
+ "t_move": 1793618240.18271,
+ "frame_box": [
+  2300,
+  250,
+  2900,
+  650
+ ],
+ "panel_reader": "muse-spark-flaps",
+ "view": {
+  "pilots_head_psi": 22.0,
+  "pilots_head_the": -30.0,
+  "field_of_view_deg": 60.0
+ },
+ "speech": "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
+ "heard": [
+  {
+   "speaker": "pf",
+   "spoken": "flaps fifteen",
+   "transcript": "Flaps 15.",
+   "audio_s": 1.76,
+   "s_from_start": 3.06,
+   "facts": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ]
+  }
+ ],
+ "recorded": "2026-11-02 16:47:53 IST"
+}

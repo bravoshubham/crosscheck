@@ -23,8 +23,12 @@ TITLES = {
     "altitude_readback": ("Readback error", "Cleared to 11,000; the crew reads back 12,000."),
     "altitude_correct": ("Correct setting", "Cleared, read back and set to 11,000. Crosscheck should stay silent."),
     "autothrottle_hold": ("Autothrottle not in speed", "737 on final to Portland 10R; the autothrottle drops out and speed decays (the Asiana 214 pattern)."),
+    "flaps_wrong": ("Flaps: wrong setting", "\u201cFlaps fifteen\u201d called; the lever goes to 10."),
+    "flaps_forgot": ("Flaps: not moved", "\u201cFlaps fifteen\u201d called; nobody moves the lever."),
+    "flaps_correct": ("Flaps: correct", "\u201cFlaps fifteen\u201d called and selected. The needle takes ~13 s; Crosscheck should stay silent."),
 }
 ORDER = ["altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold",
+         "flaps_wrong", "flaps_forgot", "flaps_correct",
          "altitude_bust_spark", "altitude_readback_spark", "altitude_correct_spark", "autothrottle_hold_spark"]
 
 
@@ -52,7 +56,8 @@ def build_one(rec: pathlib.Path, synth) -> dict:
             if e.get("frame"):
                 shutil.copy(rec / e["frame"], out / e["frame"])
             readings.append({"t": rel(e["t"]), "frame": f"rec/{name}/{e['frame']}" if e.get("frame") else None,
-                             **{f: e.get(f) for f in ("ias", "selected_speed", "selected_altitude", "altitude", "track_mag")},
+                             **{f: e.get(f) for f in ("ias", "selected_speed", "selected_altitude", "altitude", "track_mag",
+                                                      "flaps", "flaps_clock")},
                              "fma": e.get("fma"), "fma_armed": e.get("fma_armed")})
         elif k == "said":
             said.append({"t": rel(e["t"]), "key": e["key"], "value": e["value"], "speaker": e["speaker"],
@@ -85,15 +90,18 @@ def build_one(rec: pathlib.Path, synth) -> dict:
     marks = []
     if "t_fault" in meta:
         marks.append({"t": rel(meta["t_fault"]), "label": "Autothrottle drops out (fault injected)"})
+    if "t_call" in meta:
+        marks.append({"t": rel(meta["t_move"]), "label": next((a["line"] for a in actions), "lever")})
     if "t_set" in meta:
         marks.append({"t": rel(meta["t_set"]), "label": next((a["line"] for a in actions), "MCP set")})
 
     tr = []
     for r in truth:
         row = {"t": rel(r["t"])}
-        for k in ("alt", "sel_alt", "ias", "sel", "at"):
+        for k in ("alt", "sel_alt", "ias", "sel", "at", "handle", "deploy"):
             if r.get(k) is not None:
-                row[k] = round(r[k], 1) if isinstance(r[k], float) else r[k]
+                digits = 4 if k in ("handle", "deploy") else 1  # ratios: 0.625 is flaps 15, 0.6 is not
+                row[k] = round(r[k], digits) if isinstance(r[k], float) else r[k]
         if len(row) > 1:
             tr.append(row)
 
@@ -102,9 +110,12 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         title += " · Spark reader"
         if meta.get("known_result"):
             blurb = "Too slow here: Spark's ~5 s reads put the callout after speed was 10 kt low."
-    return {"id": name, "title": title, "blurb": blurb, "kind": meta["scorer"], "meta": {
+    box = meta.get("frame_box", [1240, 1230, 3180, 2200])
+    return {"id": name, "title": title, "blurb": blurb, "kind": meta["scorer"],
+            "aspect": f"{box[2] - box[0]} / {box[3] - box[1]}", "meta": {
         k: meta[k] for k in ("aircraft", "area", "airport", "recorded", "speech", "cleared", "readback",
-                             "mcp_set", "target_kt", "variant", "panel_reader", "known_result") if k in meta},
+                             "mcp_set", "target_kt", "variant", "panel_reader", "known_result",
+                             "called", "selected") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
         "truth": tr, "audio": audio, "result": result}
