@@ -1,0 +1,422 @@
+[
+ {
+  "group": "exact",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "input": "alaska four two one climb and maintain flight level two four zero",
+  "got": {
+   "callsign": "alaska four two one",
+   "altitude_ft": 24000,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 11.25
+ },
+ {
+  "group": "exact",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "input": "alaska four two one turn left heading two seven zero",
+  "got": {
+   "callsign": "alaska four two one",
+   "altitude_ft": null,
+   "heading_deg": 270,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.54
+ },
+ {
+  "group": "exact",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "input": "alaska four two one descend and maintain one one thousand",
+  "got": {
+   "callsign": "alaska four two one",
+   "altitude_ft": 11000,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.72
+ },
+ {
+  "group": "exact",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "input": "alaska four two one contact portland approach one two four point three five",
+  "got": {
+   "callsign": "alaska four two one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": 124.35,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.2
+ },
+ {
+  "group": "exact",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "input": "alaska four two one reduce speed to two one zero knots",
+  "got": {
+   "callsign": "alaska four two one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": 210,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.57
+ },
+ {
+  "group": "exact",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "input": "cessna three four five charlie papa squawk four three two one",
+  "got": {
+   "callsign": "cessna three four five charlie papa",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": "4321"
+  },
+  "ok": true,
+  "s": 4.93
+ },
+ {
+  "group": "exact",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "input": "cessna three four five charlie papa maintain three thousand five hundred",
+  "got": {
+   "callsign": "cessna three four five charlie papa",
+   "altitude_ft": 3500,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.96
+ },
+ {
+  "group": "mms snr+5",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "input": "alaska forth two one clumbed and mantan flight bevil two fors aro",
+  "got": {
+   "callsign": "alaska forth two one",
+   "altitude_ft": 24000,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.73
+ },
+ {
+  "group": "mms snr+0",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "input": "alaska for two one clumbd and mainten white bevel two forser",
+  "got": {
+   "callsign": "alaska for two one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.48
+ },
+ {
+  "group": "mms snr-5",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "input": "il ask a for you on grum and mak wite bebbl to ors there",
+  "got": {
+   "callsign": "il ask a for you on grum and mak wite bebbl to ors there",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 5.59
+ },
+ {
+  "group": "mms snr+5",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "input": "amaska for to one turn lap hiting to seven zerv",
+  "got": {
+   "callsign": "amaska for to one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.49
+ },
+ {
+  "group": "mms snr+0",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "input": "imaska ford to one turn lap hiting to seven zerve",
+  "got": {
+   "callsign": "imaska ford to one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.5
+ },
+ {
+  "group": "mms snr-5",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "input": "i'm ask afor two one term lap hitting two seven serv",
+  "got": {
+   "callsign": "delta four",
+   "altitude_ft": null,
+   "heading_deg": 310,
+   "speed_kt": null,
+   "frequency_mhz": 132.5,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.61
+ },
+ {
+  "group": "mms snr+5",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "input": "alaska for two one descend and maintain one one thousand",
+  "got": {
+   "callsign": "alaska for two one",
+   "altitude_ft": 11000,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.69
+ },
+ {
+  "group": "mms snr+0",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "input": "alaste for two one descended maintain one one thousand",
+  "got": {
+   "callsign": "alaste for two one",
+   "altitude_ft": 11000,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.73
+ },
+ {
+  "group": "mms snr-5",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "input": "a laster for two ontes then tis mainten on one thousand",
+  "got": {
+   "callsign": "a laster for two ontes then tis mainten on one thousand",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 5.24
+ },
+ {
+  "group": "mms snr+5",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "input": "alastra four two one contact portland approach one two four point three five",
+  "got": {
+   "callsign": "alastra four two one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": 124.35,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.84
+ },
+ {
+  "group": "mms snr+0",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "input": "alasta four tw one contact portland approach on two four point thr fiv",
+  "got": {
+   "callsign": "alasta four tw one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": 24.5,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.79
+ },
+ {
+  "group": "mms snr-5",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "input": "olanda for tw one con tac portland approach on  fr poin tf",
+  "got": {
+   "callsign": "olanda",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.33
+ },
+ {
+  "group": "mms snr+5",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "input": "alaska four two one reduce speed to two one zerumnots",
+  "got": {
+   "callsign": "alaska four two one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": 210,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.64
+ },
+ {
+  "group": "mms snr+0",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "input": "alasca four to one reduced feat o two one ther of nots",
+  "got": {
+   "callsign": "alasca four to one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.62
+ },
+ {
+  "group": "mms snr-5",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "input": "alasca bor to one reduced feat an two one ther af notin",
+  "got": {
+   "callsign": "alasca bor to one",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.61
+ },
+ {
+  "group": "mms snr+5",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "input": "sesina tr fur fiv charly pappas qwork four thrtwo one",
+  "got": {
+   "callsign": "sesina tr fur fiv charly pappas",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": "four thrtwo one"
+  },
+  "ok": false,
+  "s": 5.56
+ },
+ {
+  "group": "mms snr+0",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "input": "setin o t ff charly pappis workd for tw oe",
+  "got": {
+   "callsign": "setin o t ff charly pappis workd for tw oe",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 5.39
+ },
+ {
+  "group": "mms snr-5",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "input": "sna t ff charli pappis f f w on",
+  "got": {
+   "callsign": "sna t ff charli pappis f f w",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 5.24
+ },
+ {
+  "group": "mms snr+5",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "input": "sesno three four five chabi pappamington three thousand five hundred",
+  "got": {
+   "callsign": "sesno three four five",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.59
+ },
+ {
+  "group": "mms snr+0",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "input": "sesna tree fourt five chabi pappamington three thousand five hundred",
+  "got": {
+   "callsign": "sesna tree fourt five",
+   "altitude_ft": 3500,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": true,
+  "s": 4.79
+ },
+ {
+  "group": "mms snr-5",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "input": "sisa tree fourt five shati pappamington teousfe udrd",
+  "got": {
+   "callsign": "sisa tree fourt five",
+   "altitude_ft": null,
+   "heading_deg": null,
+   "speed_kt": null,
+   "frequency_mhz": null,
+   "squawk": null
+  },
+  "ok": false,
+  "s": 4.68
+ }
+]

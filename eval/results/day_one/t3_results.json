@@ -1,0 +1,10 @@
+{
+ "model": "muse-glimmer:30b",
+ "correct": {
+  "exact": "7/7",
+  "mms snr+5": "4/7",
+  "mms snr+0": "2/7",
+  "mms snr-5": "0/7"
+ },
+ "median_s": 4.72
+}
