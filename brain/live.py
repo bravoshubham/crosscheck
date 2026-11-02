@@ -13,6 +13,7 @@ import json
 import pathlib
 import subprocess
 import tempfile
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, fields
@@ -58,7 +59,8 @@ def frame_from_crop(crop: Image.Image, origin: tuple[int, int] = FRAME_ORIGIN) -
 
 class Crosscheck:
     def __init__(self, out_dir: pathlib.Path, speak=None, frames: bool = False, log_name: str = "events.jsonl",
-                 reader: str = "apple", frame_box: tuple[int, int, int, int] = FRAME_BOX, fact_time: str = "arrival"):
+                 reader: str = "apple", frame_box: tuple[int, int, int, int] = FRAME_BOX, fact_time: str = "arrival",
+                 explain: bool = False):
         self.dir = out_dir
         self.dir.mkdir(parents=True, exist_ok=True)
         self.ledger = Ledger()
@@ -73,13 +75,16 @@ class Crosscheck:
         # moment), applied when the reading arrives. "arrival": stamped on arrival (the recordings
         # made before 3 Nov, and the flap gauge, whose settle rule was tuned that way).
         self.fact_time = fact_time
+        self.explain = explain  # live runs: Muse Spark writes a sentence under each callout (brain/explain.py)
+        self._log_lock = threading.Lock()  # the explanation arrives on another thread
         self.n = 0
         if frames:
             (out_dir / "frames").mkdir(exist_ok=True)
 
     def event(self, kind: str, t: float, **data) -> None:
-        self.log.write(json.dumps({"t": t, "kind": kind, **data}) + "\n")
-        self.log.flush()
+        with self._log_lock:
+            self.log.write(json.dumps({"t": t, "kind": kind, **data}) + "\n")
+            self.log.flush()
 
     def said(self, fact: Fact, **extra) -> None:
         """A spoken clearance, readback or callout (from speech, or from a scenario script).
@@ -126,6 +131,9 @@ class Crosscheck:
                 self.event("callout", t, **asdict(f))
                 if self.speak:
                     self.speak(f.callout)
+                if self.explain:
+                    from brain.explain import explain_later
+                    explain_later(self.ledger, f, t, lambda r, f=f: self.event("explain", time.time(), rule=f.rule, key=f.key, **r))
         for k in [k for k in self.active if k not in current and t - self.last_seen[k] >= CLEAR_AFTER_S]:
             del self.active[k]
             self.event("cleared", t, rule=k[0], key=k[1])

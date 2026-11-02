@@ -11,6 +11,12 @@ keypoints into "slumped or not". A slumped posture alone never alerts: Crosschec
 The answer is spoken (macOS voice) and heard through Muse Voice Transcribe, like all crew speech.
 No simulator is needed.
 
+--video: the camera sees moving footage instead of still images: clips made from the same photos
+with LTX-2.5 (eval/pilot_watch/make_video.py), cut together as the run goes (idle until T_CHANGE,
+then the change, then the state held; in "answers" the pilot lifts his head when asked). Every
+captured frame goes to SAM 3D Body. The run also writes camera.mp4, exactly what the camera saw.
+Generated footage: no real person is filmed.
+
 --webcam: the Mac's own camera instead of the image sets, with you as the captain. A voice tells
 you what to do 3 s before T_CHANGE ("slump forward and stay still", "look down at your lap as if
 reading a checklist"); the ground truth is that instruction. With --mic you answer Crosscheck
@@ -19,7 +25,7 @@ pilot_<variant>_webcam. The frames show your face: they stay on this Mac (git-ig
 you choose to publish them.
 
 Needs:  uv run modal deploy cloud/sam3d_body_app.py
-Run:    uv run --group eval python eval/scenarios/pilot_watch.py [slumped|asleep|checklist|answers] [--speak] [--webcam] [--mic]
+Run:    uv run --group eval python eval/scenarios/pilot_watch.py [slumped|asleep|checklist|answers] [--speak] [--video|--webcam] [--mic]
 """
 import asyncio
 import io
@@ -46,6 +52,8 @@ from senses.speech import transcribe  # noqa: E402
 from voice.crew import SR, say  # noqa: E402
 
 IMAGES = ROOT / "eval" / "pilot_watch" / "images"
+VIDEO = ROOT / "eval" / "pilot_watch" / "video"
+CHANGE_S = 5.0  # length of the "change" clip
 BOXES = json.loads((ROOT / "eval" / "pilot_watch" / "boxes.json").read_text())
 VARIANTS = {  # image set, state after the change, what the pilot says when asked
     "slumped": ("e", "slumped", None),
@@ -79,6 +87,68 @@ def play(pcm, sr: int) -> None:
     subprocess.Popen(["afplay", str(path)])
 
 
+class VideoFeed:
+    """The pilot camera playing the generated clips: idle until T_CHANGE, the change, then the state
+    held (idle and hold play back and forth, so the footage never jumps); recover() cuts to the
+    pilot lifting his head. at(t) is the frame on screen t seconds into the run."""
+
+    def __init__(self, variant: str):
+        import cv2
+        self.cv2 = cv2
+        self.clips = {}
+        for p in sorted((VIDEO / variant).glob("*.mp4")):
+            cap, frames = cv2.VideoCapture(str(p)), []
+            while True:
+                ok, f = cap.read()
+                if not ok:
+                    break
+                frames.append(f)
+            self.fps = cap.get(cv2.CAP_PROP_FPS) or 24
+            self.clips[p.stem] = frames
+        if not {"idle", "change", "hold"} <= set(self.clips):
+            raise SystemExit(f"no clips in {VIDEO / variant}: run eval/pilot_watch/make_video.py {variant}")
+        self.t_recover = None
+
+    def _pingpong(self, name: str, t: float):
+        f = self.clips[name]
+        i = int(t * self.fps) % (2 * len(f) - 2)
+        return f[i if i < len(f) else 2 * len(f) - 2 - i]
+
+    def recover(self, t: float) -> None:
+        if "recover" in self.clips and self.t_recover is None:
+            self.t_recover = t
+
+    def at(self, t: float):
+        """(BGR frame, what it shows) at t seconds into the run."""
+        if self.t_recover is not None and t >= self.t_recover:
+            rec = self.clips["recover"]
+            i = int((t - self.t_recover) * self.fps)
+            if i < len(rec):
+                return rec[i], "recover"
+            return self._pingpong("idle", t - self.t_recover - len(rec) / self.fps), "idle"
+        if t < T_CHANGE:
+            return self._pingpong("idle", t), "idle"
+        if t < T_CHANGE + CHANGE_S:
+            ch = self.clips["change"]
+            return ch[min(len(ch) - 1, int((t - T_CHANGE) * self.fps))], "change"
+        return self._pingpong("hold", t - T_CHANGE - CHANGE_S), "hold"
+
+    def jpeg(self, t: float) -> bytes:
+        return self.cv2.imencode(".jpg", self.at(t)[0], [self.cv2.IMWRITE_JPEG_QUALITY, 88])[1].tobytes()
+
+    def write(self, path: pathlib.Path, seconds: float) -> None:
+        """What the camera saw, as an H.264 file a browser can play."""
+        f0 = self.at(0)[0]
+        h, w = f0.shape[:2]
+        p = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{w}x{h}",
+                              "-r", str(self.fps), "-i", "-", "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p",
+                              "-movflags", "+faststart", str(path)], stdin=subprocess.PIPE)
+        for i in range(int(seconds * self.fps)):
+            p.stdin.write(self.at(i / self.fps)[0].tobytes())
+        p.stdin.close()
+        p.wait()
+
+
 class Webcam:
     def __init__(self):
         import cv2
@@ -96,14 +166,23 @@ class Webcam:
         return self.cv2.imencode(".jpg", bgr, [self.cv2.IMWRITE_JPEG_QUALITY, 85])[1].tobytes()
 
 
-async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None = None) -> int:
+async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None = None, video: bool = False) -> int:
     import modal
     image_set, state, answer = VARIANTS[variant]
     name = f"pilot_{variant}" + ("_webcam" if webcam else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     (out / "frames").mkdir(parents=True, exist_ok=True)
     cam = Webcam() if webcam else None
-    if cam:
+    feed = VideoFeed(variant) if video else None
+    box_from = "hand-drawn seat box (eval/pilot_watch/boxes.json)"
+    if feed:
+        size = feed.at(0)[0].shape[1]
+        frames = {"upright": feed.jpeg(0)}
+        from senses.sam31 import pilot_box  # SAM 3.1 finds the captain; SAM 3D Body poses inside that box
+        found = pilot_box(frames["upright"])
+        box = list(found) if found else [v * size / 1600 for v in BOXES[image_set]]
+        box_from = "SAM 3.1, on the first frame" if found else box_from
+    elif cam:
         first = cam.frame()
         w, h = Image.open(io.BytesIO(first)).size
         box = [0, 0, w, h]  # a laptop camera sees one person, filling the frame
@@ -113,12 +192,12 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
         box = [v * SCALE for v in BOXES[image_set]]
     pose = modal.Cls.from_name("crosscheck-sam3d-body", "Pose")()
     await pose.one.remote.aio(frames["upright"], box)  # wake the GPU container before the clock starts
-    live_answer = webcam and mic is not None and variant == "answers"
+    live_answer = mic is not None and variant == "answers"  # the person at the microphone answers for the captain
 
     say_cc = mic.speak if mic else None
     if speak and not mic:
         from voice.tts import speak as say_cc
-    cc = Crosscheck(out, speak=say_cc)
+    cc = Crosscheck(out, speak=say_cc, explain=True)
     truth, heard, n = [], [], 0
     answer_task = None
 
@@ -128,6 +207,8 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
         line = await mic.next_line(RESPONSE_WAIT_S)
         if line is None:
             return
+        if feed:  # the captain on screen lifts his head as the person answers
+            feed.recover(time.time() - t0)  # from now: the camera.mp4 must match the frames it captured
         f = f"mic{len(heard)}.wav"
         sf.write(out / f, line["pcm"], SR)
         heard.append({"speaker": "capt", "spoken": None, "audio_file": f, "transcript": line["text"],
@@ -150,6 +231,9 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
 
     async def respond():
         """The pilot answers 1.5 s after Crosscheck asks."""
+        if feed:  # he lifts his head first, then speaks
+            feed.recover(time.time() - t0)
+            cc.event("action", time.time(), line="The captain lifts his head")
         await asyncio.sleep(1.5)
         audio = say(answer)
         t_start = time.time()
@@ -168,7 +252,11 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
     while time.time() - t0 < RUN_S:
         captured = time.time()
         now_state = "upright" if captured - t0 < T_CHANGE else state
-        data = cam.frame() if cam else frames[now_state]
+        if feed:
+            data = feed.jpeg(captured - t0)
+            now_state = {"recover": "upright", "idle": "upright"}.get(feed.at(captured - t0)[1], now_state)
+        else:
+            data = cam.frame() if cam else frames[now_state]
         fname = f"frames/{n:05d}.jpg"
         (out / fname).write_bytes(data)
         n += 1
@@ -186,6 +274,8 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
         await answer_task
     if instructing:
         await instructing
+    if feed:
+        feed.write(out / "camera.mp4", time.time() - t0)
 
     with (out / "truth.jsonl").open("w") as f:
         for row in truth:
@@ -193,25 +283,35 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
     (out / "meta.json").write_text(json.dumps({
         "scenario": name, "scorer": "pilot_watch", "variant": variant, "image_set": image_set, "state": state,
         "answer": answer, "expect_ask": EXPECT[variant][0], "expect_alert": EXPECT[variant][1],
-        "t_start": t0, "t_change": t0 + T_CHANGE, "frame_box": [0, 0, 800, 800], "pilot_camera": True,
+        "t_start": t0, "t_change": t0 + T_CHANGE, "frame_box": [0, 0, size, size] if feed else [0, 0, 800, 800], "pilot_camera": True,
         "pose": "SAM 3D Body (facebook/sam-3d-body-vith) on Modal T4, one call per frame",
-        "camera": "the Mac's webcam, a person following spoken instructions" if cam else f"Muse Image set {image_set}",
+        "pilot_box": [round(v) for v in box], "pilot_box_from": box_from,
+        "camera": "the Mac's webcam, a person following spoken instructions" if cam else
+                  f"generated video: LTX-2.5 clips anchored on Muse Image set {image_set}" if feed else f"Muse Image set {image_set}",
+        "video": "camera.mp4" if feed else None,
         "speech": ("Muse Voice Transcribe, live: the person on the Mac's microphone" if live_answer else
                    "Muse Voice Transcribe, live (macOS voice for the pilot's answer)") if answer else "none",
         "heard": heard, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+    if feed:  # Muse Wonder watches the recording, independently of SAM 3D Body
+        from brain.review import review_recording
+        try:
+            rv = review_recording(out)
+            print("Muse Wonder:", rv["state"], "from", rv["from_s"], "s:", rv["evidence"])
+        except Exception as e:  # the review is a second opinion; the run stands without it
+            print("Muse Wonder review failed:", e)
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))
     return 0 if result["pass"] else 1
 
 
-async def _run(variant: str, speak: bool, webcam: bool) -> int:
+async def _run(variant: str, speak: bool, webcam: bool, video: bool) -> int:
     if "--mic" not in sys.argv:
-        return await main(variant, speak, webcam)
+        return await main(variant, speak, webcam, video=video)
     async with Mic() as mic:
-        return await main(variant, speak, webcam, mic)
+        return await main(variant, speak, webcam, mic, video=video)
 
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    sys.exit(asyncio.run(_run(args[0] if args else "slumped", speak="--speak" in sys.argv, webcam="--webcam" in sys.argv)))
+    sys.exit(asyncio.run(_run(args[0] if args else "slumped", speak="--speak" in sys.argv, webcam="--webcam" in sys.argv, video="--video" in sys.argv)))

@@ -10,7 +10,9 @@
    "callouts": "Speed. Autothrottle not in speed.",
    "seconds": 92,
    "callout_s_after_fault": 10.0,
-   "false_callouts_before_fault": []
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 12.8,
+   "panel_readable": 0.92
   },
   {
    "run": 1,
@@ -18,7 +20,9 @@
    "callouts": "Speed. Autothrottle not in speed.",
    "seconds": 92,
    "callout_s_after_fault": 10.5,
-   "false_callouts_before_fault": []
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 13.1,
+   "panel_readable": 0.94
   },
   {
    "run": 2,
@@ -26,7 +30,9 @@
    "callouts": "Speed. Autothrottle not in speed.",
    "seconds": 93,
    "callout_s_after_fault": 10.2,
-   "false_callouts_before_fault": []
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 12.9,
+   "panel_readable": 1.0
   }
  ]
 }

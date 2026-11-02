@@ -1,0 +1,447 @@
+{
+ "right": 23,
+ "of": 24,
+ "rows": [
+  {
+   "image": "a/looking_down.jpg",
+   "sam31_box": [
+    138,
+    302,
+    967,
+    1153
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 28.4,
+    "wrists": 0.42,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "a/slumped.jpg",
+   "sam31_box": [
+    138,
+    403,
+    809,
+    1153
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 52.7,
+    "wrists": 0.24,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "a/slumped_side.jpg",
+   "sam31_box": [
+    63,
+    354,
+    843,
+    1152
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 7.6,
+    "wrists": 0.19,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "a/upright.jpg",
+   "sam31_box": [
+    135,
+    286,
+    954,
+    1152
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 20.4,
+    "wrists": 0.45,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "b/looking_down.jpg",
+   "sam31_box": [
+    364,
+    266,
+    1193,
+    1159
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 24.7,
+    "wrists": 0.54,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "b/slumped.jpg",
+   "sam31_box": [
+    336,
+    357,
+    995,
+    1158
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 44.5,
+    "wrists": 0.28,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "b/slumped_side.jpg",
+   "sam31_box": [
+    179,
+    356,
+    1154,
+    1157
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 11.5,
+    "wrists": 0.14,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "b/upright.jpg",
+   "sam31_box": [
+    378,
+    239,
+    1194,
+    1158
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 16.8,
+    "wrists": 0.49,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "c/looking_down.jpg",
+   "sam31_box": [
+    34,
+    457,
+    686,
+    1290
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 34.3,
+    "wrists": 0.25,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": false
+  },
+  {
+   "image": "c/slumped.jpg",
+   "sam31_box": [
+    45,
+    557,
+    614,
+    1302
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 57.2,
+    "wrists": 0.3,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "c/slumped_side.jpg",
+   "sam31_box": [
+    44,
+    601,
+    626,
+    1297
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 46.6,
+    "wrists": 0.28,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "c/upright.jpg",
+   "sam31_box": [
+    0,
+    452,
+    625,
+    1302
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 26.6,
+    "wrists": 0.34,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "d/looking_down.jpg",
+   "sam31_box": [
+    73,
+    384,
+    1116,
+    1599
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 36.8,
+    "wrists": 0.38,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "d/slumped.jpg",
+   "sam31_box": [
+    79,
+    480,
+    1113,
+    1599
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 51.2,
+    "wrists": 0.25,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "d/slumped_side.jpg",
+   "sam31_box": [
+    5,
+    522,
+    1116,
+    1599
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 22.6,
+    "wrists": 0.21,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "d/upright.jpg",
+   "sam31_box": [
+    81,
+    377,
+    1116,
+    1599
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 23.0,
+    "wrists": 0.47,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "e/looking_down.jpg",
+   "sam31_box": [
+    142,
+    327,
+    1076,
+    1219
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 31.2,
+    "wrists": 0.42,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "e/slumped.jpg",
+   "sam31_box": [
+    149,
+    401,
+    992,
+    1238
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 45.9,
+    "wrists": 0.22,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "e/slumped_side.jpg",
+   "sam31_box": [
+    144,
+    354,
+    971,
+    1228
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 10.7,
+    "wrists": 0.23,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "e/upright.jpg",
+   "sam31_box": [
+    144,
+    301,
+    1148,
+    1236
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 20.3,
+    "wrists": 0.48,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "f/looking_down.jpg",
+   "sam31_box": [
+    416,
+    343,
+    1431,
+    1436
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 28.5,
+    "wrists": 0.46,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "f/slumped.jpg",
+   "sam31_box": [
+    419,
+    426,
+    1432,
+    1433
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 47.3,
+    "wrists": 0.24,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "f/slumped_side.jpg",
+   "sam31_box": [
+    416,
+    424,
+    1537,
+    1436
+   ],
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 13.3,
+    "wrists": 0.21,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "f/upright.jpg",
+   "sam31_box": [
+    415,
+    331,
+    1432,
+    1436
+   ],
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 20.8,
+    "wrists": 0.46,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  }
+ ]
+}

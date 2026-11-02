@@ -40,9 +40,18 @@ def run(spec: str, i: int) -> dict:
         return {"run": i, "error": (p.stderr or p.stdout)[-600:], "seconds": round(time.time() - t)}
     r = json.loads(results[0].read_text())
     return {"run": i, "pass": r["pass"], "callouts": r.get("callouts") or r.get("callout"),
-            "seconds": round(time.time() - t), **{k: r[k] for k in ("callout_s_after_fault", "false_callouts_before_fault",
-                                                                      "false_callouts_before_clearance", "false_callouts_before_call")
-                                                  if k in r}}
+            "seconds": round(time.time() - t), **timing(r)}
+
+
+TIMING = ("callout_s_after_fault", "truth_below_target_minus_10_s", "aircraft_passed_cleared_s_after_set",
+          "flaps_settled_s_after_call", "asked_s_after_change", "alert_s_after_change", "false_callouts",
+          "false_callouts_before_fault", "false_callouts_before_clearance", "false_callouts_before_call",
+          "false_callouts_before_change", "panel_readable")
+
+
+def timing(r: dict) -> dict:
+    """The scorer's timing fields: when Crosscheck spoke, and the deadline it had to beat."""
+    return {k: r[k] for k in TIMING if k in r}
 
 
 def main() -> int:

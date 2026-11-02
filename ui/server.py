@@ -15,13 +15,14 @@ from fastapi.responses import FileResponse, StreamingResponse
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 REPLAY = ROOT / "replay"
+DIRS = (REPLAY, ROOT / "demo_runs")  # recorded scenarios, and live demos (demo.py)
 PAGE = pathlib.Path(__file__).resolve().parent / "live.html"
 
 app = FastAPI()
 
 
 def newest() -> pathlib.Path | None:
-    logs = list(REPLAY.glob("*/events.jsonl"))
+    logs = [p for d in DIRS for p in d.glob("*/events.jsonl")]
     return max(logs, key=lambda p: p.stat().st_mtime) if logs else None
 
 
@@ -32,10 +33,12 @@ def page():
 
 @app.get("/frame/{scenario}/{name}")
 def frame(scenario: str, name: str):
-    p = (REPLAY / scenario / "frames" / name).resolve()
-    if REPLAY not in p.parents or not p.is_file():
-        raise HTTPException(404)
-    return FileResponse(p, headers={"Cache-Control": "no-store"})
+    for d in DIRS:
+        p = d / scenario / "frames" / name
+        # the frames folder of a re-enactment is a link to the recording's: check where it really points
+        if p.is_file() and any(base.resolve() in p.resolve().parents for base in DIRS):
+            return FileResponse(p, headers={"Cache-Control": "no-store"})
+    raise HTTPException(404)
 
 
 @app.get("/stream")

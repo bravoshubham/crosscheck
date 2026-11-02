@@ -1,0 +1,2876 @@
+{
+ "transcripts": 168,
+ "spark_asked": 119,
+ "code_only": {
+  "right": 30,
+  "missed": 18,
+  "wrong": 0,
+  "of": 48
+ },
+ "code_then_spark": {
+  "right": 35,
+  "missed": 13,
+  "wrong": 0,
+  "of": 48
+ },
+ "recovered": [
+  {
+   "clip": "08_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "flaps fifteen",
+   "heard": "vats 15.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "spark_answer": {
+    "kind": "flaps",
+    "value": 15,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "11_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One, white level two and four zero Alaska four two one",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "11_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One white level two and four zero Oscar four two one",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "11_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One, white level two and four zero asterisk four two one.",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "11_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "white level two and four zero Alaska four two one.",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  }
+ ],
+ "rows": [
+  {
+   "clip": "00_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska four two one climbed and maintain flight level two four zero",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska four, two one climbed and maintained flight level two four zero",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska, four, two, one, climb and maintain flight level two four zero.",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska 421 climb and maintain flight level 240",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska 421 climbed and maintained flight level 240",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska, 421 climb and maintain flight level 240",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska 421 club and main flight level 240",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska 421 climbed and maintained flight level 240.",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska, 4, 2, 1 club and main flight level 240.",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska 4, 21 club and main flight level 240",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska 4, 21 plum and main flight level 240.",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "00_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one climb and maintain flight level two four zero",
+   "heard": "Alaska 4, 21 club and main flight level 240.",
+   "want": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain one one thousand.",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain one one thousand",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain 11000.",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain 11000",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain 11000",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain one one thousand",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain 11000",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain 11000",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 descend and maintain 11000",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 defend maintain 11000",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421, defend maintain 11000",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "02_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one descend and maintain one one thousand",
+   "heard": "Alaska 421 defend maintain one one thousand",
+   "want": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "code": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "08_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "flaps fifteen",
+   "heard": "Fired fitted.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "08_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "flaps fifteen",
+   "heard": "Fired fifty.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "08_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "flaps fifteen",
+   "heard": "Forage fifty.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "08_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "flaps fifteen",
+   "heard": "Fifty.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "08_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "flaps fifteen",
+   "heard": "Fright fifty.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "08_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "flaps fifteen",
+   "heard": "Fifty.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "08_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "flaps fifteen",
+   "heard": "perhaps fifty.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "positive rate gear up",
+   "heard": "visitive rate gear up",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "positive rate gear up",
+   "heard": "Positive rate gear up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "positive rate gear up",
+   "heard": "Visitive rate gear up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "positive rate gear up",
+   "heard": "Positive rate gear up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "positive rate gear up",
+   "heard": "Visitive rate, dear up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "positive rate gear up",
+   "heard": "Positive rate gear up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "positive rate gear up",
+   "heard": "Positive rape, dear,",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "positive rate gear up",
+   "heard": "visitive raped here up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "positive rate gear up",
+   "heard": "Positive rape gear up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "positive rate gear up",
+   "heard": " was it it break here up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "positive rate gear up",
+   "heard": " visited rape here",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "09_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "positive rate gear up",
+   "heard": " visited rape gear up.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "11_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "flight level 240 Oscar 421",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "11_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "flight level 240, ask 421.",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "11_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "flight level two four zero Oscar four two one",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "11_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": " Plum, flight level 240, Oscar 421.",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "11_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "Plan flight level two four zero Oscar four two one.",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "11_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One, flight level two four zero Oscar four two one,",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark": [],
+   "spark_answer": null
+  },
+  {
+   "clip": "01_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left heading to 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left hitting 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 4, 21, turn left, hitting 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left hitting 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left hitting 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left heading 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left heading to 70",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left hitting 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left heading 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left hitting 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left heading to 70",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska for 21 contact Portland approach 124.35",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "01_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one turn left heading two seven zero",
+   "heard": "Alaska 421 turn left hitting 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421 contact Portland approach 124.35",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alassa for two one contact Portland approach one two four point three five",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421 contact Portland approach one two four point three five.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alassa for two one contact Portland approach one two four point three five.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421, contact Portland Approach 124.35.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421 contact Portland approach 124.35",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421 contact Portland approach 124.35",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421 Kentucky Portland approach 124.35",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421 contact Portland approach 124.35",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421 Kentucky Portland approach 124.35",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "03_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one contact portland approach one two four point three five",
+   "heard": "Alaska 421, Kentucky, Portland, approach 124.35.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduced speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduced speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, for two one cleardills runway one zero right approach.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska 421 reduce speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, for two one cleardills runway one zero right approach",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, before two-one clear deals, runway one zero right approach",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, but for two one clear deals, runway one zero right approach",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "04_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one reduce speed to two one zero knots",
+   "heard": "Alaska, 421 reduced speed to 210 knots.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, but for 2-1 clear goals, runway 10 right approach.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, but four 2-1 clear deals runway 10 right approach",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, but four, two, one, clear deals. Runway one zero right approach.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas but for two one clear deals runway one zero right approach",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "Alas, but for two one clear deals runway one zero right approach",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "05_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "The last of four 2-1 clear kills. Runway one zero right approach.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "06_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna 345 Charlie Papa spoke 4321.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "05_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "The last for 21 clear goals runway 10 right approach",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "06_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna 345 Charlie Papa spoke 4321.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "05_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "alaska four two one cleared ils runway one zero right approach",
+   "heard": "The last of the 421 clear drills. Runway 10 right approach.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "06_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna three four five Charlie Papa spoke four three two one.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr+0.wav",
+   "pass": 0,
+   "condition": "piston +0 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna 345 Charlie Papa Squawk 432 on.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr+5.wav",
+   "pass": 0,
+   "condition": "piston +5 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna 345, Charlie Papa, squawk 4321.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr+5.wav",
+   "pass": 1,
+   "condition": "piston +5 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna three four five Charlie Papa squawk four three two one.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr+5.wav",
+   "pass": 2,
+   "condition": "piston +5 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna 345 Charlie Papa squawk 4321.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr+0.wav",
+   "pass": 1,
+   "condition": "piston +0 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna three four five Charlie Papa squawk four three two one.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr+0.wav",
+   "pass": 2,
+   "condition": "piston +0 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Cessna 345 Charlie Papa 4321.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cesna, free 45 Charlie Papamington 3500",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cesna, 345 Charlie Papa 3500.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr-5.wav",
+   "pass": 2,
+   "condition": "piston -5 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Saturn a three, four, five Charlie Papas four four three two one",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr-5.wav",
+   "pass": 1,
+   "condition": "piston -5 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "Set three four five Charlie Papa four four three two one.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cesna, free 45 Charlie Papermington 3500",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr+5.wav",
+   "pass": 0,
+   "condition": "piston +5 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna, 345, Charlie Papa, maintains 3,500.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "06_piston_snr-5.wav",
+   "pass": 0,
+   "condition": "piston -5 dB",
+   "script": "cessna three four five charlie papa squawk four three two one",
+   "heard": "32745 Charlie Pappas 4432 on",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr+5.wav",
+   "pass": 1,
+   "condition": "piston +5 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna, 345 Charlie Papa Manhattan 3500.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr+5.wav",
+   "pass": 2,
+   "condition": "piston +5 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna 345 Charlie Papua 3500",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr+0.wav",
+   "pass": 0,
+   "condition": "piston +0 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna, three four five, Charlie, Papa, maintain three thousand five hundred.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr+0.wav",
+   "pass": 1,
+   "condition": "piston +0 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna, 345, Charlie, Papa, maintenance 3,500.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr-5.wav",
+   "pass": 0,
+   "condition": "piston -5 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna three four five Charlie Patton three thousand five hundred",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr-5.wav",
+   "pass": 1,
+   "condition": "piston -5 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna, three four five Charlie, Papamington, three thousand five hundred.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr-5.wav",
+   "pass": 2,
+   "condition": "piston -5 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cessna, three four five Charlie, Pat Mington three thousand five hundred.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "07_piston_snr+0.wav",
+   "pass": 2,
+   "condition": "piston +0 dB",
+   "script": "cessna three four five charlie papa maintain three thousand five hundred",
+   "heard": "Cesna, three, four, five, Charlie, Papamington, three thousand five hundred.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "08_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "flaps fifteen",
+   "heard": "vats 15.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "spark_answer": {
+    "kind": "flaps",
+    "value": 15,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "08_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "flaps fifteen",
+   "heard": "15.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "flaps",
+    "value": 15,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "set heading two seven zero",
+   "heard": "said heading two seven zero.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "set heading two seven zero",
+   "heard": "said heading 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "08_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "flaps fifteen",
+   "heard": " at 15.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "flaps",
+    "value": 15,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "set heading two seven zero",
+   "heard": "said heading two seven zero.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "set heading two seven zero",
+   "heard": "set heading 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "08_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "flaps fifteen",
+   "heard": "Fire at 50.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "set heading two seven zero",
+   "heard": "said heading 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "set heading two seven zero",
+   "heard": "said heading 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "set heading two seven zero",
+   "heard": "said Hetty 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "08_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "flaps fifteen",
+   "heard": "Flight 50.",
+   "want": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": {}
+  },
+  {
+   "clip": "10_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "set heading two seven zero",
+   "heard": "said Hetty 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "set heading two seven zero",
+   "heard": "said heading 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "set heading two seven zero",
+   "heard": "said Hetty, 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "set heading two seven zero",
+   "heard": "said kitty, 270.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "11_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One, white level two and four zero Alaska four two one",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "10_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "set heading two seven zero",
+   "heard": "said Hetty 270",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "11_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One white level two and four zero Oscar four two one",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "12_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday, mayday, mayday Cessna three four five Charlie Papa engine failure.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "11_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One white level two and four zero four two one",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "12_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday, mayday, mayday, Cessna three four five Charlie Papa engine failure.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "11_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One, white level two and four zero asterisk four two one.",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "11_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "One, white level two and four zero Oscar four two one",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [],
+   "spark_answer": {}
+  },
+  {
+   "clip": "11_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "climb flight level two four zero alaska four two one",
+   "heard": "white level two and four zero Alaska four two one.",
+   "want": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "code": [],
+   "spark": [
+    [
+     "readback.altitude",
+     24000
+    ]
+   ],
+   "spark_answer": {
+    "kind": "readback",
+    "value": 24000,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "12_piston_snr+5.wav",
+   "pass": 0,
+   "condition": "piston +5 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday, mayday, mayday, Cessna three four five Charlie Papa engine failure.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_piston_snr+5.wav",
+   "pass": 1,
+   "condition": "piston +5 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday, mayday, mayday Cessna three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_piston_snr+5.wav",
+   "pass": 2,
+   "condition": "piston +5 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_piston_snr+0.wav",
+   "pass": 1,
+   "condition": "piston +0 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday, mayday, mayday, Cessna three four five Charlie Papa engine failure.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_piston_snr+0.wav",
+   "pass": 0,
+   "condition": "piston +0 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_piston_snr-5.wav",
+   "pass": 2,
+   "condition": "piston -5 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_piston_snr+0.wav",
+   "pass": 2,
+   "condition": "piston +0 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday, mayday, mayday Cessna three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "13_clean.wav",
+   "pass": 0,
+   "condition": "clean",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabilized.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "12_piston_snr-5.wav",
+   "pass": 0,
+   "condition": "piston -5 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": false
+   }
+  },
+  {
+   "clip": "12_piston_snr-5.wav",
+   "pass": 1,
+   "condition": "piston -5 dB",
+   "script": "mayday mayday mayday cessna three four five charlie papa engine failure",
+   "heard": "Mayday mayday mayday system three four five Charlie Papa engine failure",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_clean.wav",
+   "pass": 1,
+   "condition": "clean",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabilized.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_clean.wav",
+   "pass": 2,
+   "condition": "clean",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabilized.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr+5.wav",
+   "pass": 1,
+   "condition": "jet +5 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabilized.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr+5.wav",
+   "pass": 0,
+   "condition": "jet +5 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabilized.,",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr+0.wav",
+   "pass": 1,
+   "condition": "jet +0 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabbed life.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr+5.wav",
+   "pass": 2,
+   "condition": "jet +5 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabilized.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr+0.wav",
+   "pass": 0,
+   "condition": "jet +0 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabbed lights.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr+0.wav",
+   "pass": 2,
+   "condition": "jet +0 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand stabbed lights.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr-5.wav",
+   "pass": 2,
+   "condition": "jet -5 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand step life.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr-5.wav",
+   "pass": 0,
+   "condition": "jet -5 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand step life.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  },
+  {
+   "clip": "13_jet_snr-5.wav",
+   "pass": 1,
+   "condition": "jet -5 dB",
+   "script": "one thousand stabilized",
+   "heard": "One thousand step life.",
+   "want": [],
+   "code": [],
+   "spark": [],
+   "spark_answer": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
+  }
+ ]
+}

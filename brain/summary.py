@@ -31,7 +31,9 @@ PROMPT = (
     "(\"at 14 s\"). If Crosscheck stayed silent, say so and why that was right or wrong. Do not use any "
     "number, name or event that is not in the timeline. Describe only what happened: never write that "
     "something is absent, missing or \"not listed\". Use set-up lines and the score only to explain, "
-    "without the words \"set-up\", \"timeline\" or \"parsed\". No headings, no bullet points.\n\nTimeline:\n"
+    "without the words \"set-up\", \"timeline\" or \"parsed\". Write numbers as a pilot would (11,000 ft, 140 kt, "
+    "flaps 15) and use the values parsed from speech rather than quoting garbled transcript words. Say \"the pilot "
+    "flying\" and \"the pilot monitoring\", not PF and PM, and \"the captain\" with no he or she (the log does not say).  No headings, no bullet points.\n\nTimeline:\n"
 )
 
 

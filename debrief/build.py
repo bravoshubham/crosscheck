@@ -76,6 +76,10 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         elif k == "callout":
             callouts.append({"t": rel(e["t"]), "rule": e["rule"], "key": e["key"], "text": e["callout"],
                              "expected": e["expected"], "actual": e["actual"], "since": rel(e["since"])})
+        elif k == "explain" and e.get("text"):  # Muse Spark's sentence under the latest matching callout
+            c = next((c for c in reversed(callouts) if c["rule"] == e["rule"] and c["key"] == e["key"]), None)
+            if c:
+                c["explain"], c["explain_t"] = e["text"], rel(e["t"])
         elif k == "action":
             actions.append({"t": rel(e["t"]), "line": e["line"]})
         elif k == "pilot":  # pilot-watch camera: posture from SAM 3D Body
@@ -147,6 +151,12 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         if meta.get("known_result"):
             blurb = "Too slow here: Spark's ~5 s reads put the callout after speed was 10 kt low."
     box = meta.get("frame_box", [1240, 1230, 3180, 2200])
+    video = None
+    if meta.get("video") and (rec / meta["video"]).exists():  # pilot watch on generated footage
+        shutil.copy(rec / meta["video"], out / meta["video"])
+        video = f"rec/{name}/{meta['video']}"
+    rv = rec / "review.json"  # Muse Wonder's independent review of the pilot camera (brain/review.py)
+    review = {k: v for k, v in json.loads(rv.read_text()).items() if k in ("model", "state", "from_s", "evidence", "agrees_with_truth", "expected_state", "s")} if rv.exists() else None
     sp = rec / "summary.json"  # Muse Spark debrief summary (brain/summary.py), if written
     summary = {k: v for k, v in json.loads(sp.read_text()).items() if k in ("text", "verified", "unsupported_numbers", "model")} if sp.exists() else None
     return {"id": name, "title": title, "blurb": blurb, "kind": meta["scorer"],
@@ -156,7 +166,134 @@ def build_one(rec: pathlib.Path, synth) -> dict:
                              "called", "selected", "state", "answer", "pose") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
-        "truth": tr, "audio": audio, "result": result, "summary": summary}
+        "truth": tr, "audio": audio, "result": result, "summary": summary, "video": video, "actions": actions, "review": review}
+
+
+# The test matrix on the overview: recording, repeat-run summaries (eval/results/repeat/), what each
+# run's time is measured from, and the deadline field it had to beat (if the scenario has one).
+MATRIX = [
+    ("altitude_bust", ["altitude_bust"], "Cleared to 11,000; the pilot flying sets 12,000.", "after the MCP was set",
+     "aircraft_passed_cleared_s_after_set", "the 737 passed 11,000"),
+    ("altitude_readback", ["altitude_readback"], "Cleared to 11,000; the crew reads back 12,000.", "after the MCP was set", None, None),
+    ("altitude_correct", ["altitude_correct"], "Cleared, read back and set to 11,000.", None, None, None),
+    ("autothrottle_hold", ["autothrottle_hold"], "On final the autothrottle drops out and speed decays.", "after the fault",
+     "truth_below_target_minus_10_s", "speed was 10 kt low"),
+    ("autothrottle_hold_spark", ["autothrottle_hold_spark"], "The same, with Muse Spark reading the panel.", "after the fault",
+     "truth_below_target_minus_10_s", "speed was 10 kt low"),
+    ("flaps_wrong", ["flaps_wrong"], "\u201cFlaps fifteen\u201d called; the lever goes to 10.", "after the call", None, None),
+    ("flaps_forgot", ["flaps_forgot"], "\u201cFlaps fifteen\u201d called; nobody moves the lever.", "after the call", None, None),
+    ("flaps_correct", ["flaps_correct"], "\u201cFlaps fifteen\u201d called and selected.", None, None, None),
+    ("pilot_slumped", ["pilot_watch_slumped"], "The captain slumps forward and does not answer.", "after the slump", None, None),
+    ("pilot_asleep", ["pilot_watch_asleep"], "The captain falls asleep against the side window.", "after the slump", None, None),
+    ("pilot_checklist", ["pilot_watch_checklist"], "The captain looks down at a checklist.", None, None, None),
+    ("pilot_answers", ["pilot_watch_answers"], "The captain slumps, then answers when asked.", "after the slump", None, None),
+    ("nominal", [], "Fifteen minutes flown correctly: six descents, four turns, four flap calls.", None, None, None),
+]
+SAYS = {"altitude_bust": "Cleared one-one thousand, set one-two thousand.",
+        "altitude_readback": "Readback one-two thousand, cleared one-one thousand.",
+        "autothrottle_hold": "Speed. Autothrottle not in speed.", "autothrottle_hold_spark": "Speed. Autothrottle not in speed.",
+        "flaps_wrong": "Flaps fifteen called, ten set.", "flaps_forgot": "Flaps fifteen called, five set.",
+        "pilot_slumped": "Captain, are you OK?\u201d then \u201cFirst officer, take control.",
+        "pilot_asleep": "Captain, are you OK?\u201d then \u201cFirst officer, take control.",
+        "pilot_answers": "Captain, are you OK?"}
+
+
+def _first_time(run: dict) -> float | None:
+    """When the first callout came, in the run's own terms (seconds after the set / fault / call / change)."""
+    if run.get("callout_s_after_fault") is not None:
+        return run["callout_s_after_fault"]
+    c = run.get("callouts")
+    if isinstance(c, list) and c:
+        return next(v for k, v in c[0].items() if k.startswith("s_after"))
+    return None
+
+
+def models(data: list[dict]) -> list[dict]:
+    """Each Meta model's job here and what was measured, read from the result files (nothing typed by hand)."""
+    R = ROOT / "eval" / "results"
+    load = lambda p: json.loads(p.read_text()) if p.exists() else None
+    out = []
+    t2, nom = load(R / "day_one" / "t2_muse.json"), next((r for r in data if r["id"] == "nominal"), None)
+    m = []
+    if t2:
+        m.append("Radio test lines with every number right, clean audio, three passes: " + ", ".join(t2["numbers_exact_by_pass"]["muse clean"]))
+    if nom:
+        m.append(f"15-minute flight: {nom['result']['lines_heard']} lines heard live, {nom['result']['altitude_and_flap_facts_parsed']} values right")
+    out.append({"model": "Muse Voice Transcribe", "job": "Hears the radio and the intercom, one channel each, as they are spoken; the person at the microphone in a live demo.", "measured": m})
+    ps, fb = load(R / "day_one" / "panel_spark.json"), load(R / "speech_fallback.json")
+    m = []
+    if ps:
+        m.append(f"Reading the flight displays: altitude within 20 ft {ps['right']['altitude']['spark']} frames (on-device text recognition {ps['right']['altitude']['apple']})")
+    if fb:
+        m.append(f"Second reader for lines code cannot parse: {fb['code_only']['right']} \u2192 {fb['code_then_spark']['right']} of {fb['code_only']['of']} values, {fb['code_then_spark']['wrong']} wrong")
+    sums = [r["summary"] for r in data if r.get("summary")]
+    if sums:
+        m.append(f"Debrief summaries: {sum(s['verified'] for s in sums)} of {len(sums)} with every number found in the log")
+    out.append({"model": "Muse Spark", "job": "Reads the flight displays and the analog flap gauge from camera frames on any computer; reads radio lines the parser cannot; writes a sentence under each callout and each recording's debrief.", "measured": m})
+    reviews = [load(ROOT / "replay" / r["id"] / "review.json") for r in data if r["kind"] == "pilot_watch"]
+    reviews = [x for x in reviews if x]
+    out.append({"model": "Muse Wonder", "job": "Watches the pilot-camera recording after each run and judges it on its own, without the poses or Crosscheck's alerts.",
+                "measured": [f"Agreed with the ground truth on {sum(x['agrees_with_truth'] for x in reviews)} of {len(reviews)} recordings"] if reviews else []})
+    checks = [load(ROOT / "replay" / r["id"] / "camera_check.json") for r in data]
+    checks = [c for c in checks if c]
+    sb = load(R / "pilot_sam_boxes.json")
+    m = ([f"Pre-flight camera check passed on {sum(c['ok'] for c in checks)} of {len(checks)} recordings"] if checks else []) + \
+        ([f"Finding the captain for SAM 3D Body: posture right on {sb['right']} of {sb['of']} labelled images"] if sb else [])
+    out.append({"model": "SAM 3.1", "job": "Finds the flight displays before each run (the camera check) and the captain in the pilot camera, from one-word prompts.", "measured": m})
+    pp = load(R / "day_one" / "pilot_posture.json")
+    out.append({"model": "SAM 3D Body", "job": "Turns every pilot-camera frame into a 3D body pose; code measures the head and hands from it.",
+                "measured": [f"Labelled images right: {k} {v}" for k, v in pp.items()] if pp else []})
+    imgs = len([p for p in (ROOT / "eval" / "pilot_watch" / "images").glob("*/*.jpg")])
+    out.append({"model": "Muse Image", "job": "Makes the synthetic pilots the pilot camera is tested on, and the halfway poses the video is anchored on.", "measured": [f"{imgs} images of 6 synthetic pilots"]})
+    out.append({"model": "MMS-TTS", "job": "Crosscheck's voice, and the synthetic voices of the radio test set.", "measured": []})
+    return out
+
+
+def overview(data: list[dict]) -> dict:
+    """Everything the overview and test report show, from the recordings and the repeat summaries."""
+    by_id = {r["id"]: r for r in data}
+    rows, totals = [], {"runs": 0, "right": 0}
+    for rid, repeats, what, measured, deadline_key, deadline_label in MATRIX:
+        if rid not in by_id:
+            continue
+        runs = []
+        for rp in repeats:
+            p = ROOT / "eval" / "results" / "repeat" / f"{rp}.json"
+            if p.exists():
+                runs += [{"pass": x["pass"], "t": _first_time(x), "deadline": x.get(deadline_key) if deadline_key else None}
+                         for x in json.loads(p.read_text())["runs"] if "pass" in x]
+        rec = by_id[rid]
+        res = rec["result"]
+        live = {"pass": res["pass"], "t": _first_time(res), "deadline": res.get(deadline_key) if deadline_key else None, "recording": True}
+        runs = [live] + runs
+        totals["runs"] += len(runs)
+        totals["right"] += sum(r["pass"] for r in runs)
+        rows.append({"id": rid, "title": rec["title"], "what": what, "says": SAYS.get(rid), "measured": measured,
+                     "deadline_label": deadline_label, "runs": runs, "kind": rec["kind"]})
+    hero = by_id.get("altitude_bust")
+    if hero:
+        c = hero["callouts"][0]
+        frame = next((r["frame"] for r in hero["readings"] if r["t"] >= c["t"] and r.get("frame")), None)
+        hero = {"id": hero["id"], "frame": frame, "callout": c, "duration": hero["duration"],
+                "said": [f for f in hero["said"]],
+                "set": [[r["t"], r["selected_altitude"]] for r in hero["readings"] if r.get("selected_altitude")],
+                "doing": [[r["t"], r["altitude"]] for r in hero["readings"] if r.get("altitude")],
+                "aspect": hero["aspect"]}
+    nominal = None
+    if "nominal" in by_id:
+        n = by_id["nominal"]
+        res = n["result"]
+        earlier = []
+        for d, label in (("nominal_before_fixes", "Run 1"), ("nominal_run2", "Run 2"), ("nominal_run3", "Run 3")):
+            p = ROOT / "eval" / "results" / d / "result.json"
+            if p.exists():
+                earlier.append({"label": label, "false_callouts": json.loads(p.read_text())["false_callouts"]})
+        nominal = {"id": "nominal", "duration": n["duration"], "result": res, "earlier": earlier,
+                   "alt": [[r["t"], r["altitude"]] for r in n["readings"] if r.get("altitude")],
+                   "heard": [[h["start"], h["t"], h["speaker"]] for h in n["heard"]],
+                   "actions": [[a["t"], a["line"]] for a in n.get("actions", [])]}
+    return {"hero": hero, "matrix": rows, "totals": totals, "nominal": nominal, "models": models(data),
+            "findings": json.loads((TEMPLATE.parent / "findings.json").read_text())}
 
 
 def build() -> pathlib.Path:
@@ -168,5 +305,7 @@ def build() -> pathlib.Path:
     data = [build_one(recs[n], synth) for n in ORDER if n in recs]
     data += [build_one(p, synth) for n, p in sorted(recs.items()) if n not in ORDER]
     (SITE / "data.js").write_text("window.DEBRIEF = " + json.dumps(data, separators=(",", ":")) + ";\n")
-    shutil.copy(TEMPLATE, SITE / "index.html")
+    (SITE / "overview.js").write_text("window.OVERVIEW = " + json.dumps(overview(data), separators=(",", ":")) + ";\n")
+    shutil.copy(TEMPLATE, SITE / "debrief.html")
+    shutil.copy(TEMPLATE.parent / "overview.html", SITE / "index.html")
     return SITE / "index.html"

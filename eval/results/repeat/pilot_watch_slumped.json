@@ -17,7 +17,10 @@
      "text": "Captain not responding. First officer, take control."
     }
    ],
-   "seconds": 54
+   "seconds": 54,
+   "asked_s_after_change": 9.8,
+   "alert_s_after_change": 20.1,
+   "false_callouts_before_change": []
   },
   {
    "run": 1,
@@ -32,7 +35,10 @@
      "text": "Captain not responding. First officer, take control."
     }
    ],
-   "seconds": 55
+   "seconds": 55,
+   "asked_s_after_change": 9.0,
+   "alert_s_after_change": 19.4,
+   "false_callouts_before_change": []
   }
  ]
 }

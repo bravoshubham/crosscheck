@@ -1,15 +1,29 @@
 # Crosscheck
 
-An AI that monitors the pilots. It listens to the crew and the radio, reads the panel through a
-camera, and calls out when what was **said**, what was **set** and what the aircraft is **doing**
-don't match — on Meta's models, proven in X-Plane against the simulator's own truth.
+**A monitoring pilot that only sees and hears.** Crosscheck listens to the radio and the intercom,
+reads the flight displays through a camera, and speaks up, in standard words, when what was
+**said**, what was **set** and what the aircraft is **doing** disagree. Built on Meta's models;
+flown and scored in X-Plane 12 against the simulator's own data, which Crosscheck never sees.
+
+![Crosscheck catching an altitude bust: the clearance was 11,000, the selector was set to 12,000](docs/overview.png)
 
 > In the NTSB's review of 37 crew-involved US airline accidents (1978–1990), failures to monitor
 > and challenge were found in 31. ([NTSB SS-94/01](https://www.ntsb.gov/safety/safety-studies/Documents/SS9401.pdf))
 
-**Status (3 Nov 2026): work in progress, built during the Meta AI Developer Hackathon.**
-Numbers below are from single runs unless stated; the evaluation section says what each was
-measured against.
+**See it without installing anything:** the overview and flight-test report, and every recording
+with its cockpit frames, transcripts, callouts and the simulator's truth on one timeline, are a
+static site built from this repository (`uv run python cli.py debrief`, then open `site/index.html`).
+
+**Try it in three commands** — no simulator, GPU or API key:
+
+```bash
+git clone <this repository> && cd crosscheck
+uv run python cli.py replay --all      # every recording through the same ledger, rules and scorer
+uv run python cli.py debrief           # then open site/index.html
+```
+
+**Status (3 Nov 2026):** built during the Meta AI Developer Hackathon. Not certified, not for
+operational use. The evaluation section says what each number was measured against.
 
 ## What it catches
 
@@ -73,13 +87,7 @@ scenario with the values typed in (no API key).
 
 ## How it works
 
-```
-panel camera ─ panel reader ─┐
-                             ├─► ledger of said / set / doing facts ─► rules ─► callout (MMS-TTS)
-crew + ATC audio ─ speech ───┘                                          │
-                                                                        └─► Muse model decides in non-standard cases
-X-Plane truth (10 Hz) ─────────────────────────────────────────────────► evaluator only
-```
+![How Crosscheck works: three inputs, Meta models, one ledger of said, set and doing facts, deterministic rules, a spoken callout; the simulator's data only scores it](docs/how-it-works.svg)
 
 - **It never reads the aircraft's data.** It only sees and hears, like a human monitoring pilot.
   The simulator's data is used only to score it.
@@ -91,16 +99,24 @@ X-Plane truth (10 Hz) ───────────────────�
 
 ## Meta models
 
+Ten Meta models are used; each has one job, and the state column says what was measured. Muse
+Spark, SAM 3.1 and Muse Wonder cross-check the others: none of them is trusted on its own word.
+
 | Model | Job | State |
 | --- | --- | --- |
-| Muse Glimmer 30B (open weights, on the Mac) | Decisions on board with no network; clearance extraction | Working: decisions in 2.5 s; extraction 7/7 on clean text |
-| Muse Spark | Reading the panel (any OS); the debrief summary; decisions through the API | Panel reader working and more accurate than the on-device one (below); live in all four scenarios; in time for the autothrottle callout in 6/6 fresh runs since the trend rule (tight: 0.3–2.7 s to spare). Writes a 2–4 sentence summary of each recording from its event log; every number is checked against the log (all verified). Decisions not yet wired in |
-| SAM 3.1 | Locating each display for calibration | Key works; not yet wired in |
-| Muse Voice Transcribe | Crew and ATC speech, one channel each; a person on the Mac's microphone | Live in every scenario with speech; 14/14 values right over the 15-minute flight; radio set scored (below); live microphone streams while the person speaks |
-| SAM 3D Body | Pilot watch: body pose from the pilot camera | Working on a Modal T4, ~2 s a frame warm (29 s cold start); posture test 8/8 on clean held-out images; live in the pilot-watch scenario |
-| Muse Image | Generating the pilot-camera test images (and edits of each) | Working, ~$0.01 an image; the content filter refused a "passed out" prompt, and some edits at random (a retry worked) |
-| SAM Audio | Separating overlapping speakers | Runs on Modal (T4); cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
-| MMS-TTS, MMS ASR | Crosscheck's voice; interim speech baseline | Working |
+| Muse Voice Transcribe | Crew and ATC speech, one channel each; a person on the Mac's microphone | Live in every scenario with speech; 14/14 values right over the 15-minute flight; radio set scored (below); the microphone streams while the person speaks |
+| Muse Spark | Reads the flight displays and the analog flap gauge from camera frames; a second reader for radio lines code cannot parse; one sentence under each callout; the debrief summary | Panel: altitude within 20 ft on 64/67 frames (on-device 56/67); in time for the autothrottle callout in 6/6 fresh runs. Speech: on the radio set's 168 Voice Transcribe transcripts, values right went from 30 to 35 of 48 with 0 wrong; it recovered every "white level two and four zero" the parser could not read (`eval/audio/speech_fallback.py`). Each answer is guarded: the value must be in the transcript, and an altitude must name our callsign. Callout sentences and summaries: every number is checked against the facts given |
+| Muse Wonder | Watches the pilot-camera recording after each run and judges it on its own, without SAM 3D Body's poses or Crosscheck's alerts | WONDER_RESULT |
+| SAM 3.1 | Pre-flight camera check: the flight displays must be where the readers expect; finds the captain for SAM 3D Body | Displays found within IoU 0.93–0.94 of the calibration on recorded frames; a run whose camera check fails does not start. Pilot found in all 24 labelled images; with its boxes the posture check is right on 23/24 (24/24 with hand-drawn boxes; the miss is a checklist held low in the lap) |
+| SAM 3D Body | Pilot watch: 3D body pose on every pilot-camera frame | Modal T4, ~2 s a frame warm; posture right on 24/24 labelled images; live on generated video in the pilot-watch scenario |
+| Muse Image | The synthetic pilots the pilot camera is tested on, and the halfway poses the video is anchored on | ~$0.01 an image; the content filter refused a "passed out" prompt, and some edits at random (a retry worked) |
+| Muse Glimmer 30B (open weights, on the Mac) | Decisions on board with no network; clearance extraction | Decisions in 2.5 s; extraction 7/7 on clean text (an earlier stage, not in the live loop) |
+| SAM Audio | Separating overlapping speakers | Cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
+| MMS-TTS, MMS ASR | Crosscheck's voice; the first speech baseline | Working |
+
+The pilot-camera footage is animated with LTX-2.5 (Lightricks, open weights, run locally) from
+the Muse Image photos, anchored on them at the start, halfway and end of each movement
+(`eval/pilot_watch/make_video.py`). It is test material, labelled as generated wherever it is shown.
 
 ## See it
 

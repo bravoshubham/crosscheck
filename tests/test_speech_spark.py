@@ -1,0 +1,32 @@
+from senses.speech_spark import guarded
+
+OURS = {"for_us": True}
+
+
+def kinds(facts):
+    return [(f.key, f.value) for f in facts]
+
+
+def test_a_mangled_readback_is_kept_when_the_transcript_holds_the_digits():
+    # radio set, jet noise 0 dB: "flight level two four zero" came back as "white level two and four zero"
+    text = "One, white level two and four zero Alaska four two one"
+    assert kinds(guarded({**OURS, "kind": "readback", "value": 24000}, text, "pm", 0, "421")) == [("readback.altitude", 24000)]
+
+
+def test_a_value_the_transcript_does_not_state_is_dropped():
+    assert guarded({**OURS, "kind": "readback", "value": 25000}, "One, white level two and four zero Alaska four two one", "pm", 0, "421") == []
+
+
+def test_another_aircrafts_clearance_is_not_ours():
+    text = "Cessna three four five Charlie Papa maintain three thousand five hundred"
+    assert guarded({**OURS, "kind": "clearance", "value": 3500}, text, "atc", 0, "421") == []
+
+
+def test_a_bare_number_from_the_crew_is_not_a_flap_call():
+    assert guarded({**OURS, "kind": "flaps", "value": 15}, "15.", "pm", 0, "421") == []
+    assert kinds(guarded({**OURS, "kind": "flaps", "value": 15}, "vats 15.", "pm", 0, "421")) == [("callout.flaps", 15)]
+
+
+def test_the_channel_decides_clearance_or_readback():
+    text = "Alaska four two one descend and maintain one one thousand"
+    assert guarded({**OURS, "kind": "readback", "value": 11000}, text, "atc", 0, "421") == []

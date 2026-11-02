@@ -14,7 +14,9 @@
     }
    ],
    "seconds": 93,
-   "false_callouts_before_clearance": []
+   "false_callouts_before_clearance": [],
+   "aircraft_passed_cleared_s_after_set": 26.1,
+   "panel_readable": 1.0
   },
   {
    "run": 1,
@@ -26,7 +28,9 @@
     }
    ],
    "seconds": 98,
-   "false_callouts_before_clearance": []
+   "false_callouts_before_clearance": [],
+   "aircraft_passed_cleared_s_after_set": 26.6,
+   "panel_readable": 0.98
   },
   {
    "run": 2,
@@ -38,7 +42,9 @@
     }
    ],
    "seconds": 98,
-   "false_callouts_before_clearance": []
+   "false_callouts_before_clearance": [],
+   "aircraft_passed_cleared_s_after_set": 26.7,
+   "panel_readable": 1.0
   }
  ]
 }

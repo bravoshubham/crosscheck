@@ -5,34 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Crosscheck Debrief</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=B612:wght@400;700&family=B612+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0a0d11; --panel: #11161d; --panel-2: #161c25; --line: #232c38;
   --text: #e7ecf2; --muted: #8995a3; --faint: #7f8a97;
   --said: #79b8ff; --set: #e46bf0; --doing: #f1f4f7; --callout: #ff5c5c; --ok: #4fd18b; --truth: #8b96a3;
-  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "B612", "Helvetica Neue", Arial, sans-serif;  /* the typeface Airbus commissioned for cockpit displays */
+  --mono: "B612", "Helvetica Neue", Arial, sans-serif;  /* values: B612 with tabular figures (the mono cut spaces punctuation) */
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--sans); }
+html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--sans); font-variant-numeric: tabular-nums; }
 a { color: var(--said); }
 .wrap { max-width: 1320px; margin: 0 auto; padding: 24px 24px 64px; }
 header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
 .brand { font-weight: 600; font-size: 22px; letter-spacing: .02em; }
-.brand span { color: var(--muted); font-weight: 400; }
+.brand { color: var(--text); text-decoration: none; }
+.brand-sub { color: var(--muted); font-size: 22px; }
+.back { margin-left: auto; color: var(--muted); font-size: 14px; text-decoration: none; }
+.back:hover { color: var(--text); }
 .lede { color: var(--muted); max-width: 860px; margin: 0 0 20px; }
 .lede b { color: var(--text); font-weight: 500; }
 .k-said { color: var(--said); } .k-set { color: var(--set); } .k-doing { color: var(--doing); } .k-call { color: var(--callout); }
 
-.tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 18px; }
-.tab { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
-  color: var(--text); font: inherit; cursor: pointer; transition: border-color .15s, background .15s; }
-.tab:hover { border-color: #33404f; }
+.tabs { display: flex; flex-wrap: wrap; gap: 14px 30px; margin: 4px 0 26px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.grp { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.grp > span { color: var(--muted); font-size: 13px; margin-right: 4px; }
+.tab { background: none; border: 1px solid transparent; border-radius: 6px; padding: 5px 10px; color: var(--text);
+  font: 14px var(--sans); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.tab:hover { border-color: var(--line); }
 .tab[aria-selected="true"] { border-color: var(--text); background: var(--panel-2); }
-.tab .t { font-weight: 600; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-.tab .d { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.tab .ok { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+.tab .ok.no { background: none; border: 1.5px solid var(--callout); }
+.rechead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
+.rechead h1 { font-size: 24px; margin: 0; font-weight: 700; }
+.recblurb { color: var(--muted); margin: 0 0 16px; max-width: 80ch; }
 .readers { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
 .readers .lbl { color: var(--muted); font-size: 13px; margin-right: 4px; }
 .seg { background: var(--panel); border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 5px 12px;
@@ -47,7 +55,9 @@ header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margi
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
 .viewer { overflow: hidden; }
 .frame { position: relative; aspect-ratio: 1940 / 970; background: #000; }
-.frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.frame img, .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.frame .gen { position: absolute; right: 10px; bottom: 10px; font-size: 11px; color: rgba(231,236,242,.75);
+  background: rgba(10,13,17,.6); padding: 2px 7px; border-radius: 4px; }
 .frame .nofr { position: absolute; inset: 0; display: grid; place-items: center; color: var(--faint); }
 .caption { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); max-width: 92%;
   background: rgba(10,13,17,.88); border: 1px solid var(--callout); color: var(--text); border-radius: 8px;
@@ -81,6 +91,8 @@ label.mute { color: var(--muted); font-size: 13px; display: flex; gap: 6px; alig
 .verdict.card { border-color: var(--line); }
 .verdict.alert { border-color: var(--callout); }
 .verdict .big { font-family: var(--sans); font-size: 17px; font-weight: 600; }
+.verdict .explain { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 14px; color: var(--text); }
+.verdict .explain span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 2px; }
 
 .timeline { margin-top: 14px; padding: 12px 14px 8px; }
 .timeline svg { width: 100%; display: block; cursor: crosshair; touch-action: none; user-select: none; }
@@ -95,6 +107,10 @@ label.mute { color: var(--muted); font-size: 13px; display: flex; gap: 6px; alig
 .note { color: var(--muted); font-size: 13px; margin-top: 18px; max-width: 900px; }
 code { font-family: var(--mono); font-size: .92em; color: var(--text); }
 
+body.film .transport, body.film .readers, body.film .note, body.film header .back, body.film .tabs { display: none !important; }
+body.film .wrap { padding-top: 22px; }
+body.film header { margin-bottom: 14px; }
+body.film .stage { align-items: start; }
 @media (max-width: 900px) {
   .stage { grid-template-columns: 1fr; }
   .result { grid-template-columns: 1fr; }
@@ -106,19 +122,23 @@ code { font-family: var(--mono); font-size: .92em; color: var(--text); }
 </head>
 <body>
 <div class="wrap">
-  <header><div class="brand">Crosscheck <span>· Debrief</span></div></header>
-  <p class="lede">Crosscheck watches the pilots the way a monitoring pilot does: it hears what was
+  <header><a class="brand" href="./">Crosscheck</a><span class="brand-sub">Recordings</span><a class="back" href="./#report">Test report</a></header>
+  <p class="lede" hidden>Crosscheck watches the pilots the way a monitoring pilot does: it hears what was
     <b class="k-said">said</b>, reads what was <b class="k-set">set</b> on the panel through a camera, and watches
     what the aircraft is <b class="k-doing">doing</b> — and speaks up when they disagree. Each run below was flown in
     X-Plane 12 and recorded; this page replays it.</p>
 
   <div class="readers" id="readers" role="radiogroup" aria-label="Panel reader"></div>
-  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <nav class="tabs" role="tablist" id="tabs" aria-label="Recordings"></nav>
+  <div class="rechead"><h1 id="recTitle"></h1><span class="badge" id="recBadge"></span></div>
+  <p class="recblurb" id="recBlurb"></p>
 
   <section class="stage">
     <div class="card viewer">
       <div class="frame" id="frame">
         <img id="img" hidden alt="Cockpit displays as Crosscheck's camera saw them">
+        <video id="vid" hidden muted playsinline preload="auto" aria-label="The pilot camera, as Crosscheck saw it"></video>
+        <div class="gen" id="gen" hidden>Generated footage (LTX-2.5 from Muse Image photos)</div>
         <div class="nofr" id="nofr" hidden>No frame</div>
         <div class="radio" id="radio"><div class="who" id="radioWho"></div><div id="radioText"></div></div>
         <div class="caption" id="caption" role="status" aria-live="polite"><span class="dot"></span><span id="captionText"></span></div>
@@ -160,6 +180,7 @@ code { font-family: var(--mono); font-size: .92em; color: var(--text); }
 const D = window.DEBRIEF || [];
 const $ = id => document.getElementById(id);
 const fmtAlt = v => v == null ? "—" : Math.round(v).toLocaleString("en-US") + " ft";
+const s1 = v => (Math.round(v * 10) / 10).toFixed(1);
 const fmtKt = v => v == null ? "—" : Math.round(v) + " kt";
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout", "pilot.voice": "captain"};
@@ -200,10 +221,17 @@ function renderTabs() {
     if (j >= 0) select(j);
   });
   const shown = D.map((r, i) => [r, i]).filter(([r]) => isSpark(r) === spark);
-  $("tabs").innerHTML = shown.map(([r, i]) => `
-    <button class="tab" role="tab" data-i="${i}" aria-selected="${r === rec}">
-      <div class="t">${esc(r.title.replace(" · Spark reader", ""))} <span class="badge ${r.result.pass ? "pass" : "fail"}">${r.result.pass ? "PASS" : "FAIL"}</span></div>
-      <div class="d">${esc(r.blurb)}</div></button>`).join("");
+  const GROUPS = [["altitude", "Altitude"], ["autothrottle_hold", "Autothrottle"], ["flaps", "Flaps"], ["pilot_watch", "Pilot watch"], ["nominal", "False-alarm test"]];
+  const SHORT = t => t.replace(" · Spark reader", "").replace(/^(Flaps|Pilot)[:]? /, "").replace(/^\w/, c => c.toUpperCase());
+  $("tabs").innerHTML = GROUPS.map(([k, label]) => {
+    const items = shown.filter(([r]) => r.kind === k);
+    return items.length ? `<div class="grp"><span>${label}</span>${items.map(([r, i]) => `
+      <button class="tab" role="tab" data-i="${i}" aria-selected="${r === rec}" title="${esc(r.blurb)}">
+        <i class="ok${r.result.pass ? "" : " no"}" aria-label="${r.result.pass ? "pass" : "fail"}"></i>${esc(SHORT(r.title))}</button>`).join("")}</div>` : "";
+  }).join("");
+  $("recTitle").textContent = rec.title.replace(" · Spark reader", "");
+  $("recBadge").className = "badge " + (rec.result.pass ? "pass" : "fail"); $("recBadge").textContent = rec.result.pass ? "PASS" : "FAIL";
+  $("recBlurb").textContent = rec.blurb;
   $("tabs").querySelectorAll(".tab").forEach(b => b.onclick = () => select(+b.dataset.i));
 }
 
@@ -213,6 +241,9 @@ function select(i) {
   const fl = rec.kind === "flaps", pw = rec.kind === "pilot_watch";
   $("setSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "not in the camera's view" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
   $("doingSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "flap gauge, read by Muse Spark" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
+  const v = $("vid"); v.pause();
+  if (rec.video) { if (v.getAttribute("src") !== rec.video) v.src = rec.video; v.currentTime = 0; }
+  v.hidden = !rec.video; $("gen").hidden = !rec.video;
   renderTabs(); renderLegend(); renderResult(); drawTimeline(); update();
   rec.readings.forEach(r => { if (r.frame && !preload.has(r.frame)) { const im = new Image(); im.src = r.frame; preload.set(r.frame, im); } });
   try { localStorage.setItem("debrief.tab", rec.id); } catch (e) {}
@@ -222,7 +253,11 @@ function select(i) {
 function update() {
   const r = last(rec.readings, t);
   const fr = r || rec.readings[0];  // before the first reading, show the first frame
-  if (fr && fr.frame) { if ($("img").getAttribute("src") !== fr.frame) $("img").src = fr.frame; $("img").hidden = false; $("nofr").hidden = true; }
+  if (rec.video) {  // moving footage: keep the video on the timeline's clock
+    const v = $("vid"); $("img").hidden = true; $("nofr").hidden = true;
+    if (playing) { v.playbackRate = rate; if (v.paused) v.play().catch(() => {}); if (Math.abs(v.currentTime - t) > 0.3) v.currentTime = t; }
+    else { if (!v.paused) v.pause(); if (Math.abs(v.currentTime - t) > 0.04) v.currentTime = t; }
+  } else if (fr && fr.frame) { if ($("img").getAttribute("src") !== fr.frame) $("img").src = fr.frame; $("img").hidden = false; $("nofr").hidden = true; }
   else { $("img").hidden = true; $("nofr").hidden = false; }
   $("clock").textContent = `${t.toFixed(1)} s / ${rec.duration.toFixed(0)} s`;
   const tr = nearestTruth(t) || {};
@@ -275,7 +310,8 @@ function update() {
   else $("caption").classList.remove("on");
   $("verdictCard").classList.toggle("alert", !!c);
   $("nowVerdict").innerHTML = c
-    ? `<div class="big k-call">“${esc(c.text)}”</div><div class="sub">${esc(ruleText(c))}</div>`
+    ? `<div class="big k-call">“${esc(c.text)}”</div><div class="sub">${esc(ruleText(c))}</div>` +
+      (c.explain && t >= c.explain_t ? `<div class="explain"><span>Muse Spark, ${s1(c.explain_t - c.t)} s later</span>${esc(c.explain)}</div>` : "")
     : `<div class="big" style="color:var(--ok)">Monitoring</div><div class="sub">Said, set and doing agree${rec.callouts.length ? " so far" : ""}.</div>`;
   drawPlayhead();
 }
@@ -296,10 +332,11 @@ function renderResult() {
   const r = rec.result, m = rec.meta;
   let what = [], how = [];
   if (rec.kind === "pilot_watch") {
-    what.push(`${esc(rec.blurb)} Images generated with Muse Image; posture from SAM 3D Body on every frame.`);
+    what.push(`${esc(rec.blurb)} ${rec.video ? "Generated footage: LTX-2.5 animating Muse Image photos; SAM 3.1 finds the pilot, SAM 3D Body measures the posture on every frame." : "Images generated with Muse Image; posture from SAM 3D Body on every frame."}`);
     how.push(r.callouts.length ? r.callouts.map(c => `“${c.text}” ${c.s_after_change} s after the change`).join("; ") : "No callout — correct, the posture stayed normal.");
     if (r.heard.length) how.push(`The captain's answer, as heard: “${esc(r.heard[0])}”.`);
     how.push(`False callouts before the change: ${r.false_callouts_before_change.length}.`);
+    if (rec.review) how.push(`<b>Second opinion, Muse Wonder</b> (watched the recording on its own, without the poses): ${esc(rec.review.state)}${rec.review.from_s != null ? " from about " + rec.review.from_s + " s" : ""}, ${rec.review.agrees_with_truth ? "agreeing with the ground truth" : "DISAGREEING with the ground truth"}. “${esc(rec.review.evidence)}”`);
   } else if (rec.kind === "flaps") {
     what.push(`“Flaps ${fmtFlaps(r.called)}” called; the lever ${r.selected == null ? "is not moved" : "goes to " + fmtFlaps(r.selected)}.`);
     how.push(r.callouts.length ? r.callouts.map(c => `“${c.text}” ${c.s_after_call} s after the call`).join("; ") : "No callout — correct, the flaps reached the setting called.");
@@ -370,14 +407,14 @@ function drawTimeline() {
   LANES.forEach(l => {
     s += `<rect x="${PADL}" y="${l.y}" width="${W - PADL - PADR}" height="${l.h}" fill="#0d1117" rx="4"/>`;
     const col = {said: "var(--said)", set: "var(--set)", doing: "var(--doing)", call: "var(--callout)"}[l.id];
-    s += `<text x="${PADL - 10}" y="${l.y + l.h / 2 + 4}" text-anchor="end" fill="${col}" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">${l.label}</text>`;
+    s += `<text x="${PADL - 10}" y="${l.y + l.h / 2 + 4}" text-anchor="end" fill="${col}" font-family="B612, sans-serif" font-size="11" letter-spacing="1">${l.label}</text>`;
   });
   // axis
   const step = rec.duration > 300 ? 60 : 10;  // the 15-minute flight: a tick a minute
   for (let sec = 0; sec <= rec.duration; sec += step) {
     const x = xOf(sec);
     s += `<line x1="${x}" x2="${x}" y1="8" y2="${H - 18}" stroke="#1b232d"/>`;
-    s += `<text x="${x}" y="${H - 4}" text-anchor="middle" fill="var(--faint)" font-size="11" font-family="IBM Plex Mono, monospace">${step === 60 ? sec / 60 + "m" : sec + "s"}</text>`;
+    s += `<text x="${x}" y="${H - 4}" text-anchor="middle" fill="var(--faint)" font-size="11" font-family="B612, sans-serif">${step === 60 ? sec / 60 + "m" : sec + "s"}</text>`;
   }
   // marks (fault, MCP set)
   rec.marks.forEach(m => {
@@ -415,7 +452,7 @@ function drawTimeline() {
   };
   const ticks = (l, lo, hi, vals, fmt) => vals.map(v => {
     const yy = l.y + l.h - 6 - (v - lo) / (hi - lo) * (l.h - 12);
-    return `<text x="${W - PADR - 4}" y="${yy - 3}" text-anchor="end" fill="var(--faint)" font-size="10" font-family="IBM Plex Mono, monospace">${fmt(v)}</text>
+    return `<text x="${W - PADR - 4}" y="${yy - 3}" text-anchor="end" fill="var(--faint)" font-size="10" font-family="B612, sans-serif">${fmt(v)}</text>
             <line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="#1b232d" stroke-dasharray="2 4"/>`;
   }).join("");
   const R = rec.readings, T = rec.truth;
@@ -464,7 +501,7 @@ function drawTimeline() {
     segs.forEach((sg, i) => { const nx = segs[i + 1]; const x1 = xOf(sg.t1), x2 = xOf(nx ? nx.t1 : sg.t2);
       const blank = sg.m === "blank";
       s += `<rect x="${x1}" y="${lset.y + 12}" width="${Math.max(2, x2 - x1)}" height="22" rx="3" fill="${blank ? "rgba(255,92,92,.14)" : "rgba(228,107,240,.16)"}" stroke="${blank ? "var(--callout)" : "var(--set)"}"/>`;
-      if (x2 - x1 > 60) s += `<text x="${x1 + 8}" y="${lset.y + 27}" fill="${blank ? "var(--callout)" : "var(--set)"}" font-size="12" font-family="IBM Plex Mono, monospace">${esc(sg.m)}</text>`; });
+      if (x2 - x1 > 60) s += `<text x="${x1 + 8}" y="${lset.y + 27}" fill="${blank ? "var(--callout)" : "var(--set)"}" font-size="12" font-family="B612, sans-serif">${esc(sg.m)}</text>`; });
     const vals = T.map(r => r.ias).filter(v => v != null).sort((a, b) => a - b);
     const q = p => vals[Math.floor(p * (vals.length - 1))];
     const tgt = rec.meta.target_kt;
@@ -505,7 +542,7 @@ function drawPlayhead() {
 
 // ---------- playback ----------
 function stopAudio() { audios.forEach(a => a.pause()); audios = []; }
-function stop() { playing = false; $("play").textContent = "Play"; $("play").setAttribute("aria-label", "Play"); stopAudio(); }
+function stop() { playing = false; $("play").textContent = "Play"; $("play").setAttribute("aria-label", "Play"); stopAudio(); $("vid").pause(); }
 function tick(now) {
   if (!playing) return;
   const dt = (now - lastWall) / 1000; lastWall = now;
@@ -542,6 +579,25 @@ else {
   try { const id = new URLSearchParams(location.search).get("s") || localStorage.getItem("debrief.tab"); const i = D.findIndex(r => r.id === id); if (i >= 0) start = i; } catch (e) {}
   select(start);
 }
+
+// ---------- film mode: debrief/film.py drives the page frame by frame ----------
+// ?film=1 hides the controls; window.film.seek(t) draws the state at t and resolves once the
+// pilot-camera video (if any) shows that exact frame, so a screenshot is never a frame behind.
+if (new URLSearchParams(location.search).has("film")) document.body.classList.add("film");
+window.film = {
+  select: id => { const i = D.findIndex(r => r.id === id); if (i >= 0) select(i); return !!rec; },
+  duration: () => rec.duration,
+  seek: t1 => new Promise(done => {
+    t = Math.max(0, Math.min(rec.duration, t1)); playing = false; update(); drawPlayhead();
+    const v = $("vid");
+    if (!rec.video || v.readyState < 1) return done(true);
+    const ready = () => requestAnimationFrame(() => requestAnimationFrame(() => done(true)));
+    if (v.seeking) return v.addEventListener("seeked", ready, {once: true});  // update() already asked for t
+    if (Math.abs(v.currentTime - t) < 0.001) return ready();
+    v.addEventListener("seeked", ready, {once: true});
+    v.currentTime = t;
+  }),
+};
 </script>
 </body>
 </html>

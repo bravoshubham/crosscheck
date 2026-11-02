@@ -14,7 +14,9 @@
     }
    ],
    "seconds": 79,
-   "false_callouts_before_call": []
+   "false_callouts_before_call": [],
+   "flaps_settled_s_after_call": 8.9,
+   "panel_readable": 1.0
   },
   {
    "run": 1,
@@ -26,7 +28,9 @@
     }
    ],
    "seconds": 81,
-   "false_callouts_before_call": []
+   "false_callouts_before_call": [],
+   "flaps_settled_s_after_call": 9.0,
+   "panel_readable": 0.96
   },
   {
    "run": 2,
@@ -38,7 +42,9 @@
     }
    ],
    "seconds": 80,
-   "false_callouts_before_call": []
+   "false_callouts_before_call": [],
+   "flaps_settled_s_after_call": 8.9,
+   "panel_readable": 1.0
   }
  ]
 }

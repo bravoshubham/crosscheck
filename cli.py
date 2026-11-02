@@ -58,21 +58,38 @@ def main() -> int:
     rp.add_argument("--reader", choices=["apple", "spark"], default="apple",
                     help="with --recompute: apple (macOS, on-device) or spark (Muse Spark, any OS, API key)")
     sub.add_parser("debrief", help="build the debrief viewer (site/index.html) from replay/")
+    rv = sub.add_parser("review", help="Muse Wonder's independent review of pilot-camera recordings (review.json)")
+    rv.add_argument("dirs", nargs="*", type=pathlib.Path)
     sm = sub.add_parser("summary", help="Muse Spark debrief summary per recording (cached in summary.json)")
     sm.add_argument("dirs", nargs="*", type=pathlib.Path)
     sm.add_argument("--force", action="store_true", help="rewrite cached summaries")
+    fm = sub.add_parser("film", help="film the debrief pages with narration (site/crosscheck_film.mp4; run debrief first)")
+    fm.add_argument("--repo", help="repository address shown on the closing card")
     sub.add_parser("video", help="render a demo video from the debrief data (run debrief first)")
+    dm = sub.add_parser("demo", help="present live: tablet + a scenario with your voice, or re-enact a recording (docs/DEMO.md)")
+    dm.add_argument("what", nargs="*", help="altitude | flaps | pilot | replay <recording>")
     lv = sub.add_parser("live", help="tablet display of the scenario being recorded")
     lv.add_argument("--port", type=int, default=8770)
     args = ap.parse_args()
+    if args.cmd == "film":
+        from debrief.film import build as film
+        print("wrote", film(args.repo))
+        return 0
     if args.cmd == "video":
         from debrief.video import build as build_video
         print("wrote", build_video())
+        return 0
+    if args.cmd == "review":
+        from brain.review import run as review
+        review(args.dirs or sorted(p.parent for p in (ROOT / "replay").glob("pilot_*/meta.json")))
         return 0
     if args.cmd == "summary":
         from brain.summary import run as summarise
         summarise(args.dirs or sorted(p.parent for p in (ROOT / "replay").glob("*/meta.json")), args.force)
         return 0
+    if args.cmd == "demo":
+        from demo import main as demo
+        return demo(args.what)
     if args.cmd == "live":
         from ui.server import serve
         print(f"Crosscheck live display on http://localhost:{args.port}")

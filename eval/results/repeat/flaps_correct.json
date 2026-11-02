@@ -9,21 +9,27 @@
    "pass": true,
    "callouts": null,
    "seconds": 77,
-   "false_callouts_before_call": []
+   "false_callouts_before_call": [],
+   "flaps_settled_s_after_call": 13.2,
+   "panel_readable": 1.0
   },
   {
    "run": 1,
    "pass": true,
    "callouts": null,
    "seconds": 78,
-   "false_callouts_before_call": []
+   "false_callouts_before_call": [],
+   "flaps_settled_s_after_call": 13.2,
+   "panel_readable": 1.0
   },
   {
    "run": 2,
    "pass": true,
    "callouts": null,
    "seconds": 78,
-   "false_callouts_before_call": []
+   "false_callouts_before_call": [],
+   "flaps_settled_s_after_call": 13.8,
+   "panel_readable": 1.0
   }
  ]
 }

@@ -14,3 +14,6 @@ site/
 eval/results/repeat/*/*/
 !eval/audio/radio_set_open/*.wav
 replay/*_webcam/frames/
+!eval/pilot_watch/video/*/*.mp4
+!replay/pilot_*/camera.mp4
+demo_runs/

@@ -1,0 +1,87 @@
+[
+ {
+  "date": "2 Nov",
+  "area": "Flaps",
+  "found": "A correct selection was called wrong while the needle was still travelling to 15.",
+  "fix": "Judge the gauge only once the needle has stopped (five readings over 5 s) and give the crew 5 s to move the lever."
+ },
+ {
+  "date": "2 Nov",
+  "area": "Flaps",
+  "found": "In repeat runs a needle still creeping towards 15 was taken as settled: one false “ten set” in 9 runs.",
+  "fix": "A trend test: the needle must not be moving. 9/9 since.",
+  "evidence": "eval/results/repeat/flaps_*.before_trend_check.json"
+ },
+ {
+  "date": "2 Nov",
+  "area": "Altitude",
+  "found": "With live speech, clearance plus readback take ~12 s, so a correctly set MCP could be flagged before the crew had finished reading back.",
+  "fix": "The grace period starts at the readback."
+ },
+ {
+  "date": "2 Nov",
+  "area": "Pilot watch",
+  "found": "The first hand-height threshold flagged 3 of 6 normal images from three held-out image sets.",
+  "fix": "Re-derived from the first set alone and tested on two sets made afterwards: 8/8 (24/24 over all six)."
+ },
+ {
+  "date": "2 Nov",
+  "area": "Recording",
+  "found": "Two recordings captured another window in front of the simulator.",
+  "fix": "Runs with an unreadable panel or a bright, non-cockpit frame are rejected, not scored."
+ },
+ {
+  "date": "3 Nov",
+  "area": "Autothrottle, Muse Spark",
+  "found": "Spark’s readings arrive 3.5–5 s after the frame is taken, so its callout came after speed was already 10 kt low: 0 of 4 runs in time.",
+  "fix": "Call on the speed trend (where speed will be in 10 s, like the PFD’s trend arrow), with each reading timed at capture and applied the moment it arrives. 6 of 6 fresh runs in time.",
+  "evidence": "eval/results/repeat/autothrottle_hold_spark.before_*.json"
+ },
+ {
+  "date": "3 Nov",
+  "area": "15-minute flight, run 1",
+  "found": "One misread altitude (918 ft while at 6,000) made Crosscheck think it was on final and raise the autothrottle alert.",
+  "fix": "The phase comes from the median of the last three altitude readings.",
+  "evidence": "eval/results/nominal_before_fixes/"
+ },
+ {
+  "date": "3 Nov",
+  "area": "15-minute flight, run 1",
+  "found": "A level-change descent (thrust at idle, the elevator holding speed) was read as “autothrottle not in speed”, twice.",
+  "fix": "No alert while the pitch mode is holding speed.",
+  "evidence": "eval/results/nominal_before_fixes/"
+ },
+ {
+  "date": "3 Nov",
+  "area": "15-minute flight, run 1",
+  "found": "The thrust-mode cell blanked for one frame during a mode change.",
+  "fix": "The thrust and pitch modes must agree over consecutive readings.",
+  "evidence": "eval/results/nominal_before_fixes/"
+ },
+ {
+  "date": "3 Nov",
+  "area": "15-minute flight, run 2",
+  "found": "On-device text recognition missed a plain “MCP SPD” on two frames in a row.",
+  "fix": "Three readings in a row are required.",
+  "evidence": "eval/results/nominal_run2/"
+ },
+ {
+  "date": "3 Nov",
+  "area": "15-minute flight, run 3",
+  "found": "The readback “descend and maintain 4,000 LAS for 421” was dropped (“for” joined the callsign into 4421), and with no readback heard the MCP check fired 1 s before the crew set it.",
+  "fix": "The callsign is also matched in the raw transcript; with no readback heard, the crew gets 15 s.",
+  "evidence": "eval/results/nominal_run3/"
+ },
+ {
+  "date": "3 Nov",
+  "area": "Simulator",
+  "found": "After the X-Plane demo’s 60 minutes the flight controls stop responding while the screen keeps drawing; two runs were invalid.",
+  "fix": "The time-out dialog is recognised and X-Plane is restarted before the next run."
+ },
+ {
+  "date": "3 Nov",
+  "area": "Pilot watch",
+  "found": "A laptop webcam sees only head and chest: neither measure told a slump from reading a checklist.",
+  "fix": "The pilot watch needs a camera that sees the upper body and hands, as on a glareshield mount; it is tested on footage from that angle."
+ }
+]

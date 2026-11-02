@@ -50,6 +50,19 @@ async def truth_logger(xp: XPlane, path: pathlib.Path, stop: asyncio.Event) -> N
                 return
 
 
+def camera_check_or_stop(out) -> dict:
+    """SAM 3.1 must find the primary flight display where the readers expect it, or the run stops:
+    a camera that has moved, or a window in front of the simulator, would make every reading wrong."""
+    from brain.live import capture_screen
+    from senses.panel import CALIBRATION
+    from senses.sam31 import camera_check
+    r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
+    (out / "camera_check.json").write_text(json.dumps(r, indent=1))
+    if not r["ok"]:
+        raise SystemExit(f"camera check failed: SAM 3.1 did not find the PFD where expected ({r['matches']})")
+    return r
+
+
 async def main(speak: bool, reader: str = "apple") -> int:
     name = "autothrottle_hold" + ("_spark" if reader == "spark" else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
@@ -76,8 +89,9 @@ async def main(speak: bool, reader: str = "apple") -> int:
     say = None
     if speak:
         from voice.tts import speak as say
-    cc = Crosscheck(out, speak=say, frames=True, reader=reader, fact_time="captured" if reader == "spark" else "arrival")
+    cc = Crosscheck(out, speak=say, frames=True, reader=reader, fact_time="captured" if reader == "spark" else "arrival", explain=True)
     bring_to_front()  # the panel reader captures the screen
+    cam = camera_check_or_stop(out)  # SAM 3.1 pre-flight check of the panel camera
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(QUIET_S + FAULT_S, t0), daemon=True)
     worker.start()
@@ -99,7 +113,7 @@ async def main(speak: bool, reader: str = "apple") -> int:
     (out / "meta.json").write_text(json.dumps({
         "scenario": name, "scorer": "autothrottle_hold", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "airport": "KPDX 10R",
         "t_start": t0, "t_fault": t_fault, "fact_time": cc.fact_time, "target_kt": TARGET_KT, "quiet_s": QUIET_S, "fault_s": FAULT_S,
-        "speech": "none", "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+        "speech": "none", "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))

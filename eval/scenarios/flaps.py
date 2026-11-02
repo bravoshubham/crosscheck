@@ -35,7 +35,8 @@ from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.scoring import score  # noqa: E402
 from senses.flaps_spark import FLAPS_VIEW  # noqa: E402
 from senses.mic import Mic  # noqa: E402
-from senses.speech import said_facts, transcribe  # noqa: E402
+from senses.speech import transcribe  # noqa: E402
+from senses.speech_spark import read_line  # noqa: E402
 from voice.crew import CREW, SR, say  # noqa: E402
 
 FLIGHT = {
@@ -100,9 +101,16 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
     say_cc = mic.speak if mic else None
     if speak and not mic:
         from voice.tts import speak as say_cc
-    cc = Crosscheck(out, speak=say_cc, frames=True, reader="spark-flaps", frame_box=FRAME_BOX)
+    cc = Crosscheck(out, speak=say_cc, frames=True, reader="spark-flaps", frame_box=FRAME_BOX, explain=True)
     heard, truth_rows = [], []
     bring_to_front()  # the camera captures the screen
+    from brain.live import capture_screen
+    from senses.flaps_spark import FLAP_GAUGE
+    from senses.sam31 import inside_check
+    cam = inside_check(capture_screen(), "gauge", FLAP_GAUGE)  # SAM 3.1 pre-flight check of the camera
+    (out / "camera_check.json").write_text(json.dumps(cam, indent=1))
+    if not cam["ok"]:
+        raise SystemExit(f"camera check failed: SAM 3.1 found no gauge in the flap reader's view ({cam['found']})")
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(RUN_S, t0), daemon=True)
     worker.start()
@@ -128,10 +136,11 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
                 break
             f_audio = f"mic{len(heard)}.wav"
             sf.write(out / f_audio, got["pcm"], SR)
-            facts = [f for f in said_facts(got["text"], "pf", got["t"], "421") if f.key == "callout.flaps" and f.value in DETENTS]
+            facts, spark = await read_line(got["text"], "pf", "421")
+            facts = [f for f in facts if f.key == "callout.flaps" and f.value in DETENTS]
             heard.append({"speaker": "pf", "spoken": None, "audio_file": f_audio, "transcript": got["text"],
                           "audio_s": got["audio_s"], "s_from_start": round(got["t"] - got["t_start"], 2),
-                          "facts": [(f.key, f.value) for f in facts]})
+                          "facts": [(f.key, f.value) for f in facts], "spark": spark})
             cc.event("heard", got["t"], speaker="pf", transcript=got["text"], spoken=None, mic=True)
             t_call = got["t_start"]
             for f in facts:
@@ -147,9 +156,9 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
             play(audio, SR)
         r = await transcribe(audio)
         t = time.time()
-        facts = said_facts(r["text"], "pf", t, "421")
+        facts, spark = await read_line(r["text"], "pf", "421")
         heard.append({"speaker": "pf", "spoken": line, "transcript": r["text"], "audio_s": r["audio_s"],
-                      "s_from_start": round(t - t_call, 2), "facts": [(f.key, f.value) for f in facts]})
+                      "s_from_start": round(t - t_call, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark})
         cc.event("heard", t, speaker="pf", transcript=r["text"], spoken=line)
         for f in facts:
             cc.said(f, transcript=r["text"])
@@ -177,7 +186,7 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
         "panel_reader": "muse-spark-flaps", "view": FLAPS_VIEW,
         "speech": "Muse Voice Transcribe, live: a person on the Mac's microphone, parsed by senses/speech.py" if mic else
                   "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
-        "heard": heard, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+        "heard": heard, "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))

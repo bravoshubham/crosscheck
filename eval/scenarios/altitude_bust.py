@@ -41,7 +41,8 @@ from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.audio.make_radio_set import radio  # noqa: E402
 from eval.scoring import score  # noqa: E402
 from senses.mic import Mic  # noqa: E402
-from senses.speech import said_facts, transcribe  # noqa: E402
+from senses.speech import transcribe  # noqa: E402
+from senses.speech_spark import read_line  # noqa: E402
 
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
 FLIGHT = {
@@ -64,6 +65,19 @@ def play(pcm: np.ndarray, sr: int) -> None:
     path = pathlib.Path(tempfile.mkstemp(suffix=".wav")[1])
     sf.write(path, pcm, sr)
     subprocess.Popen(["afplay", str(path)])
+
+
+def camera_check_or_stop(out) -> dict:
+    """SAM 3.1 must find the primary flight display where the readers expect it, or the run stops:
+    a camera that has moved, or a window in front of the simulator, would make every reading wrong."""
+    from brain.live import capture_screen
+    from senses.panel import CALIBRATION
+    from senses.sam31 import camera_check
+    r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
+    (out / "camera_check.json").write_text(json.dumps(r, indent=1))
+    if not r["ok"]:
+        raise SystemExit(f"camera check failed: SAM 3.1 did not find the PFD where expected ({r['matches']})")
+    return r
 
 
 READBACK_WAIT_S = 12  # --mic: how long the PM has to read back
@@ -108,9 +122,10 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
     say = mic.speak if mic else None
     if speak and not mic:
         from voice.tts import speak as say
-    cc = Crosscheck(out, speak=say, frames=True, reader=reader)
+    cc = Crosscheck(out, speak=say, frames=True, reader=reader, explain=not scripted)
     truth_rows = []
     bring_to_front()  # the panel reader captures the screen
+    cam = camera_check_or_stop(out)  # SAM 3.1 pre-flight check of the panel camera
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(RUN_S, t0), daemon=True)
     worker.start()
@@ -141,9 +156,9 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
         if mic:
             await playing
         t = time.time()
-        facts = said_facts(r["text"], who, t, OWN)
+        facts, spark = await read_line(r["text"], who, OWN)
         heard.append({"speaker": who, "spoken": lines[who], "transcript": r["text"], "audio_s": r["audio_s"],
-                      "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts]})
+                      "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark})
         cc.event("heard", t, speaker=who, transcript=r["text"], spoken=lines[who])
         for f in facts:
             cc.said(f, transcript=r["text"])
@@ -158,10 +173,10 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
             return
         f = f"mic{len(heard)}.wav"
         sf.write(out / f, line["pcm"], 16000)
-        facts = said_facts(line["text"], "pm", line["t"], OWN)
+        facts, spark = await read_line(line["text"], "pm", OWN)
         heard.append({"speaker": "pm", "spoken": None, "audio_file": f, "transcript": line["text"],
                       "audio_s": line["audio_s"], "s_from_start": round(line["t"] - line["t_start"], 2),
-                      "facts": [(x.key, x.value) for x in facts]})
+                      "facts": [(x.key, x.value) for x in facts], "spark": spark})
         cc.event("heard", line["t"], speaker="pm", transcript=line["text"], spoken=None, mic=True)
         for x in facts:
             cc.said(x, transcript=line["text"])
@@ -194,7 +209,7 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
                   "Mac's microphone" if mic else "scripted (said facts from the scenario script)" if scripted else
                   "Muse Voice Transcribe, live (MMS-TTS lines; ATC radio-filtered), parsed by senses/speech.py",
         "heard": heard,
-        "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+        "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))

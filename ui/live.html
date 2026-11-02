@@ -6,19 +6,20 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Crosscheck Live</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=B612:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #07090c; --panel: #0f141a; --line: #222b36; --text: #eef2f6; --muted: #93a0ae; --faint: #7f8a97;
   --said: #79b8ff; --set: #e46bf0; --ok: #4fd18b; --callout: #ff5c5c;
-  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  /* B612: the typeface Airbus commissioned for cockpit displays; tabular figures so values do not jump */
+  --sans: "B612", "Helvetica Neue", Arial, sans-serif; --mono: "B612", "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 16px/1.4 var(--sans); }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 16px/1.4 var(--sans); font-variant-numeric: tabular-nums; }
 body { display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); min-height: 100vh; }
 .top { display: flex; align-items: center; gap: 14px; }
-.brand { font-weight: 600; letter-spacing: .14em; font-size: 14px; }
+.brand { font-weight: 700; font-size: 17px; }
 .scn { color: var(--muted); font-size: 14px; }
 .spacer { flex: 1; }
 .conn { font: 500 12px var(--mono); color: var(--muted); display: flex; align-items: center; gap: 6px; }
@@ -28,6 +29,9 @@ body { display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; padding
 
 .status { border-radius: 14px; padding: 18px 22px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
   background: rgba(79,209,139,.08); border: 1px solid rgba(79,209,139,.45); transition: background .2s, border-color .2s; }
+.explain { margin-top: 10px; max-width: 60ch; }
+.explain span { font-size: 12px; color: var(--muted); }
+.explain p { margin: 2px 0 0; font-size: 17px; line-height: 1.4; color: var(--text); }
 .status .what { font: 600 30px/1.15 var(--sans); color: var(--ok); }
 .status .why { color: var(--muted); margin-top: 4px; font-size: 15px; }
 .status.alert { background: rgba(255,92,92,.12); border-color: var(--callout); }
@@ -69,34 +73,31 @@ body { display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; padding
   .cols { grid-template-columns: 1fr; }
   .status { grid-template-columns: 1fr; }
   .cam { width: 100%; }
-  .status .what { font-size: 24px; }
+  .explain { margin-top: 10px; max-width: 60ch; }
+.explain span { font-size: 12px; color: var(--muted); }
+.explain p { margin: 2px 0 0; font-size: 17px; line-height: 1.4; color: var(--text); }
+.status .what { font-size: 24px; }
   .row .v { font-size: 28px; }
 }
 </style>
 </head>
 <body>
   <div class="top">
-    <span class="brand">CROSSCHECK</span><span class="scn" id="scn">waiting for a run…</span>
+    <span class="brand">Crosscheck</span><span class="scn" id="scn">waiting for a run…</span>
     <span class="spacer"></span><span class="clock" id="clock"></span>
     <span class="conn" id="conn"><i></i><span id="connText">connecting</span></span>
   </div>
 
   <section class="status" id="status" role="status" aria-live="assertive">
-    <div><div class="what" id="what">Monitoring</div><div class="why" id="why">Said, set and doing agree.</div></div>
+    <div><div class="what" id="what">Monitoring</div><div class="why" id="why">Said, set and doing agree.</div>
+      <div class="explain" id="explain" hidden><span>Muse Spark</span><p id="explainText"></p></div></div>
     <div class="cam"><img id="cam" alt="Latest camera frame of the cockpit displays" hidden></div>
   </section>
 
   <section class="cols">
     <div class="col"><div class="lab k-said">SAID</div><div id="said"><div class="empty">Nothing said yet.</div></div></div>
-    <div class="col set"><div class="lab k-set">SET</div>
-      <div class="row"><div class="k">MCP altitude</div><div class="v" id="selAlt">—</div></div>
-      <div class="row"><div class="k">MCP speed</div><div class="v small" id="selSpd">—</div></div>
-      <div class="row"><div class="k">Thrust mode</div><div class="v mode" id="thr">—</div></div></div>
-    <div class="col"><div class="lab">DOING</div>
-      <div class="row"><div class="k">Altitude</div><div class="v" id="alt">—</div></div>
-      <div class="row"><div class="k">Airspeed</div><div class="v small" id="ias">—</div></div>
-      <div class="row"><div class="k">Track</div><div class="v small" id="trk">—</div></div>
-      <div class="row"><div class="k">Flaps (gauge)</div><div class="v small" id="flp">—</div></div></div>
+    <div class="col set"><div class="lab k-set" id="setLab">SET</div><div id="setRows"></div></div>
+    <div class="col"><div class="lab" id="doLab">DOING</div><div id="doRows"></div></div>
   </section>
 
   <section class="log"><ol id="log"></ol></section>
@@ -106,14 +107,35 @@ body { display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; padding
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ft = v => v == null ? "—" : Math.round(v).toLocaleString("en-US");
-const WHO = {atc: "ATC · RADIO", pm: "CREW · INTERCOM", pf: "CREW · INTERCOM"};
-const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout flaps"};
-let scenario = null, t0 = null, lastT = null, active = new Map(), heard = [], facts = [];
+const WHO = {atc: "ATC · RADIO", pm: "CREW · INTERCOM", pf: "CREW · INTERCOM", capt: "CAPTAIN · INTERCOM"};
+const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout flaps", "pilot.voice": "the captain answered"};
+let scenario = null, t0 = null, lastT = null, active = new Map(), heard = [], facts = [], layout = null, explains = new Map();
+// what the Set and Doing columns show, per scenario: [label, field, css class]
+const LAYOUTS = {
+  altitude: {set: ["SET", [["MCP altitude", "selAlt", ""], ["MCP speed", "selSpd", "small"]]], doing: ["DOING", [["Altitude", "alt", ""], ["Airspeed", "ias", "small"], ["Track", "trk", "small"]]]},
+  autothrottle_hold: {set: ["SET", [["MCP speed", "selSpd", ""], ["Thrust mode", "thr", "mode"]]], doing: ["DOING", [["Airspeed", "ias", ""], ["Altitude", "alt", "small"]]]},
+  flaps: {set: ["SET", [["Flaps called", "called", ""], ["Flap lever", "lever", "small"]]], doing: ["DOING", [["Flap gauge", "flp", ""], ["Needle", "clock", "small"]]]},
+  pilot_watch: {set: ["HEAD · SAM 3D Body", [["Neck flexion", "neck", ""], ["Alert above", "neckMax", "small"]]], doing: ["HANDS · SAM 3D Body", [["Height above the hips", "wrists", ""], ["Alert below", "wristMin", "small"]]]},
+};
+LAYOUTS.nominal = LAYOUTS.altitude;
+const RULES = {clearance_vs_set: "MCP against the clearance", readback_vs_clearance: "Readback against the clearance",
+  callout_vs_set: "Flap callout against the gauge", mode_vs_phase: "Autothrottle mode on final", pilot_watch: "Pilot camera"};
+function setLayout(kind) {
+  layout = LAYOUTS[kind] || LAYOUTS.altitude;
+  const rows = r => r.map(([k, id, cls]) => `<div class="row"><div class="k">${k}</div><div class="v ${cls}" id="${id}">—</div></div>`).join("");
+  $("setLab").textContent = layout.set[0]; $("setRows").innerHTML = rows(layout.set[1]);
+  $("doLab").textContent = layout.doing[0]; $("doRows").innerHTML = rows(layout.doing[1]);
+  if (kind === "flaps") $("lever").textContent = "not in the camera's view";
+  if (kind === "pilot_watch") { $("neckMax").textContent = "40°"; $("wristMin").textContent = "0.31"; }
+}
+const put = (id, v) => { const el = $(id); if (el && v != null) el.textContent = v; };
 
 function reset(d) {
-  scenario = d.scenario; t0 = null; active.clear(); heard = []; facts = [];
-  $("scn").textContent = scenario.replace(/_/g, " ");
-  ["selAlt", "selSpd", "thr", "alt", "ias", "trk", "flp"].forEach(id => $(id).textContent = "—");
+  scenario = d.scenario; t0 = null; active.clear(); heard = []; facts = []; explains.clear();
+  const re = scenario.endsWith("_reenacted"), base = scenario.replace(/_reenacted$/, "").replace(/_mic$/, "");
+  const name = base.replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
+  $("scn").textContent = name + (re ? " · re-enacted from the recording" : scenario.endsWith("_mic") ? " · live voice" : "");
+  setLayout((d.meta || {}).scorer);
   $("log").innerHTML = ""; $("cam").hidden = true; renderSaid(); renderStatus();
 }
 const rel = t => t0 == null ? 0 : t - t0;
@@ -128,7 +150,7 @@ function renderSaid() {
   $("said").innerHTML = heard.slice(-3).reverse().map(h => {
     const f = facts.filter(f => Math.abs(f.t - h.t) < 0.05 && f.speaker === h.speaker);
     return `<div class="tx"><div class="who">${WHO[h.speaker] || esc(h.speaker)}</div><div class="q">“${esc(h.transcript.trim())}”</div>
-      ${f.length ? f.map(x => `<div class="f">→ ${KEYS[x.key] || esc(x.key)} ${x.key === "callout.flaps" ? x.value : ft(x.value) + " ft"}</div>`).join("") : `<div class="f" style="color:var(--faint)">no value for us</div>`}</div>`;
+      ${f.length ? f.map(x => `<div class="f">→ ${KEYS[x.key] || esc(x.key)} ${x.key === "callout.flaps" ? x.value : x.key === "pilot.voice" ? "" : ft(x.value) + " ft"}</div>`).join("") : `<div class="f" style="color:var(--faint)">no value for us</div>`}</div>`;
   }).join(`<div style="height:10px"></div>`);
 }
 function renderStatus(fresh) {
@@ -137,30 +159,42 @@ function renderStatus(fresh) {
     const c = [...active.values()].pop();
     s.classList.add("alert"); $("what").textContent = `“${c.callout}”`;
     const v = x => typeof x === "number" && x >= 1000 ? ft(x) + " ft" : String(x).toLowerCase();
-    $("why").textContent = `${c.rule.replace(/_/g, " ")} · expected ${v(c.expected)}, found ${v(c.actual)}`;
+    $("why").textContent = `${RULES[c.rule] || c.rule.replace(/_/g, " ")}: expected ${v(c.expected)}, found ${v(c.actual)}`;
     if (fresh) { s.classList.remove("flash"); void s.offsetWidth; s.classList.add("flash"); }
+    const x = explains.get(c.rule + "/" + c.key);
+    $("explain").hidden = !x; if (x) $("explainText").textContent = x;
   } else {
     s.classList.remove("alert", "flash"); $("what").textContent = "Monitoring"; $("why").textContent = "Said, set and doing agree.";
+    $("explain").hidden = true;
   }
 }
 function onEvent(e) {
   if (t0 == null) t0 = e.t;
   lastT = e.t; $("clock").textContent = rel(e.t).toFixed(0) + " s";
   if (e.kind === "reading") {
-    if (e.selected_altitude != null) $("selAlt").textContent = ft(e.selected_altitude);
-    if (e.selected_speed != null) $("selSpd").textContent = e.selected_speed + " kt";
-    if (e.fma && e.fma.some(Boolean)) { const m = e.fma[0] || "BLANK"; $("thr").textContent = m; $("thr").classList.toggle("blank", m === "BLANK"); }
-    if (e.altitude != null) $("alt").textContent = ft(e.altitude);
-    if (e.ias != null) $("ias").textContent = e.ias + " kt";
-    if (e.track_mag != null) $("trk").textContent = String(Math.round(e.track_mag)).padStart(3, "0") + "°";
-    if (e.flaps != null) $("flp").textContent = e.flaps === 0 ? "UP" : e.flaps;
+    if (e.selected_altitude != null) put("selAlt", ft(e.selected_altitude));
+    if (e.selected_speed != null) put("selSpd", e.selected_speed + " kt");
+    if (e.fma && e.fma.some(Boolean)) { const m = e.fma[0] || "BLANK"; put("thr", m); if ($("thr")) $("thr").classList.toggle("blank", m === "BLANK"); }
+    if (e.altitude != null) put("alt", ft(e.altitude) + " ft");
+    if (e.ias != null) put("ias", e.ias + " kt");
+    if (e.track_mag != null) put("trk", String(Math.round(e.track_mag)).padStart(3, "0") + "°");
+    if (e.flaps != null) put("flp", e.flaps === 0 ? "UP" : "Flaps " + e.flaps);
+    if (e.flaps_clock != null) put("clock", `${(((e.flaps_clock - 1) % 12) + 1).toFixed(1)} o\u2019clock`);
+    if (e.frame) { $("cam").src = `/frame/${scenario}/${e.frame.split("/").pop()}`; $("cam").hidden = false; }
+  } else if (e.kind === "pilot") {  // the opt-in pilot camera: posture from SAM 3D Body
+    put("neck", Math.round(e.neck_flex) + "°"); put("wrists", e.wrists.toFixed(2));
+    if ($("neck")) $("neck").classList.toggle("blank", e.neck_flex > 40);
+    if ($("wrists")) $("wrists").classList.toggle("blank", e.wrists < 0.31);
     if (e.frame) { $("cam").src = `/frame/${scenario}/${e.frame.split("/").pop()}`; $("cam").hidden = false; }
   } else if (e.kind === "heard") {
     heard.push(e); renderSaid(); logLine("heard", e.t, `${esc(WHO[e.speaker] || e.speaker)}: “${esc(e.transcript.trim())}”`);
   } else if (e.kind === "said") {
     facts.push(e); renderSaid();
+    if (e.key === "callout.flaps") put("called", "Flaps " + e.value);
   } else if (e.kind === "callout") {
     active.set(e.rule + "/" + e.key, e); renderStatus(true); logLine("callout", e.t, `“${esc(e.callout)}”`);
+  } else if (e.kind === "explain") {  // Muse Spark's sentence under the callout (brain/explain.py)
+    if (e.text) { explains.set(e.rule + "/" + e.key, e.text); renderStatus(); logLine("explain", e.t, esc(e.text)); }
   } else if (e.kind === "cleared") {
     active.delete(e.rule + "/" + e.key); renderStatus(); logLine("cleared", e.t, esc(e.rule.replace(/_/g, " ")));
   } else if (e.kind === "action") {
