@@ -39,6 +39,16 @@ class XPlane:
     async def start_flight(self, flight: dict) -> None:
         await self._call("POST", "/flight", json={"data": flight})
 
+    async def ensure_running(self) -> None:
+        """Refuse to start a scenario behind a paused sim (the demo's "leaving the demo area"
+        dialog pauses X-Plane and survives loading a new flight; it needs a click on OK)."""
+        if await self.dataref_count() and await self.get("sim/time/paused"):
+            raise XPlaneError("X-Plane is paused, probably by the demo-area dialog: click OK in X-Plane, then rerun")
+
+    async def park(self) -> None:
+        """Pause at the end of a scenario so the aircraft cannot fly out of the demo area afterwards."""
+        await self.command("sim/operation/pause_on")
+
     async def dataref_count(self) -> int:
         return (await self._call("GET", "/datarefs/count")).json()["data"]
 

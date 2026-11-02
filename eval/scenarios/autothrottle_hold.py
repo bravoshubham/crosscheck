@@ -22,8 +22,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from brain.live import Crosscheck  # noqa: E402
 from bridge.xplane import XPlane  # noqa: E402
+from eval.scoring import score  # noqa: E402
 
-OUT = ROOT / "eval" / "results" / "scenarios" / "autothrottle_hold"
+OUT = ROOT / "replay" / "autothrottle_hold"
 TARGET_KT = 145.0
 QUIET_S, FAULT_S = 25, 45
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
@@ -52,6 +53,7 @@ async def truth_logger(xp: XPlane, path: pathlib.Path, stop: asyncio.Event) -> N
 async def main(speak: bool) -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
+    await xp.ensure_running()
     await xp.start_flight(FLIGHT)
     await xp.wait_until_loaded()
     await asyncio.sleep(4)
@@ -72,7 +74,7 @@ async def main(speak: bool) -> int:
     say = None
     if speak:
         from voice.tts import speak as say
-    cc = Crosscheck(OUT / "events.jsonl", speak=say)
+    cc = Crosscheck(OUT, speak=say, frames=True)
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(QUIET_S + FAULT_S, t0), daemon=True)
     worker.start()
@@ -83,35 +85,19 @@ async def main(speak: bool) -> int:
     while worker.is_alive():
         await asyncio.sleep(0.5)
     stop.set()
-    await asyncio.wait_for(logger, 5)
+    logger.cancel()  # it waits on the next update, which never comes if the sim is paused
+    try:
+        await logger
+    except asyncio.CancelledError:
+        pass
+    await xp.park()
     await xp.close()
 
-    truth = [json.loads(l) for l in (OUT / "truth.jsonl").read_text().splitlines()]
-    events = [json.loads(l) for l in (OUT / "events.jsonl").read_text().splitlines()]
-    callouts = [e for e in events if e["kind"] == "callout"]
-    # subscriptions send only changes: carry the last value forward
-    last, rows = {}, []
-    for r in truth:
-        last.update({k: v for k, v in r.items() if v is not None})
-        rows.append(dict(last))
-    sel = next((r["sel"] for r in reversed(rows) if r["t"] <= t_fault and "sel" in r), TARGET_KT)
-    ias = [(r["t"], r["ias"]) for r in rows if "ias" in r]
-    def t_below(margin):
-        return next((t for t, v in ias if t > t_fault and v < sel - margin), None)
-    first = next((c for c in callouts if c["t"] >= t_fault and c["rule"] == "mode_vs_phase"), None)
-    t10 = t_below(10)
-    result = {
-        "selected_speed_truth": round(sel, 1),
-        "false_callouts_before_fault": [c["callout"] for c in callouts if c["t"] < t_fault],
-        "callout": first["callout"] if first else None,
-        "callout_s_after_fault": round(first["t"] - t_fault, 1) if first else None,
-        "truth_below_target_minus_5_s": round(t_below(5) - t_fault, 1) if t_below(5) else None,
-        "truth_below_target_minus_10_s": round(t10 - t_fault, 1) if t10 else None,
-        "readings": sum(e["kind"] == "reading" for e in events),
-        "paused_during_run": any(r.get("paused") for r in truth),
-    }
-    result["pass"] = (not result["false_callouts_before_fault"] and first is not None
-                      and (t10 is None or first["t"] < t10) and not result["paused_during_run"])
+    (OUT / "meta.json").write_text(json.dumps({
+        "scenario": "autothrottle_hold", "scorer": "autothrottle_hold", "aircraft": "B738", "airport": "KPDX 10R",
+        "t_start": t0, "t_fault": t_fault, "target_kt": TARGET_KT, "quiet_s": QUIET_S, "fault_s": FAULT_S,
+        "speech": "none", "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+    result = score(OUT)
     (OUT / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))
     return 0 if result["pass"] else 1

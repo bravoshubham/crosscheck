@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 from brain.ledger import Fact  # noqa: E402
 from brain.live import Crosscheck  # noqa: E402
 from bridge.xplane import XPlane  # noqa: E402
+from eval.scoring import score  # noqa: E402
 
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
 FLIGHT = {
@@ -41,9 +42,10 @@ TRUTH = {"alt": "sim/cockpit2/gauges/indicators/altitude_ft_pilot",
 
 async def main(variant: str, speak: bool) -> int:
     cleared, readback, mcp = VARIANTS[variant]
-    out = ROOT / "eval" / "results" / "scenarios" / f"altitude_{variant}"
+    out = ROOT / "replay" / f"altitude_{variant}"
     out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
+    await xp.ensure_running()
     await xp.start_flight(FLIGHT)
     await xp.wait_until_loaded()
     await asyncio.sleep(4)
@@ -60,7 +62,7 @@ async def main(variant: str, speak: bool) -> int:
     say = None
     if speak:
         from voice.tts import speak as say
-    cc = Crosscheck(out / "events.jsonl", speak=say)
+    cc = Crosscheck(out, speak=say, frames=True)
     truth_rows = []
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(RUN_S, t0), daemon=True)
@@ -76,41 +78,30 @@ async def main(variant: str, speak: bool) -> int:
     sampler = asyncio.create_task(sample_truth())
 
     await at(T_CLEAR)
-    cc.ledger.add(Fact("said", "clearance.altitude", cleared, time.time(), "atc", source="script"))
-    cc.event("script", time.time(), line=f"ATC: climb and maintain {cleared}")
+    cc.said(Fact("said", "clearance.altitude", cleared, time.time(), "atc", source="script"))
     await at(T_READBACK)
-    cc.ledger.add(Fact("said", "readback.altitude", readback, time.time(), "pm", source="script"))
-    cc.event("script", time.time(), line=f"PM readback: {readback}")
+    cc.said(Fact("said", "readback.altitude", readback, time.time(), "pm", source="script"))
     await at(T_SET)
     t_set = time.time()
     await xp.set("sim/cockpit2/autopilot/altitude_dial_ft", float(mcp))
     await xp.command("laminar/B738/autopilot/lvl_chg_press")
-    cc.event("script", t_set, line=f"PF sets MCP {mcp} and climbs")
+    cc.event("action", t_set, line=f"PF sets MCP {mcp} and climbs")
     while worker.is_alive():
         await asyncio.sleep(0.5)
     await sampler
+    await xp.park()
     await xp.close()
 
-    events = [json.loads(l) for l in (out / "events.jsonl").read_text().splitlines()]
-    callouts = [e for e in events if e["kind"] == "callout"]
-    t_clear = t0 + T_CLEAR
-    want = EXPECT[variant]
-    hit = next((c for c in callouts if c["rule"] == want), None) if want else None
-    t_pass = next((r["t"] for r in truth_rows if r["t"] > t_set and r["alt"] > cleared), None)
-    result = {
+    with (out / "truth.jsonl").open("w") as f:
+        for r in truth_rows:
+            f.write(json.dumps(r) + "\n")
+    (out / "meta.json").write_text(json.dumps({
+        "scenario": f"altitude_{variant}", "scorer": "altitude", "aircraft": "B738", "area": "Portland",
         "variant": variant, "cleared": cleared, "readback": readback, "mcp_set": mcp,
-        "false_callouts_before_clearance": [c["callout"] for c in callouts if c["t"] < t_clear],
-        "callouts": [{"s_after_set": round(c["t"] - t_set, 1), "text": c["callout"]} for c in callouts],
-        "aircraft_passed_cleared_s_after_set": round(t_pass - t_set, 1) if t_pass else None,
-        "max_altitude_in_run": round(max(r["alt"] for r in truth_rows)),
-        "mcp_read_from_screen": sorted({e["selected_altitude"] for e in events if e["kind"] == "reading" and e.get("selected_altitude")}),
-        "paused_during_run": any(r["paused"] for r in truth_rows),
-    }
-    if want is None:
-        result["pass"] = not callouts and not result["paused_during_run"]
-    else:
-        result["pass"] = (hit is not None and not result["false_callouts_before_clearance"]
-                          and (t_pass is None or hit["t"] < t_pass) and not result["paused_during_run"])
+        "expect_rule": EXPECT[variant], "t_start": t0, "t_clear": t0 + T_CLEAR, "t_set": t_set,
+        "speech": "scripted (said facts from the scenario script)",
+        "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+    result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))
     return 0 if result["pass"] else 1
