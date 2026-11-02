@@ -21,7 +21,7 @@ import time
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from brain.live import Crosscheck  # noqa: E402
-from bridge.xplane import XPlane  # noqa: E402
+from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.scoring import score  # noqa: E402
 
 OUT = ROOT / "replay" / "autothrottle_hold"
@@ -75,6 +75,7 @@ async def main(speak: bool) -> int:
     if speak:
         from voice.tts import speak as say
     cc = Crosscheck(OUT, speak=say, frames=True)
+    bring_to_front()  # the panel reader captures the screen
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(QUIET_S + FAULT_S, t0), daemon=True)
     worker.start()

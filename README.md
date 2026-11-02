@@ -15,14 +15,19 @@ measured against.
 
 | Scenario | What happens | Crosscheck says | First result |
 | --- | --- | --- | --- |
-| Altitude bust | Cleared to 11,000, MCP set to 12,000 | "Cleared one-one thousand, set one-two thousand." | Called 8.1 s after the mis-set, 17.7 s before the 737 passed 11,000 |
-| Readback error | Cleared 11,000, read back 12,000 | "Readback one-two thousand, cleared one-one thousand." | Called right after the readback |
+| Altitude bust | Cleared to 11,000, MCP set to 12,000 | "Cleared one-one thousand, set one-two thousand." | Called 10.7 s after the mis-set, 15.9 s before the 737 passed 11,000 |
+| Readback error | Cleared 11,000, read back 12,000 | "Readback one-two thousand, cleared one-one thousand." | Called as soon as the readback was transcribed |
 | Correct setting | Cleared and set 11,000 | (silence) | No callout |
 | Autothrottle not in speed on final (the Asiana 214 pattern) | 737 on approach to Portland 10R; autothrottle drops out, speed decays | "Speed. Autothrottle not in speed." | Called 9.9 s after the fault, 3.1 s before speed was 10 kt below target; no false callouts in the 25 s before |
 
-In the altitude scenarios the clearance and readback are supplied by the scenario script; the
-panel side (reading the MCP altitude from the screen) is real. Speech recognition joins when the
-Muse Voice Transcribe path is connected.
+In the altitude scenarios both sides are real. The clearance (radio-filtered) and the readback
+are spoken by a synthetic voice, each streamed on its own channel to Muse Voice Transcribe, and
+only what comes back is parsed into the ledger (`senses/speech.py`); the MCP altitude is read
+from the screen. The final transcript arrives ~1.3 s after each line ends. Recognition is not
+perfect and the design assumes so: the readback came back as "Plan een mensen one two thousand
+Alaska four two one" — the verb is lost but the value and callsign digits survive, and those are
+all Crosscheck takes. A line without our callsign digits is ignored. `--scripted` runs the same
+scenario with the values typed in (no API key).
 
 ## How it works
 
@@ -49,7 +54,7 @@ X-Plane truth (10 Hz) ───────────────────�
 | Muse Glimmer 30B (open weights, on the Mac) | Decisions on board with no network; clearance extraction | Working: decisions in 2.5 s; extraction 7/7 on clean text |
 | Muse Spark | The same decisions through the API; reading panel crops on non-Macs | Key works; not yet wired in |
 | SAM 3.1 | Locating each display for calibration | Key works; not yet wired in |
-| Muse Voice Transcribe | Crew and ATC speech | Working over the realtime websocket; radio set scored (below); not yet in the live loop |
+| Muse Voice Transcribe | Crew and ATC speech, one channel each | Live in the altitude scenarios; radio set scored (below) |
 | SAM Audio | Separating overlapping speakers | Runs on Modal (T4); cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
 | SAM 3D Body | Opt-in pilot watch (slumping, unresponsive) | Weights ready; GPU run pending |
 | MMS-TTS, MMS ASR | Crosscheck's voice; interim speech baseline | Working |
@@ -86,7 +91,8 @@ Tests: `uv run pytest`.
 | X-Plane link | 10.0 Hz truth; autopilot, transponder and failure commands work | Read-back of each write |
 | On-board decisions (Glimmer) | 8/8 correct, median 2.5 s | Hand-labelled flags |
 | Clearance extraction (Glimmer) | Exact text 7/7; noisy recognizer output 4/7 (+5 dB) to 0/7 (−5 dB); 0 wrong values after the guard | Known script of each line |
-| Radio speech, Muse Voice Transcribe (14 lines × clean, +5/0/−5 dB jet or piston noise) | Lines with every number exact: clean 13/13; +5 dB 12/13; 0 dB 10/13; −5 dB 10/13. After SAM Audio: 11, 9, 7. Meta's open MMS ASR: 5, 3, 1. 98 clips cost ≈ $0.02 | Known script of each line (`eval/audio/wer_muse.py`) |
+| Radio speech, Muse Voice Transcribe (14 lines × clean, +5/0/−5 dB jet or piston noise) | Lines with every number exact: clean 13/13; +5 dB 12/13; 0 dB 9/13; −5 dB 10/13. After SAM Audio: 11, 8, 7. Meta's open MMS ASR: 5, 3, 1. 98 clips cost ≈ $0.02 | Known script of each line (`eval/audio/wer_muse.py`) |
+| Altitude facts from those transcripts (`senses/speech.py`) | 0 wrong altitudes into the ledger from 98 transcripts; misses where "flight level" became "white level" or the callsign digits were lost | Known script |
 | Callsign recognition (same set) | "Alaska" missed in 2/7 clean, 5/21 noisy lines ("Oscar", "Alas, for"); the guard drops it rather than misattribute | Known script |
 
 ## Built during the hackathon

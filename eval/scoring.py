@@ -71,6 +71,15 @@ def score_altitude(events: list[dict], truth: list[dict], meta: dict) -> dict:
 SCORERS = {"autothrottle_hold": score_autothrottle, "altitude": score_altitude}
 
 
+MIN_READABLE = 0.5  # below this the panel was not on screen (another window in front): not a valid run
+
+
 def score(rec_dir: pathlib.Path, events_file: str = "events.jsonl") -> dict:
     meta = json.loads((rec_dir / "meta.json").read_text())
-    return SCORERS[meta["scorer"]](load_jsonl(rec_dir / events_file), load_jsonl(rec_dir / "truth.jsonl"), meta)
+    events = load_jsonl(rec_dir / events_file)
+    result = SCORERS[meta["scorer"]](events, load_jsonl(rec_dir / "truth.jsonl"), meta)
+    readings = [e for e in events if e["kind"] == "reading"]
+    readable = sum(e.get("ias") is not None for e in readings) / max(1, len(readings))
+    result["panel_readable"] = round(readable, 2)
+    result["pass"] = result["pass"] and readable >= MIN_READABLE
+    return result

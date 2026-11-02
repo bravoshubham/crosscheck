@@ -99,3 +99,21 @@ def test_one_flickering_reading_does_not_repeat_a_callout(tmp_path):
         cc.observe(PanelReading(selected_altitude=alt), t)
         said += [f.callout for f in cc.decide(t)]
     assert said == ["Cleared one-one thousand, set one-two thousand."]
+
+
+def test_grace_starts_at_the_readback():
+    # live speech timing: clearance heard at 18 s, readback at 25 s, MCP still 9000 until set at 27 s
+    led = Ledger()
+    for t in range(0, 40):
+        led.add(Fact("set", "mcp.altitude", 9000 if t < 27 else 11000, float(t), source="panel"))
+    led.add(Fact("said", "clearance.altitude", 11000, 18.0, "atc"))
+    led.add(Fact("said", "readback.altitude", 11000, 25.0, "pm"))
+    assert not [f for t in range(18, 40) for f in evaluate(led, float(t))]
+    # never set: flagged 8 s after the readback
+    led2 = Ledger()
+    for t in range(0, 40):
+        led2.add(Fact("set", "mcp.altitude", 9000, float(t), source="panel"))
+    led2.add(Fact("said", "clearance.altitude", 11000, 18.0, "atc"))
+    led2.add(Fact("said", "readback.altitude", 11000, 25.0, "pm"))
+    assert not evaluate(led2, 32.0)
+    assert [f.rule for f in evaluate(led2, 33.0)] == ["clearance_vs_set"]

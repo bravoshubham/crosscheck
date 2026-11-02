@@ -6,18 +6,18 @@
  "false_callouts_before_clearance": [],
  "callouts": [
   {
-   "s_after_set": 9.9,
+   "s_after_set": 10.7,
    "text": "Cleared one-one thousand, set one-two thousand."
   }
  ],
- "aircraft_passed_cleared_s_after_set": 25.8,
- "max_altitude_in_run": 12083,
+ "aircraft_passed_cleared_s_after_set": 26.6,
+ "max_altitude_in_run": 12019,
  "mcp_read_from_screen": [
   1200,
   9000,
-  9600,
   12000
  ],
  "paused_during_run": false,
- "pass": true
+ "pass": true,
+ "panel_readable": 0.98
 }

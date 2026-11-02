@@ -8,9 +8,37 @@
  "readback": 11000,
  "mcp_set": 11000,
  "expect_rule": null,
- "t_start": 1793600988.0043259,
- "t_clear": 1793601000.0043259,
- "t_set": 1793601006.005476,
- "speech": "scripted (said facts from the scenario script)",
- "recorded": "2026-11-02 12:00:43 IST"
+ "t_start": 1793614064.445057,
+ "t_clear": 1793614076.445057,
+ "t_set": 1793614090.446184,
+ "speech": "Muse Voice Transcribe, live (MMS-TTS lines; ATC radio-filtered), parsed by senses/speech.py",
+ "heard": [
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one climb and maintain one one thousand",
+   "transcript": "Alaska 421 climb and maintain 11000",
+   "audio_s": 4.88,
+   "s_from_start": 6.33,
+   "facts": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ]
+  },
+  {
+   "speaker": "pm",
+   "spoken": "climb and maintain one one thousand alaska four two one",
+   "transcript": " Fland and maintained one 1000 Alaska 421.",
+   "audio_s": 4.4,
+   "s_from_start": 5.6,
+   "facts": [
+    [
+     "readback.altitude",
+     11000
+    ]
+   ]
+  }
+ ],
+ "recorded": "2026-11-02 15:38:47 IST"
 }

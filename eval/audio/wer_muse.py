@@ -16,83 +16,20 @@ import collections
 import json
 import os
 import pathlib
-import re
 import sys
 
 import jiwer
-import numpy as np
 import soundfile as sf
-import websockets
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
-from brain.speech_guard import SCALE, WORD_DIGITS, spoken_values  # noqa: E402
+from senses.speech import normalise, numbers, transcribe  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SET = ROOT / "eval" / "audio" / "radio_set"
 OUT = ROOT / "eval" / "results" / "day_one"
 CACHE = OUT / "t2_muse_cache.json"
-URL = "wss://api.meta.ai/v1/asr/realtime"
-MODEL = "muse-voice-transcribe-1.0"
-PACKET_S = 0.08
 USD_PER_MIN = 3 / 1000
 PARALLEL = 6
-TEENS = {w: str(10 + i) for i, w in enumerate("ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split())}
-
-
-def normalise(text: str) -> str:
-    """Lowercase, no punctuation, and every spoken number as one value, so "two seven zero",
-    "270" and "two seventy" style differences between reference and recognizer don't count as
-    word errors: "one one thousand" -> 11000, "fifteen" -> 15, "124.35" -> 124 point 35."""
-    t = text.lower().replace("-", " ")
-    t = re.sub(r"\bfl\s*(?=\d)", "flight level ", t)
-    t = re.sub(r"(?<=\d)[.,](?=\d)", lambda m: " point " if m.group() == "." else "", t)
-    out, run = [], []
-    for w in re.findall(r"[a-z]+|\d+", t) + [""]:
-        if w.isdigit() or w in WORD_DIGITS or w in TEENS or (w in SCALE and run):
-            run.append(TEENS.get(w, w))
-            continue
-        if run:
-            out.append(str(max(spoken_values(" ".join(run)))))
-            run = []
-        if w:
-            out.append(w)
-    return " ".join(out)
-
-
-def numbers(text: str) -> list[str]:
-    return [w for w in normalise(text).split() if w.isdigit()]
-
-
-async def transcribe(path: pathlib.Path, key: str) -> dict:
-    x, sr = sf.read(path)
-    assert sr == 16000, sr
-    pcm = (np.clip(x, -1, 1) * 32767).astype("<i2")
-    step = int(sr * PACKET_S)
-    handshake = {"authorization": {"accessToken": key}, "audioEncoding": "PCM_16KHZ", "model": MODEL,
-                 "mode": "PUSH_TO_TALK", "partialMode": "CUMULATIVE", "emitAudioProgress": True}
-    finals, processed_ms = [], 0.0
-    async with websockets.connect(URL, proxy=None) as ws:
-        await ws.send(json.dumps(handshake))
-
-        async def receive():
-            nonlocal processed_ms
-            async for m in ws:
-                e = json.loads(m)
-                processed_ms = max(processed_ms, e.get("audioProcessedMs", 0))
-                if e.get("type") == "error":
-                    raise RuntimeError(f"{path.name}: {e}")
-                if e.get("type") == "transcript" and e.get("final"):
-                    finals.append(e["transcript"])
-
-        rx = asyncio.create_task(receive())
-        for i in range(0, len(pcm), step):
-            await ws.send(pcm[i:i + step].tobytes())
-            await asyncio.sleep(PACKET_S)
-        await ws.send('{"type":"endStream"}')
-        await asyncio.wait_for(rx, 30)
-    return {"text": " ".join(finals), "audio_s": processed_ms / 1000}
-
-
 async def run_all(files: list[pathlib.Path], cache: dict, key: str) -> None:
     sem = asyncio.Semaphore(PARALLEL)
 
@@ -100,7 +37,9 @@ async def run_all(files: list[pathlib.Path], cache: dict, key: str) -> None:
         async with sem:
             for attempt in range(3):
                 try:
-                    cache[p.name] = await transcribe(p, key)
+                    x, sr = sf.read(p)
+                    assert sr == 16000, sr
+                    cache[p.name] = await transcribe(x, key)
                     print(f"  {p.name}: {cache[p.name]['text']}")
                     CACHE.write_text(json.dumps(cache, indent=1))
                     return
@@ -155,7 +94,7 @@ def main() -> int:
                      "muse_sam": cache[sam]["text"]})
     summary = {k: round(jiwer.wer([r for r, _ in v], [h for _, h in v]), 3) for k, v in sorted(groups.items())}
     audio_s = sum(cache[p.name]["audio_s"] for p in files)
-    result = {"asr": MODEL, "normalisation": "lowercase, no punctuation, each spoken number as one value",
+    result = {"asr": "muse-voice-transcribe-1.0", "normalisation": "lowercase, no punctuation, each spoken number as one value",
               "wer": summary,
               "numbers_exact": {k: f"{sum(v)}/{len(v)}" for k, v in sorted(exact.items())},
               "audio_minutes": round(audio_s / 60, 2),

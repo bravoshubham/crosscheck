@@ -6,6 +6,7 @@ the actions a copilot may take. Crosscheck's perception never reads from here.
 import asyncio
 import itertools
 import json
+import subprocess
 import time
 from collections.abc import AsyncIterator
 
@@ -14,6 +15,12 @@ import websockets
 
 BASE = "http://127.0.0.1:8086/api/v3"
 WS = "ws://127.0.0.1:8086/api/v3"
+
+
+def bring_to_front() -> None:
+    """The panel reader captures the screen, so X-Plane must be the window in front."""
+    subprocess.run(["open", "-a", "X-Plane"], check=False)
+    time.sleep(1.0)
 
 
 class XPlaneError(RuntimeError):
@@ -45,6 +52,7 @@ class XPlane:
         survives loading a new flight until someone clicks it."""
         if not await self.dataref_count():
             return
+        bring_to_front()
         if await self.get("sim/time/paused"):
             await self.command("sim/operation/pause_off")
             await asyncio.sleep(1.5)

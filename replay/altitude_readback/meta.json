@@ -8,9 +8,37 @@
  "readback": 12000,
  "mcp_set": 11000,
  "expect_rule": "readback_vs_clearance",
- "t_start": 1793600914.6221519,
- "t_clear": 1793600926.6221519,
- "t_set": 1793600932.623223,
- "speech": "scripted (said facts from the scenario script)",
- "recorded": "2026-11-02 11:59:30 IST"
+ "t_start": 1793613867.872739,
+ "t_clear": 1793613879.872739,
+ "t_set": 1793613893.874073,
+ "speech": "Muse Voice Transcribe, live (MMS-TTS lines; ATC radio-filtered), parsed by senses/speech.py",
+ "heard": [
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one climb and maintain one one thousand",
+   "transcript": "Alaska 421 climb and maintain one one thousand",
+   "audio_s": 4.88,
+   "s_from_start": 6.12,
+   "facts": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ]
+  },
+  {
+   "speaker": "pm",
+   "spoken": "climb and maintain one two thousand alaska four two one",
+   "transcript": " Plan een mensen one two thousand Alaska four two one.",
+   "audio_s": 4.32,
+   "s_from_start": 5.52,
+   "facts": [
+    [
+     "readback.altitude",
+     12000
+    ]
+   ]
+  }
+ ],
+ "recorded": "2026-11-02 15:35:31 IST"
 }

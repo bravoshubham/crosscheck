@@ -59,7 +59,9 @@ def _stable_set(led: Ledger, key: str, now: float, votes: int = 3) -> tuple[obje
 
 def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
     """The MCP altitude differs from the latest cleared altitude for longer than the grace period,
-    timed from when the mismatching value first appeared, not from the latest reading."""
+    timed from when the mismatching value first appeared, not from the latest reading. The crew
+    normally sets the MCP after reading the clearance back, so the grace starts at the readback
+    when there is one (live speech made this visible: clearance plus readback take ~12 s)."""
     clr = led.latest("said", "clearance.altitude", before=now, speaker="atc")
     stable = _stable_set(led, "mcp.altitude", now)
     if clr is None or stable is None:
@@ -67,7 +69,8 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
     value, first_seen = stable
     if abs(value - clr.value) < 50:
         return []
-    since = max(clr.t, first_seen)
+    rb = led.latest("said", "readback.altitude", before=now)
+    since = max(clr.t, first_seen, rb.t if rb is not None and rb.t >= clr.t else clr.t)
     if now - since < grace:
         return []
     return [Flag("clearance_vs_set", "altitude", clr.value, value, since,

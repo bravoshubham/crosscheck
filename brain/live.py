@@ -61,10 +61,11 @@ class Crosscheck:
         self.log.write(json.dumps({"t": t, "kind": kind, **data}) + "\n")
         self.log.flush()
 
-    def said(self, fact: Fact) -> None:
-        """A spoken clearance, readback or callout (from speech, or from a scenario script)."""
+    def said(self, fact: Fact, **extra) -> None:
+        """A spoken clearance, readback or callout (from speech, or from a scenario script).
+        extra (e.g. the transcript) is logged with the event but does not enter the ledger."""
         self.ledger.add(fact)
-        self.event("said", fact.t, key=fact.key, value=fact.value, speaker=fact.speaker, source=fact.source)
+        self.event("said", fact.t, key=fact.key, value=fact.value, speaker=fact.speaker, source=fact.source, **extra)
 
     def observe(self, r: PanelReading, t: float, frame_file: str | None = None) -> None:
         facts = [("doing", "ias", r.ias), ("doing", "altitude", r.altitude),
