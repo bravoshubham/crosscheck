@@ -21,6 +21,7 @@ CALIBRATION = {
 PFD_REGIONS = {
     "speed": ((10, 340, 140, 440), 3),
     "selected_speed": ((30, 60, 140, 115), 2),  # magenta MCP speed above the speed tape
+    "selected_altitude": ((580, 62, 730, 122), 2),  # magenta MCP altitude above the altitude tape
 }
 ALT_BIG = (608, 345, 690, 420)   # thousands and hundreds, large digits (room for 5 digits)
 ALT_ROLL = (686, 345, 740, 420)  # rolling tens column, 20 ft labels
@@ -46,6 +47,7 @@ BARO = re.compile(r"^(\d{2}\.\d{2}|STD\b|\d{3,4}\s*HPA)")
 class PanelReading:
     ias: int | None = None
     selected_speed: int | None = None
+    selected_altitude: int | None = None
     altitude: int | None = None
     altitude_method: str = ""  # "roll" (to the pointer line) or "hundreds" (+/-50 ft)
     track_mag: int | None = None
@@ -151,7 +153,9 @@ def read_frame(frame: Image.Image) -> PanelReading:
         crop = _crop(pfd, _shift(box, dx, dy), scale)
         res = _ocr(crop)
         out.raw[name] = [t for t, _, _ in res]
-        if name == "selected_speed":
+        if name == "selected_altitude":
+            out.selected_altitude = _number_near_centre(res, crop.height, 0, 50000)
+        elif name == "selected_speed":
             out.selected_speed = _number_near_centre(res, crop.height, 80, 400)
         elif name == "speed":
             out.ias = _number_near_centre(res, crop.height, 30, 400)

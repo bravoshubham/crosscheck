@@ -35,17 +35,43 @@ def readback_vs_clearance(led: Ledger, now: float, window: float = 20.0) -> list
                  f"Readback {say.altitude(rb.value)}, cleared {say.altitude(clr.value)}.")]
 
 
+def _stable_set(led: Ledger, key: str, now: float, votes: int = 3) -> tuple[object, float] | None:
+    """The selected value as the majority of the last few camera readings (one misread such as
+    "1200" for "12000" must not count), and when that value was first seen in the current run."""
+    hist = [f for f in led.since("set", key, float("-inf")) if f.t <= now]
+    if not hist:
+        return None
+    recent = [f.value for f in hist[-votes:]]
+    value = max(set(recent), key=recent.count)
+    if recent.count(value) * 2 <= len(recent) and len(recent) > 1:
+        return None
+    start = None
+    for f in reversed(hist):
+        if f.value == value:
+            start = f.t
+        elif start is not None and abs(f.value - value) >= 50:
+            # a different value read twice in a row ends the run; a lone misread does not
+            prev = hist[hist.index(f) - 1] if hist.index(f) > 0 else None
+            if prev is not None and prev.value == f.value:
+                break
+    return value, start
+
+
 def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
-    """The MCP altitude differs from the latest cleared altitude for longer than the grace period."""
+    """The MCP altitude differs from the latest cleared altitude for longer than the grace period,
+    timed from when the mismatching value first appeared, not from the latest reading."""
     clr = led.latest("said", "clearance.altitude", before=now, speaker="atc")
-    mcp = led.latest("set", "mcp.altitude", before=now)
-    if clr is None or mcp is None or now - clr.t < grace or abs(mcp.value - clr.value) < 50:
+    stable = _stable_set(led, "mcp.altitude", now)
+    if clr is None or stable is None:
         return []
-    since = max(clr.t, mcp.t)
+    value, first_seen = stable
+    if abs(value - clr.value) < 50:
+        return []
+    since = max(clr.t, first_seen)
     if now - since < grace:
         return []
-    return [Flag("clearance_vs_set", "altitude", clr.value, mcp.value, since,
-                 f"Cleared {say.altitude(clr.value)}, set {say.altitude(mcp.value)}.")]
+    return [Flag("clearance_vs_set", "altitude", clr.value, value, since,
+                 f"Cleared {say.altitude(clr.value)}, set {say.altitude(value)}.")]
 
 
 def callout_vs_set(led: Ledger, now: float, window: float = 6.0) -> list[Flag]:

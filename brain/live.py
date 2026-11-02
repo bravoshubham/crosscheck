@@ -38,7 +38,8 @@ class Crosscheck:
 
     def observe(self, r: PanelReading, t: float) -> None:
         facts = [("doing", "ias", r.ias), ("doing", "altitude", r.altitude),
-                 ("doing", "track", r.track_mag), ("set", "mcp.speed", r.selected_speed)]
+                 ("doing", "track", r.track_mag), ("set", "mcp.speed", r.selected_speed),
+                 ("set", "mcp.altitude", r.selected_altitude)]
         if r.fma and any(r.fma):
             # the line was read: a blank thrust cell means no engaged thrust mode, not "unknown"
             facts.append(("doing", "fma.thrust", r.fma[0] or "BLANK"))
@@ -48,7 +49,8 @@ class Crosscheck:
         if r.altitude is not None:
             self.ledger.add(Fact("doing", "phase", "final" if r.altitude < FINAL_BELOW_FT else "other", t, source="derived"))
         self.event("reading", t, ias=r.ias, altitude=r.altitude, track=r.track_mag,
-                   selected_speed=r.selected_speed, fma=r.fma, fma_armed=r.fma_armed)
+                   selected_speed=r.selected_speed, selected_altitude=r.selected_altitude,
+                   fma=r.fma, fma_armed=r.fma_armed)
 
     def step(self, frame: Image.Image, t: float) -> list[Flag]:
         self.observe(read_frame(frame), t)

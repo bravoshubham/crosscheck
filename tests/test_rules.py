@@ -65,3 +65,23 @@ def test_autothrottle_in_speed_is_silent():
     led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 140, 0.0),
                  ("doing", "fma.thrust", "MCP SPD", 1.0), ("doing", "ias", 132, 2.0))
     assert evaluate(led, 2.0) == []
+
+
+def test_altitude_bust_with_a_reading_every_frame_and_a_misread():
+    """Regression: the grace period must run from when 25000 first appeared, even though a new
+    camera reading arrives every second, and one misread ("2500") must not reset it."""
+    led = ledger(("said", "clearance.altitude", 24000, 0.0, "atc"))
+    for i in range(20):
+        t = 1.0 + i
+        value = 2500 if i == 6 else (24000 if i < 3 else 25000)
+        led.add(Fact("set", "mcp.altitude", value, t))
+    flags = evaluate(led, 20.0)
+    assert [f.callout for f in flags] == ["Cleared two-four-zero, set two-five-zero."]
+    assert flags[0].since == 4.0
+
+
+def test_correct_setting_with_readings_every_frame_is_silent():
+    led = ledger(("said", "clearance.altitude", 11000, 0.0, "atc"))
+    for i in range(20):
+        led.add(Fact("set", "mcp.altitude", 9000 if i < 3 else 11000, 1.0 + i))
+    assert evaluate(led, 20.0) == []
