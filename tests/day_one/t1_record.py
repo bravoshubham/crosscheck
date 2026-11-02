@@ -23,7 +23,9 @@ PFD_CROP = (1340, 1330, 2150, 2120)
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
 TRUTH = {"ias": "sim/cockpit2/gauges/indicators/airspeed_kts_pilot",
          "alt": "sim/cockpit2/gauges/indicators/altitude_ft_pilot",
-         "hdg": "sim/cockpit2/gauges/indicators/heading_AHARS_deg_mag_pilot"}
+         "hdg": "sim/cockpit2/gauges/indicators/heading_AHARS_deg_mag_pilot",
+         "trk_true": "sim/flightmodel/position/hpath",
+         "magvar": "sim/flightmodel/position/magnetic_variation"}
 MODES = ["autothrottle_enabled", "heading_status", "altitude_hold_status", "speed_status", "vvi_status",
          "pitch_status", "roll_status"]
 
@@ -69,7 +71,7 @@ async def main(frames: int) -> int:
             before = await truth(xp)
             with tempfile.NamedTemporaryFile(suffix=".png") as f:
                 subprocess.run(["screencapture", "-x", f.name], check=True)
-                Image.open(f.name).crop(PFD_CROP).save(REC / f"{i:03d}.png")
+                Image.open(f.name).save(REC / f"{i:03d}.png")  # full frame: the reader crops
             after = await truth(xp)
             modes = {m: await xp.get("sim/cockpit2/autopilot/" + m) for m in MODES}
             if await xp.get("sim/time/paused"):
