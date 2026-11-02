@@ -390,5 +390,789 @@
  "13_jet_snr-5.wav": {
   "text": "One thousand step life.",
   "audio_s": 3.04
+ },
+ "00_jet_snr-5.sam.wav#1": {
+  "text": "Alaska, four, two, one, flight level two, four, zero",
+  "audio_s": 6.4
+ },
+ "00_clean.wav#1": {
+  "text": "Alaska four, two one climbed and maintained flight level two four zero",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+0.sam.wav#1": {
+  "text": "Alaska 2-1 and main flight level 240",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+5.sam.wav#1": {
+  "text": "Alaska, Ford, 21 Climb and maintain flight level 240.",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+0.wav#1": {
+  "text": "Alaska 421 climbed and maintained flight level 240.",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+5.wav#1": {
+  "text": "Alaska 421 climbed and maintained flight level 240",
+  "audio_s": 6.4
+ },
+ "01_jet_snr+0.wav#1": {
+  "text": "Alaska 421 turn left heading 270.",
+  "audio_s": 5.04
+ },
+ "01_clean.wav#1": {
+  "text": "Alaska 421 turn left hitting 270",
+  "audio_s": 5.04
+ },
+ "01_jet_snr+0.sam.wav#1": {
+  "text": "Alaska 4, 21 turn left, heading 270.",
+  "audio_s": 5.04
+ },
+ "01_jet_snr+5.sam.wav#1": {
+  "text": "I'm Oscar for two one turn left hitting two seven zero",
+  "audio_s": 5.04
+ },
+ "01_jet_snr+5.wav#1": {
+  "text": "Alaska 421 turn left heading to 270",
+  "audio_s": 5.04
+ },
+ "00_jet_snr-5.wav#1": {
+  "text": "Alaska 4, 21 plum and main flight level 240.",
+  "audio_s": 6.4
+ },
+ "02_clean.wav#1": {
+  "text": "Alaska 421 descend and maintain one one thousand",
+  "audio_s": 4.8
+ },
+ "01_jet_snr-5.sam.wav#1": {
+  "text": "I'll ask for 210 left hitting 270",
+  "audio_s": 5.04
+ },
+ "02_jet_snr+0.sam.wav#1": {
+  "text": "Alaska 421 descend and maintain 11000",
+  "audio_s": 4.8
+ },
+ "02_jet_snr+0.wav#1": {
+  "text": "Alaska 421 descend and maintain 11000",
+  "audio_s": 4.8
+ },
+ "01_jet_snr-5.wav#1": {
+  "text": "Alaska 421 turn left hitting 270",
+  "audio_s": 5.04
+ },
+ "02_jet_snr+5.sam.wav#1": {
+  "text": "Alaska 421 descend and maintain one one thousand",
+  "audio_s": 4.8
+ },
+ "02_jet_snr-5.wav#1": {
+  "text": "Alaska 421, defend maintain 11000",
+  "audio_s": 4.8
+ },
+ "02_jet_snr+5.wav#1": {
+  "text": "Alaska 421 descend and maintain 11000",
+  "audio_s": 4.8
+ },
+ "02_jet_snr-5.sam.wav#1": {
+  "text": "I 42, once this end, maintain one one",
+  "audio_s": 4.8
+ },
+ "03_jet_snr+0.sam.wav#1": {
+  "text": "Alaska 421 contact Portland approach 124.35",
+  "audio_s": 6.08
+ },
+ "03_clean.wav#1": {
+  "text": "Alassa for two one contact Portland approach one two four point three five.",
+  "audio_s": 6.08
+ },
+ "03_jet_snr+0.wav#1": {
+  "text": "Alaska 421, contact Portland Approach 124.35.",
+  "audio_s": 6.08
+ },
+ "03_jet_snr+5.sam.wav#1": {
+  "text": "Alaska 421 contact Portland approach 124.35",
+  "audio_s": 6.08
+ },
+ "03_jet_snr+5.wav#1": {
+  "text": "Alaska 421 contact Portland approach one two four point three five.",
+  "audio_s": 6.08
+ },
+ "03_jet_snr-5.sam.wav#1": {
+  "text": "Alacha 421, attack, coach 124.35",
+  "audio_s": 6.08
+ },
+ "04_clean.wav#1": {
+  "text": "Alaska 421 reduced speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "04_jet_snr+0.sam.wav#1": {
+  "text": "Alaska 421 reduce speed to 210.",
+  "audio_s": 4.64
+ },
+ "03_jet_snr-5.wav#1": {
+  "text": "Alaska 421 Kentucky Portland approach 124.35",
+  "audio_s": 6.08
+ },
+ "04_jet_snr+0.wav#1": {
+  "text": "Alaska 421 reduced speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "04_jet_snr+5.sam.wav#1": {
+  "text": "Alaska 421 reduce speed to 210 knots",
+  "audio_s": 4.64
+ },
+ "04_jet_snr+5.wav#1": {
+  "text": "Alaska 421 reduce speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "04_jet_snr-5.sam.wav#1": {
+  "text": "Alaska Bore 21, speak to 2109.",
+  "audio_s": 4.64
+ },
+ "04_jet_snr-5.wav#1": {
+  "text": "Alaska 421 reduce speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "05_clean.wav#1": {
+  "text": "Alas, before two-one clear deals, runway one zero right approach",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+0.sam.wav#1": {
+  "text": "Alaska 421 clear runway 10 right approach",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+0.wav#1": {
+  "text": "Alas, but four, two, one, clear deals. Runway one zero right approach.",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+5.sam.wav#1": {
+  "text": "Alas, but for two one Cleartios, runway one zero right approach",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+5.wav#1": {
+  "text": "Alas, but four 2-1 clear deals runway 10 right approach",
+  "audio_s": 6.48
+ },
+ "05_jet_snr-5.sam.wav#1": {
+  "text": "Alas, but for two one Run weight one terror Liger",
+  "audio_s": 6.48
+ },
+ "05_jet_snr-5.wav#1": {
+  "text": "The last for 21 clear goals runway 10 right approach",
+  "audio_s": 6.48
+ },
+ "06_clean.wav#1": {
+  "text": "Cessna 345 Charlie Papa spoke 4321.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+0.sam.wav#1": {
+  "text": "That's pre four five Charlie four four three two one",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+0.wav#1": {
+  "text": "Cessna three four five Charlie Papa squawk four three two one.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+5.sam.wav#1": {
+  "text": "Cessna Pre 45 Charlie Papa 4321",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+5.wav#1": {
+  "text": "Cessna three four five Charlie Papa squawk four three two one.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr-5.sam.wav#1": {
+  "text": "That's not three, four, five, Charlie, habit sport four, three, two, one.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr-5.wav#1": {
+  "text": "Set three four five Charlie Papa four four three two one.",
+  "audio_s": 5.04
+ },
+ "07_clean.wav#1": {
+  "text": "Cesna, free 45 Charlie Papamington 3500",
+  "audio_s": 6.0
+ },
+ "07_piston_snr+0.sam.wav#1": {
+  "text": "Cesna three four five Chevy three thousand five hundred.",
+  "audio_s": 6.0
+ },
+ "07_piston_snr+0.wav#1": {
+  "text": "Cessna, 345, Charlie, Papa, maintenance 3,500.",
+  "audio_s": 6.0
+ },
+ "07_piston_snr+5.sam.wav#1": {
+  "text": "Cessna three four five Charlie three thousand five hundred",
+  "audio_s": 6.0
+ },
+ "07_piston_snr+5.wav#1": {
+  "text": "Cessna, 345 Charlie Papa Manhattan 3500.",
+  "audio_s": 6.0
+ },
+ "08_clean.wav#1": {
+  "text": "15.",
+  "audio_s": 2.4
+ },
+ "08_jet_snr+0.sam.wav#1": {
+  "text": "Plan 15.",
+  "audio_s": 2.4
+ },
+ "08_jet_snr+0.wav#1": {
+  "text": "Fifty.",
+  "audio_s": 2.4
+ },
+ "07_piston_snr-5.sam.wav#1": {
+  "text": "Sesma, three, four, five, Charlie Paplington, three thousand five hundred.",
+  "audio_s": 6.0
+ },
+ "08_jet_snr+5.sam.wav#1": {
+  "text": "plant 50.",
+  "audio_s": 2.4
+ },
+ "07_piston_snr-5.wav#1": {
+  "text": "Cessna, three four five Charlie, Papamington, three thousand five hundred.",
+  "audio_s": 6.0
+ },
+ "08_jet_snr+5.wav#1": {
+  "text": "Fired fifty.",
+  "audio_s": 2.4
+ },
+ "08_jet_snr-5.sam.wav#1": {
+  "text": " fired video.",
+  "audio_s": 2.4
+ },
+ "08_jet_snr-5.wav#1": {
+  "text": "perhaps fifty.",
+  "audio_s": 2.4
+ },
+ "09_clean.wav#1": {
+  "text": "Positive rate gear up.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+0.sam.wav#1": {
+  "text": "A positive rate gear",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+0.wav#1": {
+  "text": "visitive raped here up.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+5.sam.wav#1": {
+  "text": "Positive rape, dear Ab.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+5.wav#1": {
+  "text": "Visitive rate, dear up.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr-5.sam.wav#1": {
+  "text": " closet his rate gear",
+  "audio_s": 2.48
+ },
+ "09_jet_snr-5.wav#1": {
+  "text": " visited rape here",
+  "audio_s": 2.48
+ },
+ "10_clean.wav#1": {
+  "text": "said heading two seven zero.",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+0.sam.wav#1": {
+  "text": "said petting two seven zero",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+0.wav#1": {
+  "text": "said Hetty 270.",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+5.sam.wav#1": {
+  "text": "set heading 270",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+5.wav#1": {
+  "text": "said heading 270.",
+  "audio_s": 2.88
+ },
+ "10_jet_snr-5.sam.wav#1": {
+  "text": "getting",
+  "audio_s": 2.88
+ },
+ "10_jet_snr-5.wav#1": {
+  "text": "said kitty, 270.",
+  "audio_s": 2.88
+ },
+ "11_clean.wav#1": {
+  "text": "flight level 240, ask 421.",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+0.sam.wav#1": {
+  "text": "From white level two four zero ask for two one",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+0.wav#1": {
+  "text": "One white level two and four zero Oscar four two one",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+5.sam.wav#1": {
+  "text": " Plum, white level two, four zero Alaska four two one.",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+5.wav#1": {
+  "text": "Plan flight level two four zero Oscar four two one.",
+  "audio_s": 5.84
+ },
+ "11_jet_snr-5.sam.wav#1": {
+  "text": "From client level two you the four two ones",
+  "audio_s": 5.84
+ },
+ "11_jet_snr-5.wav#1": {
+  "text": "One white level two and four zero four two one",
+  "audio_s": 5.84
+ },
+ "12_clean.wav#1": {
+  "text": "Mayday, mayday, mayday, Cessna three four five Charlie Papa engine failure.",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+0.sam.wav#1": {
+  "text": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure.",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+0.wav#1": {
+  "text": "Mayday, mayday, mayday, Cessna three four five Charlie Papa engine failure.",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+5.sam.wav#1": {
+  "text": "May day, May day, may day, Cessna three four five Charlie papa engine failure",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+5.wav#1": {
+  "text": "Mayday, mayday, mayday Cessna three four five Charlie Papa engine failure",
+  "audio_s": 5.84
+ },
+ "13_jet_snr+0.sam.wav#1": {
+  "text": "One thousand Stavrides.",
+  "audio_s": 3.04
+ },
+ "13_clean.wav#1": {
+  "text": "One thousand stabilized.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr+0.wav#1": {
+  "text": "One thousand stabbed life.",
+  "audio_s": 3.04
+ },
+ "12_piston_snr-5.wav#1": {
+  "text": "Mayday mayday mayday system three four five Charlie Papa engine failure",
+  "audio_s": 5.84
+ },
+ "12_piston_snr-5.sam.wav#1": {
+  "text": "May day, May day, May day, Cessna three four five, Charlie engine failure..",
+  "audio_s": 5.84
+ },
+ "13_jet_snr+5.sam.wav#1": {
+  "text": "A 1000 stab life.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr+5.wav#1": {
+  "text": "One thousand stabilized.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr-5.sam.wav#1": {
+  "text": "One thousand steps right.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr-5.wav#1": {
+  "text": "One thousand step life.",
+  "audio_s": 3.04
+ },
+ "00_clean.wav#2": {
+  "text": "Alaska, four, two, one, climb and maintain flight level two four zero.",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+0.sam.wav#2": {
+  "text": "Alaska 421 climb and main flight level 240.",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+0.wav#2": {
+  "text": "Alaska, 4, 2, 1 club and main flight level 240.",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+5.sam.wav#2": {
+  "text": "Alaska, Ford, 21, clumb and maintain flight level 240.",
+  "audio_s": 6.4
+ },
+ "00_jet_snr+5.wav#2": {
+  "text": "Alaska, 421 climb and maintain flight level 240",
+  "audio_s": 6.4
+ },
+ "00_jet_snr-5.sam.wav#2": {
+  "text": "Alaska, four. Two, one, flight level two, four, zero.",
+  "audio_s": 6.4
+ },
+ "01_clean.wav#2": {
+  "text": "Alaska 4, 21, turn left, hitting 270.",
+  "audio_s": 5.04
+ },
+ "01_jet_snr+0.sam.wav#2": {
+  "text": "Alaska 421 turn left heading 270",
+  "audio_s": 5.04
+ },
+ "00_jet_snr-5.wav#2": {
+  "text": "Alaska 4, 21 club and main flight level 240.",
+  "audio_s": 6.4
+ },
+ "01_jet_snr+0.wav#2": {
+  "text": "Alaska 421 turn left heading 270",
+  "audio_s": 5.04
+ },
+ "01_jet_snr+5.sam.wav#2": {
+  "text": "I'm Aska for two one turn left hitting two seven zero.",
+  "audio_s": 5.04
+ },
+ "01_jet_snr+5.wav#2": {
+  "text": "Alaska 421 turn left heading to 70",
+  "audio_s": 5.04
+ },
+ "01_jet_snr-5.sam.wav#2": {
+  "text": "I'll ask for 210 left hitting 270.",
+  "audio_s": 5.04
+ },
+ "01_jet_snr-5.wav#2": {
+  "text": "Alaska 421 turn left hitting 270",
+  "audio_s": 5.04
+ },
+ "02_clean.wav#2": {
+  "text": "Alaska 421 descend and maintain 11000.",
+  "audio_s": 4.8
+ },
+ "02_jet_snr+0.sam.wav#2": {
+  "text": "Alaska 421 defend the maintain one one thousand",
+  "audio_s": 4.8
+ },
+ "02_jet_snr+0.wav#2": {
+  "text": "Alaska 421 descend and maintain 11000",
+  "audio_s": 4.8
+ },
+ "02_jet_snr+5.sam.wav#2": {
+  "text": "Alaska 421 descend and maintain 11000",
+  "audio_s": 4.8
+ },
+ "02_jet_snr+5.wav#2": {
+  "text": "Alaska 421 descend and maintain one one thousand",
+  "audio_s": 4.8
+ },
+ "02_jet_snr-5.sam.wav#2": {
+  "text": "42 wants to defend maintain one one",
+  "audio_s": 4.8
+ },
+ "02_jet_snr-5.wav#2": {
+  "text": "Alaska 421 defend maintain one one thousand",
+  "audio_s": 4.8
+ },
+ "03_clean.wav#2": {
+  "text": "Alassa for two one contact Portland approach one two four point three five",
+  "audio_s": 6.08
+ },
+ "03_jet_snr+0.sam.wav#2": {
+  "text": "Alaska 421 contact to Portland approach 124.35",
+  "audio_s": 6.08
+ },
+ "03_jet_snr+0.wav#2": {
+  "text": "Alaska 421 contact Portland approach 124.35",
+  "audio_s": 6.08
+ },
+ "03_jet_snr+5.sam.wav#2": {
+  "text": "Alaska 421 contact Portland approach 124.35",
+  "audio_s": 6.08
+ },
+ "03_jet_snr+5.wav#2": {
+  "text": "Alaska 421 contact Portland approach 124.35",
+  "audio_s": 6.08
+ },
+ "03_jet_snr-5.sam.wav#2": {
+  "text": "Alatcha 421 Coat 124.35.",
+  "audio_s": 6.08
+ },
+ "04_clean.wav#2": {
+  "text": "Alaska 421 reduce speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "03_jet_snr-5.wav#2": {
+  "text": "Alaska 421, Kentucky, Portland, approach 124.35.",
+  "audio_s": 6.08
+ },
+ "04_jet_snr+0.sam.wav#2": {
+  "text": "Alaska 421 reduce speed to 210",
+  "audio_s": 4.64
+ },
+ "04_jet_snr+0.wav#2": {
+  "text": "Alaska, 421 reduced speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "04_jet_snr+5.sam.wav#2": {
+  "text": "Alaska 421 reduce speed to 210 knots",
+  "audio_s": 4.64
+ },
+ "04_jet_snr+5.wav#2": {
+  "text": "Alaska 421 reduce speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "04_jet_snr-5.sam.wav#2": {
+  "text": "Alaska 421 reduce speed to 2109.",
+  "audio_s": 4.64
+ },
+ "04_jet_snr-5.wav#2": {
+  "text": "Alaska 421 reduce speed to 210 knots.",
+  "audio_s": 4.64
+ },
+ "05_clean.wav#2": {
+  "text": "Alas, for two one cleardills runway one zero right approach.",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+0.sam.wav#2": {
+  "text": "Alaska 421 cleared goals runway 10 right approach",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+0.wav#2": {
+  "text": "Alas, but for two one clear deals runway one zero right approach",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+5.sam.wav#2": {
+  "text": "Alas, but for two one clear deals, runway one zero right approach,",
+  "audio_s": 6.48
+ },
+ "05_jet_snr+5.wav#2": {
+  "text": "Alas but for two one clear deals runway one zero right approach",
+  "audio_s": 6.48
+ },
+ "05_jet_snr-5.sam.wav#2": {
+  "text": "Alas, but for two one, run weight one terror liger prog.",
+  "audio_s": 6.48
+ },
+ "05_jet_snr-5.wav#2": {
+  "text": "The last of the 421 clear drills. Runway 10 right approach.",
+  "audio_s": 6.48
+ },
+ "06_clean.wav#2": {
+  "text": "Cessna three four five Charlie Papa spoke four three two one.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+0.sam.wav#2": {
+  "text": "That's in a pre-four five Charlie four four three two one.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+0.wav#2": {
+  "text": "Cessna 345 Charlie Papa 4321.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+5.sam.wav#2": {
+  "text": "Cessna 345 Charlie Papa Sport 4321",
+  "audio_s": 5.04
+ },
+ "06_piston_snr+5.wav#2": {
+  "text": "Cessna 345 Charlie Papa squawk 4321.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr-5.sam.wav#2": {
+  "text": "That's 345 Charlie, have a sport 4321.",
+  "audio_s": 5.04
+ },
+ "06_piston_snr-5.wav#2": {
+  "text": "Saturn a three, four, five Charlie Papas four four three two one",
+  "audio_s": 5.04
+ },
+ "07_clean.wav#2": {
+  "text": "Cesna, free 45 Charlie Papermington 3500",
+  "audio_s": 6.0
+ },
+ "07_piston_snr+0.sam.wav#2": {
+  "text": "Cesna, three four five Chevy Papamington three thousand five hundred",
+  "audio_s": 6.0
+ },
+ "07_piston_snr+0.wav#2": {
+  "text": "Cesna, three, four, five, Charlie, Papamington, three thousand five hundred.",
+  "audio_s": 6.0
+ },
+ "07_piston_snr+5.sam.wav#2": {
+  "text": "Cessna, 345, Charlie, Patterson, 3500.",
+  "audio_s": 6.0
+ },
+ "08_clean.wav#2": {
+  "text": " at 15.",
+  "audio_s": 2.4
+ },
+ "07_piston_snr+5.wav#2": {
+  "text": "Cessna 345 Charlie Papua 3500",
+  "audio_s": 6.0
+ },
+ "08_jet_snr+0.sam.wav#2": {
+  "text": "Ptolemy, fifty.",
+  "audio_s": 2.4
+ },
+ "07_piston_snr-5.sam.wav#2": {
+  "text": "Sesma, three, four, five, Charlie, Pappington, three thousand five hundred.",
+  "audio_s": 6.0
+ },
+ "08_jet_snr+0.wav#2": {
+  "text": "Fright fifty.",
+  "audio_s": 2.4
+ },
+ "07_piston_snr-5.wav#2": {
+  "text": "Cessna, three four five Charlie, Pat Mington three thousand five hundred.",
+  "audio_s": 6.0
+ },
+ "08_jet_snr+5.sam.wav#2": {
+  "text": "Plage fifty.",
+  "audio_s": 2.4
+ },
+ "08_jet_snr+5.wav#2": {
+  "text": "Forage fifty.",
+  "audio_s": 2.4
+ },
+ "08_jet_snr-5.sam.wav#2": {
+  "text": "fired video.",
+  "audio_s": 2.4
+ },
+ "08_jet_snr-5.wav#2": {
+  "text": "Flight 50.",
+  "audio_s": 2.4
+ },
+ "09_clean.wav#2": {
+  "text": "Visitive rate gear up.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+0.sam.wav#2": {
+  "text": "A bit of right gear, um,",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+0.wav#2": {
+  "text": "Positive rape gear up.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+5.sam.wav#2": {
+  "text": "Positive rate, dear",
+  "audio_s": 2.48
+ },
+ "09_jet_snr+5.wav#2": {
+  "text": "Positive rate gear up.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr-5.sam.wav#2": {
+  "text": "Consider his rate, dear.",
+  "audio_s": 2.48
+ },
+ "09_jet_snr-5.wav#2": {
+  "text": " visited rape gear up.",
+  "audio_s": 2.48
+ },
+ "10_clean.wav#2": {
+  "text": "said heading 270.",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+0.sam.wav#2": {
+  "text": "said petting two seven zero",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+5.sam.wav#2": {
+  "text": "said ketting two seven zero",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+0.wav#2": {
+  "text": "said heading 270.",
+  "audio_s": 2.88
+ },
+ "10_jet_snr-5.sam.wav#2": {
+  "text": "Getting 270.",
+  "audio_s": 2.88
+ },
+ "10_jet_snr+5.wav#2": {
+  "text": "said heading 270.",
+  "audio_s": 2.88
+ },
+ "10_jet_snr-5.wav#2": {
+  "text": "said Hetty 270",
+  "audio_s": 2.88
+ },
+ "11_clean.wav#2": {
+  "text": "flight level two four zero Oscar four two one",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+0.sam.wav#2": {
+  "text": "from white level two and four zero Oscar four two one.",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+0.wav#2": {
+  "text": "One, white level two and four zero Oscar four two one",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+5.sam.wav#2": {
+  "text": " Plum, white level two four zero ask a four two one.",
+  "audio_s": 5.84
+ },
+ "11_jet_snr+5.wav#2": {
+  "text": "One, flight level two four zero Oscar four two one,",
+  "audio_s": 5.84
+ },
+ "11_jet_snr-5.sam.wav#2": {
+  "text": "From client level two, you over zero the four two ones.",
+  "audio_s": 5.84
+ },
+ "11_jet_snr-5.wav#2": {
+  "text": "white level two and four zero Alaska four two one.",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+0.sam.wav#2": {
+  "text": "Mayday, mayday, mayday Cessna Three Four Five Charlie Papa Engine failure.",
+  "audio_s": 5.84
+ },
+ "12_clean.wav#2": {
+  "text": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+0.wav#2": {
+  "text": "Mayday, mayday, mayday Cessna three four five Charlie Papa engine failure",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+5.sam.wav#2": {
+  "text": "May day, may day, may day, Cessna three four five Charlie Papa engine failure",
+  "audio_s": 5.84
+ },
+ "12_piston_snr+5.wav#2": {
+  "text": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+  "audio_s": 5.84
+ },
+ "13_clean.wav#2": {
+  "text": "One thousand stabilized.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr+0.sam.wav#2": {
+  "text": "One thousand stars rise.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr+0.wav#2": {
+  "text": "One thousand stabbed lights.",
+  "audio_s": 3.04
+ },
+ "12_piston_snr-5.sam.wav#2": {
+  "text": "Mayday, mayday, mayday, Cessna three four five, Charlie engine failure.",
+  "audio_s": 5.84
+ },
+ "13_jet_snr+5.sam.wav#2": {
+  "text": "A 1,000 step",
+  "audio_s": 3.04
+ },
+ "12_piston_snr-5.wav#2": {
+  "text": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+  "audio_s": 5.84
+ },
+ "13_jet_snr+5.wav#2": {
+  "text": "One thousand stabilized.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr-5.sam.wav#2": {
+  "text": "One thousand staff right.",
+  "audio_s": 3.04
+ },
+ "13_jet_snr-5.wav#2": {
+  "text": "One thousand step life.",
+  "audio_s": 3.04
  }
 }

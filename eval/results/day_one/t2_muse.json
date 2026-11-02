@@ -31,6 +31,150 @@
   "muse sam snr+5": "11/13",
   "muse sam snr-5": "7/13"
  },
- "audio_minutes": 7.81,
- "est_cost_usd": 0.0234
+ "passes": [
+  {
+   "wer": {
+    "mms raw snr+0": 1.074,
+    "mms raw snr+5": 0.852,
+    "mms raw snr-5": 1.481,
+    "mms sam snr+0": 1.123,
+    "mms sam snr+5": 0.926,
+    "mms sam snr-5": 1.556,
+    "muse clean": 0.16,
+    "muse raw snr+0": 0.309,
+    "muse raw snr+5": 0.123,
+    "muse raw snr-5": 0.432,
+    "muse sam snr+0": 0.37,
+    "muse sam snr+5": 0.383,
+    "muse sam snr-5": 0.741
+   },
+   "numbers_exact": {
+    "mms raw snr+0": "3/13",
+    "mms raw snr+5": "5/13",
+    "mms raw snr-5": "1/13",
+    "mms sam snr+0": "2/13",
+    "mms sam snr+5": "3/13",
+    "mms sam snr-5": "1/13",
+    "muse clean": "13/13",
+    "muse raw snr+0": "9/13",
+    "muse raw snr+5": "12/13",
+    "muse raw snr-5": "10/13",
+    "muse sam snr+0": "8/13",
+    "muse sam snr+5": "11/13",
+    "muse sam snr-5": "7/13"
+   }
+  },
+  {
+   "wer": {
+    "mms raw snr+0": 1.074,
+    "mms raw snr+5": 0.852,
+    "mms raw snr-5": 1.481,
+    "mms sam snr+0": 1.123,
+    "mms sam snr+5": 0.926,
+    "mms sam snr-5": 1.556,
+    "muse clean": 0.247,
+    "muse raw snr+0": 0.284,
+    "muse raw snr+5": 0.185,
+    "muse raw snr-5": 0.383,
+    "muse sam snr+0": 0.309,
+    "muse sam snr+5": 0.383,
+    "muse sam snr-5": 0.778
+   },
+   "numbers_exact": {
+    "mms raw snr+0": "3/13",
+    "mms raw snr+5": "5/13",
+    "mms raw snr-5": "1/13",
+    "mms sam snr+0": "2/13",
+    "mms sam snr+5": "3/13",
+    "mms sam snr-5": "1/13",
+    "muse clean": "11/13",
+    "muse raw snr+0": "11/13",
+    "muse raw snr+5": "12/13",
+    "muse raw snr-5": "10/13",
+    "muse sam snr+0": "11/13",
+    "muse sam snr+5": "10/13",
+    "muse sam snr-5": "6/13"
+   }
+  },
+  {
+   "wer": {
+    "mms raw snr+0": 1.074,
+    "mms raw snr+5": 0.852,
+    "mms raw snr-5": 1.481,
+    "mms sam snr+0": 1.123,
+    "mms sam snr+5": 0.926,
+    "mms sam snr-5": 1.556,
+    "muse clean": 0.198,
+    "muse raw snr+0": 0.284,
+    "muse raw snr+5": 0.16,
+    "muse raw snr-5": 0.395,
+    "muse sam snr+0": 0.432,
+    "muse sam snr+5": 0.395,
+    "muse sam snr-5": 0.679
+   },
+   "numbers_exact": {
+    "mms raw snr+0": "3/13",
+    "mms raw snr+5": "5/13",
+    "mms raw snr-5": "1/13",
+    "mms sam snr+0": "2/13",
+    "mms sam snr+5": "3/13",
+    "mms sam snr-5": "1/13",
+    "muse clean": "12/13",
+    "muse raw snr+0": "11/13",
+    "muse raw snr+5": "10/13",
+    "muse raw snr-5": "10/13",
+    "muse sam snr+0": "10/13",
+    "muse sam snr+5": "11/13",
+    "muse sam snr-5": "7/13"
+   }
+  }
+ ],
+ "audio_minutes": 23.44,
+ "est_cost_usd": 0.0703,
+ "numbers_exact_by_pass": {
+  "muse clean": [
+   "13/13",
+   "11/13",
+   "12/13"
+  ],
+  "muse raw snr+0": [
+   "9/13",
+   "11/13",
+   "11/13"
+  ],
+  "muse raw snr+5": [
+   "12/13",
+   "12/13",
+   "10/13"
+  ],
+  "muse raw snr-5": [
+   "10/13",
+   "10/13",
+   "10/13"
+  ],
+  "muse sam snr+0": [
+   "8/13",
+   "11/13",
+   "10/13"
+  ],
+  "muse sam snr+5": [
+   "11/13",
+   "10/13",
+   "11/13"
+  ],
+  "muse sam snr-5": [
+   "7/13",
+   "6/13",
+   "7/13"
+  ]
+ },
+ "wer_mean": {
+  "muse clean": 0.202,
+  "muse raw snr+0": 0.292,
+  "muse raw snr+5": 0.156,
+  "muse raw snr-5": 0.403,
+  "muse sam snr+0": 0.37,
+  "muse sam snr+5": 0.387,
+  "muse sam snr-5": 0.733
+ }
 }

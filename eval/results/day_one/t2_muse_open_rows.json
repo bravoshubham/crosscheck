@@ -1,0 +1,254 @@
+[
+ {
+  "file": "00_jet_snr+5.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "muse_raw": "Alaska, 4, 21 climb and maintain flight level 240.",
+  "muse_sam": null
+ },
+ {
+  "file": "00_jet_snr+0.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "muse_raw": "Alaska fourth two one climb and maintain flight level two four zero",
+  "muse_sam": null
+ },
+ {
+  "file": "00_jet_snr-5.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "muse_raw": "Alright.",
+  "muse_sam": null
+ },
+ {
+  "file": "01_jet_snr+5.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "muse_raw": "Alaska 421 turn left heading 270",
+  "muse_sam": null
+ },
+ {
+  "file": "01_jet_snr+0.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "muse_raw": "Alaska 421 turn left heading 270",
+  "muse_sam": null
+ },
+ {
+  "file": "01_jet_snr-5.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "muse_raw": "21 left, hitting 270.",
+  "muse_sam": null
+ },
+ {
+  "file": "02_jet_snr+5.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "muse_raw": "Alaska 421 descend and maintain one one thousand",
+  "muse_sam": null
+ },
+ {
+  "file": "02_jet_snr+0.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "muse_raw": "Alaska 421 descend and maintain 11000",
+  "muse_sam": null
+ },
+ {
+  "file": "02_jet_snr-5.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "muse_raw": "421 defended maintain 11000",
+  "muse_sam": null
+ },
+ {
+  "file": "03_jet_snr+5.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "muse_raw": "Alaska 421 contact Portland approach 124.35",
+  "muse_sam": null
+ },
+ {
+  "file": "03_jet_snr+0.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "muse_raw": "Alaska 421 contact Portland Approach 124.35",
+  "muse_sam": null
+ },
+ {
+  "file": "03_jet_snr-5.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "muse_raw": "The last of four, 212, taxi Portland approach 22, 4.25.",
+  "muse_sam": null
+ },
+ {
+  "file": "04_jet_snr+5.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "muse_raw": "Alaska 421 reduce speed to 210 knots.",
+  "muse_sam": null
+ },
+ {
+  "file": "04_jet_snr+0.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "muse_raw": "Alaska 421 reduced speed to 210 knots.",
+  "muse_sam": null
+ },
+ {
+  "file": "04_jet_snr-5.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "muse_raw": "Alaska 421 reduced speed to 210 knots.",
+  "muse_sam": null
+ },
+ {
+  "file": "05_jet_snr+5.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "muse_raw": "Alaska 421 clear deals runway 10 right approach",
+  "muse_sam": null
+ },
+ {
+  "file": "05_jet_snr+0.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "muse_raw": "The last of four 2-1 clear bills runway one zero right approach",
+  "muse_sam": null
+ },
+ {
+  "file": "05_jet_snr-5.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "muse_raw": "Last, the 4210. Runway 10 right approach.",
+  "muse_sam": null
+ },
+ {
+  "file": "06_piston_snr+5.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "muse_raw": "Cessna three four five Charlie Papa spot four three two one.",
+  "muse_sam": null
+ },
+ {
+  "file": "06_piston_snr+0.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "muse_raw": "Cessna three four five Charlie Papas four four three two one",
+  "muse_sam": null
+ },
+ {
+  "file": "06_piston_snr-5.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "muse_raw": "Set three, four, five, Charlie, Papas four, four, three, two, one.",
+  "muse_sam": null
+ },
+ {
+  "file": "07_piston_snr+5.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "muse_raw": "Cessna, three four five Charlie Papa Mington three thousand five hundred.",
+  "muse_sam": null
+ },
+ {
+  "file": "07_piston_snr+0.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "muse_raw": "System, three, four, five, Charlie, 3500.",
+  "muse_sam": null
+ },
+ {
+  "file": "07_piston_snr-5.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "muse_raw": "System, three four five Charlie three thousand five hundred",
+  "muse_sam": null
+ },
+ {
+  "file": "08_jet_snr+5.wav",
+  "ref": "flaps fifteen",
+  "muse_raw": "Flash fifty.",
+  "muse_sam": null
+ },
+ {
+  "file": "08_jet_snr+0.wav",
+  "ref": "flaps fifteen",
+  "muse_raw": "50.",
+  "muse_sam": null
+ },
+ {
+  "file": "08_jet_snr-5.wav",
+  "ref": "flaps fifteen",
+  "muse_raw": "Class 50.",
+  "muse_sam": null
+ },
+ {
+  "file": "09_jet_snr+5.wav",
+  "ref": "positive rate gear up",
+  "muse_raw": "Positive rate gear up.",
+  "muse_sam": null
+ },
+ {
+  "file": "09_jet_snr+0.wav",
+  "ref": "positive rate gear up",
+  "muse_raw": "But it is right here up",
+  "muse_sam": null
+ },
+ {
+  "file": "09_jet_snr-5.wav",
+  "ref": "positive rate gear up",
+  "muse_raw": "Whether it is race year",
+  "muse_sam": null
+ },
+ {
+  "file": "10_jet_snr+5.wav",
+  "ref": "set heading two seven zero",
+  "muse_raw": "said Ketty 270",
+  "muse_sam": null
+ },
+ {
+  "file": "10_jet_snr+0.wav",
+  "ref": "set heading two seven zero",
+  "muse_raw": "The ketty 270.",
+  "muse_sam": null
+ },
+ {
+  "file": "10_jet_snr-5.wav",
+  "ref": "set heading two seven zero",
+  "muse_raw": "That heading 270",
+  "muse_sam": null
+ },
+ {
+  "file": "11_jet_snr+5.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "muse_raw": " Plum, flight level two four zero, ask for two one",
+  "muse_sam": null
+ },
+ {
+  "file": "11_jet_snr+0.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "muse_raw": " client level 24, 04 21",
+  "muse_sam": null
+ },
+ {
+  "file": "11_jet_snr-5.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "muse_raw": "level 24 line",
+  "muse_sam": null
+ },
+ {
+  "file": "12_piston_snr+5.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "muse_raw": "May Day, May day, May day, Cessna three four five Charlie Papa engine failure.",
+  "muse_sam": null
+ },
+ {
+  "file": "12_piston_snr+0.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "muse_raw": "Mayday, mayday, mayday Cessna three four five Charlie Papa engine failure.",
+  "muse_sam": null
+ },
+ {
+  "file": "12_piston_snr-5.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "muse_raw": "Mayday, mayday, mayday says the three four five Charlie Papa engine failure",
+  "muse_sam": null
+ },
+ {
+  "file": "13_jet_snr+5.wav",
+  "ref": "one thousand stabilized",
+  "muse_raw": "One thousand stabilized.",
+  "muse_sam": null
+ },
+ {
+  "file": "13_jet_snr+0.wav",
+  "ref": "one thousand stabilized",
+  "muse_raw": "One thousand stabbed life.",
+  "muse_sam": null
+ },
+ {
+  "file": "13_jet_snr-5.wav",
+  "ref": "one thousand stabilized",
+  "muse_raw": "One thousand",
+  "muse_sam": null
+ }
+]

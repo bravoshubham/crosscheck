@@ -5,7 +5,8 @@ replace them. Noise: X-Plane's own engine loops, read from the local install and
 into the repo (Laminar's assets). Output goes to eval/audio/radio_set/ (git-ignored wavs) with a
 manifest of the true text, so WER can be scored with and without SAM Audio.
 
-Run:  uv run --group eval python eval/audio/make_radio_set.py
+Run:  uv run --group eval python eval/audio/make_radio_set.py            # X-Plane noise (local only)
+      uv run --group eval python eval/audio/make_radio_set.py --synthetic  # radio_set_open/, publishable
 """
 import json
 import pathlib
@@ -16,8 +17,11 @@ import torch
 from scipy.signal import butter, resample_poly, sosfilt
 from transformers import AutoTokenizer, VitsModel
 
+from synth_noise import ENGINES as SYNTH
+
 ROOT = pathlib.Path(__file__).resolve().parent
 OUT = ROOT / "radio_set"
+OUT_OPEN = ROOT / "radio_set_open"  # synthetic engine noise (synth_noise.py): safe to publish
 SR = 16000
 ENGINES = {"jet": pathlib.Path.home() / "X-Plane 12/Resources/sounds/engine/ENGINE_HI_BYPASS_JET_inn.wav",
            "piston": pathlib.Path.home() / "X-Plane 12/Resources/sounds/engine/ENGINE_RECIPROCATING_inn.wav"}
@@ -64,8 +68,9 @@ def mix(speech: np.ndarray, noise: np.ndarray, snr_db: float) -> np.ndarray:
     return y / (np.abs(y).max() + 1e-9) * 0.9
 
 
-def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
+def main(synthetic: bool = False) -> None:
+    out = OUT_OPEN if synthetic else OUT
+    out.mkdir(parents=True, exist_ok=True)
     tok = AutoTokenizer.from_pretrained("facebook/mms-tts-eng")
     tts = VitsModel.from_pretrained("facebook/mms-tts-eng").eval()
     manifest = []
@@ -76,17 +81,18 @@ def main() -> None:
         wav = resample_poly(wav, SR, tts.config.sampling_rate)
         pad = np.zeros(int(0.4 * SR))
         clean = np.concatenate([pad, radio(wav) if who == "atc" else wav * 0.8, pad])
-        sf.write(OUT / f"{i:02d}_clean.wav", clean, SR)
+        sf.write(out / f"{i:02d}_clean.wav", clean, SR)
         engine = "jet" if "alaska" in text or who == "crew" and "cessna" not in text else "piston"
-        noise = load_noise(ENGINES[engine], len(clean))
+        noise = SYNTH[engine](len(clean), seed=i) if synthetic else load_noise(ENGINES[engine], len(clean))
         for snr in SNRS_DB:
             name = f"{i:02d}_{engine}_snr{snr:+d}.wav"
-            sf.write(OUT / name, mix(clean, noise, snr), SR)
+            sf.write(out / name, mix(clean, noise, snr), SR)
             manifest.append({"file": name, "clean": f"{i:02d}_clean.wav", "speaker": who,
                              "engine": engine, "snr_db": snr, "text": text})
-    (OUT / "manifest.json").write_text(json.dumps(manifest, indent=1))
-    print(f"{len(LINES)} lines x {len(SNRS_DB)} SNRs = {len(manifest)} mixes in {OUT}")
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=1))
+    print(f"{len(LINES)} lines x {len(SNRS_DB)} SNRs = {len(manifest)} mixes in {out}")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(synthetic="--synthetic" in sys.argv)

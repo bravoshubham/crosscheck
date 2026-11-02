@@ -12,3 +12,4 @@ replay/*/replay_events.jsonl
 replay/*/replay_result.json
 site/
 eval/results/repeat/*/*/
+!eval/audio/radio_set_open/*.wav

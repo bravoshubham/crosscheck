@@ -1,7 +1,7 @@
 {
  "scenario": "flaps_wrong",
- "scored": 2,
- "passed": 2,
+ "scored": 3,
+ "passed": 3,
  "errors": 0,
  "runs": [
   {
@@ -26,6 +26,18 @@
     }
    ],
    "seconds": 81,
+   "false_callouts_before_call": []
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 19.1,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 80,
    "false_callouts_before_call": []
   }
  ]

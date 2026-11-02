@@ -1,0 +1,20 @@
+{
+ "scenario": "pilot_watch_checklist",
+ "scored": 2,
+ "passed": 2,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": null,
+   "seconds": 54
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": null,
+   "seconds": 54
+  }
+ ]
+}

@@ -139,7 +139,9 @@ Tests: `uv run pytest`.
 | X-Plane link | 10.0 Hz truth; autopilot, transponder and failure commands work | Read-back of each write |
 | On-board decisions (Glimmer) | 8/8 correct, median 2.5 s | Hand-labelled flags |
 | Clearance extraction (Glimmer) | Exact text 7/7; noisy recognizer output 4/7 (+5 dB) to 0/7 (−5 dB); 0 wrong values after the guard | Known script of each line |
-| Radio speech, Muse Voice Transcribe (14 lines × clean, +5/0/−5 dB jet or piston noise) | Lines with every number exact: clean 13/13; +5 dB 12/13; 0 dB 9/13; −5 dB 10/13. After SAM Audio: 11, 8, 7. Meta's open MMS ASR: 5, 3, 1. 98 clips cost ≈ $0.02 | Known script of each line (`eval/audio/wer_muse.py`) |
+| Repeated live runs, current rules (3 per variant; 2 for the pilot watch) | Altitude bust / readback / correct 9/9 · autothrottle 3/3 · flaps wrong / forgot / correct 9/9 · pilot watch slumped / asleep / checklist / answers 8/8. Before the flap trend check: 8/9 (one false "ten set"; kept in `eval/results/repeat/*.before_trend_check.json`) | Each scenario's scorer against X-Plane's values or the scripted state (`eval/repeat.py`) |
+| Radio speech, Muse Voice Transcribe, 3 passes (14 lines × clean, +5/0/−5 dB jet or piston noise) | Lines with every number exact, per pass: clean 13, 11, 12 /13; +5 dB 12, 12, 10; 0 dB 9, 11, 11; −5 dB 10, 10, 10. After SAM Audio: +5 dB 11, 10, 11; 0 dB 8, 11, 10; −5 dB 7, 6, 7. Meta's open MMS ASR (1 pass): 5, 3, 1 | Known script of each line (`eval/audio/wer_muse.py --passes 3`) |
+| Same lines, synthetic engine noise (`eval/audio/radio_set_open/`, published) | Clean 10, 12, 12 /13; +5 dB 12, 11, 11; 0 dB 9, 10, 10; −5 dB 6, 6, 6 — like X-Plane's noise except harder at −5 dB. The clean clips are byte-identical to the set above: their difference is Voice Transcribe varying between passes (±2 lines in 13) | Known script (`--open`) |
 | Altitude facts from those transcripts (`senses/speech.py`) | 0 wrong altitudes into the ledger from 98 transcripts; misses where "flight level" became "white level" or the callsign digits were lost | Known script |
 | Callsign recognition (same set) | "Alaska" missed in 2/7 clean, 5/21 noisy lines ("Oscar", "Alas, for"); the guard drops it rather than misattribute | Known script |
 
@@ -153,5 +155,8 @@ scenarios, evaluation scripts and the GPU apps for SAM Audio and SAM 3D Body.
 
 Code: MIT. MMS-TTS is CC-BY-NC 4.0 (fine for a hackathon; to be replaced before any commercial
 use). SAM Audio and SAM 3D Body weights are gated on Hugging Face and are not redistributed here.
-X-Plane's engine sounds are used locally to build test audio and are not included. All procedures
+X-Plane's engine sounds are used locally to build test audio and are not included;
+`eval/audio/radio_set_open/` uses synthetic engine noise (`eval/audio/synth_noise.py`) and MMS-TTS
+voices (CC-BY-NC 4.0), so it can be published. The pilot-watch images are generated with Muse
+Image; no real person appears in them. All procedures
 are written from public FAA handbooks; no airline data is used.

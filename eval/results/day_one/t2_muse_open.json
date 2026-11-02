@@ -1,0 +1,90 @@
+{
+ "asr": "muse-voice-transcribe-1.0",
+ "normalisation": "lowercase, no punctuation, each spoken number as one value",
+ "wer": {
+  "muse clean": 0.259,
+  "muse raw snr+0": 0.37,
+  "muse raw snr+5": 0.198,
+  "muse raw snr-5": 0.617
+ },
+ "numbers_exact": {
+  "muse clean": "10/13",
+  "muse raw snr+0": "9/13",
+  "muse raw snr+5": "12/13",
+  "muse raw snr-5": "6/13"
+ },
+ "passes": [
+  {
+   "wer": {
+    "muse clean": 0.259,
+    "muse raw snr+0": 0.37,
+    "muse raw snr+5": 0.198,
+    "muse raw snr-5": 0.617
+   },
+   "numbers_exact": {
+    "muse clean": "10/13",
+    "muse raw snr+0": "9/13",
+    "muse raw snr+5": "12/13",
+    "muse raw snr-5": "6/13"
+   }
+  },
+  {
+   "wer": {
+    "muse clean": 0.21,
+    "muse raw snr+0": 0.333,
+    "muse raw snr+5": 0.235,
+    "muse raw snr-5": 0.543
+   },
+   "numbers_exact": {
+    "muse clean": "12/13",
+    "muse raw snr+0": "10/13",
+    "muse raw snr+5": "11/13",
+    "muse raw snr-5": "6/13"
+   }
+  },
+  {
+   "wer": {
+    "muse clean": 0.21,
+    "muse raw snr+0": 0.37,
+    "muse raw snr+5": 0.235,
+    "muse raw snr-5": 0.593
+   },
+   "numbers_exact": {
+    "muse clean": "12/13",
+    "muse raw snr+0": "10/13",
+    "muse raw snr+5": "11/13",
+    "muse raw snr-5": "6/13"
+   }
+  }
+ ],
+ "audio_minutes": 13.39,
+ "est_cost_usd": 0.0402,
+ "numbers_exact_by_pass": {
+  "muse clean": [
+   "10/13",
+   "12/13",
+   "12/13"
+  ],
+  "muse raw snr+0": [
+   "9/13",
+   "10/13",
+   "10/13"
+  ],
+  "muse raw snr+5": [
+   "12/13",
+   "11/13",
+   "11/13"
+  ],
+  "muse raw snr-5": [
+   "6/13",
+   "6/13",
+   "6/13"
+  ]
+ },
+ "wer_mean": {
+  "muse clean": 0.226,
+  "muse raw snr+0": 0.358,
+  "muse raw snr+5": 0.223,
+  "muse raw snr-5": 0.584
+ }
+}
