@@ -40,10 +40,16 @@ class XPlane:
         await self._call("POST", "/flight", json={"data": flight})
 
     async def ensure_running(self) -> None:
-        """Refuse to start a scenario behind a paused sim (the demo's "leaving the demo area"
-        dialog pauses X-Plane and survives loading a new flight; it needs a click on OK)."""
-        if await self.dataref_count() and await self.get("sim/time/paused"):
-            raise XPlaneError("X-Plane is paused, probably by the demo-area dialog: click OK in X-Plane, then rerun")
+        """Unpause (scenarios pause the sim when they finish), then refuse to start if it stays
+        paused: a demo dialog ("leaving the demo area", "unlock X-Plane") is holding it, and it
+        survives loading a new flight until someone clicks it."""
+        if not await self.dataref_count():
+            return
+        if await self.get("sim/time/paused"):
+            await self.command("sim/operation/pause_off")
+            await asyncio.sleep(1.5)
+        if await self.get("sim/time/paused"):
+            raise XPlaneError("X-Plane stays paused: a demo dialog is open (Use Demo / OK). Click it, then rerun")
 
     async def park(self) -> None:
         """Pause at the end of a scenario so the aircraft cannot fly out of the demo area afterwards."""
