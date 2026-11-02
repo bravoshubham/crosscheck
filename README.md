@@ -85,6 +85,7 @@ X-Plane truth (10 Hz) ───────────────────�
 
 ```bash
 uv run python cli.py debrief      # then open site/index.html
+uv run python cli.py video        # site/crosscheck_demo.mp4: a 3.5-minute cut of the same recordings
 ```
 
 The debrief viewer replays each recorded scenario: the cockpit frames Crosscheck's camera saw,

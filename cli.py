@@ -6,6 +6,7 @@
   uv run python cli.py replay --all --recompute --reader spark   # re-read with Muse Spark (any OS)
   uv run python cli.py debrief                            # build the debrief viewer into site/
   uv run python cli.py live                               # tablet display of the run in progress (:8770)
+  uv run python cli.py video                              # demo video from the debrief data (site/crosscheck_demo.mp4)
 
 Replay feeds the panel readings and spoken ("said") facts saved with each recording back
 through the same ledger, rules and scorer as the live run, then compares the result with the
@@ -57,9 +58,14 @@ def main() -> int:
     rp.add_argument("--reader", choices=["apple", "spark"], default="apple",
                     help="with --recompute: apple (macOS, on-device) or spark (Muse Spark, any OS, API key)")
     sub.add_parser("debrief", help="build the debrief viewer (site/index.html) from replay/")
+    sub.add_parser("video", help="render a demo video from the debrief data (run debrief first)")
     lv = sub.add_parser("live", help="tablet display of the scenario being recorded")
     lv.add_argument("--port", type=int, default=8770)
     args = ap.parse_args()
+    if args.cmd == "video":
+        from debrief.video import build as build_video
+        print("wrote", build_video())
+        return 0
     if args.cmd == "live":
         from ui.server import serve
         print(f"Crosscheck live display on http://localhost:{args.port}")

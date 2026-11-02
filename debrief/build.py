@@ -82,8 +82,13 @@ def build_one(rec: pathlib.Path, synth) -> dict:
 
     # audio: radio lines (as spoken, started when the line began) and callouts
     audio = []
+    mac_voice = "macOS voice" in meta.get("speech", "")  # flaps and pilot watch: the crew spoke in a macOS voice
     for i, h in enumerate(heard):
-        wav, sr = synth(h["spoken"])
+        if mac_voice:
+            from voice.crew import SR as crew_sr, say
+            wav, sr = say(h["spoken"]), crew_sr
+        else:
+            wav, sr = synth(h["spoken"])
         f = f"rec/{name}/line{i}.wav"
         sf.write(SITE / f, wav, sr)
         dur = len(wav) / sr
