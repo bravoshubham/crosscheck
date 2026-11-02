@@ -81,5 +81,14 @@ def score(rec_dir: pathlib.Path, events_file: str = "events.jsonl") -> dict:
     readings = [e for e in events if e["kind"] == "reading"]
     readable = sum(e.get("ias") is not None for e in readings) / max(1, len(readings))
     result["panel_readable"] = round(readable, 2)
-    result["pass"] = result["pass"] and readable >= MIN_READABLE
+    # a frame much brighter than the dark cockpit means another window was captured (and would
+    # be published with the recording); Spark can return numbers for any image, so check pixels
+    frames = [rec_dir / e["frame"] for e in readings if e.get("frame") and (rec_dir / e["frame"]).exists()]
+    result["non_cockpit_frames"] = sum(_bright(f) for f in frames)
+    result["pass"] = result["pass"] and readable >= MIN_READABLE and not result["non_cockpit_frames"]
     return result
+
+
+def _bright(path: pathlib.Path) -> bool:
+    from PIL import Image, ImageStat
+    return ImageStat.Stat(Image.open(path).convert("L").resize((64, 32))).mean[0] > 110
