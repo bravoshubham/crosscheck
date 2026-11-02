@@ -47,10 +47,10 @@ X-Plane truth (10 Hz) ───────────────────�
 | Model | Job | State |
 | --- | --- | --- |
 | Muse Glimmer 30B (open weights, on the Mac) | Decisions on board with no network; clearance extraction | Working: decisions in 2.5 s; extraction 7/7 on clean text |
-| Muse Spark | The same decisions through the API; reading panel crops on non-Macs | Waiting for API key |
-| SAM 3.1 | Locating each display for calibration | Waiting for API key |
-| Muse Voice Transcribe | Crew and ATC speech with speaker labels | Waiting for API key |
-| SAM Audio | Separating ATC and each pilot from cockpit noise | Weights ready; GPU run pending |
+| Muse Spark | The same decisions through the API; reading panel crops on non-Macs | Key works; not yet wired in |
+| SAM 3.1 | Locating each display for calibration | Key works; not yet wired in |
+| Muse Voice Transcribe | Crew and ATC speech | Working over the realtime websocket; radio set scored (below); not yet in the live loop |
+| SAM Audio | Separating overlapping speakers | Runs on Modal (T4); cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
 | SAM 3D Body | Opt-in pilot watch (slumping, unresponsive) | Weights ready; GPU run pending |
 | MMS-TTS, MMS ASR | Crosscheck's voice; interim speech baseline | Working |
 
@@ -86,7 +86,8 @@ Tests: `uv run pytest`.
 | X-Plane link | 10.0 Hz truth; autopilot, transponder and failure commands work | Read-back of each write |
 | On-board decisions (Glimmer) | 8/8 correct, median 2.5 s | Hand-labelled flags |
 | Clearance extraction (Glimmer) | Exact text 7/7; noisy recognizer output 4/7 (+5 dB) to 0/7 (−5 dB); 0 wrong values after the guard | Known script of each line |
-| Radio word error rate, MMS ASR, no separation | 0.435 clean → 0.911 at −5 dB | Known script; SAM Audio comparison pending |
+| Radio speech, Muse Voice Transcribe (14 lines × clean, +5/0/−5 dB jet or piston noise) | Lines with every number exact: clean 13/13; +5 dB 12/13; 0 dB 10/13; −5 dB 10/13. After SAM Audio: 11, 9, 7. Meta's open MMS ASR: 5, 3, 1. 98 clips cost ≈ $0.02 | Known script of each line (`eval/audio/wer_muse.py`) |
+| Callsign recognition (same set) | "Alaska" missed in 2/7 clean, 5/21 noisy lines ("Oscar", "Alas, for"); the guard drops it rather than misattribute | Known script |
 
 ## Built during the hackathon
 

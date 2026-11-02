@@ -1,0 +1,36 @@
+{
+ "asr": "muse-voice-transcribe-1.0",
+ "normalisation": "lowercase, no punctuation, each spoken number as one value",
+ "wer": {
+  "mms raw snr+0": 1.062,
+  "mms raw snr+5": 0.812,
+  "mms raw snr-5": 1.475,
+  "mms sam snr+0": 1.075,
+  "mms sam snr+5": 0.875,
+  "mms sam snr-5": 1.538,
+  "muse clean": 0.163,
+  "muse raw snr+0": 0.287,
+  "muse raw snr+5": 0.125,
+  "muse raw snr-5": 0.438,
+  "muse sam snr+0": 0.35,
+  "muse sam snr+5": 0.388,
+  "muse sam snr-5": 0.75
+ },
+ "numbers_exact": {
+  "mms raw snr+0": "3/13",
+  "mms raw snr+5": "5/13",
+  "mms raw snr-5": "1/13",
+  "mms sam snr+0": "2/13",
+  "mms sam snr+5": "3/13",
+  "mms sam snr-5": "1/13",
+  "muse clean": "13/13",
+  "muse raw snr+0": "10/13",
+  "muse raw snr+5": "12/13",
+  "muse raw snr-5": "10/13",
+  "muse sam snr+0": "9/13",
+  "muse sam snr+5": "11/13",
+  "muse sam snr-5": "7/13"
+ },
+ "audio_minutes": 7.81,
+ "est_cost_usd": 0.0234
+}

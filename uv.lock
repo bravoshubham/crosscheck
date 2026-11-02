@@ -197,6 +197,7 @@ eval = [
     { name = "soundfile" },
     { name = "torch" },
     { name = "transformers" },
+    { name = "websockets" },
 ]
 
 [package.metadata]
@@ -226,6 +227,7 @@ eval = [
     { name = "soundfile", specifier = ">=0.14.0" },
     { name = "torch", specifier = ">=2.15.0" },
     { name = "transformers", specifier = ">=5.22.1" },
+    { name = "websockets", specifier = ">=17.4" },
 ]
 
 [[package]]

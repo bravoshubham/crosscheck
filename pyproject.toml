@@ -31,6 +31,7 @@ eval = [
     "soundfile>=0.14.0",
     "torch>=2.15.0",
     "transformers>=5.22.1",
+    "websockets>=17.4",
 ]
 
 [tool.pytest.ini_options]

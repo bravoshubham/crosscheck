@@ -1,0 +1,254 @@
+[
+ {
+  "file": "00_jet_snr+5.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "muse_raw": "Alaska 421 climb and maintain flight level 240",
+  "muse_sam": "Alaska, Ford, 21 Clumb and maintain flight level 240"
+ },
+ {
+  "file": "00_jet_snr+0.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "muse_raw": "Alaska 421 club and main flight level 240",
+  "muse_sam": "Alaska 21 and main flight level 240."
+ },
+ {
+  "file": "00_jet_snr-5.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "muse_raw": "Alaska 4, 21 club and main flight level 240",
+  "muse_sam": "Alaska four, two one flight level two four zero"
+ },
+ {
+  "file": "01_jet_snr+5.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "muse_raw": "Alaska 421 turn left hitting 270",
+  "muse_sam": "I'm Aska for two one turn left hitting two seven zero"
+ },
+ {
+  "file": "01_jet_snr+0.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "muse_raw": "Alaska 421 turn left heading to 70",
+  "muse_sam": "Alaska 421 turn left heading to seven zero"
+ },
+ {
+  "file": "01_jet_snr-5.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "muse_raw": "Alaska 421 turn left hitting 270",
+  "muse_sam": "I'll ask for 210 left, hitting 270."
+ },
+ {
+  "file": "02_jet_snr+5.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "muse_raw": "Alaska 421 descend and maintain 11000",
+  "muse_sam": "Alaska 421 descend and maintain one one thousand."
+ },
+ {
+  "file": "02_jet_snr+0.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "muse_raw": "Alaska 421 descend and maintain 11000",
+  "muse_sam": "Alaska 421 descend and maintain 11000"
+ },
+ {
+  "file": "02_jet_snr-5.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "muse_raw": "Alaska 421 defend maintain 11000",
+  "muse_sam": "I want this maintain one one"
+ },
+ {
+  "file": "03_jet_snr+5.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "muse_raw": "Alaska 421 contact Portland approach 124.35",
+  "muse_sam": "Alaska 421 contact Portland approach 124.35."
+ },
+ {
+  "file": "03_jet_snr+0.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "muse_raw": "Alaska 421 contact Portland approach 124.35",
+  "muse_sam": "Alaska 421 can contact Portland approach 124.35"
+ },
+ {
+  "file": "03_jet_snr-5.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "muse_raw": "Alaska 421 Kentucky Portland approach 124.35",
+  "muse_sam": "Alatcha 421 contact code 124.35"
+ },
+ {
+  "file": "04_jet_snr+5.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "muse_raw": "Alaska 421 reduce speed to 210 knots.",
+  "muse_sam": "Alaska 421 reduce speed to 210 knots."
+ },
+ {
+  "file": "04_jet_snr+0.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "muse_raw": "Alaska 421 reduce speed to 210 knots.",
+  "muse_sam": "Alaska 421 reduce speed to 210 knots"
+ },
+ {
+  "file": "04_jet_snr-5.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "muse_raw": "Alaska 421 reduce speed to 210 knots.",
+  "muse_sam": "Alaska, 421, reduce speed to 210."
+ },
+ {
+  "file": "05_jet_snr+5.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "muse_raw": "Alas, but for two one clear deals, runway one zero right approach",
+  "muse_sam": "Alas, but for two one clear yells runway one zero right approach"
+ },
+ {
+  "file": "05_jet_snr+0.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "muse_raw": "Alas, but for 2-1 clear goals, runway 10 right approach.",
+  "muse_sam": "Alaska 421 cleared goals runway 10 right approach"
+ },
+ {
+  "file": "05_jet_snr-5.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "muse_raw": "The last of four 2-1 clear kills. Runway one zero right approach.",
+  "muse_sam": "Alas, before two one Creo, run wait one terror Liger prog."
+ },
+ {
+  "file": "06_piston_snr+5.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "muse_raw": "Cessna 345, Charlie Papa, squawk 4321.",
+  "muse_sam": "Cessna 345 Charlie Papa 4321."
+ },
+ {
+  "file": "06_piston_snr+0.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "muse_raw": "Cessna 345 Charlie Papa Squawk 432 on.",
+  "muse_sam": "That's a pre-four five Charlie Tapas four four three two one"
+ },
+ {
+  "file": "06_piston_snr-5.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "muse_raw": "32745 Charlie Pappas 4432 on",
+  "muse_sam": "That's 345 Charlie, 44321."
+ },
+ {
+  "file": "07_piston_snr+5.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "muse_raw": "Cessna, 345, Charlie Papa, maintains 3,500.",
+  "muse_sam": " Cesna, 345 Charlie Papamington 3500."
+ },
+ {
+  "file": "07_piston_snr+0.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "muse_raw": "Cessna, three four five, Charlie, Papa, maintain three thousand five hundred.",
+  "muse_sam": "Cessna, three, four, five, Charlie, Papamington, three thousand five hundred."
+ },
+ {
+  "file": "07_piston_snr-5.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "muse_raw": "Cessna three four five Charlie Patton three thousand five hundred",
+  "muse_sam": "Sesma three four five Charlie Paplington three thousand five hundred"
+ },
+ {
+  "file": "08_jet_snr+5.wav",
+  "ref": "flaps fifteen",
+  "muse_raw": "Fired fitted.",
+  "muse_sam": " Flat 50."
+ },
+ {
+  "file": "08_jet_snr+0.wav",
+  "ref": "flaps fifteen",
+  "muse_raw": "Fire at 50.",
+  "muse_sam": "pledge fitting."
+ },
+ {
+  "file": "08_jet_snr-5.wav",
+  "ref": "flaps fifteen",
+  "muse_raw": "Fifty.",
+  "muse_sam": " Fired 50."
+ },
+ {
+  "file": "09_jet_snr+5.wav",
+  "ref": "positive rate gear up",
+  "muse_raw": "Positive rate gear up.",
+  "muse_sam": "Positive rape gear up."
+ },
+ {
+  "file": "09_jet_snr+0.wav",
+  "ref": "positive rate gear up",
+  "muse_raw": "Positive rape, dear,",
+  "muse_sam": "visiting rate gear um"
+ },
+ {
+  "file": "09_jet_snr-5.wav",
+  "ref": "positive rate gear up",
+  "muse_raw": " was it it break here up.",
+  "muse_sam": " Gazette is"
+ },
+ {
+  "file": "10_jet_snr+5.wav",
+  "ref": "set heading two seven zero",
+  "muse_raw": "set heading 270.",
+  "muse_sam": "said Ketting, 270."
+ },
+ {
+  "file": "10_jet_snr+0.wav",
+  "ref": "set heading two seven zero",
+  "muse_raw": "said Hetty 270",
+  "muse_sam": "said petting two seven zero."
+ },
+ {
+  "file": "10_jet_snr-5.wav",
+  "ref": "set heading two seven zero",
+  "muse_raw": "said Hetty, 270.",
+  "muse_sam": "Is that getting 270?"
+ },
+ {
+  "file": "11_jet_snr+5.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "muse_raw": " Plum, flight level 240, Oscar 421.",
+  "muse_sam": "plum white level two four zero Oscar four two one"
+ },
+ {
+  "file": "11_jet_snr+0.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "muse_raw": "One, white level two and four zero Alaska four two one",
+  "muse_sam": "From white level two and four zero Oscar four two one."
+ },
+ {
+  "file": "11_jet_snr-5.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "muse_raw": "One, white level two and four zero asterisk four two one.",
+  "muse_sam": "From twent level two, you over the four two ones."
+ },
+ {
+  "file": "12_piston_snr+5.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "muse_raw": "Mayday, mayday, mayday, Cessna three four five Charlie Papa engine failure.",
+  "muse_sam": "May day, May day, May day, Cessna three four five Charlie Papa engine failure."
+ },
+ {
+  "file": "12_piston_snr+0.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "muse_raw": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+  "muse_sam": "Mayday, mayday, mayday, Cessna three four five, Charlie, Papa, engine failure."
+ },
+ {
+  "file": "12_piston_snr-5.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "muse_raw": "Mayday mayday mayday Cessna three four five Charlie Papa engine failure",
+  "muse_sam": "May Day, May Day, May Day Cessna three four five Charlie engine failure."
+ },
+ {
+  "file": "13_jet_snr+5.wav",
+  "ref": "one thousand stabilized",
+  "muse_raw": "One thousand stabilized.,",
+  "muse_sam": "A 1000 step"
+ },
+ {
+  "file": "13_jet_snr+0.wav",
+  "ref": "one thousand stabilized",
+  "muse_raw": "One thousand stabbed lights.",
+  "muse_sam": "One thousand"
+ },
+ {
+  "file": "13_jet_snr-5.wav",
+  "ref": "one thousand stabilized",
+  "muse_raw": "One thousand step life.",
+  "muse_sam": "One thousand steps"
+ }
+]
