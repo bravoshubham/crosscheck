@@ -177,6 +177,11 @@ dependencies = [
     { name = "pillow" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "scipy", version = "1.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "soundfile" },
+    { name = "torch" },
+    { name = "transformers" },
     { name = "uvicorn" },
     { name = "websockets" },
 ]
@@ -205,6 +210,10 @@ requires-dist = [
     { name = "pillow", specifier = ">=13.0.0" },
     { name = "python-dotenv", specifier = ">=1.2.4" },
     { name = "pyyaml", specifier = ">=6.0.3" },
+    { name = "scipy", specifier = ">=1.17.1" },
+    { name = "soundfile", specifier = ">=0.14.0" },
+    { name = "torch", specifier = ">=2.15.0" },
+    { name = "transformers", specifier = ">=5.22.1" },
     { name = "uvicorn", specifier = ">=0.54.0" },
     { name = "websockets", specifier = ">=17.4" },
 ]

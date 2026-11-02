@@ -13,6 +13,10 @@ dependencies = [
     "pillow>=13.0.0",
     "python-dotenv>=1.2.4",
     "pyyaml>=6.0.3",
+    "scipy>=1.17.1",
+    "soundfile>=0.14.0",
+    "torch>=2.15.0",
+    "transformers>=5.22.1",
     "uvicorn>=0.54.0",
     "websockets>=17.4",
 ]

@@ -19,9 +19,6 @@ CALIBRATION = {
 }
 # Boxes inside the PFD crop, with an upscale factor for small digits.
 PFD_REGIONS = {
-    "fma_thrust": ((140, 20, 290, 72), 1),
-    "fma_roll": ((290, 20, 425, 72), 1),
-    "fma_pitch": ((425, 20, 580, 72), 1),
     "speed": ((10, 340, 140, 440), 3),
     "selected_speed": ((30, 60, 140, 115), 2),  # magenta MCP speed above the speed tape
 }
@@ -31,7 +28,14 @@ ALT_ROLL = (686, 345, 740, 420)  # rolling tens column, 20 ft labels
 # frames: 29/30 within 20 ft, vs 27/30 with the eyeballed 37.5 px / 22.4 px).
 ROLL_CENTRE_PX = 43.0            # pointer line, native px from the top of ALT_ROLL
 ROLL_PX_PER_20FT = 25.8
-FMA_WORDS = re.compile(r"[A-Z][A-Z /]+")
+# Flight mode annunciator: engaged modes on the top line (green), armed modes below (white).
+FMA_ENGAGED = (140, 12, 580, 68)
+FMA_ARMED = (140, 64, 580, 106)
+FMA_COLUMNS = (290, 425)  # x boundaries thrust | roll | pitch, in PFD-crop px
+FMA_VOCAB = ["MCP SPD", "FMC SPD", "THR HLD", "RETARD", "N1", "GA", "ARM", "HDG SEL", "HDG HOLD", "LNAV",
+             "VOR/LOC", "LOC", "ROLLOUT", "TO/GA", "CWS R", "CWS P", "ALT HOLD", "ALT ACQ", "VNAV PTH",
+             "VNAV SPD", "VNAV ALT", "V/S", "G/S", "FLARE"]
+FMA_RE = re.compile("|".join(re.escape(w) for w in sorted(FMA_VOCAB, key=len, reverse=True)))
 # Anchor: the barometric setting under the altitude tape ("29.92 IN." or "STD"), always present.
 # Its top-left in the calibration PFD crop; regions shift with it when the view moves.
 BARO_ANCHOR = (590, 665)
@@ -45,7 +49,8 @@ class PanelReading:
     altitude: int | None = None
     altitude_method: str = ""  # "roll" (to the pointer line) or "hundreds" (+/-50 ft)
     track_mag: int | None = None
-    fma: list[str] = field(default_factory=list)
+    fma: list[str] = field(default_factory=list)        # engaged [thrust, roll, pitch]; "" = blank
+    fma_armed: list[str] = field(default_factory=list)  # armed line, same columns
     raw: dict[str, list[str]] = field(default_factory=dict)
     alt_base: int | None = None
     roll_labels: list[tuple[int, float]] = field(default_factory=list)  # (label, y in native crop px)
@@ -68,6 +73,8 @@ def _anchor_offset(pfd: Image.Image) -> tuple[int, int]:
 
 
 def _crop(img: Image.Image, box: tuple, scale: int) -> Image.Image:
+    # clamp to the image: black padding from an out-of-bounds crop degrades text recognition
+    box = (max(0, box[0]), max(0, box[1]), min(img.width, box[2]), min(img.height, box[3]))
     c = img.crop(box)
     return c.resize((c.width * scale, c.height * scale), Image.LANCZOS) if scale > 1 else c
 
@@ -83,6 +90,20 @@ def _number_near_centre(results, height: float, lo: int, hi: int) -> int | None:
         if best is None or dist < best[0]:
             best = (dist, int(digits))
     return None if best is None else best[1]
+
+
+def _fma_line(pfd: Image.Image, box: tuple, scale: int = 2) -> list[str]:
+    """Read one FMA line and assign each recognised mode word to a column by its x position."""
+    cols = ["", "", ""]
+    for text, _, (x0, _, x1, _) in _ocr(_crop(pfd, box, scale)):
+        text = text.upper()
+        for m in FMA_RE.finditer(text):
+            # x of the word's centre, assuming roughly even character width across the box
+            frac = (m.start() + m.end()) / 2 / max(len(text), 1)
+            x = max(0, box[0]) + (x0 + frac * (x1 - x0)) / scale
+            col = 0 if x < FMA_COLUMNS[0] else 1 if x < FMA_COLUMNS[1] else 2
+            cols[col] = cols[col] or m.group(0)
+    return cols
 
 
 def _altitude(pfd: Image.Image, out: PanelReading, dx: int = 0, dy: int = 0) -> None:
@@ -130,10 +151,7 @@ def read_frame(frame: Image.Image) -> PanelReading:
         crop = _crop(pfd, _shift(box, dx, dy), scale)
         res = _ocr(crop)
         out.raw[name] = [t for t, _, _ in res]
-        if name.startswith("fma_"):
-            words = " ".join(t for t, _, _ in sorted(res, key=lambda r: r[2][0]))
-            out.fma.append(m.group(0).strip() if (m := FMA_WORDS.search(words)) else "")
-        elif name == "selected_speed":
+        if name == "selected_speed":
             out.selected_speed = _number_near_centre(res, crop.height, 80, 400)
         elif name == "speed":
             out.ias = _number_near_centre(res, crop.height, 30, 400)
@@ -142,6 +160,8 @@ def read_frame(frame: Image.Image) -> PanelReading:
                     break
                 c2 = _crop(pfd, _shift(box, dx, dy), retry)
                 out.ias = _number_near_centre(_ocr(c2), c2.height, 30, 400)
+    out.fma = _fma_line(pfd, _shift(FMA_ENGAGED, dx, dy))
+    out.fma_armed = _fma_line(pfd, _shift(FMA_ARMED, dx, dy))
     _altitude(pfd, out, dx, dy)
     nd = _ocr(frame.crop(_shift(CALIBRATION["nd_top"], dx, dy)))
     out.raw["nd_top"] = [t for t, _, _ in nd]

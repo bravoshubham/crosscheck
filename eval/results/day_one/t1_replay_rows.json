@@ -12,7 +12,7 @@
    "alt_method": "roll",
    "trk": 253,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -33,7 +33,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.745
+  "read_s": 0.661
  },
  {
   "i": 1,
@@ -48,7 +48,7 @@
    "alt_method": "roll",
    "trk": 251,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -69,7 +69,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.634
+  "read_s": 0.593
  },
  {
   "i": 2,
@@ -84,7 +84,7 @@
    "alt_method": "roll",
    "trk": null,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -104,7 +104,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.574
+  "read_s": 0.514
  },
  {
   "i": 3,
@@ -119,7 +119,7 @@
    "alt_method": "roll",
    "trk": 249,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -140,7 +140,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.604
+  "read_s": 0.511
  },
  {
   "i": 4,
@@ -155,7 +155,7 @@
    "alt_method": "",
    "trk": 247,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -174,7 +174,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.572
+  "read_s": 0.475
  },
  {
   "i": 5,
@@ -189,7 +189,7 @@
    "alt_method": "roll",
    "trk": 246,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -210,7 +210,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.923
+  "read_s": 0.753
  },
  {
   "i": 6,
@@ -225,7 +225,7 @@
    "alt_method": "roll",
    "trk": 245,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -246,7 +246,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.614
+  "read_s": 0.547
  },
  {
   "i": 7,
@@ -261,9 +261,9 @@
    "alt_method": "roll",
    "trk": 244,
    "fma": [
-    "NI",
     "",
-    "MCP SPU"
+    "",
+    ""
    ]
   },
   "err": {
@@ -282,7 +282,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.61
+  "read_s": 0.558
  },
  {
   "i": 8,
@@ -297,7 +297,7 @@
    "alt_method": "roll",
    "trk": 242,
    "fma": [
-    "TN",
+    "",
     "",
     ""
    ]
@@ -316,7 +316,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.865
+  "read_s": 0.768
  },
  {
   "i": 9,
@@ -331,9 +331,9 @@
    "alt_method": "roll",
    "trk": 241,
    "fma": [
-    "TNI",
     "",
-    "ME"
+    "",
+    ""
    ]
   },
   "err": {
@@ -352,7 +352,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.846
+  "read_s": 0.759
  },
  {
   "i": 10,
@@ -367,7 +367,7 @@
    "alt_method": "",
    "trk": 239,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -386,7 +386,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.575
+  "read_s": 0.533
  },
  {
   "i": 11,
@@ -401,7 +401,7 @@
    "alt_method": "roll",
    "trk": 238,
    "fma": [
-    "",
+    "N1",
     "",
     "MCP SPD"
    ]
@@ -422,7 +422,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.683
+  "read_s": 0.626
  },
  {
   "i": 12,
@@ -458,7 +458,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.623
+  "read_s": 0.56
  },
  {
   "i": 13,
@@ -494,7 +494,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.618
+  "read_s": 0.582
  },
  {
   "i": 14,
@@ -529,7 +529,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.621
+  "read_s": 0.571
  },
  {
   "i": 15,
@@ -565,7 +565,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.622
+  "read_s": 0.587
  },
  {
   "i": 16,
@@ -601,7 +601,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.618
+  "read_s": 0.575
  },
  {
   "i": 17,
@@ -637,7 +637,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.624
+  "read_s": 0.579
  },
  {
   "i": 18,
@@ -673,7 +673,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.624
+  "read_s": 0.587
  },
  {
   "i": 19,
@@ -709,7 +709,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.626
+  "read_s": 0.59
  },
  {
   "i": 20,
@@ -745,7 +745,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.644
+  "read_s": 0.588
  },
  {
   "i": 21,
@@ -781,7 +781,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.641
+  "read_s": 0.586
  },
  {
   "i": 22,
@@ -816,7 +816,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.656
+  "read_s": 0.581
  },
  {
   "i": 23,
@@ -852,7 +852,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.662
+  "read_s": 0.581
  },
  {
   "i": 24,
@@ -888,7 +888,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.666
+  "read_s": 0.582
  },
  {
   "i": 25,
@@ -923,7 +923,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.675
+  "read_s": 0.577
  },
  {
   "i": 26,
@@ -959,7 +959,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.675
+  "read_s": 0.594
  },
  {
   "i": 27,
@@ -995,7 +995,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.651
+  "read_s": 0.566
  },
  {
   "i": 28,
@@ -1031,7 +1031,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.669
+  "read_s": 0.579
  },
  {
   "i": 29,
@@ -1067,7 +1067,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.664
+  "read_s": 0.577
  },
  {
   "i": 30,
@@ -1103,7 +1103,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.66
+  "read_s": 0.58
  },
  {
   "i": 31,
@@ -1139,7 +1139,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.646
+  "read_s": 0.58
  },
  {
   "i": 32,
@@ -1174,7 +1174,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.722
+  "read_s": 0.66
  },
  {
   "i": 33,
@@ -1210,7 +1210,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.653
+  "read_s": 0.578
  },
  {
   "i": 34,
@@ -1246,7 +1246,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.755
+  "read_s": 0.666
  },
  {
   "i": 35,
@@ -1282,7 +1282,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.889
+  "read_s": 0.736
  },
  {
   "i": 36,
@@ -1318,7 +1318,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.715
+  "read_s": 0.585
  },
  {
   "i": 37,
@@ -1354,7 +1354,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.718
+  "read_s": 0.589
  },
  {
   "i": 38,
@@ -1390,7 +1390,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.714
+  "read_s": 0.633
  },
  {
   "i": 39,
@@ -1425,7 +1425,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.81
+  "read_s": 0.738
  },
  {
   "i": 40,
@@ -1461,7 +1461,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.823
+  "read_s": 0.668
  },
  {
   "i": 41,
@@ -1497,7 +1497,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.815
+  "read_s": 0.666
  },
  {
   "i": 42,
@@ -1533,7 +1533,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.779
+  "read_s": 0.661
  },
  {
   "i": 43,
@@ -1569,7 +1569,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.778
+  "read_s": 0.661
  },
  {
   "i": 44,
@@ -1605,7 +1605,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.775
+  "read_s": 0.67
  },
  {
   "i": 45,
@@ -1641,7 +1641,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.853
+  "read_s": 0.725
  },
  {
   "i": 46,
@@ -1677,7 +1677,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.755
+  "read_s": 0.651
  },
  {
   "i": 47,
@@ -1713,7 +1713,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.654
+  "read_s": 0.585
  },
  {
   "i": 48,
@@ -1749,7 +1749,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.896
+  "read_s": 0.781
  },
  {
   "i": 49,
@@ -1785,7 +1785,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.672
+  "read_s": 0.589
  },
  {
   "i": 50,
@@ -1821,7 +1821,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.673
+  "read_s": 0.585
  },
  {
   "i": 51,
@@ -1857,7 +1857,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.672
+  "read_s": 0.589
  },
  {
   "i": 52,
@@ -1893,7 +1893,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.672
+  "read_s": 0.585
  },
  {
   "i": 53,
@@ -1929,7 +1929,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.68
+  "read_s": 0.594
  },
  {
   "i": 54,
@@ -1965,7 +1965,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.674
+  "read_s": 0.588
  },
  {
   "i": 55,
@@ -2001,7 +2001,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.778
+  "read_s": 0.676
  },
  {
   "i": 56,
@@ -2037,7 +2037,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.781
+  "read_s": 0.672
  },
  {
   "i": 57,
@@ -2073,7 +2073,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.782
+  "read_s": 0.677
  },
  {
   "i": 58,
@@ -2109,7 +2109,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.777
+  "read_s": 0.674
  },
  {
   "i": 59,
@@ -2145,6 +2145,6 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.782
+  "read_s": 0.672
  }
 ]

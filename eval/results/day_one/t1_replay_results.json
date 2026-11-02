@@ -1,7 +1,7 @@
 {
  "frames": 60,
  "reader": "senses.panel (Apple Vision OCR on calibrated crops)",
- "read_s_median": 0.673,
+ "read_s_median": 0.589,
  "ias": {
   "read": "59/60",
   "median_err": 0.4,
@@ -42,10 +42,8 @@
   "": 2
  },
  "fma_strings": {
-  " |  | MCP SPD": 9,
-  "NI |  | MCP SPU": 1,
-  "TN |  | ": 1,
-  "TNI |  | ME": 1,
+  "N1 |  | MCP SPD": 9,
+  " |  | ": 3,
   "MCP SPD |  | ALT HOLD": 48
  }
 }

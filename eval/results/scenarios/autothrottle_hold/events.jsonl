@@ -1,0 +1,58 @@
+{"t": 1793596654.905313, "kind": "reading", "ias": 150, "altitude": 2042, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "", ""], "fma_armed": ["", "", ""]}
+{"t": 1793596656.3830242, "kind": "reading", "ias": 147, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596657.438129, "kind": "reading", "ias": 144, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596658.535763, "kind": "reading", "ias": 140, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596659.884481, "kind": "reading", "ias": 136, "altitude": 2131, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596661.071826, "kind": "reading", "ias": 132, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596662.234635, "kind": "reading", "ias": 81, "altitude": 2202, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596663.5988102, "kind": "reading", "ias": 126, "altitude": 2239, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596664.782683, "kind": "reading", "ias": 126, "altitude": 2267, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596665.9300082, "kind": "reading", "ias": 127, "altitude": 2287, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596667.168519, "kind": "reading", "ias": null, "altitude": 2312, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596668.677674, "kind": "reading", "ias": 133, "altitude": 2336, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596669.841829, "kind": "reading", "ias": null, "altitude": 2354, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596671.285065, "kind": "reading", "ias": 138, "altitude": 2377, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596672.463037, "kind": "reading", "ias": 139, "altitude": 2391, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596673.640705, "kind": "reading", "ias": 140, "altitude": 2500, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596674.880888, "kind": "reading", "ias": 142, "altitude": 2410, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596676.078457, "kind": "reading", "ias": 143, "altitude": 2411, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596677.325429, "kind": "reading", "ias": 144, "altitude": 2413, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596678.513528, "kind": "reading", "ias": 145, "altitude": 2410, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596679.7310221, "kind": "reading", "ias": 145, "altitude": 2404, "track": 104, "selected_speed": 142, "fma": ["MCP SPD", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596680.906815, "kind": "reading", "ias": 145, "altitude": 2397, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596682.143011, "kind": "reading", "ias": 145, "altitude": 2389, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596683.3839319, "kind": "reading", "ias": 144, "altitude": 2384, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596684.62864, "kind": "reading", "ias": 143, "altitude": 2375, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596685.925897, "kind": "reading", "ias": 141, "altitude": 2366, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596687.168874, "kind": "reading", "ias": null, "altitude": 2357, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596688.596916, "kind": "reading", "ias": 138, "altitude": 2353, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596689.8499, "kind": "reading", "ias": 136, "altitude": 2342, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["", "", ""]}
+{"t": 1793596689.8499, "kind": "callout", "rule": "mode_vs_phase", "key": "autothrottle", "expected": "speed mode", "actual": "BLANK", "since": 1793596689.8499, "callout": "Speed. Autothrottle not in speed."}
+{"t": 1793596691.2331169, "kind": "reading", "ias": 134, "altitude": 2336, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596692.511832, "kind": "reading", "ias": 132, "altitude": 2332, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596693.6884081, "kind": "reading", "ias": 130, "altitude": 2325, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596694.8848388, "kind": "reading", "ias": 128, "altitude": 2321, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596695.981898, "kind": "reading", "ias": 126, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596697.0343611, "kind": "reading", "ias": 125, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596698.076994, "kind": "reading", "ias": 123, "altitude": 2315, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596699.225284, "kind": "reading", "ias": 121, "altitude": 2313, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596700.435484, "kind": "reading", "ias": 119, "altitude": 2310, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596701.6179872, "kind": "reading", "ias": 116, "altitude": 2308, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596702.855289, "kind": "reading", "ias": 114, "altitude": 2306, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596704.076069, "kind": "reading", "ias": 112, "altitude": 2303, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596705.235689, "kind": "reading", "ias": null, "altitude": 2400, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596706.715999, "kind": "reading", "ias": 60, "altitude": 2297, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596708.125049, "kind": "reading", "ias": 110, "altitude": 2286, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596709.487484, "kind": "reading", "ias": 110, "altitude": null, "track": null, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596710.8418272, "kind": "reading", "ias": 111, "altitude": 2235, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596712.055487, "kind": "reading", "ias": 113, "altitude": 2200, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596713.338558, "kind": "reading", "ias": 115, "altitude": 2157, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596714.5870981, "kind": "reading", "ias": 118, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596715.7771251, "kind": "reading", "ias": 120, "altitude": 2063, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596717.052484, "kind": "reading", "ias": 123, "altitude": 2006, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596718.2328289, "kind": "reading", "ias": 123, "altitude": 1955, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596719.429518, "kind": "reading", "ias": 128, "altitude": null, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596720.559266, "kind": "reading", "ias": null, "altitude": 1864, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596722.124062, "kind": "reading", "ias": 131, "altitude": 1806, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596723.3445811, "kind": "reading", "ias": 132, "altitude": 1767, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
+{"t": 1793596724.578547, "kind": "reading", "ias": 132, "altitude": 1737, "track": 104, "selected_speed": 142, "fma": ["", "HDG SEL", "ALT HOLD"], "fma_armed": ["ARM", "", ""]}
