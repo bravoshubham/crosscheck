@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-11-02T10:33:20.550Z",
         "reason": "Claude: img starts hidden ([hidden]{display:none!important}) and JS sets src when the first camera frame arrives"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "ui/live.html"
+        ],
+        "createdAt": "2026-11-02T12:22:33.270Z",
+        "reason": "Claude: magenta = selected values and white/green = actual follows Boeing 737 PFD colour conventions on purpose; no gradients"
       }
     ]
   }

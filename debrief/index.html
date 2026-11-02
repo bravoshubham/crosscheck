@@ -55,9 +55,10 @@ header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margi
 .caption.on { display: flex; }
 .caption .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--callout); flex: none; }
 .radio { position: absolute; left: 12px; top: 12px; max-width: 70%; background: rgba(10,13,17,.85);
-  border-left: 3px solid var(--said); padding: 6px 10px; border-radius: 4px; font-size: 13px; display: none; }
+  border: 1px solid rgba(121,184,255,.45); padding: 6px 10px; border-radius: 6px; font-size: 13px; display: none; }
 .radio.on { display: block; }
 .radio .who { color: var(--said); font: 500 11px var(--mono); letter-spacing: .06em; }
+.radio .who::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--said); margin-right: 6px; vertical-align: 1px; }
 .transport { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--line); }
 .btn { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); border-radius: 8px;
   padding: 7px 12px; font: 500 13px var(--sans); cursor: pointer; min-width: 44px; }
