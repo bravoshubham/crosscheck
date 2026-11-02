@@ -11,7 +11,9 @@ channel to Muse Voice Transcribe, and only what comes back is parsed into the le
 (senses/speech.py). --scripted puts the values in directly instead (no API key needed).
 --speak also plays the lines and callouts aloud.
 
-Run with X-Plane 12 open:  uv run python eval/scenarios/altitude_bust.py [bust|readback|correct] [--speak] [--scripted]
+--spark reads the panel with Muse Spark instead of Apple Vision (recorded as altitude_<variant>_spark).
+
+Run with X-Plane 12 open:  uv run python eval/scenarios/altitude_bust.py [bust|readback|correct] [--speak] [--scripted] [--spark]
 """
 import asyncio
 import json
@@ -57,7 +59,7 @@ def play(pcm: np.ndarray, sr: int) -> None:
     subprocess.Popen(["afplay", str(path)])
 
 
-async def main(variant: str, speak: bool, scripted: bool) -> int:
+async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple") -> int:
     cleared, readback, mcp = VARIANTS[variant]
     lines = {"atc": f"alaska four two one climb and maintain {SPOKEN[cleared]}",
              "pm": f"climb and maintain {SPOKEN[readback]} alaska four two one"}
@@ -69,7 +71,8 @@ async def main(variant: str, speak: bool, scripted: bool) -> int:
             assert sr == 16000, sr
             audio[who] = radio(pcm) if who == "atc" else pcm * 0.9 / (np.abs(pcm).max() + 1e-9)
     heard = []
-    out = ROOT / "replay" / f"altitude_{variant}"
+    name = f"altitude_{variant}" + ("_spark" if reader == "spark" else "")
+    out = ROOT / "replay" / name
     out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
     await xp.ensure_running()
@@ -89,7 +92,7 @@ async def main(variant: str, speak: bool, scripted: bool) -> int:
     say = None
     if speak:
         from voice.tts import speak as say
-    cc = Crosscheck(out, speak=say, frames=True)
+    cc = Crosscheck(out, speak=say, frames=True, reader=reader)
     truth_rows = []
     bring_to_front()  # the panel reader captures the screen
     t0 = time.time()
@@ -142,7 +145,7 @@ async def main(variant: str, speak: bool, scripted: bool) -> int:
         for r in truth_rows:
             f.write(json.dumps(r) + "\n")
     (out / "meta.json").write_text(json.dumps({
-        "scenario": f"altitude_{variant}", "scorer": "altitude", "aircraft": "B738", "area": "Portland",
+        "scenario": name, "scorer": "altitude", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "area": "Portland",
         "variant": variant, "cleared": cleared, "readback": readback, "mcp_set": mcp,
         "expect_rule": EXPECT[variant], "t_start": t0, "t_clear": t0 + T_CLEAR, "t_set": t_set,
         "speech": "scripted (said facts from the scenario script)" if scripted else
@@ -158,4 +161,4 @@ async def main(variant: str, speak: bool, scripted: bool) -> int:
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     sys.exit(asyncio.run(main(args[0] if args else "bust", speak="--speak" in sys.argv,
-                              scripted="--scripted" in sys.argv)))
+                              scripted="--scripted" in sys.argv, reader="spark" if "--spark" in sys.argv else "apple")))

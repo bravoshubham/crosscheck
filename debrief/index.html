@@ -33,6 +33,12 @@ header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margi
 .tab[aria-selected="true"] { border-color: var(--text); background: var(--panel-2); }
 .tab .t { font-weight: 600; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .tab .d { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.readers { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.readers .lbl { color: var(--muted); font-size: 13px; margin-right: 4px; }
+.seg { background: var(--panel); border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 5px 12px;
+  font: 500 13px var(--sans); cursor: pointer; }
+.seg[aria-checked="true"] { color: var(--text); border-color: var(--text); background: var(--panel-2); }
+.seg:focus-visible { outline: 2px solid var(--said); outline-offset: 2px; }
 .badge { font: 500 11px/1 var(--mono); padding: 4px 6px; border-radius: 4px; letter-spacing: .04em; white-space: nowrap; }
 .badge.pass { color: var(--ok); background: rgba(79,209,139,.12); }
 .badge.fail { color: var(--callout); background: rgba(255,92,92,.12); }
@@ -103,6 +109,7 @@ code { font-family: var(--mono); font-size: .92em; color: var(--text); }
     what the aircraft is <b class="k-doing">doing</b> — and speaks up when they disagree. Each run below was flown in
     X-Plane 12 and recorded; this page replays it.</p>
 
+  <div class="readers" id="readers" role="radiogroup" aria-label="Panel reader"></div>
   <nav class="tabs" role="tablist" id="tabs"></nav>
 
   <section class="stage">
@@ -170,10 +177,25 @@ function nearestTruth(tt) {
 }
 
 // ---------- tabs ----------
+// recordings come in pairs: the same scenario with the on-device reader and with Muse Spark
+const base = r => r.id.replace(/_spark$/, "");
+const isSpark = r => r.id.endsWith("_spark");
+const READERS = [["apple", "On-device (Apple Vision)"], ["spark", "Muse Spark"]];
 function renderTabs() {
-  $("tabs").innerHTML = D.map((r, i) => `
+  const spark = isSpark(rec);
+  const have = new Set(D.map(r => isSpark(r) ? "spark" : "apple"));
+  $("readers").innerHTML = `<span class="lbl">Panel reader</span>` + READERS.filter(([k]) => have.has(k)).map(([k, label]) =>
+    `<button class="seg" role="radio" data-k="${k}" aria-checked="${(k === "spark") === spark}">${label}</button>`).join("");
+  $("readers").querySelectorAll(".seg").forEach(b => b.onclick = () => {
+    const want = b.dataset.k === "spark";
+    const i = D.findIndex(r => base(r) === base(rec) && isSpark(r) === want);
+    const j = i >= 0 ? i : D.findIndex(r => isSpark(r) === want);
+    if (j >= 0) select(j);
+  });
+  const shown = D.map((r, i) => [r, i]).filter(([r]) => isSpark(r) === spark);
+  $("tabs").innerHTML = shown.map(([r, i]) => `
     <button class="tab" role="tab" data-i="${i}" aria-selected="${r === rec}">
-      <div class="t">${esc(r.title)} <span class="badge ${r.result.pass ? "pass" : "fail"}">${r.result.pass ? "PASS" : "FAIL"}</span></div>
+      <div class="t">${esc(r.title.replace(" · Spark reader", ""))} <span class="badge ${r.result.pass ? "pass" : "fail"}">${r.result.pass ? "PASS" : "FAIL"}</span></div>
       <div class="d">${esc(r.blurb)}</div></button>`).join("");
   $("tabs").querySelectorAll(".tab").forEach(b => b.onclick = () => select(+b.dataset.i));
 }
@@ -261,6 +283,8 @@ function renderResult() {
     how.push(`False callouts before the fault: ${(r.false_callouts_before_fault || []).length}.`);
   }
   how.push(`Panel readable in ${Math.round((r.panel_readable ?? 1) * 100)}% of frames.`);
+  if (m.panel_reader) how.push(`Panel read by ${m.panel_reader === "muse-spark" ? "Muse Spark (Meta Model API), readings applied when they arrived" : "Apple Vision, on the Mac"}.`);
+  if (m.known_result) how.push(`<b>Expected result.</b> ${esc(m.known_result.replace(/^fail: /, ""))}`);
   $("result").innerHTML = `
     <div><h3>Scenario</h3><p>${what.join(" ")}</p><p class="sub" style="margin-top:6px">${esc(m.aircraft || "")} · recorded ${esc(m.recorded || "")}<br>Speech: ${esc(m.speech || "none")}</p></div>
     <div><h3>Result · <span class="badge ${r.pass ? "pass" : "fail"}">${r.pass ? "PASS" : "FAIL"}</span></h3><ul>${how.map(h => `<li>${h}</li>`).join("")}</ul></div>`;

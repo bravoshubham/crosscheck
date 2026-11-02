@@ -52,7 +52,7 @@ X-Plane truth (10 Hz) ───────────────────�
 | Model | Job | State |
 | --- | --- | --- |
 | Muse Glimmer 30B (open weights, on the Mac) | Decisions on board with no network; clearance extraction | Working: decisions in 2.5 s; extraction 7/7 on clean text |
-| Muse Spark | The same decisions through the API; reading panel crops on non-Macs | Key works; not yet wired in |
+| Muse Spark | Reading the panel (any OS); decisions through the API | Panel reader working and more accurate than the on-device one (below); live in all four scenarios — fast enough for clearance checks, ~3–5 s too slow for the autothrottle callout. Decisions not yet wired in |
 | SAM 3.1 | Locating each display for calibration | Key works; not yet wired in |
 | Muse Voice Transcribe | Crew and ATC speech, one channel each | Live in the altitude scenarios; radio set scored (below) |
 | SAM Audio | Separating overlapping speakers | Runs on Modal (T4); cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
@@ -83,10 +83,15 @@ uv run python cli.py replay --all
 
 Replays every recorded scenario in `replay/` from the panel readings saved with it, through the
 same ledger, rules and scorer as the live run, and checks the result matches the live one. No
-simulator, GPU or API key needed. `--recompute` re-reads the saved panel images (macOS).
-Four recordings ship today (2 Nov): `autothrottle_hold`, `altitude_bust`, `altitude_readback`,
-`altitude_correct` — 4/4 pass and match their live runs, both from the saved readings and with
-`--recompute`.
+simulator, GPU or API key needed. `--recompute` re-reads the saved panel images (macOS);
+`--recompute --reader spark` re-reads them with Muse Spark on any OS (needs `MODEL_API_KEY`;
+~$0.003 a frame, ~$0.60 for all frames of the four on-device recordings).
+Eight recordings ship today (2 Nov): the four scenarios with the on-device panel reader
+(`autothrottle_hold`, `altitude_bust`, `altitude_readback`, `altitude_correct`) and the same four
+with Muse Spark reading the panel live (`*_spark`). All eight replay exactly as they ran live.
+Seven pass; `autothrottle_hold_spark` fails as recorded — Spark's readings arrive ~5 s after
+capture, so the callout came after speed was already 10 kt low — and is kept as evidence. The
+on-device four also match with `--recompute`, and with `--recompute --reader spark`.
 
 Live scenarios need X-Plane 12 on the same machine. The free demo works; `bridge/demo_dialogs.py`
 clicks the demo's own "Use Demo" / "Understood" / "OK" dialogs so runs can be unattended (macOS
@@ -95,6 +100,7 @@ must allow the app to control the computer):
 ```bash
 uv run python eval/scenarios/autothrottle_hold.py --silent
 uv run python eval/scenarios/altitude_bust.py bust      # or readback, correct
+# add --spark to read the panel with Muse Spark instead (recorded as *_spark)
 ```
 
 Tests: `uv run pytest`.
@@ -103,6 +109,7 @@ Tests: `uv run pytest`.
 
 | Test | Result | Measured against |
 | --- | --- | --- |
+| Panel reading, Muse Spark vs on-device, every 3rd frame of the four recordings (67 frames) | Altitude ±20 ft: **64/67** vs 56/67 · Selected altitude exact: **49/49** vs 44/49 · Speed ±2 kt: **18/18** vs 17/18 · Thrust mode: **17/17** vs 16/17 · Spark median 2.8 s/frame, $0.20 in all (`eval/panel_spark.py`) | X-Plane's values in the second before each capture; thrust mode against the scripted fault time |
 | Panel reading (737, screen capture, 60 frames of a climbing turn) | Speed ±2 kt: 57/60 · Altitude ±20 ft: 54/60 · Track ±2°: 54/60 · ~0.6 s/frame | X-Plane's values logged around each capture |
 | X-Plane link | 10.0 Hz truth; autopilot, transponder and failure commands work | Read-back of each write |
 | On-board decisions (Glimmer) | 8/8 correct, median 2.5 s | Hand-labelled flags |

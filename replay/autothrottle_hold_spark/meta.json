@@ -1,0 +1,15 @@
+{
+ "scenario": "autothrottle_hold_spark",
+ "scorer": "autothrottle_hold",
+ "panel_reader": "muse-spark",
+ "aircraft": "B738",
+ "airport": "KPDX 10R",
+ "t_start": 1793616537.973889,
+ "t_fault": 1793616562.97689,
+ "target_kt": 145.0,
+ "quiet_s": 25,
+ "fault_s": 45,
+ "speech": "none",
+ "recorded": "2026-11-02 16:20:11 IST",
+ "known_result": "fail: Muse Spark readings arrive ~5 s after capture (median), so the callout came 14.8 s after the fault, after speed was 10 kt below target (12.7 s). The Apple Vision reader calls it at ~10 s. Kept as evidence of where the Spark reader's latency matters."
+}

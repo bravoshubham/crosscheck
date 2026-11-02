@@ -1,0 +1,1610 @@
+{
+ "altitude_bust/frames/00000.jpg": {
+  "ias": 185,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 185, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 260,
+   "prompt_tokens": 966,
+   "total_tokens": 1226,
+   "completion_tokens_details": {
+    "reasoning_tokens": 203
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 0
+   }
+  },
+  "seconds": 3.58
+ },
+ "altitude_bust/frames/00015.jpg": {
+  "ias": 194,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8920,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 194, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8920, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 385,
+   "prompt_tokens": 966,
+   "total_tokens": 1351,
+   "completion_tokens_details": {
+    "reasoning_tokens": 328
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 0
+   }
+  },
+  "seconds": 3.77
+ },
+ "altitude_bust/frames/00006.jpg": {
+  "ias": 191,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 191, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8900, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 424,
+   "prompt_tokens": 966,
+   "total_tokens": 1390,
+   "completion_tokens_details": {
+    "reasoning_tokens": 367
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 0
+   }
+  },
+  "seconds": 3.91
+ },
+ "altitude_bust/frames/00003.jpg": {
+  "ias": 188,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 188, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 371,
+   "prompt_tokens": 966,
+   "total_tokens": 1337,
+   "completion_tokens_details": {
+    "reasoning_tokens": 314
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 0
+   }
+  },
+  "seconds": 4.05
+ },
+ "altitude_bust/frames/00009.jpg": {
+  "ias": 193,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9000, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 383,
+   "prompt_tokens": 966,
+   "total_tokens": 1349,
+   "completion_tokens_details": {
+    "reasoning_tokens": 326
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 4.11
+ },
+ "altitude_bust/frames/00012.jpg": {
+  "ias": 194,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 194, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9020, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 624,
+   "prompt_tokens": 966,
+   "total_tokens": 1590,
+   "completion_tokens_details": {
+    "reasoning_tokens": 567
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 5.83
+ },
+ "altitude_bust/frames/00021.jpg": {
+  "ias": 193,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 8980,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 8980, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 243,
+   "prompt_tokens": 966,
+   "total_tokens": 1209,
+   "completion_tokens_details": {
+    "reasoning_tokens": 186
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.27
+ },
+ "altitude_bust/frames/00024.jpg": {
+  "ias": 199,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 8980,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 199, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 8980, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 203,
+   "prompt_tokens": 966,
+   "total_tokens": 1169,
+   "completion_tokens_details": {
+    "reasoning_tokens": 146
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.33
+ },
+ "altitude_bust/frames/00027.jpg": {
+  "ias": 210,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 9040,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 210, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 9040, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 271,
+   "prompt_tokens": 966,
+   "total_tokens": 1237,
+   "completion_tokens_details": {
+    "reasoning_tokens": 214
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.98
+ },
+ "altitude_bust/frames/00018.jpg": {
+  "ias": 193,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 531,
+   "prompt_tokens": 966,
+   "total_tokens": 1497,
+   "completion_tokens_details": {
+    "reasoning_tokens": 474
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.95
+ },
+ "altitude_bust/frames/00033.jpg": {
+  "ias": 215,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 9620,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 215, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 9620, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 390,
+   "prompt_tokens": 966,
+   "total_tokens": 1356,
+   "completion_tokens_details": {
+    "reasoning_tokens": 333
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.32
+ },
+ "altitude_bust/frames/00039.jpg": {
+  "ias": 198,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 10720,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 198, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 10720, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 404,
+   "prompt_tokens": 966,
+   "total_tokens": 1370,
+   "completion_tokens_details": {
+    "reasoning_tokens": 347
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.19
+ },
+ "altitude_bust/frames/00030.jpg": {
+  "ias": 217,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 9240,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 217, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 9240, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 707,
+   "prompt_tokens": 966,
+   "total_tokens": 1673,
+   "completion_tokens_details": {
+    "reasoning_tokens": 650
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 5.47
+ },
+ "altitude_bust/frames/00042.jpg": {
+  "ias": 184,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 11320,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 184, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 11320, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 327,
+   "prompt_tokens": 966,
+   "total_tokens": 1293,
+   "completion_tokens_details": {
+    "reasoning_tokens": 270
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.58
+ },
+ "altitude_correct/frames/00003.jpg": {
+  "ias": 198,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 198, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9020, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 237,
+   "prompt_tokens": 966,
+   "total_tokens": 1203,
+   "completion_tokens_details": {
+    "reasoning_tokens": 180
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.48
+ },
+ "altitude_bust/frames/00045.jpg": {
+  "ias": 176,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 11740,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 176, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 11740, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 456,
+   "prompt_tokens": 966,
+   "total_tokens": 1422,
+   "completion_tokens_details": {
+    "reasoning_tokens": 399
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.48
+ },
+ "altitude_correct/frames/00009.jpg": {
+  "ias": 200,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 200, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9020, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 306,
+   "prompt_tokens": 966,
+   "total_tokens": 1272,
+   "completion_tokens_details": {
+    "reasoning_tokens": 249
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.8
+ },
+ "altitude_correct/frames/00000.jpg": {
+  "ias": 191,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 191, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 336,
+   "prompt_tokens": 966,
+   "total_tokens": 1302,
+   "completion_tokens_details": {
+    "reasoning_tokens": 279
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.69
+ },
+ "altitude_correct/frames/00006.jpg": {
+  "ias": 200,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 200, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9020, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 268,
+   "prompt_tokens": 966,
+   "total_tokens": 1234,
+   "completion_tokens_details": {
+    "reasoning_tokens": 211
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.28
+ },
+ "altitude_correct/frames/00012.jpg": {
+  "ias": 199,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 199, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9000, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 339,
+   "prompt_tokens": 966,
+   "total_tokens": 1305,
+   "completion_tokens_details": {
+    "reasoning_tokens": 282
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.57
+ },
+ "altitude_bust/frames/00036.jpg": {
+  "ias": 209,
+  "selected_speed": 193,
+  "selected_altitude": 12000,
+  "altitude": 10140,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 209, \"selected_speed\": 193, \"selected_altitude\": 12000, \"altitude\": 10140, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 1171,
+   "prompt_tokens": 966,
+   "total_tokens": 2137,
+   "completion_tokens_details": {
+    "reasoning_tokens": 1114
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 7.6
+ },
+ "altitude_correct/frames/00015.jpg": {
+  "ias": 197,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 197, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 398,
+   "prompt_tokens": 966,
+   "total_tokens": 1364,
+   "completion_tokens_details": {
+    "reasoning_tokens": 341
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.22
+ },
+ "altitude_correct/frames/00018.jpg": {
+  "ias": 195,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 195, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 330,
+   "prompt_tokens": 966,
+   "total_tokens": 1296,
+   "completion_tokens_details": {
+    "reasoning_tokens": 273
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.8
+ },
+ "altitude_correct/frames/00024.jpg": {
+  "ias": 197,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 8980,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 197, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 8980, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 389,
+   "prompt_tokens": 966,
+   "total_tokens": 1355,
+   "completion_tokens_details": {
+    "reasoning_tokens": 332
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.37
+ },
+ "altitude_correct/frames/00021.jpg": {
+  "ias": 193,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 8960,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 8960, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 495,
+   "prompt_tokens": 966,
+   "total_tokens": 1461,
+   "completion_tokens_details": {
+    "reasoning_tokens": 438
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.35
+ },
+ "altitude_correct/frames/00027.jpg": {
+  "ias": 208,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 9020,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 208, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 9020, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 315,
+   "prompt_tokens": 966,
+   "total_tokens": 1281,
+   "completion_tokens_details": {
+    "reasoning_tokens": 258
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.17
+ },
+ "altitude_correct/frames/00039.jpg": {
+  "ias": 198,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 10560,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 198, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 10560, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 289,
+   "prompt_tokens": 966,
+   "total_tokens": 1255,
+   "completion_tokens_details": {
+    "reasoning_tokens": 232
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.59
+ },
+ "altitude_correct/frames/00036.jpg": {
+  "ias": 212,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 10020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 212, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 10020, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 359,
+   "prompt_tokens": 966,
+   "total_tokens": 1325,
+   "completion_tokens_details": {
+    "reasoning_tokens": 302
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.06
+ },
+ "altitude_correct/frames/00030.jpg": {
+  "ias": 216,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 9160,
+  "fma": [
+   "",
+   "",
+   ""
+  ],
+  "raw": "{\"ias\": 216, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 9160, \"fma\": [null, null, null]}",
+  "usage": {
+   "completion_tokens": 635,
+   "prompt_tokens": 966,
+   "total_tokens": 1601,
+   "completion_tokens_details": {
+    "reasoning_tokens": 585
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.59
+ },
+ "altitude_correct/frames/00033.jpg": {
+  "ias": 217,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 9500,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 217, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 9500, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 468,
+   "prompt_tokens": 966,
+   "total_tokens": 1434,
+   "completion_tokens_details": {
+    "reasoning_tokens": 411
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.6
+ },
+ "altitude_correct/frames/00042.jpg": {
+  "ias": 183,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 10960,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 183, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 10960, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 465,
+   "prompt_tokens": 966,
+   "total_tokens": 1431,
+   "completion_tokens_details": {
+    "reasoning_tokens": 408
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.9
+ },
+ "altitude_correct/frames/00048.jpg": {
+  "ias": 193,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 11240,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 11240, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 188,
+   "prompt_tokens": 966,
+   "total_tokens": 1154,
+   "completion_tokens_details": {
+    "reasoning_tokens": 131
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.65
+ },
+ "altitude_correct/frames/00045.jpg": {
+  "ias": 185,
+  "selected_speed": 194,
+  "selected_altitude": 11000,
+  "altitude": 11200,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 185, \"selected_speed\": 194, \"selected_altitude\": 11000, \"altitude\": 11200, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 476,
+   "prompt_tokens": 966,
+   "total_tokens": 1442,
+   "completion_tokens_details": {
+    "reasoning_tokens": 419
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.0
+ },
+ "altitude_readback/frames/00000.jpg": {
+  "ias": 185,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 185, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 211,
+   "prompt_tokens": 966,
+   "total_tokens": 1177,
+   "completion_tokens_details": {
+    "reasoning_tokens": 154
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.46
+ },
+ "altitude_readback/frames/00006.jpg": {
+  "ias": 191,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 191, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 277,
+   "prompt_tokens": 966,
+   "total_tokens": 1243,
+   "completion_tokens_details": {
+    "reasoning_tokens": 220
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.19
+ },
+ "altitude_readback/frames/00003.jpg": {
+  "ias": 187,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 187, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 506,
+   "prompt_tokens": 966,
+   "total_tokens": 1472,
+   "completion_tokens_details": {
+    "reasoning_tokens": 449
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.63
+ },
+ "altitude_readback/frames/00015.jpg": {
+  "ias": 194,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 194, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8900, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 281,
+   "prompt_tokens": 966,
+   "total_tokens": 1247,
+   "completion_tokens_details": {
+    "reasoning_tokens": 224
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.81
+ },
+ "altitude_readback/frames/00018.jpg": {
+  "ias": 193,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 8980, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 346,
+   "prompt_tokens": 966,
+   "total_tokens": 1312,
+   "completion_tokens_details": {
+    "reasoning_tokens": 289
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.33
+ },
+ "altitude_readback/frames/00021.jpg": {
+  "ias": 193,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 8980,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 8980, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 340,
+   "prompt_tokens": 966,
+   "total_tokens": 1306,
+   "completion_tokens_details": {
+    "reasoning_tokens": 283
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.25
+ },
+ "altitude_readback/frames/00024.jpg": {
+  "ias": 199,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 8980,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 199, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 8980, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 221,
+   "prompt_tokens": 966,
+   "total_tokens": 1187,
+   "completion_tokens_details": {
+    "reasoning_tokens": 164
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.52
+ },
+ "altitude_readback/frames/00009.jpg": {
+  "ias": 193,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9000, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 594,
+   "prompt_tokens": 966,
+   "total_tokens": 1560,
+   "completion_tokens_details": {
+    "reasoning_tokens": 537
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 4.47
+ },
+ "altitude_readback/frames/00033.jpg": {
+  "ias": 215,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 9640,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 215, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 9640, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 203,
+   "prompt_tokens": 966,
+   "total_tokens": 1169,
+   "completion_tokens_details": {
+    "reasoning_tokens": 146
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.45
+ },
+ "altitude_readback/frames/00012.jpg": {
+  "ias": 193,
+  "selected_speed": 191,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 193, \"selected_speed\": 191, \"selected_altitude\": 9000, \"altitude\": 9000, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 865,
+   "prompt_tokens": 966,
+   "total_tokens": 1831,
+   "completion_tokens_details": {
+    "reasoning_tokens": 808
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 5.94
+ },
+ "altitude_readback/frames/00039.jpg": {
+  "ias": 199,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 10760,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 199, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 10760, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 307,
+   "prompt_tokens": 966,
+   "total_tokens": 1273,
+   "completion_tokens_details": {
+    "reasoning_tokens": 250
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.06
+ },
+ "altitude_readback/frames/00027.jpg": {
+  "ias": 210,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 9040,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 210, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 9040, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 451,
+   "prompt_tokens": 966,
+   "total_tokens": 1417,
+   "completion_tokens_details": {
+    "reasoning_tokens": 394
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.64
+ },
+ "altitude_readback/frames/00030.jpg": {
+  "ias": 217,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 9250,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "raw": "{\"ias\": 217, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 9250, \"fma\": [\"N1\", \"HDG SEL\", \"MCP SPD\"]}",
+  "usage": {
+   "completion_tokens": 592,
+   "prompt_tokens": 966,
+   "total_tokens": 1558,
+   "completion_tokens_details": {
+    "reasoning_tokens": 535
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.4
+ },
+ "altitude_readback/frames/00042.jpg": {
+  "ias": 181,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 11080,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 181, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 11080, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 385,
+   "prompt_tokens": 966,
+   "total_tokens": 1351,
+   "completion_tokens_details": {
+    "reasoning_tokens": 328
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.38
+ },
+ "altitude_readback/frames/00045.jpg": {
+  "ias": 189,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 11240,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 189, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 11240, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 289,
+   "prompt_tokens": 966,
+   "total_tokens": 1255,
+   "completion_tokens_details": {
+    "reasoning_tokens": 232
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.77
+ },
+ "autothrottle_hold/frames/00000.jpg": {
+  "ias": 150,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2040,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 150, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2040, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 232,
+   "prompt_tokens": 966,
+   "total_tokens": 1198,
+   "completion_tokens_details": {
+    "reasoning_tokens": 175
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.57
+ },
+ "altitude_readback/frames/00036.jpg": {
+  "ias": 207,
+  "selected_speed": 193,
+  "selected_altitude": 11000,
+  "altitude": 10220,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 207, \"selected_speed\": 193, \"selected_altitude\": 11000, \"altitude\": 10220, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 458,
+   "prompt_tokens": 966,
+   "total_tokens": 1424,
+   "completion_tokens_details": {
+    "reasoning_tokens": 401
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 4.13
+ },
+ "autothrottle_hold/frames/00006.jpg": {
+  "ias": 127,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2220,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 127, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2220, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 318,
+   "prompt_tokens": 966,
+   "total_tokens": 1284,
+   "completion_tokens_details": {
+    "reasoning_tokens": 261
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.09
+ },
+ "autothrottle_hold/frames/00012.jpg": {
+  "ias": 137,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2360,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 137, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2360, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 284,
+   "prompt_tokens": 966,
+   "total_tokens": 1250,
+   "completion_tokens_details": {
+    "reasoning_tokens": 227
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 1.89
+ },
+ "autothrottle_hold/frames/00009.jpg": {
+  "ias": 129,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2300,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 129, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2300, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 508,
+   "prompt_tokens": 966,
+   "total_tokens": 1474,
+   "completion_tokens_details": {
+    "reasoning_tokens": 451
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.7
+ },
+ "autothrottle_hold/frames/00018.jpg": {
+  "ias": 144,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2420,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 144, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2420, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 274,
+   "prompt_tokens": 966,
+   "total_tokens": 1240,
+   "completion_tokens_details": {
+    "reasoning_tokens": 217
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.81
+ },
+ "autothrottle_hold/frames/00021.jpg": {
+  "ias": 145,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2380,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 145, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2380, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 421,
+   "prompt_tokens": 966,
+   "total_tokens": 1387,
+   "completion_tokens_details": {
+    "reasoning_tokens": 367
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.67
+ },
+ "autothrottle_hold/frames/00024.jpg": {
+  "ias": 140,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2360,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 140, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2360, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 484,
+   "prompt_tokens": 966,
+   "total_tokens": 1450,
+   "completion_tokens_details": {
+    "reasoning_tokens": 430
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.26
+ },
+ "autothrottle_hold/frames/00015.jpg": {
+  "ias": 141,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2400,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 141, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2400, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 769,
+   "prompt_tokens": 966,
+   "total_tokens": 1735,
+   "completion_tokens_details": {
+    "reasoning_tokens": 712
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 4.31
+ },
+ "autothrottle_hold/frames/00003.jpg": {
+  "ias": 139,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2100,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 139, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2100, \"fma\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 875,
+   "prompt_tokens": 966,
+   "total_tokens": 1841,
+   "completion_tokens_details": {
+    "reasoning_tokens": 818
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 6.29
+ },
+ "autothrottle_hold/frames/00030.jpg": {
+  "ias": 129,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2320,
+  "fma": [
+   "ARM",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 129, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2320, \"fma\": [\"ARM\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 246,
+   "prompt_tokens": 966,
+   "total_tokens": 1212,
+   "completion_tokens_details": {
+    "reasoning_tokens": 191
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.16
+ },
+ "autothrottle_hold/frames/00027.jpg": {
+  "ias": 135,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2340,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 135, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2340, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 435,
+   "prompt_tokens": 966,
+   "total_tokens": 1401,
+   "completion_tokens_details": {
+    "reasoning_tokens": 381
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.64
+ },
+ "autothrottle_hold/frames/00033.jpg": {
+  "ias": 123,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2320,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 123, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2320, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 388,
+   "prompt_tokens": 966,
+   "total_tokens": 1354,
+   "completion_tokens_details": {
+    "reasoning_tokens": 334
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.32
+ },
+ "autothrottle_hold/frames/00036.jpg": {
+  "ias": 116,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2320,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 116, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2320, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 487,
+   "prompt_tokens": 966,
+   "total_tokens": 1453,
+   "completion_tokens_details": {
+    "reasoning_tokens": 433
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.74
+ },
+ "autothrottle_hold/frames/00048.jpg": {
+  "ias": 124,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 1980,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 124, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 1980, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 307,
+   "prompt_tokens": 966,
+   "total_tokens": 1273,
+   "completion_tokens_details": {
+    "reasoning_tokens": 253
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.15
+ },
+ "autothrottle_hold/frames/00051.jpg": {
+  "ias": 130,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 1820,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 130, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 1820, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 321,
+   "prompt_tokens": 966,
+   "total_tokens": 1287,
+   "completion_tokens_details": {
+    "reasoning_tokens": 267
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 2.09
+ },
+ "autothrottle_hold/frames/00045.jpg": {
+  "ias": 115,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2140,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 115, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2140, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 674,
+   "prompt_tokens": 966,
+   "total_tokens": 1640,
+   "completion_tokens_details": {
+    "reasoning_tokens": 620
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 3.58
+ },
+ "autothrottle_hold/frames/00042.jpg": {
+  "ias": 110,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2260,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 110, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2260, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 491,
+   "prompt_tokens": 966,
+   "total_tokens": 1457,
+   "completion_tokens_details": {
+    "reasoning_tokens": 437
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 4.34
+ },
+ "autothrottle_hold/frames/00039.jpg": {
+  "ias": 109,
+  "selected_speed": 141,
+  "selected_altitude": 2500,
+  "altitude": 2300,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "raw": "{\"ias\": 109, \"selected_speed\": 141, \"selected_altitude\": 2500, \"altitude\": 2300, \"fma\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}",
+  "usage": {
+   "completion_tokens": 772,
+   "prompt_tokens": 966,
+   "total_tokens": 1738,
+   "completion_tokens_details": {
+    "reasoning_tokens": 718
+   },
+   "prompt_tokens_details": {
+    "cached_tokens": 99
+   }
+  },
+  "seconds": 6.23
+ }
+}

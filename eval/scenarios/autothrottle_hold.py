@@ -24,7 +24,6 @@ from brain.live import Crosscheck  # noqa: E402
 from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.scoring import score  # noqa: E402
 
-OUT = ROOT / "replay" / "autothrottle_hold"
 TARGET_KT = 145.0
 QUIET_S, FAULT_S = 25, 45
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
@@ -50,8 +49,10 @@ async def truth_logger(xp: XPlane, path: pathlib.Path, stop: asyncio.Event) -> N
                 return
 
 
-async def main(speak: bool) -> int:
-    OUT.mkdir(parents=True, exist_ok=True)
+async def main(speak: bool, reader: str = "apple") -> int:
+    name = "autothrottle_hold" + ("_spark" if reader == "spark" else "")
+    out = ROOT / "replay" / name
+    out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
     await xp.ensure_running()
     await xp.start_flight(FLIGHT)
@@ -70,11 +71,11 @@ async def main(speak: bool) -> int:
     await asyncio.sleep(8)  # let speed settle on the bug
 
     stop = asyncio.Event()
-    logger = asyncio.create_task(truth_logger(xp, OUT / "truth.jsonl", stop))
+    logger = asyncio.create_task(truth_logger(xp, out / "truth.jsonl", stop))
     say = None
     if speak:
         from voice.tts import speak as say
-    cc = Crosscheck(OUT, speak=say, frames=True)
+    cc = Crosscheck(out, speak=say, frames=True, reader=reader)
     bring_to_front()  # the panel reader captures the screen
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(QUIET_S + FAULT_S, t0), daemon=True)
@@ -94,15 +95,15 @@ async def main(speak: bool) -> int:
     await xp.park()
     await xp.close()
 
-    (OUT / "meta.json").write_text(json.dumps({
-        "scenario": "autothrottle_hold", "scorer": "autothrottle_hold", "aircraft": "B738", "airport": "KPDX 10R",
+    (out / "meta.json").write_text(json.dumps({
+        "scenario": name, "scorer": "autothrottle_hold", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "airport": "KPDX 10R",
         "t_start": t0, "t_fault": t_fault, "target_kt": TARGET_KT, "quiet_s": QUIET_S, "fault_s": FAULT_S,
         "speech": "none", "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
-    result = score(OUT)
-    (OUT / "result.json").write_text(json.dumps(result, indent=1))
+    result = score(out)
+    (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))
     return 0 if result["pass"] else 1
 
 
 if __name__ == "__main__":
-    sys.exit(asyncio.run(main(speak="--silent" not in sys.argv)))
+    sys.exit(asyncio.run(main(speak="--silent" not in sys.argv, reader="spark" if "--spark" in sys.argv else "apple")))

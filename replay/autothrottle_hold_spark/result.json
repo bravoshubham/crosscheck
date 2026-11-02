@@ -1,0 +1,12 @@
+{
+ "selected_speed_truth": 141.8,
+ "false_callouts_before_fault": [],
+ "callout": "Speed. Autothrottle not in speed.",
+ "callout_s_after_fault": 14.8,
+ "truth_below_target_minus_5_s": 9.3,
+ "truth_below_target_minus_10_s": 12.7,
+ "readings": 42,
+ "paused_during_run": false,
+ "pass": false,
+ "panel_readable": 1.0
+}

@@ -24,7 +24,8 @@ TITLES = {
     "altitude_correct": ("Correct setting", "Cleared, read back and set to 11,000. Crosscheck should stay silent."),
     "autothrottle_hold": ("Autothrottle not in speed", "737 on final to Portland 10R; the autothrottle drops out and speed decays (the Asiana 214 pattern)."),
 }
-ORDER = ["altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold"]
+ORDER = ["altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold",
+         "altitude_bust_spark", "altitude_readback_spark", "altitude_correct_spark", "autothrottle_hold_spark"]
 
 
 def load_jsonl(p: pathlib.Path) -> list[dict]:
@@ -96,10 +97,14 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         if len(row) > 1:
             tr.append(row)
 
-    title, blurb = TITLES.get(name, (name, ""))
+    title, blurb = TITLES.get(name.removesuffix("_spark"), (name, ""))
+    if name.endswith("_spark"):
+        title += " · Spark reader"
+        if meta.get("known_result"):
+            blurb = "Too slow here: Spark's ~5 s reads put the callout after speed was 10 kt low."
     return {"id": name, "title": title, "blurb": blurb, "kind": meta["scorer"], "meta": {
         k: meta[k] for k in ("aircraft", "area", "airport", "recorded", "speech", "cleared", "readback",
-                             "mcp_set", "target_kt", "variant") if k in meta},
+                             "mcp_set", "target_kt", "variant", "panel_reader", "known_result") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
         "truth": tr, "audio": audio, "result": result}
