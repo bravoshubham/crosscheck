@@ -58,7 +58,7 @@ def frame_from_crop(crop: Image.Image, origin: tuple[int, int] = FRAME_ORIGIN) -
 
 class Crosscheck:
     def __init__(self, out_dir: pathlib.Path, speak=None, frames: bool = False, log_name: str = "events.jsonl",
-                 reader: str = "apple", frame_box: tuple[int, int, int, int] = FRAME_BOX):
+                 reader: str = "apple", frame_box: tuple[int, int, int, int] = FRAME_BOX, fact_time: str = "arrival"):
         self.dir = out_dir
         self.dir.mkdir(parents=True, exist_ok=True)
         self.ledger = Ledger()
@@ -69,6 +69,10 @@ class Crosscheck:
         self.frames = frames
         self.reader = reader
         self.frame_box = frame_box
+        # "captured": a Spark reading's facts carry the time its frame was taken (it is about that
+        # moment), applied when the reading arrives. "arrival": stamped on arrival (the recordings
+        # made before 3 Nov, and the flap gauge, whose settle rule was tuned that way).
+        self.fact_time = fact_time
         self.n = 0
         if frames:
             (out_dir / "frames").mkdir(exist_ok=True)
@@ -83,7 +87,9 @@ class Crosscheck:
         self.ledger.add(fact)
         self.event("said", fact.t, key=fact.key, value=fact.value, speaker=fact.speaker, source=fact.source, **extra)
 
-    def observe(self, r: PanelReading, t: float, frame_file: str | None = None, **extra) -> None:
+    def observe(self, r: PanelReading, t: float, frame_file: str | None = None, fact_t: float | None = None, **extra) -> None:
+        """t: when the reading is applied (logged); fact_t: the time its facts are about (default t)."""
+        t_event, t = t, (fact_t if fact_t is not None else t)
         facts = [("doing", "ias", r.ias), ("doing", "altitude", r.altitude),
                  ("doing", "track", r.track_mag), ("set", "mcp.speed", r.selected_speed),
                  ("set", "mcp.altitude", r.selected_altitude)]
@@ -92,12 +98,16 @@ class Crosscheck:
         if r.fma and any(r.fma):
             # the line was read: a blank thrust cell means no engaged thrust mode, not "unknown"
             facts.append(("doing", "fma.thrust", r.fma[0] or "BLANK"))
+            facts.append(("doing", "fma.pitch", r.fma[2] or "BLANK"))
         for stream, key, value in facts:
             if value is not None:
                 self.ledger.add(Fact(stream, key, value, t, source="panel"))
         if r.altitude is not None:
-            self.ledger.add(Fact("doing", "phase", "final" if r.altitude < FINAL_BELOW_FT else "other", t, source="derived"))
-        self.event("reading", t, frame=frame_file, **{k: getattr(r, k) for k in READING_FIELDS}, **extra)
+            # the median of the last three altitudes: one misread (918 ft at 6,000) must not make it "final"
+            alts = sorted(f.value for f in self.ledger.since("doing", "altitude", 0)[-3:])
+            phase = "final" if alts[len(alts) // 2] < FINAL_BELOW_FT else "other"
+            self.ledger.add(Fact("doing", "phase", phase, t, source="derived"))
+        self.event("reading", t_event, frame=frame_file, **{k: getattr(r, k) for k in READING_FIELDS}, **extra)
 
     def observe_pilot(self, p: dict, t: float, frame_file: str | None = None, **extra) -> None:
         """One pilot-camera posture (senses/pilot_pose.py) from the opt-in pilot watch."""
@@ -143,10 +153,14 @@ class Crosscheck:
     def _run_spark(self, seconds: float, t0: float) -> None:
         """Capture every SPARK_PERIOD_S, read on Muse Spark with several calls in flight, and
         apply readings in capture order, timestamped when they arrive: the reader's latency
-        is part of the record, so replay reproduces the live run exactly."""
+        is part of the record, so replay reproduces the live run exactly. With
+        fact_time="captured", each reading is applied as soon as it arrives (one slow call does
+        not hold back newer ones) with its facts at capture time, and older readings that
+        arrive after a newer one are dropped."""
         read = _spark_reader(self.reader)
         pending: collections.deque = collections.deque()
         next_capture = time.time()
+        last_captured = 0.0
         with ThreadPoolExecutor(max_workers=6) as pool:
             while time.time() - t0 < seconds or pending:
                 if time.time() - t0 < seconds and time.time() >= next_capture:
@@ -155,15 +169,23 @@ class Crosscheck:
                     name = self._save(frame)
                     pending.append((captured, name, pool.submit(lambda f=frame: asyncio.run(read(f))[0])))
                     next_capture = captured + SPARK_PERIOD_S
-                while pending and pending[0][2].done():
-                    captured, name, fut = pending.popleft()
+                by_arrival = self.fact_time == "captured"
+                while pending and (pending[0][2].done() or by_arrival and any(p[2].done() for p in pending)):
+                    i = 0 if pending[0][2].done() else next(i for i, p in enumerate(pending) if p[2].done())
+                    captured, name, fut = pending[i]
+                    del pending[i]
                     t = time.time()
                     try:
                         r = fut.result()
                     except Exception as e:  # one failed call: the frame stays unread, the run goes on
                         self.event("reader_error", t, frame=name, error=str(e)[:200])
                         continue
-                    self.observe(r, t, name, captured=round(captured, 3), reader="muse-spark")
+                    if by_arrival and captured < last_captured:  # a newer frame was read first: this one is stale
+                        self.event("late_reading", t, frame=name, captured=round(captured, 3))
+                        continue
+                    last_captured = captured
+                    self.observe(r, t, name, fact_t=captured if by_arrival else None,
+                                 captured=round(captured, 3), reader="muse-spark")
                     self.decide(t)
                 time.sleep(0.05)
 
@@ -211,9 +233,13 @@ def replay(rec_dir: pathlib.Path, out_dir: pathlib.Path, recompute: bool = False
         if spark is not None:
             r = spark[e["frame"]]
         elif recompute:
+            if not (rec_dir / e["frame"]).exists():
+                raise FileNotFoundError(f"{rec_dir / e['frame']}: this recording ships only some of its frames "
+                                        "(replay/nominal keeps every 5th), so it replays from its saved readings only")
             r = read_frame(frame_from_crop(Image.open(rec_dir / e["frame"])))
         else:
             r = PanelReading(**{k: e[k] for k in READING_FIELDS if k in e})
-        cc.observe(r, e["t"], e.get("frame"))
+        captured = e.get("captured") if meta.get("fact_time") == "captured" else None
+        cc.observe(r, e["t"], e.get("frame"), fact_t=captured)
         cc.decide(e["t"])
     return cc

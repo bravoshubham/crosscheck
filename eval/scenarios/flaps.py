@@ -10,7 +10,11 @@ Speech: the callout is spoken (macOS voice, voice/crew.py) and heard through Mus
 Panel: the camera looks right so it sees the centre panel; Muse Spark reads the analog flap gauge
 (senses/flaps_spark.py). Nothing is read from X-Plane except to score the run.
 
-Run with X-Plane 12 open:  uv run python eval/scenarios/flaps.py [wrong|forgot|correct] [--speak]
+--mic: you are the pilot flying. Call any flap setting into the Mac's microphone ("flaps fifteen",
+"flaps ten"...) when prompted; the pilot monitoring (this script) then mis-selects it (wrong), leaves
+the lever (forgot) or selects it (correct). Recorded as flaps_<variant>_mic.
+
+Run with X-Plane 12 open:  uv run python eval/scenarios/flaps.py [wrong|forgot|correct] [--speak] [--mic]
 """
 import asyncio
 import json
@@ -30,6 +34,7 @@ from brain.live import Crosscheck  # noqa: E402
 from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.scoring import score  # noqa: E402
 from senses.flaps_spark import FLAPS_VIEW  # noqa: E402
+from senses.mic import Mic  # noqa: E402
 from senses.speech import said_facts, transcribe  # noqa: E402
 from voice.crew import CREW, SR, say  # noqa: E402
 
@@ -46,6 +51,14 @@ EXPECT = {"wrong": "callout_vs_set", "forgot": "callout_vs_set", "correct": None
 CALLED = 15
 FRAME_BOX = (2300, 250, 2900, 650)  # the flap gauge with the gear and LE flap lights around it
 T_CALL, RUN_S = 8, 42
+CALL_WAIT_S = 15  # --mic: how long the PF has to make the callout
+DETENTS = [1, 2, 5, 10, 15, 25, 30, 40]
+
+
+def wrong_detent(called: int) -> int:
+    """The PM's slip: one detent short of the call (from flaps 5 the needle must still move)."""
+    i = DETENTS.index(called)
+    return DETENTS[i - 1] if called > 5 else DETENTS[i + 1]
 TRUTH = {"handle": "sim/cockpit2/controls/flap_ratio", "deploy": "sim/cockpit2/controls/flap_handle_deploy_ratio",
          "ias": "sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "paused": "sim/time/paused"}
 
@@ -56,9 +69,10 @@ def play(pcm, sr: int) -> None:
     subprocess.Popen(["afplay", str(path)])
 
 
-async def main(variant: str, speak: bool) -> int:
+async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
     selects = VARIANTS[variant]
-    name = f"flaps_{variant}"
+    called = CALLED
+    name = f"flaps_{variant}" + ("_mic" if mic else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     line = "flaps fifteen"
@@ -83,8 +97,8 @@ async def main(variant: str, speak: bool) -> int:
         await asyncio.sleep(0.5)
     await asyncio.sleep(2)
 
-    say_cc = None
-    if speak:
+    say_cc = mic.speak if mic else None
+    if speak and not mic:
         from voice.tts import speak as say_cc
     cc = Crosscheck(out, speak=say_cc, frames=True, reader="spark-flaps", frame_box=FRAME_BOX)
     heard, truth_rows = [], []
@@ -104,16 +118,41 @@ async def main(variant: str, speak: bool) -> int:
 
     await at(T_CALL)
     t_call = time.time()
-    if speak:
-        play(audio, SR)
-    r = await transcribe(audio)
-    t = time.time()
-    facts = said_facts(r["text"], "pf", t, "421")
-    heard.append({"speaker": "pf", "spoken": line, "transcript": r["text"], "audio_s": r["audio_s"],
-                  "s_from_start": round(t - t_call, 2), "facts": [(f.key, f.value) for f in facts]})
-    cc.event("heard", t, speaker="pf", transcript=r["text"], spoken=line)
-    for f in facts:
-        cc.said(f, transcript=r["text"])
+    if mic:
+        print(">>> Call the flaps now (e.g. \"flaps fifteen\")", flush=True)
+        mic.flush()
+        facts = []
+        while not facts and time.time() - t_call < CALL_WAIT_S:  # anything else said is logged, not acted on
+            got = await mic.next_line(CALL_WAIT_S - (time.time() - t_call))
+            if got is None:
+                break
+            f_audio = f"mic{len(heard)}.wav"
+            sf.write(out / f_audio, got["pcm"], SR)
+            facts = [f for f in said_facts(got["text"], "pf", got["t"], "421") if f.key == "callout.flaps" and f.value in DETENTS]
+            heard.append({"speaker": "pf", "spoken": None, "audio_file": f_audio, "transcript": got["text"],
+                          "audio_s": got["audio_s"], "s_from_start": round(got["t"] - got["t_start"], 2),
+                          "facts": [(f.key, f.value) for f in facts]})
+            cc.event("heard", got["t"], speaker="pf", transcript=got["text"], spoken=None, mic=True)
+            t_call = got["t_start"]
+            for f in facts:
+                cc.said(f, transcript=got["text"])
+        if not facts:
+            print("no flap callout heard; stopping", flush=True)
+            await xp.park()
+            return 2
+        called = facts[0].value
+        selects = {"wrong": wrong_detent(called), "forgot": None, "correct": called}[variant]
+    else:
+        if speak:
+            play(audio, SR)
+        r = await transcribe(audio)
+        t = time.time()
+        facts = said_facts(r["text"], "pf", t, "421")
+        heard.append({"speaker": "pf", "spoken": line, "transcript": r["text"], "audio_s": r["audio_s"],
+                      "s_from_start": round(t - t_call, 2), "facts": [(f.key, f.value) for f in facts]})
+        cc.event("heard", t, speaker="pf", transcript=r["text"], spoken=line)
+        for f in facts:
+            cc.said(f, transcript=r["text"])
     await asyncio.sleep(1.0)
     t_move = time.time()
     if selects is not None:
@@ -132,10 +171,12 @@ async def main(variant: str, speak: bool) -> int:
             f.write(json.dumps(row) + "\n")
     (out / "meta.json").write_text(json.dumps({
         "scenario": name, "scorer": "flaps", "aircraft": "B738", "area": "Portland", "variant": variant,
-        "called": CALLED, "selected": selects, "expect_rule": EXPECT[variant],
+        "called": called, "selected": selects,
+        "expect_rule": ("callout_vs_set" if (selects if selects is not None else 5) != called else None) if mic else EXPECT[variant],
         "t_start": t0, "t_call": t_call, "t_move": t_move, "frame_box": list(FRAME_BOX),
         "panel_reader": "muse-spark-flaps", "view": FLAPS_VIEW,
-        "speech": "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
+        "speech": "Muse Voice Transcribe, live: a person on the Mac's microphone, parsed by senses/speech.py" if mic else
+                  "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
         "heard": heard, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
@@ -143,6 +184,13 @@ async def main(variant: str, speak: bool) -> int:
     return 0 if result["pass"] else 1
 
 
+async def _run(variant: str, speak: bool) -> int:
+    if "--mic" not in sys.argv:
+        return await main(variant, speak)
+    async with Mic() as mic:
+        return await main(variant, speak, mic)
+
+
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    sys.exit(asyncio.run(main(args[0] if args else "wrong", speak="--speak" in sys.argv)))
+    sys.exit(asyncio.run(_run(args[0] if args else "wrong", speak="--speak" in sys.argv)))

@@ -1,0 +1,33 @@
+{
+ "minutes": 15.0,
+ "false_callouts": [
+  {
+   "s": 173.4,
+   "text": "Speed. Autothrottle not in speed.",
+   "rule": "mode_vs_phase"
+  },
+  {
+   "s": 666.9,
+   "text": "Speed. Autothrottle not in speed.",
+   "rule": "mode_vs_phase"
+  },
+  {
+   "s": 698.6,
+   "text": "Speed. Autothrottle not in speed.",
+   "rule": "mode_vs_phase"
+  },
+  {
+   "s": 747.3,
+   "text": "Speed. Autothrottle not in speed.",
+   "rule": "mode_vs_phase"
+  }
+ ],
+ "lines_heard": 22,
+ "altitude_and_flap_facts_parsed": "14/14",
+ "minutes_below_2500ft": 3.7,
+ "readings": 729,
+ "paused_during_run": false,
+ "pass": false,
+ "panel_readable": 0.99,
+ "non_cockpit_frames": 0
+}

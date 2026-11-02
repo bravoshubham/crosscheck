@@ -1,0 +1,336 @@
+{
+ "scenario": "nominal",
+ "scorer": "nominal",
+ "panel_reader": "apple-vision",
+ "aircraft": "B738",
+ "area": "Portland",
+ "t_start": 1793648667.688705,
+ "run_s": 900.0,
+ "plan": [
+  [
+   20,
+   "alt",
+   6000
+  ],
+  [
+   90,
+   "hdg",
+   120
+  ],
+  [
+   150,
+   "alt",
+   5000
+  ],
+  [
+   230,
+   "spd",
+   210
+  ],
+  [
+   290,
+   "hdg",
+   300
+  ],
+  [
+   330,
+   "alt",
+   4000
+  ],
+  [
+   400,
+   "flaps",
+   1
+  ],
+  [
+   450,
+   "alt",
+   3000
+  ],
+  [
+   510,
+   "spd",
+   190
+  ],
+  [
+   530,
+   "flaps",
+   5
+  ],
+  [
+   600,
+   "hdg",
+   120
+  ],
+  [
+   640,
+   "alt",
+   2000
+  ],
+  [
+   720,
+   "spd",
+   170
+  ],
+  [
+   740,
+   "flaps",
+   10
+  ],
+  [
+   800,
+   "hdg",
+   300
+  ],
+  [
+   840,
+   "flaps",
+   15
+  ]
+ ],
+ "speech": "Muse Voice Transcribe, live (MMS-TTS ATC radio-filtered and readbacks; macOS voice for flap callouts)",
+ "heard": [
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one descend and maintain six thousand",
+   "transcript": "Alaska 421 descendant mating 6000.",
+   "audio_s": 3.6,
+   "s_from_start": 4.9,
+   "facts": [
+    [
+     "clearance.altitude",
+     6000
+    ]
+   ]
+  },
+  {
+   "speaker": "pm",
+   "spoken": "descend and maintain six thousand alaska four two one",
+   "transcript": "Descend and mate in 6,000 Alaska 421.",
+   "audio_s": 3.68,
+   "s_from_start": 4.95,
+   "facts": [
+    [
+     "readback.altitude",
+     6000
+    ]
+   ]
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one turn left heading one two zero",
+   "transcript": "Alaska Fort two one turn left hitting one two zero..",
+   "audio_s": 4.08,
+   "s_from_start": 5.37,
+   "facts": []
+  },
+  {
+   "speaker": "pm",
+   "spoken": "left heading one two zero alaska four two one",
+   "transcript": "Left heading one two zero will ask for four two one.",
+   "audio_s": 3.44,
+   "s_from_start": 4.69,
+   "facts": []
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one descend and maintain five thousand",
+   "transcript": "Alaska 421 descend and maintain 5000.",
+   "audio_s": 4.72,
+   "s_from_start": 6.0,
+   "facts": [
+    [
+     "clearance.altitude",
+     5000
+    ]
+   ]
+  },
+  {
+   "speaker": "pm",
+   "spoken": "descend and maintain five thousand alaska four two one",
+   "transcript": "We send and maintain 5,000 Alaska 421.",
+   "audio_s": 4.32,
+   "s_from_start": 5.67,
+   "facts": [
+    [
+     "readback.altitude",
+     5000
+    ]
+   ]
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one turn right heading three zero zero",
+   "transcript": "Alaska 421 turn right heading three zero zero",
+   "audio_s": 4.08,
+   "s_from_start": 5.49,
+   "facts": []
+  },
+  {
+   "speaker": "pm",
+   "spoken": "right heading three zero zero alaska four two one",
+   "transcript": "Right heading 300 will ask 421.",
+   "audio_s": 3.68,
+   "s_from_start": 5.01,
+   "facts": []
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one descend and maintain four thousand",
+   "transcript": "Alaska, 421 descend and maintain 4000.",
+   "audio_s": 4.0,
+   "s_from_start": 5.37,
+   "facts": [
+    [
+     "clearance.altitude",
+     4000
+    ]
+   ]
+  },
+  {
+   "speaker": "pm",
+   "spoken": "descend and maintain four thousand alaska four two one",
+   "transcript": "descend and maintain 4,000 LAS for 421.",
+   "audio_s": 4.08,
+   "s_from_start": 5.46,
+   "facts": []
+  },
+  {
+   "speaker": "pf",
+   "spoken": "flaps one",
+   "transcript": "Flaps one.",
+   "audio_s": 1.52,
+   "s_from_start": 2.77,
+   "facts": [
+    [
+     "callout.flaps",
+     1
+    ]
+   ]
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one descend and maintain three thousand",
+   "transcript": "Alaska 421 Descend and maintain 3000.",
+   "audio_s": 3.92,
+   "s_from_start": 5.3,
+   "facts": [
+    [
+     "clearance.altitude",
+     3000
+    ]
+   ]
+  },
+  {
+   "speaker": "pm",
+   "spoken": "descend and maintain three thousand alaska four two one",
+   "transcript": "Descend and maintain 3000 Alaska 421.",
+   "audio_s": 4.08,
+   "s_from_start": 5.44,
+   "facts": [
+    [
+     "readback.altitude",
+     3000
+    ]
+   ]
+  },
+  {
+   "speaker": "pf",
+   "spoken": "flaps five",
+   "transcript": "Flaps five.",
+   "audio_s": 1.52,
+   "s_from_start": 2.8,
+   "facts": [
+    [
+     "callout.flaps",
+     5
+    ]
+   ]
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one turn left heading one two zero",
+   "transcript": "Alaska Fort two one turn left hitting one two zero.",
+   "audio_s": 4.08,
+   "s_from_start": 5.48,
+   "facts": []
+  },
+  {
+   "speaker": "pm",
+   "spoken": "left heading one two zero alaska four two one",
+   "transcript": "Left heading 120 will ask for 421",
+   "audio_s": 3.44,
+   "s_from_start": 4.7,
+   "facts": []
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one descend and maintain two thousand",
+   "transcript": "Alaska 421 Descendant maintain 2000.",
+   "audio_s": 3.92,
+   "s_from_start": 5.21,
+   "facts": [
+    [
+     "clearance.altitude",
+     2000
+    ]
+   ]
+  },
+  {
+   "speaker": "pm",
+   "spoken": "descend and maintain two thousand alaska four two one",
+   "transcript": " Descend and maintain 2,000 Alaska 421.",
+   "audio_s": 3.92,
+   "s_from_start": 5.19,
+   "facts": [
+    [
+     "readback.altitude",
+     2000
+    ]
+   ]
+  },
+  {
+   "speaker": "pf",
+   "spoken": "flaps ten",
+   "transcript": "Flaps 10.",
+   "audio_s": 1.52,
+   "s_from_start": 2.95,
+   "facts": [
+    [
+     "callout.flaps",
+     10
+    ]
+   ]
+  },
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one turn right heading three zero zero",
+   "transcript": "Alaska 421 turn right heading 300.",
+   "audio_s": 4.08,
+   "s_from_start": 5.53,
+   "facts": []
+  },
+  {
+   "speaker": "pm",
+   "spoken": "right heading three zero zero alaska four two one",
+   "transcript": "Right heading three zero zero will ask for two one.",
+   "audio_s": 3.68,
+   "s_from_start": 5.01,
+   "facts": []
+  },
+  {
+   "speaker": "pf",
+   "spoken": "flaps fifteen",
+   "transcript": "Flaps 15.",
+   "audio_s": 1.76,
+   "s_from_start": 3.04,
+   "facts": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ]
+  }
+ ],
+ "recorded": "2026-11-03 01:29:28 IST"
+}

@@ -46,13 +46,49 @@ class XPlane:
     async def start_flight(self, flight: dict) -> None:
         await self._call("POST", "/flight", json={"data": flight})
 
+    async def restart(self) -> None:
+        """Quit and relaunch X-Plane, then click through the demo's start-up dialogs."""
+        def running() -> bool:
+            return subprocess.run(["pgrep", "-x", "X-Plane"], capture_output=True).returncode == 0
+        # behind the demo's time-up dialog X-Plane ignores a normal quit (the Apple event times
+        # out) and SIGTERM, so: quit, then TERM, then KILL
+        subprocess.run(["osascript", "-e", 'with timeout of 15 seconds', "-e", 'tell application "X-Plane" to quit',
+                        "-e", "end timeout"], check=False, capture_output=True)
+        for sig in ("-TERM", "-KILL"):
+            for _ in range(15):
+                if not running():
+                    break
+                await asyncio.sleep(1)
+            else:
+                subprocess.run(["pkill", sig, "-x", "X-Plane"], check=False)
+        await asyncio.sleep(3)
+        if running():
+            raise XPlaneError("X-Plane would not quit for a restart")
+        subprocess.run(["open", "-a", "X-Plane"], check=False)
+        for _ in range(120):  # the API answers from the main menu on (with 0 datarefs until a flight loads)
+            await asyncio.sleep(2)
+            try:
+                await self.dataref_count()
+                break
+            except httpx.HTTPError:
+                pass
+        else:
+            raise XPlaneError("X-Plane did not come back after a restart")
+        await asyncio.sleep(10)
+        from bridge.demo_dialogs import dismiss_all
+        dismiss_all()
+
     async def ensure_running(self) -> None:
         """Unpause (scenarios pause the sim when they finish), then refuse to start if it stays
         paused: a demo dialog ("leaving the demo area", "unlock X-Plane") is holding it, and it
-        survives loading a new flight until someone clicks it."""
+        survives loading a new flight until someone clicks it. After the demo's 60 minutes
+        the controls stop working: restart X-Plane."""
         if not await self.dataref_count():
             return
         bring_to_front()
+        from bridge.demo_dialogs import demo_time_up
+        if demo_time_up():
+            await self.restart()
         if await self.get("sim/time/paused"):
             await self.command("sim/operation/pause_off")
             await asyncio.sleep(1.5)

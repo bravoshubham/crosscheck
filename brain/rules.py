@@ -57,6 +57,9 @@ def _stable_set(led: Ledger, key: str, now: float, votes: int = 3) -> tuple[obje
     return value, start
 
 
+NO_READBACK_GRACE_S = 15.0
+
+
 def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
     """The MCP altitude differs from the latest cleared altitude for longer than the grace period,
     timed from when the mismatching value first appeared, not from the latest reading. The crew
@@ -70,8 +73,12 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
     if abs(value - clr.value) < 50:
         return []
     rb = led.latest("said", "readback.altitude", before=now)
-    since = max(clr.t, first_seen, rb.t if rb is not None and rb.t >= clr.t else clr.t)
-    if now - since < grace:
+    heard_rb = rb is not None and rb.t >= clr.t
+    since = max(clr.t, first_seen, rb.t if heard_rb else clr.t)
+    # no readback heard (missed by the recognizer, or not yet made): when the crew acknowledged is
+    # unknown, so allow the time a readback takes as well (15-minute flight, 345 s: a readback lost
+    # to speech recognition made this fire 1 s before the PF set the MCP)
+    if now - since < (grace if heard_rb else NO_READBACK_GRACE_S):
         return []
     return [Flag("clearance_vs_set", "altitude", clr.value, value, since,
                  f"Cleared {say.altitude(clr.value)}, set {say.altitude(value)}.")]
@@ -138,14 +145,50 @@ def callout_vs_set(led: Ledger, now: float, window: float = 6.0) -> list[Flag]:
     return flags
 
 
+TREND_WINDOW_S = 8.0  # speed trend from the readings of the last few seconds (Spark: ~1 every 1.7 s)
+TREND_AHEAD_S = 10.0  # look this far ahead, like the PFD's own speed trend vector
+THRUST_STEADY = 3     # thrust-mode readings in a row that must agree it is not in speed: on-device text recognition once
+                      # missed a plain "MCP SPD" on two frames in a row (nominal flight, run 2, 748 s)
+
+
+def _speed_trend(led: Ledger, now: float) -> float | None:
+    """kt per second over the TREND_WINDOW_S before the newest reading (least squares), None with
+    fewer than 3 readings. Anchored on the newest reading, not on now: a slow reader's facts carry
+    their capture time and are a few seconds old when they arrive."""
+    newest = led.latest("doing", "ias", before=now)
+    if newest is None:
+        return None
+    pts = [(f.t, f.value) for f in led.since("doing", "ias", newest.t - TREND_WINDOW_S) if f.t <= now]
+    if len(pts) < 3:
+        return None
+    mt = sum(t for t, _ in pts) / len(pts)
+    mv = sum(v for _, v in pts) / len(pts)
+    var = sum((t - mt) ** 2 for t, _ in pts)
+    return sum((t - mt) * (v - mv) for t, v in pts) / var if var else None
+
+
 def mode_vs_phase(led: Ledger, now: float, speed_margin: float = 5.0) -> list[Flag]:
-    """On final, the autothrottle is not controlling speed and speed is below target."""
+    """On final, the autothrottle is not controlling speed (and the pitch is not holding it either,
+    as in a level-change descent) and speed is below target, or below
+    it and trending past target - margin within TREND_AHEAD_S. The trend is what lets a slow
+    reader (Muse Spark, ~4 s a frame) still call it before the speed is 10 kt low."""
     if led.value_at("doing", "phase", now) != "final":
         return []
-    thr = led.value_at("doing", "fma.thrust", now)
+    thrust = [f.value for f in led.since("doing", "fma.thrust", 0) if f.t <= now][-THRUST_STEADY:]
+    thr = thrust[-1] if thrust else None
     ias = led.value_at("doing", "ias", now)
     target = led.value_at("set", "mcp.speed", now)
-    if thr is None or ias is None or target is None or thr in SPEED_MODES or ias > target - speed_margin:
+    if (len(thrust) < THRUST_STEADY or any(m in SPEED_MODES for m in thrust) or ias is None or target is None
+            or ias >= target):
+        return []
+    pitch = [f.value for f in led.since("doing", "fma.pitch", 0) if f.t <= now][-THRUST_STEADY:]
+    if any(m in SPEED_MODES for m in pitch):
+        # level change: the elevator holds the speed while the thrust is at idle (RETARD / ARM); and
+        # at the level-off the thrust cell blanks for a frame while the modes change over
+        return []
+    trend = _speed_trend(led, now)
+    predicted = ias + min(0.0, trend or 0.0) * TREND_AHEAD_S
+    if ias > target - speed_margin and predicted > target - speed_margin:
         return []
     return [Flag("mode_vs_phase", "autothrottle", "speed mode", thr, now, "Speed. Autothrottle not in speed.")]
 

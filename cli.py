@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT))
 from brain.live import replay  # noqa: E402
 from eval.scoring import score  # noqa: E402
 
-COMPARE = ("pass", "callout", "callouts", "callout_s_after_fault", "false_callouts_before_fault",
+COMPARE = ("pass", "callout", "callouts", "callout_s_after_fault", "false_callouts", "false_callouts_before_fault",
            "false_callouts_before_clearance")
 
 
@@ -58,6 +58,9 @@ def main() -> int:
     rp.add_argument("--reader", choices=["apple", "spark"], default="apple",
                     help="with --recompute: apple (macOS, on-device) or spark (Muse Spark, any OS, API key)")
     sub.add_parser("debrief", help="build the debrief viewer (site/index.html) from replay/")
+    sm = sub.add_parser("summary", help="Muse Spark debrief summary per recording (cached in summary.json)")
+    sm.add_argument("dirs", nargs="*", type=pathlib.Path)
+    sm.add_argument("--force", action="store_true", help="rewrite cached summaries")
     sub.add_parser("video", help="render a demo video from the debrief data (run debrief first)")
     lv = sub.add_parser("live", help="tablet display of the scenario being recorded")
     lv.add_argument("--port", type=int, default=8770)
@@ -65,6 +68,10 @@ def main() -> int:
     if args.cmd == "video":
         from debrief.video import build as build_video
         print("wrote", build_video())
+        return 0
+    if args.cmd == "summary":
+        from brain.summary import run as summarise
+        summarise(args.dirs or sorted(p.parent for p in (ROOT / "replay").glob("*/meta.json")), args.force)
         return 0
     if args.cmd == "live":
         from ui.server import serve

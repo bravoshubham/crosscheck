@@ -1,0 +1,18 @@
+{
+ "minutes": 15.0,
+ "false_callouts": [
+  {
+   "s": 748.8,
+   "text": "Speed. Autothrottle not in speed.",
+   "rule": "mode_vs_phase"
+  }
+ ],
+ "lines_heard": 22,
+ "altitude_and_flap_facts_parsed": "14/14",
+ "minutes_below_2500ft": 3.7,
+ "readings": 739,
+ "paused_during_run": false,
+ "pass": false,
+ "panel_readable": 0.98,
+ "non_cockpit_frames": 0
+}

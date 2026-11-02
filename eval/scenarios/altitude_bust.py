@@ -13,6 +13,11 @@ channel to Muse Voice Transcribe, and only what comes back is parsed into the le
 
 --spark reads the panel with Muse Spark instead of Apple Vision (recorded as altitude_<variant>_spark).
 
+--mic: you are the pilot monitoring. The ATC line plays through the speakers; read it back into
+the Mac's microphone (right or wrong, your choice). Your voice goes to Voice Transcribe like any
+other line. The variant then only sets what the PF dials (bust: 12,000, correct: 11,000), and
+the expected callout follows from what you read back. Recorded as altitude_<variant>_mic.
+
 Run with X-Plane 12 open:  uv run python eval/scenarios/altitude_bust.py [bust|readback|correct] [--speak] [--scripted] [--spark]
 """
 import asyncio
@@ -35,6 +40,7 @@ from brain.live import Crosscheck  # noqa: E402
 from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.audio.make_radio_set import radio  # noqa: E402
 from eval.scoring import score  # noqa: E402
+from senses.mic import Mic  # noqa: E402
 from senses.speech import said_facts, transcribe  # noqa: E402
 
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
@@ -60,7 +66,16 @@ def play(pcm: np.ndarray, sr: int) -> None:
     subprocess.Popen(["afplay", str(path)])
 
 
-async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple") -> int:
+READBACK_WAIT_S = 12  # --mic: how long the PM has to read back
+
+
+def expected_rule(cleared: int, readback: int | None, mcp: int) -> str | None:
+    if readback != cleared:
+        return "readback_vs_clearance"  # a missing readback counts too: the clearance was not confirmed
+    return "clearance_vs_set" if mcp != cleared else None
+
+
+async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple", mic: Mic | None = None) -> int:
     cleared, readback, mcp = VARIANTS[variant]
     lines = {"atc": f"alaska four two one climb and maintain {SPOKEN[cleared]}",
              "pm": f"climb and maintain {SPOKEN[readback]} alaska four two one"}
@@ -72,7 +87,7 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple")
             assert sr == 16000, sr
             audio[who] = radio(pcm) if who == "atc" else pcm * 0.9 / (np.abs(pcm).max() + 1e-9)
     heard = []
-    name = f"altitude_{variant}" + ("_spark" if reader == "spark" else "")
+    name = f"altitude_{variant}" + ("_spark" if reader == "spark" else "") + ("_mic" if mic else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
@@ -90,8 +105,8 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple")
         await xp.set("sim/graphics/view/" + k, v)
     await asyncio.sleep(6)
 
-    say = None
-    if speak:
+    say = mic.speak if mic else None
+    if speak and not mic:
         from voice.tts import speak as say
     cc = Crosscheck(out, speak=say, frames=True, reader=reader)
     truth_rows = []
@@ -112,13 +127,19 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple")
     async def transmit(who: str, value: int):
         """One radio or intercom line: speech -> Voice Transcribe -> parsed facts -> ledger."""
         t_start = time.time()
+        if mic and who == "pm":
+            return await from_mic()
         if scripted:
             key = "clearance.altitude" if who == "atc" else "readback.altitude"
             cc.said(Fact("said", key, value, t_start, who, source="script"), line=lines[who])
             return
-        if speak:
+        if mic:  # the person must hear ATC; the microphone is muted meanwhile
+            playing = asyncio.create_task(mic.play(audio[who], 16000))
+        elif speak:
             play(audio[who], 16000)
         r = await transcribe(audio[who])
+        if mic:
+            await playing
         t = time.time()
         facts = said_facts(r["text"], who, t, OWN)
         heard.append({"speaker": who, "spoken": lines[who], "transcript": r["text"], "audio_s": r["audio_s"],
@@ -127,10 +148,30 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple")
         for f in facts:
             cc.said(f, transcript=r["text"])
 
+    async def from_mic():
+        """The PM's readback, from the person at the microphone."""
+        print(">>> Read back the clearance now", flush=True)
+        mic.flush()
+        line = await mic.next_line(READBACK_WAIT_S)
+        if line is None:
+            cc.event("action", time.time(), line="no readback heard")
+            return
+        f = f"mic{len(heard)}.wav"
+        sf.write(out / f, line["pcm"], 16000)
+        facts = said_facts(line["text"], "pm", line["t"], OWN)
+        heard.append({"speaker": "pm", "spoken": None, "audio_file": f, "transcript": line["text"],
+                      "audio_s": line["audio_s"], "s_from_start": round(line["t"] - line["t_start"], 2),
+                      "facts": [(x.key, x.value) for x in facts]})
+        cc.event("heard", line["t"], speaker="pm", transcript=line["text"], spoken=None, mic=True)
+        for x in facts:
+            cc.said(x, transcript=line["text"])
+
     await at(T_CLEAR)
     await transmit("atc", cleared)
     await asyncio.sleep(1.0)
     await transmit("pm", readback)
+    if mic:
+        readback = next((v for h in heard if h["speaker"] == "pm" for k, v in h["facts"] if k == "readback.altitude"), None)
     await at(T_SET)
     t_set = time.time()
     await xp.set("sim/cockpit2/autopilot/altitude_dial_ft", float(mcp))
@@ -148,8 +189,9 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple")
     (out / "meta.json").write_text(json.dumps({
         "scenario": name, "scorer": "altitude", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "area": "Portland",
         "variant": variant, "cleared": cleared, "readback": readback, "mcp_set": mcp,
-        "expect_rule": EXPECT[variant], "t_start": t0, "t_clear": t0 + T_CLEAR, "t_set": t_set,
-        "speech": "scripted (said facts from the scenario script)" if scripted else
+        "expect_rule": expected_rule(cleared, readback, mcp) if mic else EXPECT[variant], "t_start": t0, "t_clear": t0 + T_CLEAR, "t_set": t_set,
+        "speech": "Muse Voice Transcribe, live: ATC in MMS-TTS (radio-filtered), the readback a person on the "
+                  "Mac's microphone" if mic else "scripted (said facts from the scenario script)" if scripted else
                   "Muse Voice Transcribe, live (MMS-TTS lines; ATC radio-filtered), parsed by senses/speech.py",
         "heard": heard,
         "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
@@ -159,7 +201,14 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple")
     return 0 if result["pass"] else 1
 
 
+async def _run(variant: str, **kw) -> int:
+    if "--mic" not in sys.argv:
+        return await main(variant, **kw)
+    async with Mic() as mic:
+        return await main(variant, mic=mic, **kw)
+
+
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    sys.exit(asyncio.run(main(args[0] if args else "bust", speak="--speak" in sys.argv,
+    sys.exit(asyncio.run(_run(args[0] if args else "bust", speak="--speak" in sys.argv,
                               scripted="--scripted" in sys.argv, reader="spark" if "--spark" in sys.argv else "apple")))

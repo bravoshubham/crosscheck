@@ -1,0 +1,19 @@
+{
+ "text": "The captain was upright at 2 s and then slumped with his head dropped and hands off the controls. Crosscheck said \"Captain, are you OK?\" at 21 s after seeing the slumped posture. The captain answered at 28 s that he was fine just reaching for his pen, and the watch flag was cleared shortly after.",
+ "verified": true,
+ "unsupported_numbers": [],
+ "model": "muse-spark-1.3",
+ "usage": {
+  "completion_tokens": 703,
+  "prompt_tokens": 363,
+  "total_tokens": 1066,
+  "completion_tokens_details": {
+   "reasoning_tokens": 625
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "attempts": 1,
+ "timeline": "Scenario: Pilot answers. The captain slumps but answers when asked: no alert. (pilot camera only)\n  2.3 s  pilot camera: captain upright\n 14.1 s  pilot camera: captain slumped (head dropped, hands off the controls)\n 21.1 s  CROSSCHECK SAID: \"Captain, are you OK?\" (expected upright, saw slumped)\n 28.1 s  heard from the captain: \"I'm fine. Just reaching for my pen.\"\n 28.1 s  parsed from speech: pilot.voice = I'm fine. Just reaching for my pen.\n 31.9 s  Crosscheck flag cleared: pilot_watch\n(set-up: pilot camera scene changes at 10.0 s)\nScored against the recorded ground truth: pass"
+}

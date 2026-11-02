@@ -57,7 +57,8 @@ def test_gear_callout_mismatch():
 
 def test_autothrottle_not_in_speed_on_final():
     led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 140, 0.0),
-                 ("doing", "fma.thrust", "HOLD", 1.0), ("doing", "ias", 132, 2.0))
+                 ("doing", "fma.thrust", "HOLD", 1.0), ("doing", "fma.thrust", "HOLD", 1.3), ("doing", "fma.thrust", "HOLD", 1.6),
+                 ("doing", "ias", 132, 2.0))
     assert [f.callout for f in evaluate(led, 2.0)] == ["Speed. Autothrottle not in speed."]
 
 
@@ -197,3 +198,57 @@ def test_needle_creeping_to_the_called_setting_is_not_settled():
     assert evaluate(led, 18.3) == []
     _gauge(led, [(19.6, 15.0), (23.0, 15.0), (23.1, 15.0), (24.8, 15.0)])
     assert evaluate(led, 24.8) == []
+
+
+def _decaying(led, speeds, t0=1.0):
+    for i, v in enumerate(speeds):
+        led.add(Fact("doing", "ias", v, t0 + i))
+
+
+def test_autothrottle_speed_decaying_fast_is_called_before_5_kt_low():
+    # 140 kt target, speed falling 1.5 kt/s: still only 3 kt low, but heading past 135 within 10 s
+    led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 140, 0.0), ("doing", "fma.thrust", "ARM", 0.5),
+                 ("doing", "fma.thrust", "ARM", 0.7), ("doing", "fma.thrust", "ARM", 0.9))
+    _decaying(led, [141.5, 140, 138.5, 137])
+    assert [f.rule for f in evaluate(led, 4.0)] == ["mode_vs_phase"]
+
+
+def test_autothrottle_steady_slightly_slow_is_silent():
+    # a steady 2 kt below target with the thrust mode not in speed: no trend, inside the margin
+    led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 140, 0.0), ("doing", "fma.thrust", "ARM", 0.5))
+    _decaying(led, [138, 138, 138, 138])
+    assert evaluate(led, 4.0) == []
+
+
+def test_autothrottle_above_target_and_falling_is_silent():
+    led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 140, 0.0), ("doing", "fma.thrust", "ARM", 0.5))
+    _decaying(led, [150, 147, 144, 141])
+    assert evaluate(led, 4.0) == []
+
+
+def test_level_change_descent_is_silent():
+    # RETARD with MCP SPD in the pitch column: the elevator holds the speed (nominal flight, 666 s)
+    led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 190, 0.0),
+                 ("doing", "fma.thrust", "RETARD", 0.5), ("doing", "fma.thrust", "RETARD", 0.7), ("doing", "fma.thrust", "RETARD", 0.8),
+                 ("doing", "fma.pitch", "MCP SPD", 0.7), ("doing", "fma.pitch", "MCP SPD", 0.8))
+    _decaying(led, [189, 187, 185, 183])
+    assert evaluate(led, 4.0) == []
+
+
+def test_two_misread_blank_thrust_cells_are_silent():
+    # slowing to a new speed bug, MCP SPD on every frame but two (nominal flight, run 2, 748 s)
+    led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 170, 0.0),
+                 ("doing", "fma.thrust", "MCP SPD", 0.5), ("doing", "fma.thrust", "BLANK", 3.5), ("doing", "fma.thrust", "BLANK", 3.9))
+    _decaying(led, [172, 171, 169, 167])
+    assert evaluate(led, 4.0) == []
+
+
+def test_without_a_readback_the_crew_gets_the_time_a_readback_takes():
+    # 15-minute flight, run 3: the readback was lost to recognition; the PF set the MCP 10 s after the clearance
+    led = ledger(("said", "clearance.altitude", 4000, 0.0, "atc"))
+    for i in range(10):
+        led.add(Fact("set", "mcp.altitude", 5000, i * 1.2))
+    assert evaluate(led, 10.0) == []
+    for i in range(10, 14):
+        led.add(Fact("set", "mcp.altitude", 5000, i * 1.2))
+    assert [f.rule for f in evaluate(led, 16.0)] == ["clearance_vs_set"]

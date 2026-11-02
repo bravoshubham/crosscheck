@@ -29,9 +29,10 @@ TITLES = {
     "pilot_asleep": ("Pilot asleep", "The captain falls asleep against the side window."),
     "pilot_checklist": ("Pilot reading", "The captain looks down at a checklist. Crosscheck should stay silent."),
     "pilot_answers": ("Pilot answers", "The captain slumps but answers when asked: no alert."),
+    "nominal": ("15-minute normal flight", "Six descents, four turns, three speed changes and four flap calls, all done right. Any callout here is a false alarm."),
     "flaps_correct": ("Flaps: correct", "\u201cFlaps fifteen\u201d called and selected. The needle takes ~13 s; Crosscheck should stay silent."),
 }
-ORDER = ["altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold",
+ORDER = ["nominal", "altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold",
          "flaps_wrong", "flaps_forgot", "flaps_correct",
          "pilot_slumped", "pilot_asleep", "pilot_checklist", "pilot_answers",
          "altitude_bust_spark", "altitude_readback_spark", "altitude_correct_spark", "autothrottle_hold_spark"]
@@ -55,12 +56,15 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         return round(t - t0, 2)
 
     readings, said, heard, callouts, actions = [], [], [], [], []
+    last_frame = None
     for e in events:
         k = e["kind"]
         if k == "reading":
-            if e.get("frame"):
+            # long recordings ship every 5th frame (replay/nominal): show the latest one kept
+            if e.get("frame") and (rec / e["frame"]).exists():
                 shutil.copy(rec / e["frame"], out / e["frame"])
-            readings.append({"t": rel(e["t"]), "frame": f"rec/{name}/{e['frame']}" if e.get("frame") else None,
+                last_frame = e["frame"]
+            readings.append({"t": rel(e["t"]), "frame": f"rec/{name}/{last_frame}" if last_frame else None,
                              **{f: e.get(f) for f in ("ias", "selected_speed", "selected_altitude", "altitude", "track_mag",
                                                       "flaps", "flaps_clock")},
                              "fma": e.get("fma"), "fma_armed": e.get("fma_armed")})
@@ -75,16 +79,24 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         elif k == "action":
             actions.append({"t": rel(e["t"]), "line": e["line"]})
         elif k == "pilot":  # pilot-watch camera: posture from SAM 3D Body
-            if e.get("frame"):
+            have = bool(e.get("frame")) and (rec / e["frame"]).exists()  # webcam frames are git-ignored
+            if have:
                 shutil.copy(rec / e["frame"], out / e["frame"])
-            readings.append({"t": rel(e["t"]), "frame": f"rec/{name}/{e['frame']}" if e.get("frame") else None,
+            readings.append({"t": rel(e["t"]), "frame": f"rec/{name}/{e['frame']}" if have else None,
                              **{f: e.get(f) for f in ("neck_flex", "wrists", "slumped", "reasons")}})
 
     # audio: radio lines (as spoken, started when the line began) and callouts
     audio = []
     mac_voice = "macOS voice" in meta.get("speech", "")  # flaps and pilot watch: the crew spoke in a macOS voice
     for i, h in enumerate(heard):
-        if mac_voice:
+        hh = meta.get("heard", [])[i] if i < len(meta.get("heard", [])) else None
+        if hh and hh.get("audio_file"):  # a person on the microphone: play their own recorded voice
+            h["spoken"] = "(live microphone)"
+            if (rec / hh["audio_file"]).exists():
+                wav, sr = sf.read(rec / hh["audio_file"])
+            else:  # voice recordings are git-ignored: elsewhere, Crosscheck's voice reads the transcript
+                wav, sr = synth(h["transcript"])
+        elif mac_voice:
             from voice.crew import SR as crew_sr, say
             wav, sr = say(h["spoken"]), crew_sr
         else:
@@ -92,7 +104,6 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         f = f"rec/{name}/line{i}.wav"
         sf.write(SITE / f, wav, sr)
         dur = len(wav) / sr
-        hh = next((x for x in meta.get("heard", []) if x["spoken"] == h["spoken"] and x["speaker"] == h["speaker"]), None)
         start = h["t"] - (hh["s_from_start"] if hh else dur)
         audio.append({"t": round(start, 2), "dur": round(dur, 2), "file": f, "kind": h["speaker"]})
         h["start"] = round(start, 2)
@@ -123,12 +134,21 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         if len(row) > 1:
             tr.append(row)
 
-    title, blurb = TITLES.get(name.removesuffix("_spark"), (name, ""))
+    base = name.removesuffix("_spark").removesuffix("_mic").removesuffix("_webcam")
+    title, blurb = TITLES.get(base, (name, ""))
+    if name.endswith("_mic"):
+        title += " · live voice"
+        blurb = "A person speaking into the Mac's microphone. " + blurb
+    if name.endswith("_webcam"):
+        title += " · webcam"
+        blurb = "A person in front of the Mac's camera, following spoken instructions. " + blurb
     if name.endswith("_spark"):
         title += " · Spark reader"
         if meta.get("known_result"):
             blurb = "Too slow here: Spark's ~5 s reads put the callout after speed was 10 kt low."
     box = meta.get("frame_box", [1240, 1230, 3180, 2200])
+    sp = rec / "summary.json"  # Muse Spark debrief summary (brain/summary.py), if written
+    summary = {k: v for k, v in json.loads(sp.read_text()).items() if k in ("text", "verified", "unsupported_numbers", "model")} if sp.exists() else None
     return {"id": name, "title": title, "blurb": blurb, "kind": meta["scorer"],
             "aspect": "4 / 3" if meta.get("pilot_camera") else f"{box[2] - box[0]} / {box[3] - box[1]}", "meta": {
         k: meta[k] for k in ("aircraft", "area", "airport", "recorded", "speech", "cleared", "readback",
@@ -136,7 +156,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
                              "called", "selected", "state", "answer", "pose") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
-        "truth": tr, "audio": audio, "result": result}
+        "truth": tr, "audio": audio, "result": result, "summary": summary}
 
 
 def build() -> pathlib.Path:

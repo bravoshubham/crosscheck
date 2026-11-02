@@ -30,11 +30,9 @@ TEENS = {w: str(10 + i) for i, w in enumerate(
     "ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split())}
 
 
-async def transcribe(pcm: np.ndarray, key: str | None = None) -> dict:
-    """Stream float or int16 16 kHz mono audio as a live feed; return the final text and billing."""
-    if pcm.dtype != np.int16:
-        pcm = (np.clip(pcm, -1, 1) * 32767).astype("<i2")
-    step = int(SR * PACKET_S)
+async def transcribe_stream(chunks, key: str | None = None) -> dict:
+    """Transcribe audio as it arrives: `chunks` is an async iterator of 16 kHz mono int16 bytes
+    (a live microphone, or a recording paced at real time). Returns the final text and billing."""
     if key is None:
         load_dotenv()
         key = os.environ["MODEL_API_KEY"]
@@ -56,12 +54,24 @@ async def transcribe(pcm: np.ndarray, key: str | None = None) -> dict:
                     finals.append(e["transcript"])
 
         rx = asyncio.create_task(receive())
-        for i in range(0, len(pcm), step):
-            await ws.send(pcm[i:i + step].tobytes())
-            await asyncio.sleep(PACKET_S)
+        async for c in chunks:
+            await ws.send(c)
         await ws.send('{"type":"endStream"}')
         await asyncio.wait_for(rx, 30)
     return {"text": " ".join(finals), "audio_s": processed_ms / 1000}
+
+
+async def transcribe(pcm: np.ndarray, key: str | None = None) -> dict:
+    """Stream float or int16 16 kHz mono audio as a live feed; return the final text and billing."""
+    if pcm.dtype != np.int16:
+        pcm = (np.clip(pcm, -1, 1) * 32767).astype("<i2")
+    step = int(SR * PACKET_S)
+
+    async def paced():
+        for i in range(0, len(pcm), step):
+            yield pcm[i:i + step].tobytes()
+            await asyncio.sleep(PACKET_S)
+    return await transcribe_stream(paced(), key)
 
 
 def normalise(text: str) -> str:
@@ -124,8 +134,9 @@ FLAP_DETENTS = {0, 1, 2, 5, 10, 15, 25, 30, 40}
 
 
 def parse_flaps(text: str) -> int | None:
-    """A flap callout: "flaps fifteen" / "Flaps 15." -> 15, "flaps up" -> 0."""
-    m = re.search(r"\bflaps?\s+(up|\d+)\b", normalise(text))
+    """A flap callout: "flaps fifteen" / "Flaps 15." / "flabs 15" -> 15, "flaps up" -> 0."""
+    # "flabs 15": how Voice Transcribe heard "flaps fifteen" through a laptop speaker and microphone
+    m = re.search(r"\bfla[pb]s?\s+(up|\d+)\b", normalise(text))
     if not m:
         return None
     v = 0 if m.group(1) == "up" else int(m.group(1))
@@ -141,7 +152,9 @@ def said_facts(text: str, speaker: str, t: float, own_digits: str) -> list[Fact]
     alt = parse_altitude(text)
     if alt is None:
         return []
-    if own_digits not in numbers(text):
+    if own_digits not in numbers(text) and not re.search(rf"\b{own_digits}\b", text):
+        # (the raw transcript too: in "descend and maintain 4,000 LAS for 421" the "for" joins the
+        # callsign into "4421" after normalising)
         # a clearance names us and a readback ends with our callsign; the digits survive even
         # when the word does not. This also keeps callouts ("one thousand stabilized") out.
         return []

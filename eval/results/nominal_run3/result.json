@@ -1,0 +1,18 @@
+{
+ "minutes": 15.0,
+ "false_callouts": [
+  {
+   "s": 344.7,
+   "text": "Cleared four thousand, set five thousand.",
+   "rule": "clearance_vs_set"
+  }
+ ],
+ "lines_heard": 22,
+ "altitude_and_flap_facts_parsed": "13/14",
+ "minutes_below_2500ft": 3.6,
+ "readings": 734,
+ "paused_during_run": false,
+ "pass": false,
+ "panel_readable": 0.97,
+ "non_cockpit_frames": 0
+}

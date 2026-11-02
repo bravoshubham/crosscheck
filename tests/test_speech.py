@@ -45,3 +45,9 @@ def test_flap_callouts():
     assert parse_flaps("Pledge five.") is None
     f = said_facts("Flaps 15.", "pf", 1.0, "421")
     assert [(x.key, x.value, x.speaker) for x in f] == [("callout.flaps", 15, "pf")]
+
+
+def test_callsign_joined_by_a_misheard_for_still_counts():
+    # "for" before the callsign is read as a 4: "LAS for 421" -> 4421 after normalising
+    assert [(f.key, f.value) for f in said_facts("descend and maintain 4,000 LAS for 421.", "pm", 0, "421")] == [
+        ("readback.altitude", 4000)]

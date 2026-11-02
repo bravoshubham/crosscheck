@@ -76,7 +76,7 @@ async def main(speak: bool, reader: str = "apple") -> int:
     say = None
     if speak:
         from voice.tts import speak as say
-    cc = Crosscheck(out, speak=say, frames=True, reader=reader)
+    cc = Crosscheck(out, speak=say, frames=True, reader=reader, fact_time="captured" if reader == "spark" else "arrival")
     bring_to_front()  # the panel reader captures the screen
     t0 = time.time()
     worker = threading.Thread(target=cc.run, args=(QUIET_S + FAULT_S, t0), daemon=True)
@@ -98,7 +98,7 @@ async def main(speak: bool, reader: str = "apple") -> int:
 
     (out / "meta.json").write_text(json.dumps({
         "scenario": name, "scorer": "autothrottle_hold", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "airport": "KPDX 10R",
-        "t_start": t0, "t_fault": t_fault, "target_kt": TARGET_KT, "quiet_s": QUIET_S, "fault_s": FAULT_S,
+        "t_start": t0, "t_fault": t_fault, "fact_time": cc.fact_time, "target_kt": TARGET_KT, "quiet_s": QUIET_S, "fault_s": FAULT_S,
         "speech": "none", "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))

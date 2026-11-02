@@ -1,0 +1,32 @@
+{
+ "scenario": "autothrottle_hold_spark",
+ "scored": 3,
+ "passed": 0,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 97,
+   "callout_s_after_fault": 15.1,
+   "false_callouts_before_fault": []
+  },
+  {
+   "run": 1,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 97,
+   "callout_s_after_fault": 14.0,
+   "false_callouts_before_fault": []
+  },
+  {
+   "run": 2,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 97,
+   "callout_s_after_fault": 19.3,
+   "false_callouts_before_fault": []
+  }
+ ]
+}

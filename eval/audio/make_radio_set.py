@@ -17,7 +17,10 @@ import torch
 from scipy.signal import butter, resample_poly, sosfilt
 from transformers import AutoTokenizer, VitsModel
 
-from synth_noise import ENGINES as SYNTH
+try:
+    from synth_noise import ENGINES as SYNTH
+except ModuleNotFoundError:  # imported as eval.audio.make_radio_set (scenarios, from the repo root)
+    from eval.audio.synth_noise import ENGINES as SYNTH
 
 ROOT = pathlib.Path(__file__).resolve().parent
 OUT = ROOT / "radio_set"

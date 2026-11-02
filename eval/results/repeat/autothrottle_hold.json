@@ -8,24 +8,24 @@
    "run": 0,
    "pass": true,
    "callouts": "Speed. Autothrottle not in speed.",
-   "seconds": 92,
-   "callout_s_after_fault": 10.0,
+   "seconds": 94,
+   "callout_s_after_fault": 6.6,
    "false_callouts_before_fault": []
   },
   {
    "run": 1,
    "pass": true,
    "callouts": "Speed. Autothrottle not in speed.",
-   "seconds": 92,
-   "callout_s_after_fault": 10.5,
+   "seconds": 94,
+   "callout_s_after_fault": 7.4,
    "false_callouts_before_fault": []
   },
   {
    "run": 2,
    "pass": true,
    "callouts": "Speed. Autothrottle not in speed.",
-   "seconds": 93,
-   "callout_s_after_fault": 10.2,
+   "seconds": 94,
+   "callout_s_after_fault": 7.4,
    "false_callouts_before_fault": []
   }
  ]

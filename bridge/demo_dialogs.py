@@ -4,7 +4,9 @@ Only three known dialogs, identified by their titles, and only their harmless bu
   "UNLOCK X-PLANE"         -> "Use Demo"   (never "Buy" or "Unlock")
   "DEMO MODE ACTIVATED"    -> "Understood" (the demo allows 60 minutes of flying at a time)
   "LEAVING THE DEMO AREA"  -> "OK"
-Anything else on screen: do nothing. The button is found by its text with Apple's on-device
+Anything else on screen: do nothing. One more is recognised but not clicked: "Your demo time is
+up" (also titled UNLOCK X-PLANE, with only Buy / Unlock buttons). The flight controls stop
+working until X-Plane restarts, so bridge/xplane.py restarts it. The button is found by its text with Apple's on-device
 text recognition, and clicked with a synthetic mouse event (X-Plane draws its own UI, so
 accessibility clicks do not reach it).
 
@@ -49,6 +51,12 @@ def find_dialog(img: Image.Image) -> tuple[str, tuple[float, float]] | None:
             b = cands[0]
             return title, ((b[0] + b[2]) / 2, (b[1] + b[3]) / 2)
     return None
+
+
+def demo_time_up() -> bool:
+    """True if the demo's 60 minutes are over (the sim keeps drawing, but ignores its controls)."""
+    words = ocrmac.OCR(_screen(), recognition_level="fast").recognize()
+    return "demo time is up" in " ".join(t for t, _, _ in words).lower()
 
 
 def dismiss_once() -> str | None:

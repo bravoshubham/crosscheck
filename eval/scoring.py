@@ -118,7 +118,28 @@ def score_pilot_watch(events: list[dict], truth: list[dict], meta: dict) -> dict
     return result
 
 
-SCORERS = {"autothrottle_hold": score_autothrottle, "altitude": score_altitude, "flaps": score_flaps,
+def score_nominal(events: list[dict], truth: list[dict], meta: dict) -> dict:
+    """A correctly flown approach: every callout is a false alarm."""
+    rows = carry_forward(truth)
+    callouts = [e for e in events if e["kind"] == "callout"]
+    heard = meta.get("heard", [])
+    expected = sum(1 for _, kind, _ in meta["plan"] if kind == "alt") * 2 + sum(1 for _, k, _ in meta["plan"] if k == "flaps")
+    parsed = sum(1 for h in heard for k, _ in h["facts"] if k in ("clearance.altitude", "readback.altitude", "callout.flaps"))
+    below = [r["t"] for r in rows if r.get("alt") is not None and r["alt"] < 2500]
+    result = {
+        "minutes": round(meta["run_s"] / 60, 1),
+        "false_callouts": [{"s": round(c["t"] - meta["t_start"], 1), "text": c["callout"], "rule": c["rule"]} for c in callouts],
+        "lines_heard": len(heard),
+        "altitude_and_flap_facts_parsed": f"{parsed}/{expected}",
+        "minutes_below_2500ft": round((below[-1] - below[0]) / 60, 1) if below else 0,
+        "readings": sum(e["kind"] == "reading" for e in events),
+        "paused_during_run": any(r.get("paused") for r in rows),
+    }
+    result["pass"] = not callouts and not result["paused_during_run"]
+    return result
+
+
+SCORERS = {"autothrottle_hold": score_autothrottle, "nominal": score_nominal, "altitude": score_altitude, "flaps": score_flaps,
            "pilot_watch": score_pilot_watch}
 
 
