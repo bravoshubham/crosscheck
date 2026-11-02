@@ -17,6 +17,9 @@ dependencies = [
 ]
 
 [dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
 eval = [
     "jiwer>=4.0.0",
     "scipy>=1.17.1",
@@ -24,3 +27,7 @@ eval = [
     "torch>=2.15.0",
     "transformers>=5.22.1",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
