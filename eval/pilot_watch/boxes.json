@@ -1,0 +1,39 @@
+{
+ "_note": "Captain's seat box per camera install, full-image pixels (left, top, right, bottom); set by eye on the upright image, like an installer calibrating a fixed camera.",
+ "a": [
+  60,
+  240,
+  1000,
+  1240
+ ],
+ "b": [
+  320,
+  160,
+  1330,
+  1230
+ ],
+ "c": [
+  0,
+  420,
+  640,
+  1400
+ ],
+ "d": [
+  50,
+  320,
+  1290,
+  1600
+ ],
+ "e": [
+  120,
+  240,
+  1160,
+  1240
+ ],
+ "f": [
+  400,
+  300,
+  1480,
+  1500
+ ]
+}

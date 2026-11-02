@@ -14,6 +14,7 @@ Run with X-Plane 12 open:  uv run python eval/scenarios/flaps.py [wrong|forgot|c
 """
 import asyncio
 import json
+import os
 import pathlib
 import subprocess
 import sys
@@ -58,7 +59,7 @@ def play(pcm, sr: int) -> None:
 async def main(variant: str, speak: bool) -> int:
     selects = VARIANTS[variant]
     name = f"flaps_{variant}"
-    out = ROOT / "replay" / name
+    out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     line = "flaps fifteen"
     audio = say(line, CREW)

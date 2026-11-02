@@ -1,0 +1,45 @@
+{
+ "scenario": "flaps_wrong",
+ "scored": 3,
+ "passed": 3,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 19.7,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 79,
+   "false_callouts_before_call": []
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 19.8,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 78,
+   "false_callouts_before_call": []
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 17.5,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 77,
+   "false_callouts_before_call": []
+  }
+ ],
+ "rule": "before the trend check (2 Nov 17:40)"
+}

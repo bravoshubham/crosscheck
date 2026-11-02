@@ -159,12 +159,12 @@ const $ = id => document.getElementById(id);
 const fmtAlt = v => v == null ? "—" : Math.round(v).toLocaleString("en-US") + " ft";
 const fmtKt = v => v == null ? "—" : Math.round(v) + " kt";
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout"};
+const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout", "pilot.voice": "captain"};
 const DETENTS = [0, 1, 2, 5, 10, 15, 25, 30, 40];
 const flapsOfRatio = r => { if (r == null) return null; const x = r * 8, i = Math.min(7, Math.floor(x)); return DETENTS[i] + (DETENTS[i + 1] - DETENTS[i]) * (x - i); };
 const fmtFlaps = v => v == null ? "—" : v === 0 ? "UP" : String(Math.round(v * 10) / 10);
-const fmtFact = f => f.key === "callout.flaps" ? "flaps " + fmtFlaps(f.value) : fmtAlt(f.value);
-const WHO = {atc: "ATC · radio", pm: "Crew · intercom", pf: "Crew · intercom"};
+const fmtFact = f => f.key === "callout.flaps" ? "flaps " + fmtFlaps(f.value) : f.key === "pilot.voice" ? "(answered)" : fmtAlt(f.value);
+const WHO = {atc: "ATC · radio", pm: "Crew · intercom", pf: "Crew · intercom", capt: "Captain · intercom"};
 
 let rec = null, t = 0, playing = false, rate = 1, lastWall = 0, played = new Set(), audios = [];
 const preload = new Map();
@@ -207,9 +207,9 @@ function renderTabs() {
 function select(i) {
   stop(); rec = D[i]; t = 0; played = new Set();
   $("frame").style.aspectRatio = rec.aspect || "1940 / 970";
-  const fl = rec.kind === "flaps";
-  $("setSrc").textContent = fl ? "not in the camera's view" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
-  $("doingSrc").textContent = fl ? "flap gauge, read by Muse Spark" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
+  const fl = rec.kind === "flaps", pw = rec.kind === "pilot_watch";
+  $("setSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "not in the camera's view" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
+  $("doingSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "flap gauge, read by Muse Spark" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
   renderTabs(); renderLegend(); renderResult(); drawTimeline(); update();
   rec.readings.forEach(r => { if (r.frame && !preload.has(r.frame)) { const im = new Image(); im.src = r.frame; preload.set(r.frame, im); } });
   try { localStorage.setItem("debrief.tab", rec.id); } catch (e) {}
@@ -242,7 +242,12 @@ function update() {
       ${facts.map(f => `<div class="fact">→ ${KEYS[f.key] || f.key} ${fmtFact(f)} (${f.speaker === "atc" ? "ATC" : "crew"})</div>`).join("")}`;
   }
   // SET and DOING
-  if (rec.kind === "flaps") {
+  if (rec.kind === "pilot_watch") {
+    $("nowSet").innerHTML = `<div class="big">${r && r.neck_flex != null ? Math.round(r.neck_flex) + "°" : "—"}</div><div class="sub">Head: neck flexion (alert above 40°)</div>
+      <div class="sim">Scripted: ${tr.state ? tr.state.replace("_", " ") : "—"} (scoring only)</div>`;
+    $("nowDoing").innerHTML = `<div class="big">${r && r.wrists != null ? r.wrists.toFixed(2) : "—"}</div><div class="sub">Hands: height above the hips, in torso lengths (alert below 0.31)</div>
+      <div class="sim">${r ? (r.slumped ? "Slumped: " + r.reasons.join(", ") : "Posture normal") : ""}</div>`;
+  } else if (rec.kind === "flaps") {
     const g = last(rec.readings.filter(x => x.flaps != null), t);
     $("nowSet").innerHTML = `<div class="big" style="color:var(--faint)">—</div><div class="sub">Flap lever: the camera does not see it, so Crosscheck judges by the gauge.</div>
       <div class="sim">X-Plane lever: ${tr.handle != null ? fmtFlaps(flapsOfRatio(tr.handle)) : "—"} (scoring only)</div>`;
@@ -275,6 +280,7 @@ function update() {
 function ruleText(c) {
   const map = {
     clearance_vs_set: `Panel shows ${fmtAlt(c.actual)}, cleared ${fmtAlt(c.expected)}. Mismatch held from ${c.since.toFixed(1)} s; called at ${c.t.toFixed(1)} s.`,
+    pilot_watch: c.key === "challenge" ? "Slumped posture held 5 s and the captain has said nothing since it began." : "No answer within 10 s of asking.",
     callout_vs_set: `Flaps ${fmtFlaps(c.expected)} were called; the flap gauge settled at ${fmtFlaps(c.actual)}.`,
     readback_vs_clearance: `Readback ${fmtAlt(c.actual)} does not match the clearance, ${fmtAlt(c.expected)}.`,
     mode_vs_phase: `On final, thrust mode is ${c.actual === "BLANK" ? "blank" : c.actual}: nothing is holding speed.`,
@@ -286,7 +292,12 @@ function ruleText(c) {
 function renderResult() {
   const r = rec.result, m = rec.meta;
   let what = [], how = [];
-  if (rec.kind === "flaps") {
+  if (rec.kind === "pilot_watch") {
+    what.push(`${esc(rec.blurb)} Images generated with Muse Image; posture from SAM 3D Body on every frame.`);
+    how.push(r.callouts.length ? r.callouts.map(c => `“${c.text}” ${c.s_after_change} s after the change`).join("; ") : "No callout — correct, the posture stayed normal.");
+    if (r.heard.length) how.push(`The captain's answer, as heard: “${esc(r.heard[0])}”.`);
+    how.push(`False callouts before the change: ${r.false_callouts_before_change.length}.`);
+  } else if (rec.kind === "flaps") {
     what.push(`“Flaps ${fmtFlaps(r.called)}” called; the lever ${r.selected == null ? "is not moved" : "goes to " + fmtFlaps(r.selected)}.`);
     how.push(r.callouts.length ? r.callouts.map(c => `“${c.text}” ${c.s_after_call} s after the call`).join("; ") : "No callout — correct, the flaps reached the setting called.");
     if (r.flaps_settled_s_after_call != null) how.push(`The flaps finished moving ${r.flaps_settled_s_after_call} s after the call (X-Plane).`);
@@ -312,6 +323,12 @@ function renderResult() {
 
 function renderLegend() {
   const alt = rec.kind === "altitude";
+  if (rec.kind === "pilot_watch") { $("legend").innerHTML = `
+    <span><i style="border-color:var(--said)"></i>Said: the captain's answer</span>
+    <span><i style="border-color:var(--set)"></i>Neck flexion (SAM 3D Body)</span>
+    <span><i style="border-color:var(--doing)"></i>Hand height (SAM 3D Body)</span>
+    <span><i style="border-color:var(--truth);border-top-style:dashed"></i>Threshold</span>
+    <span><i style="border-color:var(--callout)"></i>Crosscheck callout</span>`; return; }
   if (rec.kind === "flaps") { $("legend").innerHTML = `
     <span><i style="border-color:var(--said)"></i>Said (transmission → transcribed)</span>
     <span><i style="border-color:var(--truth);border-top-style:dashed"></i>Set: flap lever, X-Plane (scoring only)</span>
@@ -333,8 +350,9 @@ const tOf = x => Math.max(0, Math.min(rec.duration, (x - PADL) / (W - PADL - PAD
 
 function drawTimeline() {
   const svg = $("tl"), alt = rec.kind === "altitude";
-  LANES = [{id: "said", h: 54, label: "SAID"}, {id: "set", h: alt ? 96 : rec.kind === "flaps" ? 64 : 54, label: "SET"},
-           {id: "doing", h: 120, label: "DOING"}, {id: "call", h: 40, label: "CROSSCHECK"}];
+  const pwl = rec.kind === "pilot_watch";
+  LANES = [{id: "said", h: 54, label: "SAID"}, {id: "set", h: alt || pwl ? 96 : rec.kind === "flaps" ? 64 : 54, label: pwl ? "HEAD" : "SET"},
+           {id: "doing", h: pwl ? 96 : 120, label: pwl ? "HANDS" : "DOING"}, {id: "call", h: 40, label: "CROSSCHECK"}];
   let y = 8; LANES.forEach(l => { l.y = y; y += l.h + 10; }); H = y + 18;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   let s = "";
@@ -390,7 +408,16 @@ function drawTimeline() {
             <line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="#1b232d" stroke-dasharray="2 4"/>`;
   }).join("");
   const R = rec.readings, T = rec.truth;
-  if (rec.kind === "flaps") {
+  if (rec.kind === "pilot_watch") {
+    const lset = lane("set"), ld = lane("doing");
+    const thr = (l, lo, hi, v, label) => { const yy = l.y + l.h - 6 - (v - lo) / (hi - lo) * (l.h - 12);
+      return `<line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="var(--truth)" stroke-dasharray="5 4"/>
+              <text x="${W - PADR - 4}" y="${yy - 4}" text-anchor="end" fill="var(--muted)" font-size="11">${label}</text>`; };
+    s += thr(lset, 0, 70, 40, "40° — head dropped");
+    s += series(R.map(r => ({t: r.t, v: r.neck_flex})), lset, 0, 70, "var(--set)", false, true);
+    s += thr(ld, 0, 0.7, 0.31, "0.31 — hands off the controls");
+    s += series(R.map(r => ({t: r.t, v: r.wrists})), ld, 0, 0.7, "var(--doing)", false, true);
+  } else if (rec.kind === "flaps") {
     const lset = lane("set"), ld = lane("doing"), lo = -2, hi = 42;
     const fl = [0, 5, 10, 15, 25, 40];
     s += ticks(lset, lo, hi, [5, 40], v => "flaps " + v);

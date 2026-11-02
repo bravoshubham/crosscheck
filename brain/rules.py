@@ -77,12 +77,15 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
                  f"Cleared {say.altitude(clr.value)}, set {say.altitude(value)}.")]
 
 
-def _settled_flaps(led: Ledger, after: float, now: float, n: int = 5, span: float = 5.0, spread: float = 1.3):
+def _settled_flaps(led: Ledger, after: float, now: float, n: int = 5, span: float = 5.0, spread: float = 1.3,
+                   max_slope: float = 0.1):
     """The flap gauge's detent once the needle has stopped, from the last n needle positions
     (clock hours, read from the camera) taken after `after`: they must cover at least `span`
-    seconds and lie within `spread`, and the detent is taken from their mean. Spark's reads of a
-    parked needle vary by up to ~1.3 h; the 737's needle moves ~0.39 h/s (~2.3 h in 6 s), so a
-    moving needle does not qualify and a correct selection is not flagged mid-travel."""
+    seconds, lie within `spread`, and show no trend (fitted slope under `max_slope` hours a
+    second); the detent is taken from their mean. Spark's reads of a parked needle scatter by up
+    to ~1.3 h with no trend (noise slope ~0.08 h/s over five reads); the 737's needle moves at
+    0.15-0.39 h/s, slowest near the end of travel, where the range test alone once mistook
+    14.0, 14.0, 14.5, 15.0, 15.0 for a needle parked between 10 and 15."""
     from senses.flaps_spark import detent
     clock = [f for f in led.since("doing", "flaps.clock", after) if f.t <= now][-n:]
     if len(clock) < n or clock[-1].t - clock[0].t < span:
@@ -90,7 +93,12 @@ def _settled_flaps(led: Ledger, after: float, now: float, n: int = 5, span: floa
     values = [f.value for f in clock]
     if max(values) - min(values) > spread:
         return None
-    return detent(sum(values) / len(values))
+    tm = sum(f.t for f in clock) / n
+    vm = sum(values) / n
+    slope = sum((f.t - tm) * (f.value - vm) for f in clock) / sum((f.t - tm) ** 2 for f in clock)
+    if abs(slope) > max_slope:
+        return None
+    return detent(vm)
 
 
 FLAP_RESPONSE_S = 5.0  # time the crew gets to move the lever after the call is heard: needle
@@ -142,7 +150,35 @@ def mode_vs_phase(led: Ledger, now: float, speed_margin: float = 5.0) -> list[Fl
     return [Flag("mode_vs_phase", "autothrottle", "speed mode", thr, now, "Speed. Autothrottle not in speed.")]
 
 
-RULES = (readback_vs_clearance, clearance_vs_set, callout_vs_set, mode_vs_phase)
+SLUMP_HOLD_S = 5.0       # slumped this long before Crosscheck asks
+RESPONSE_WAIT_S = 10.0   # no answer this long after asking before it alerts
+
+
+def pilot_watch(led: Ledger, now: float) -> list[Flag]:
+    """Opt-in pilot camera. A slumped posture alone never alerts: Crosscheck first asks the pilot,
+    and alerts the other pilot only if there is no answer. Anything the pilot says, or sitting
+    back up, clears it."""
+    hist = [f for f in led.since("doing", "pilot.slumped", float("-inf")) if f.t <= now]
+    if not hist or not hist[-1].value:
+        return []
+    start = hist[-1].t
+    for f in reversed(hist):
+        if not f.value:
+            break
+        start = f.t
+    if now - start < SLUMP_HOLD_S:
+        return []
+    if [f for f in led.since("said", "pilot.voice", start) if f.t <= now]:
+        return []
+    asked = start + SLUMP_HOLD_S
+    flags = [Flag("pilot_watch", "challenge", "upright", "slumped", start, "Captain, are you OK?")]
+    if now - asked >= RESPONSE_WAIT_S:
+        flags.append(Flag("pilot_watch", "incapacitated", "answer", "none", asked,
+                          "Captain not responding. First officer, take control."))
+    return flags
+
+
+RULES = (readback_vs_clearance, clearance_vs_set, callout_vs_set, mode_vs_phase, pilot_watch)
 
 
 def evaluate(led: Ledger, now: float) -> list[Flag]:

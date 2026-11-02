@@ -97,7 +97,29 @@ def score_flaps(events: list[dict], truth: list[dict], meta: dict) -> dict:
     return result
 
 
-SCORERS = {"autothrottle_hold": score_autothrottle, "altitude": score_altitude, "flaps": score_flaps}
+def score_pilot_watch(events: list[dict], truth: list[dict], meta: dict) -> dict:
+    t_change = meta["t_change"]
+    callouts = [e for e in events if e["kind"] == "callout"]
+    asked = next((c for c in callouts if c["key"] == "challenge"), None)
+    alert = next((c for c in callouts if c["key"] == "incapacitated"), None)
+    result = {
+        "variant": meta["variant"], "state": meta["state"], "answer": meta.get("answer"),
+        "postures": [{"s_after_change": round(e["t"] - t_change, 1), "slumped": e["slumped"], "neck_flex": e["neck_flex"],
+                      "wrists": e["wrists"]} for e in events if e["kind"] == "pilot"][::3],
+        "heard": [e["transcript"] for e in events if e["kind"] == "heard"],
+        "false_callouts_before_change": [c["callout"] for c in callouts if c["t"] < t_change],
+        "callouts": [{"s_after_change": round(c["t"] - t_change, 1), "text": c["callout"]} for c in callouts],
+        "asked_s_after_change": round(asked["t"] - t_change, 1) if asked else None,
+        "alert_s_after_change": round(alert["t"] - t_change, 1) if alert else None,
+    }
+    want_ask, want_alert = meta["expect_ask"], meta["expect_alert"]
+    result["pass"] = (bool(asked) == want_ask and bool(alert) == want_alert
+                      and not result["false_callouts_before_change"])
+    return result
+
+
+SCORERS = {"autothrottle_hold": score_autothrottle, "altitude": score_altitude, "flaps": score_flaps,
+           "pilot_watch": score_pilot_watch}
 
 
 MIN_READABLE = 0.5  # below this the panel was not on screen (another window in front): not a valid run
@@ -108,6 +130,8 @@ def score(rec_dir: pathlib.Path, events_file: str = "events.jsonl") -> dict:
     events = load_jsonl(rec_dir / events_file)
     result = SCORERS[meta["scorer"]](events, load_jsonl(rec_dir / "truth.jsonl"), meta)
     readings = [e for e in events if e["kind"] == "reading"]
+    if not readings:  # the pilot-watch scenario has no panel camera
+        return result
     readable = sum(e.get("ias") is not None or e.get("flaps") is not None for e in readings) / max(1, len(readings))
     result["panel_readable"] = round(readable, 2)
     # a frame much brighter than the dark cockpit means another window was captured (and would

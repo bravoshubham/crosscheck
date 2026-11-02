@@ -13,6 +13,7 @@ Run with X-Plane 12 open:  uv run python eval/scenarios/autothrottle_hold.py [--
 """
 import asyncio
 import json
+import os
 import pathlib
 import sys
 import threading
@@ -51,7 +52,7 @@ async def truth_logger(xp: XPlane, path: pathlib.Path, stop: asyncio.Event) -> N
 
 async def main(speak: bool, reader: str = "apple") -> int:
     name = "autothrottle_hold" + ("_spark" if reader == "spark" else "")
-    out = ROOT / "replay" / name
+    out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
     await xp.ensure_running()

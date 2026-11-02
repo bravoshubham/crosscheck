@@ -1,0 +1,23 @@
+{
+ "scenario": "pilot_watch_asleep",
+ "scored": 1,
+ "passed": 1,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_change": 9.6,
+     "text": "Captain, are you OK?"
+    },
+    {
+     "s_after_change": 19.4,
+     "text": "Captain not responding. First officer, take control."
+    }
+   ],
+   "seconds": 55
+  }
+ ]
+}

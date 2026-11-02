@@ -1,0 +1,23 @@
+{
+ "scenario": "pilot_slumped",
+ "scorer": "pilot_watch",
+ "variant": "slumped",
+ "image_set": "e",
+ "state": "slumped",
+ "answer": null,
+ "expect_ask": true,
+ "expect_alert": true,
+ "t_start": 1793620473.223285,
+ "t_change": 1793620483.223285,
+ "frame_box": [
+  0,
+  0,
+  800,
+  800
+ ],
+ "pilot_camera": true,
+ "pose": "SAM 3D Body (facebook/sam-3d-body-vith) on Modal T4, one call per frame",
+ "speech": "none",
+ "heard": [],
+ "recorded": "2026-11-02 17:25:19 IST"
+}

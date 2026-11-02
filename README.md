@@ -19,7 +19,17 @@ measured against.
 | Readback error | Cleared 11,000, read back 12,000 | "Readback one-two thousand, cleared one-one thousand." | Called as soon as the readback was transcribed |
 | Correct setting | Cleared and set 11,000 | (silence) | No callout |
 | Autothrottle not in speed on final (the Asiana 214 pattern) | 737 on approach to Portland 10R; autothrottle drops out, speed decays | "Speed. Autothrottle not in speed." | Called 9.9 s after the fault, 3.1 s before speed was 10 kt below target; no false callouts in the 25 s before |
+| Pilot incapacitated (pilot camera, 4 variants) | Captain slumps forward / falls asleep / reads a checklist / slumps but answers | "Captain, are you OK?" then "Captain not responding. First officer, take control." / silence / the question only | Asked 8.5–11.1 s after the slump, alert ~10 s later; silent for the checklist; no alert once the captain answered |
 | Flaps not set as called (3 variants) | "Flaps fifteen" called; lever to 10 / not moved / to 15 | "Flaps fifteen called, ten set." / "…five set." / silence | Called 17.6 s and 16.2 s after the call; silent while the needle took 13 s to reach 15 |
+
+The pilot watch is an opt-in camera on the pilot. Its images are generated with Muse Image (no
+real person is filmed): one photo per pilot, edited into upright, slumped forward, asleep against
+the window, and reading a checklist. Every frame goes to SAM 3D Body (on a Modal GPU, ~2 s a
+frame); code turns its 3D keypoints into neck flexion and hand height. A slumped posture alone
+never alerts: Crosscheck asks first, and an answer heard on the intercom clears it. The
+thresholds were chosen on one image set; a first guess flagged 3 of 6 normal images on three
+held-out sets, so they were re-derived from the first set alone and tested on two sets made
+afterwards: 8/8 (24/24 over all six sets).
 
 In the flaps scenarios the camera looks at the centre panel and Muse Spark reads the analog flap
 gauge (text recognition cannot read a needle): Spark says where the needle points, code turns
@@ -66,8 +76,9 @@ X-Plane truth (10 Hz) ───────────────────�
 | Muse Spark | Reading the panel (any OS); decisions through the API | Panel reader working and more accurate than the on-device one (below); live in all four scenarios — fast enough for clearance checks, ~3–5 s too slow for the autothrottle callout. Decisions not yet wired in |
 | SAM 3.1 | Locating each display for calibration | Key works; not yet wired in |
 | Muse Voice Transcribe | Crew and ATC speech, one channel each | Live in the altitude scenarios; radio set scored (below) |
+| SAM 3D Body | Pilot watch: body pose from the pilot camera | Working on a Modal T4, ~2 s a frame warm (29 s cold start); posture test 8/8 on clean held-out images; live in the pilot-watch scenario |
+| Muse Image | Generating the pilot-camera test images (and edits of each) | Working, ~$0.01 an image; the content filter refused a "passed out" prompt, and some edits at random (a retry worked) |
 | SAM Audio | Separating overlapping speakers | Runs on Modal (T4); cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
-| SAM 3D Body | Opt-in pilot watch (slumping, unresponsive) | Weights ready; GPU run pending |
 | MMS-TTS, MMS ASR | Crosscheck's voice; interim speech baseline | Working |
 
 ## See it
@@ -113,6 +124,8 @@ uv run python eval/scenarios/autothrottle_hold.py --silent
 uv run python eval/scenarios/altitude_bust.py bust      # or readback, correct
 # add --spark to read the panel with Muse Spark instead (recorded as *_spark)
 uv run python eval/scenarios/flaps.py wrong             # or forgot, correct
+uv run modal deploy cloud/sam3d_body_app.py             # once, for the pilot watch (Modal GPU)
+uv run --group eval python eval/scenarios/pilot_watch.py slumped   # or asleep, checklist, answers; no simulator
 ```
 
 Tests: `uv run pytest`.

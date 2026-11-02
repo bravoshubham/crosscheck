@@ -1,0 +1,29 @@
+{
+ "scenario": "altitude_correct",
+ "scored": 3,
+ "passed": 3,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": null,
+   "seconds": 98,
+   "false_callouts_before_clearance": []
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": null,
+   "seconds": 98,
+   "false_callouts_before_clearance": []
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": null,
+   "seconds": 97,
+   "false_callouts_before_clearance": []
+  }
+ ]
+}

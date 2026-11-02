@@ -99,6 +99,11 @@ class Crosscheck:
             self.ledger.add(Fact("doing", "phase", "final" if r.altitude < FINAL_BELOW_FT else "other", t, source="derived"))
         self.event("reading", t, frame=frame_file, **{k: getattr(r, k) for k in READING_FIELDS}, **extra)
 
+    def observe_pilot(self, p: dict, t: float, frame_file: str | None = None, **extra) -> None:
+        """One pilot-camera posture (senses/pilot_pose.py) from the opt-in pilot watch."""
+        self.ledger.add(Fact("doing", "pilot.slumped", p["slumped"], t, source="pilot-camera"))
+        self.event("pilot", t, frame=frame_file, **p, **extra)
+
     def decide(self, t: float) -> list[Flag]:
         flags = evaluate(self.ledger, t)
         new = []
@@ -195,9 +200,13 @@ def replay(rec_dir: pathlib.Path, out_dir: pathlib.Path, recompute: bool = False
         frames = [e["frame"] for e in events if e["kind"] == "reading" and e.get("frame")]
         spark = _spark_readings(rec_dir, frames, reader, tuple(meta.get("frame_box", FRAME_BOX))[:2])
     cc = Crosscheck(out_dir, log_name="replay_events.jsonl")
-    for e in sorted((e for e in events if e["kind"] in ("reading", "said")), key=lambda e: (e["t"], e["kind"] != "said")):
+    for e in sorted((e for e in events if e["kind"] in ("reading", "said", "pilot")), key=lambda e: (e["t"], e["kind"] != "said")):
         if e["kind"] == "said":
             cc.said(Fact("said", e["key"], e["value"], e["t"], e["speaker"], source=e["source"]))
+            continue  # live, decisions happen on camera frames only
+        if e["kind"] == "pilot":  # postures are always replayed as recorded (re-posing needs the GPU)
+            cc.observe_pilot({k: e[k] for k in ("neck_flex", "wrists", "slumped", "reasons")}, e["t"], e.get("frame"))
+            cc.decide(e["t"])
             continue
         if spark is not None:
             r = spark[e["frame"]]

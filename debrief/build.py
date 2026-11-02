@@ -25,10 +25,15 @@ TITLES = {
     "autothrottle_hold": ("Autothrottle not in speed", "737 on final to Portland 10R; the autothrottle drops out and speed decays (the Asiana 214 pattern)."),
     "flaps_wrong": ("Flaps: wrong setting", "\u201cFlaps fifteen\u201d called; the lever goes to 10."),
     "flaps_forgot": ("Flaps: not moved", "\u201cFlaps fifteen\u201d called; nobody moves the lever."),
+    "pilot_slumped": ("Pilot slumped", "The captain slumps forward and does not answer."),
+    "pilot_asleep": ("Pilot asleep", "The captain falls asleep against the side window."),
+    "pilot_checklist": ("Pilot reading", "The captain looks down at a checklist. Crosscheck should stay silent."),
+    "pilot_answers": ("Pilot answers", "The captain slumps but answers when asked: no alert."),
     "flaps_correct": ("Flaps: correct", "\u201cFlaps fifteen\u201d called and selected. The needle takes ~13 s; Crosscheck should stay silent."),
 }
 ORDER = ["altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold",
          "flaps_wrong", "flaps_forgot", "flaps_correct",
+         "pilot_slumped", "pilot_asleep", "pilot_checklist", "pilot_answers",
          "altitude_bust_spark", "altitude_readback_spark", "altitude_correct_spark", "autothrottle_hold_spark"]
 
 
@@ -65,10 +70,15 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         elif k == "heard":
             heard.append({"t": rel(e["t"]), "speaker": e["speaker"], "transcript": e["transcript"], "spoken": e["spoken"]})
         elif k == "callout":
-            callouts.append({"t": rel(e["t"]), "rule": e["rule"], "text": e["callout"],
+            callouts.append({"t": rel(e["t"]), "rule": e["rule"], "key": e["key"], "text": e["callout"],
                              "expected": e["expected"], "actual": e["actual"], "since": rel(e["since"])})
         elif k == "action":
             actions.append({"t": rel(e["t"]), "line": e["line"]})
+        elif k == "pilot":  # pilot-watch camera: posture from SAM 3D Body
+            if e.get("frame"):
+                shutil.copy(rec / e["frame"], out / e["frame"])
+            readings.append({"t": rel(e["t"]), "frame": f"rec/{name}/{e['frame']}" if e.get("frame") else None,
+                             **{f: e.get(f) for f in ("neck_flex", "wrists", "slumped", "reasons")}})
 
     # audio: radio lines (as spoken, started when the line began) and callouts
     audio = []
@@ -90,6 +100,9 @@ def build_one(rec: pathlib.Path, synth) -> dict:
     marks = []
     if "t_fault" in meta:
         marks.append({"t": rel(meta["t_fault"]), "label": "Autothrottle drops out (fault injected)"})
+    if "t_change" in meta:
+        marks.append({"t": rel(meta["t_change"]), "label": {"slumped": "Pilot slumps", "slumped_side": "Pilot falls asleep",
+                                                            "looking_down": "Pilot looks down at a checklist"}.get(meta["state"], meta["state"])})
     if "t_call" in meta:
         marks.append({"t": rel(meta["t_move"]), "label": next((a["line"] for a in actions), "lever")})
     if "t_set" in meta:
@@ -98,7 +111,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
     tr = []
     for r in truth:
         row = {"t": rel(r["t"])}
-        for k in ("alt", "sel_alt", "ias", "sel", "at", "handle", "deploy"):
+        for k in ("alt", "sel_alt", "ias", "sel", "at", "handle", "deploy", "state"):
             if r.get(k) is not None:
                 digits = 4 if k in ("handle", "deploy") else 1  # ratios: 0.625 is flaps 15, 0.6 is not
                 row[k] = round(r[k], digits) if isinstance(r[k], float) else r[k]
@@ -112,10 +125,10 @@ def build_one(rec: pathlib.Path, synth) -> dict:
             blurb = "Too slow here: Spark's ~5 s reads put the callout after speed was 10 kt low."
     box = meta.get("frame_box", [1240, 1230, 3180, 2200])
     return {"id": name, "title": title, "blurb": blurb, "kind": meta["scorer"],
-            "aspect": f"{box[2] - box[0]} / {box[3] - box[1]}", "meta": {
+            "aspect": "4 / 3" if meta.get("pilot_camera") else f"{box[2] - box[0]} / {box[3] - box[1]}", "meta": {
         k: meta[k] for k in ("aircraft", "area", "airport", "recorded", "speech", "cleared", "readback",
                              "mcp_set", "target_kt", "variant", "panel_reader", "known_result",
-                             "called", "selected") if k in meta},
+                             "called", "selected", "state", "answer", "pose") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
         "truth": tr, "audio": audio, "result": result}

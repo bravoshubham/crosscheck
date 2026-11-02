@@ -1,0 +1,61 @@
+{
+ "variant": "checklist",
+ "state": "looking_down",
+ "answer": null,
+ "postures": [
+  {
+   "s_after_change": -7.7,
+   "slumped": false,
+   "neck_flex": 17.8,
+   "wrists": 0.42
+  },
+  {
+   "s_after_change": -1.5,
+   "slumped": false,
+   "neck_flex": 17.8,
+   "wrists": 0.42
+  },
+  {
+   "s_after_change": 4.7,
+   "slumped": false,
+   "neck_flex": 24.6,
+   "wrists": 0.5
+  },
+  {
+   "s_after_change": 10.8,
+   "slumped": false,
+   "neck_flex": 24.6,
+   "wrists": 0.5
+  },
+  {
+   "s_after_change": 17.0,
+   "slumped": false,
+   "neck_flex": 24.6,
+   "wrists": 0.5
+  },
+  {
+   "s_after_change": 23.2,
+   "slumped": false,
+   "neck_flex": 24.6,
+   "wrists": 0.5
+  },
+  {
+   "s_after_change": 29.5,
+   "slumped": false,
+   "neck_flex": 24.6,
+   "wrists": 0.5
+  },
+  {
+   "s_after_change": 35.7,
+   "slumped": false,
+   "neck_flex": 24.6,
+   "wrists": 0.5
+  }
+ ],
+ "heard": [],
+ "false_callouts_before_change": [],
+ "callouts": [],
+ "asked_s_after_change": null,
+ "alert_s_after_change": null,
+ "pass": true
+}

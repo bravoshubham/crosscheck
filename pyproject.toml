@@ -27,6 +27,7 @@ dev = [
 ]
 eval = [
     "jiwer>=4.0.0",
+    "modal>=1.6.3",
     "scipy>=1.17.1",
     "soundfile>=0.14.0",
     "torch>=2.15.0",

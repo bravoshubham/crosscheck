@@ -1,0 +1,70 @@
+{
+ "variant": "slumped",
+ "state": "slumped",
+ "answer": null,
+ "postures": [
+  {
+   "s_after_change": -7.7,
+   "slumped": false,
+   "neck_flex": 17.6,
+   "wrists": 0.51
+  },
+  {
+   "s_after_change": -1.5,
+   "slumped": false,
+   "neck_flex": 17.6,
+   "wrists": 0.51
+  },
+  {
+   "s_after_change": 5.6,
+   "slumped": true,
+   "neck_flex": 43.7,
+   "wrists": 0.25
+  },
+  {
+   "s_after_change": 11.7,
+   "slumped": true,
+   "neck_flex": 43.7,
+   "wrists": 0.25
+  },
+  {
+   "s_after_change": 17.9,
+   "slumped": true,
+   "neck_flex": 43.7,
+   "wrists": 0.25
+  },
+  {
+   "s_after_change": 24.1,
+   "slumped": true,
+   "neck_flex": 43.7,
+   "wrists": 0.25
+  },
+  {
+   "s_after_change": 30.3,
+   "slumped": true,
+   "neck_flex": 43.7,
+   "wrists": 0.25
+  },
+  {
+   "s_after_change": 36.5,
+   "slumped": true,
+   "neck_flex": 43.7,
+   "wrists": 0.25
+  }
+ ],
+ "heard": [],
+ "false_callouts_before_change": [],
+ "callouts": [
+  {
+   "s_after_change": 9.7,
+   "text": "Captain, are you OK?"
+  },
+  {
+   "s_after_change": 19.9,
+   "text": "Captain not responding. First officer, take control."
+  }
+ ],
+ "asked_s_after_change": 9.7,
+ "alert_s_after_change": 19.9,
+ "pass": true
+}

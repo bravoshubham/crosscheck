@@ -17,6 +17,7 @@ Run with X-Plane 12 open:  uv run python eval/scenarios/altitude_bust.py [bust|r
 """
 import asyncio
 import json
+import os
 import pathlib
 import subprocess
 import sys
@@ -72,7 +73,7 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple")
             audio[who] = radio(pcm) if who == "atc" else pcm * 0.9 / (np.abs(pcm).max() + 1e-9)
     heard = []
     name = f"altitude_{variant}" + ("_spark" if reader == "spark" else "")
-    out = ROOT / "replay" / name
+    out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
     await xp.ensure_running()

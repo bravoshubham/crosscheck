@@ -131,7 +131,8 @@ def test_flaps_from_the_gauge_wait_for_the_needle_to_settle():
     _gauge(led, [(1.5, 12.2), (3.0, 12.2), (4.5, 12.6), (6.0, 13.2), (7.5, 13.8), (9.0, 14.0), (10.5, 14.1),
                  (12.0, 14.0), (13.5, 14.0)])
     assert evaluate(led, 10.5) == []  # only four readings after the crew's response time
-    assert [f.callout for f in evaluate(led, 12.0)] == ["Flaps fifteen called, ten set."]
+    assert evaluate(led, 12.0) == []  # 13.2 .. 14.0: still a trend as the needle slows
+    assert [f.callout for f in evaluate(led, 13.5)] == ["Flaps fifteen called, ten set."]
 
 
 def test_flaps_travelling_to_the_called_setting_is_silent():
@@ -146,7 +147,7 @@ def test_flaps_never_moved():
     led = ledger(("said", "callout.flaps", 15, 0.0, "pf"))
     _gauge(led, [(1.5 * (i + 1), c) for i, c in enumerate([12.0, 12.5, 11.5, 11.5, 12.0, 11.5, 12.5, 12.2, 11.7, 11.5])])
     assert evaluate(led, 10.5) == []  # four readings since the crew's response time
-    assert [f.callout for f in evaluate(led, 12.0)] == ["Flaps fifteen called, five set."]
+    assert [f.callout for f in evaluate(led, 13.5)] == ["Flaps fifteen called, five set."]
 
 
 def test_flaps_not_yet_moved_is_not_a_missed_selection():
@@ -163,3 +164,36 @@ def test_jitter_on_a_settled_needle_does_not_clear_the_flag():
     _gauge(led, [(6.0 + 1.5 * i, c) for i, c in enumerate([12.0, 11.5, 12.5, 11.5, 12.0, 11.5, 12.8, 11.5, 11.5, 12.5])])
     for t in (12.0, 15.0, 18.0, 19.5):
         assert [f.callout for f in evaluate(led, t)] == ["Flaps fifteen called, five set."], t
+
+
+def _posture(led, states):
+    for t, slumped in states:
+        led.add(Fact("doing", "pilot.slumped", slumped, t, source="pilot-camera"))
+
+
+def test_slumped_pilot_is_asked_then_reported():
+    led = Ledger()
+    _posture(led, [(float(t), t >= 10) for t in range(0, 40, 2)])
+    assert evaluate(led, 14.0) == []                      # slumped 4 s
+    assert [f.callout for f in evaluate(led, 16.0)] == ["Captain, are you OK?"]
+    assert [f.callout for f in evaluate(led, 26.0)] == ["Captain, are you OK?",
+                                                        "Captain not responding. First officer, take control."]
+
+
+def test_an_answer_or_sitting_up_clears_it():
+    led = Ledger()
+    _posture(led, [(float(t), t >= 10) for t in range(0, 40, 2)])
+    led.add(Fact("said", "pilot.voice", "I'm fine, just dropped my pen", 18.0, "capt"))
+    assert evaluate(led, 30.0) == []
+    led2 = Ledger()
+    _posture(led2, [(float(t), 10 <= t < 20) for t in range(0, 40, 2)])
+    assert evaluate(led2, 22.0) == []
+
+
+def test_needle_creeping_to_the_called_setting_is_not_settled():
+    # seen live (repeat run): slow end of travel, two identical reads; range 1.0, mean 14.5 (between 10 and 15)
+    led = ledger(("said", "callout.flaps", 15, 0.0, "pf"))
+    _gauge(led, [(11.0, 14.0), (14.1, 14.0), (16.8, 14.5), (16.9, 15.0), (18.3, 15.0)])
+    assert evaluate(led, 18.3) == []
+    _gauge(led, [(19.6, 15.0), (23.0, 15.0), (23.1, 15.0), (24.8, 15.0)])
+    assert evaluate(led, 24.8) == []
