@@ -49,7 +49,14 @@ class XPlane:
             await self.command("sim/operation/pause_off")
             await asyncio.sleep(1.5)
         if await self.get("sim/time/paused"):
-            raise XPlaneError("X-Plane stays paused: a demo dialog is open (Use Demo / OK). Click it, then rerun")
+            # the demo's own dialogs: click "Use Demo" / "OK" (needs macOS Accessibility permission)
+            from bridge.demo_dialogs import dismiss_all
+            dismiss_all()
+            await self.command("sim/operation/pause_off")
+            await asyncio.sleep(1.5)
+        if await self.get("sim/time/paused"):
+            raise XPlaneError("X-Plane stays paused: a demo dialog is open (Use Demo / OK). Click it, or grant "
+                              "Accessibility permission so bridge/demo_dialogs.py can, then rerun")
 
     async def park(self) -> None:
         """Pause at the end of a scenario so the aircraft cannot fly out of the demo area afterwards."""
