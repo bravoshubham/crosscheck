@@ -1,0 +1,212 @@
+[
+ {
+  "file": "00_jet_snr+5.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "raw": "alaska forth two one clumbed and mantan flight bevil two fors aro"
+ },
+ {
+  "file": "00_jet_snr+0.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "raw": "alaska for two one clumbd and mainten white bevel two forser"
+ },
+ {
+  "file": "00_jet_snr-5.wav",
+  "ref": "alaska four two one climb and maintain flight level two four zero",
+  "raw": "il ask a for you on grum and mak wite bebbl to ors there"
+ },
+ {
+  "file": "01_jet_snr+5.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "raw": "amaska for to one turn lap hiting to seven zerv"
+ },
+ {
+  "file": "01_jet_snr+0.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "raw": "imaska ford to one turn lap hiting to seven zerve"
+ },
+ {
+  "file": "01_jet_snr-5.wav",
+  "ref": "alaska four two one turn left heading two seven zero",
+  "raw": "i'm ask afor two one term lap hitting two seven serv"
+ },
+ {
+  "file": "02_jet_snr+5.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "raw": "alaska for two one descend and maintain one one thousand"
+ },
+ {
+  "file": "02_jet_snr+0.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "raw": "alaste for two one descended maintain one one thousand"
+ },
+ {
+  "file": "02_jet_snr-5.wav",
+  "ref": "alaska four two one descend and maintain one one thousand",
+  "raw": "a laster for two ontes then tis mainten on one thousand"
+ },
+ {
+  "file": "03_jet_snr+5.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "raw": "alastra four two one contact portland approach one two four point three five"
+ },
+ {
+  "file": "03_jet_snr+0.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "raw": "alasta four tw one contact portland approach on two four point thr fiv"
+ },
+ {
+  "file": "03_jet_snr-5.wav",
+  "ref": "alaska four two one contact portland approach one two four point three five",
+  "raw": "olanda for tw one con tac portland approach on  fr poin tf"
+ },
+ {
+  "file": "04_jet_snr+5.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "raw": "alaska four two one reduce speed to two one zerumnots"
+ },
+ {
+  "file": "04_jet_snr+0.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "raw": "alasca four to one reduced feat o two one ther of nots"
+ },
+ {
+  "file": "04_jet_snr-5.wav",
+  "ref": "alaska four two one reduce speed to two one zero knots",
+  "raw": "alasca bor to one reduced feat an two one ther af notin"
+ },
+ {
+  "file": "05_jet_snr+5.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "raw": "alas be for two one clear dills run wi oncer a right approach"
+ },
+ {
+  "file": "05_jet_snr+0.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "raw": "alas bet for two one clear dills rung wi oncer a right approach"
+ },
+ {
+  "file": "05_jet_snr-5.wav",
+  "ref": "alaska four two one cleared ils runway one zero right approach",
+  "raw": "alas bet o'er two one cleer gills run with one zerro right aproach"
+ },
+ {
+  "file": "06_piston_snr+5.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "raw": "sesina tr fur fiv charly pappas qwork four thrtwo one"
+ },
+ {
+  "file": "06_piston_snr+0.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "raw": "setin o t ff charly pappis workd for tw oe"
+ },
+ {
+  "file": "06_piston_snr-5.wav",
+  "ref": "cessna three four five charlie papa squawk four three two one",
+  "raw": "sna t ff charli pappis f f w on"
+ },
+ {
+  "file": "07_piston_snr+5.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "raw": "sesno three four five chabi pappamington three thousand five hundred"
+ },
+ {
+  "file": "07_piston_snr+0.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "raw": "sesna tree fourt five chabi pappamington three thousand five hundred"
+ },
+ {
+  "file": "07_piston_snr-5.wav",
+  "ref": "cessna three four five charlie papa maintain three thousand five hundred",
+  "raw": "sisa tree fourt five shati pappamington teousfe udrd"
+ },
+ {
+  "file": "08_jet_snr+5.wav",
+  "ref": "flaps fifteen",
+  "raw": "why it's fity"
+ },
+ {
+  "file": "08_jet_snr+0.wav",
+  "ref": "flaps fifteen",
+  "raw": "wy it's fit i"
+ },
+ {
+  "file": "08_jet_snr-5.wav",
+  "ref": "flaps fifteen",
+  "raw": "tri its piti"
+ },
+ {
+  "file": "09_jet_snr+5.wav",
+  "ref": "positive rate gear up",
+  "raw": "pizitive ra jirab"
+ },
+ {
+  "file": "09_jet_snr+0.wav",
+  "ref": "positive rate gear up",
+  "raw": "pisitiv rair a"
+ },
+ {
+  "file": "09_jet_snr-5.wav",
+  "ref": "positive rate gear up",
+  "raw": "positiv rat  ira"
+ },
+ {
+  "file": "10_jet_snr+5.wav",
+  "ref": "set heading two seven zero",
+  "raw": "set heading two seven zerab"
+ },
+ {
+  "file": "10_jet_snr+0.wav",
+  "ref": "set heading two seven zero",
+  "raw": "set heading two seven zero"
+ },
+ {
+  "file": "10_jet_snr-5.wav",
+  "ref": "set heading two seven zero",
+  "raw": "set heting two sevins er"
+ },
+ {
+  "file": "11_jet_snr+5.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "raw": "plum flight level to be for zeroaska for two ones"
+ },
+ {
+  "file": "11_jet_snr+0.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "raw": "plum quite level to me for zeroaska for two ones"
+ },
+ {
+  "file": "11_jet_snr-5.wav",
+  "ref": "climb flight level two four zero alaska four two one",
+  "raw": "from wite level tuman por ser askd afford to one"
+ },
+ {
+  "file": "12_piston_snr+5.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "raw": "mayday mayday may day sesson a three four five charri pappa inging failure"
+ },
+ {
+  "file": "12_piston_snr+0.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "raw": "mayday mayday may day sesson o free four five charri pappa inging failure"
+ },
+ {
+  "file": "12_piston_snr-5.wav",
+  "ref": "mayday mayday mayday cessna three four five charlie papa engine failure",
+  "raw": "may day ma day may day ses me free four five carri hap a inchin falure"
+ },
+ {
+  "file": "13_jet_snr+5.wav",
+  "ref": "one thousand stabilized",
+  "raw": "one thousand stav e lized"
+ },
+ {
+  "file": "13_jet_snr+0.wav",
+  "ref": "one thousand stabilized",
+  "raw": "one thousand stabed the lives"
+ },
+ {
+  "file": "13_jet_snr-5.wav",
+  "ref": "one thousand stabilized",
+  "raw": "one thousand stabe the lihvs"
+ }
+]

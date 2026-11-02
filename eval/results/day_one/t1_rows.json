@@ -1,0 +1,722 @@
+[
+ {
+  "i": 0,
+  "truth": {
+   "ias": 195.5,
+   "alt": 7000.1,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.3,
+   "alt": 0.1,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 195,
+   "altitude_thousands_and_hundreds": 7000,
+   "altitude_last_two": 20,
+   "fma_thrust": "RETARD",
+   "fma_roll": "HDG SEL",
+   "fma_pitch": "MCP SPD",
+   "heading_deg": 240,
+   "altitude_ft": 700020
+  },
+  "latency_s": 12.82,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.477935791015625,
+   "alt": 693019.8903808594,
+   "hdg": 0.01013946533203125
+  }
+ },
+ {
+  "i": 1,
+  "truth": {
+   "ias": 192.5,
+   "alt": 6871.0,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.2,
+   "alt": 10.8,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 193,
+   "altitude_thousands_and_hundreds": 68,
+   "altitude_last_two": 80,
+   "fma_thrust": "RETARD",
+   "fma_roll": "HDG SEL",
+   "fma_pitch": "MCP SPD",
+   "heading_deg": 240,
+   "altitude_ft": 6880
+  },
+  "latency_s": 12.02,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.5170364379882812,
+   "alt": 9.013427734375,
+   "hdg": 0.01030731201171875
+  }
+ },
+ {
+  "i": 2,
+  "truth": {
+   "ias": 198.1,
+   "alt": 6566.1,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.2,
+   "alt": 15.5,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 65,
+   "altitude_last_two": 80,
+   "fma_thrust": "RETARD",
+   "fma_roll": "HDG SEL",
+   "fma_pitch": "MCP SPD",
+   "heading_deg": 240,
+   "altitude_ft": 6580
+  },
+  "latency_s": 12.01,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.062225341796875,
+   "alt": 13.8935546875,
+   "hdg": 0.01003265380859375
+  }
+ },
+ {
+  "i": 3,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 80,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 245,
+   "altitude_ft": 640080
+  },
+  "latency_s": 12.16,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633675.1655273438,
+   "hdg": 5.00994873046875
+  }
+ },
+ {
+  "i": 4,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 245,
+   "altitude_ft": 640020
+  },
+  "latency_s": 12.27,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 5.00994873046875
+  }
+ },
+ {
+  "i": 5,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.54,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 6,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.56,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 7,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 245,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.3,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 5.00994873046875
+  }
+ },
+ {
+  "i": 8,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 245,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.53,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 5.00994873046875
+  }
+ },
+ {
+  "i": 9,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 12.06,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 10,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 245,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.5,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 5.00994873046875
+  }
+ },
+ {
+  "i": 11,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.3,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 12,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 245,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.45,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 5.00994873046875
+  }
+ },
+ {
+  "i": 13,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 245,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.29,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 5.00994873046875
+  }
+ },
+ {
+  "i": 14,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 242,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.38,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 2.00994873046875
+  }
+ },
+ {
+  "i": 15,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.39,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 16,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 5.71,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 17,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.54,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 18,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 4.98,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ },
+ {
+  "i": 19,
+  "truth": {
+   "ias": 197.6,
+   "alt": 6404.8,
+   "hdg": 240.0
+  },
+  "change_during_capture": {
+   "ias": 0.0,
+   "alt": 0.0,
+   "hdg": 0.0
+  },
+  "read": {
+   "airspeed_kt": 198,
+   "altitude_thousands_and_hundreds": 6400,
+   "altitude_last_two": 20,
+   "fma_thrust": "CMD",
+   "fma_roll": "4.8",
+   "fma_pitch": "",
+   "heading_deg": 244,
+   "altitude_ft": 640020
+  },
+  "latency_s": 11.51,
+  "modes": {
+   "autothrottle_enabled": 3,
+   "heading_status": 2,
+   "altitude_hold_status": 0,
+   "speed_status": 2,
+   "vvi_status": 0
+  },
+  "err": {
+   "ias": 0.3807373046875,
+   "alt": 633615.1655273438,
+   "hdg": 4.00994873046875
+  }
+ }
+]

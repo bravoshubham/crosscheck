@@ -1,0 +1,9 @@
+{
+ "asr": "facebook/mms-1b-all",
+ "wer": {
+  "clean": 0.435,
+  "raw snr+0": 0.677,
+  "raw snr+5": 0.516,
+  "raw snr-5": 0.911
+ }
+}

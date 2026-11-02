@@ -1,0 +1,23 @@
+{
+ "reader": "muse-glimmer:30b vision, fixed crop + 2x compass crop, split altitude digits, screen capture",
+ "samples": 20,
+ "ias_kt": {
+  "median": 0.4,
+  "max": 0.5,
+  "within_target": "20/20",
+  "target": 2
+ },
+ "alt_ft": {
+  "median": 633615.2,
+  "max": 693019.9,
+  "within_target": "2/20",
+  "target": 20
+ },
+ "hdg_deg": {
+  "median": 4.0,
+  "max": 5.0,
+  "within_target": "3/20",
+  "target": 2
+ },
+ "latency_s_median": 11.52
+}

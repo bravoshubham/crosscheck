@@ -1,0 +1,338 @@
+[
+ {
+  "file": "00_jet_snr+5.wav",
+  "clean": "00_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "alaska four two one climb and maintain flight level two four zero"
+ },
+ {
+  "file": "00_jet_snr+0.wav",
+  "clean": "00_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "alaska four two one climb and maintain flight level two four zero"
+ },
+ {
+  "file": "00_jet_snr-5.wav",
+  "clean": "00_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "alaska four two one climb and maintain flight level two four zero"
+ },
+ {
+  "file": "01_jet_snr+5.wav",
+  "clean": "01_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "alaska four two one turn left heading two seven zero"
+ },
+ {
+  "file": "01_jet_snr+0.wav",
+  "clean": "01_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "alaska four two one turn left heading two seven zero"
+ },
+ {
+  "file": "01_jet_snr-5.wav",
+  "clean": "01_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "alaska four two one turn left heading two seven zero"
+ },
+ {
+  "file": "02_jet_snr+5.wav",
+  "clean": "02_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "alaska four two one descend and maintain one one thousand"
+ },
+ {
+  "file": "02_jet_snr+0.wav",
+  "clean": "02_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "alaska four two one descend and maintain one one thousand"
+ },
+ {
+  "file": "02_jet_snr-5.wav",
+  "clean": "02_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "alaska four two one descend and maintain one one thousand"
+ },
+ {
+  "file": "03_jet_snr+5.wav",
+  "clean": "03_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "alaska four two one contact portland approach one two four point three five"
+ },
+ {
+  "file": "03_jet_snr+0.wav",
+  "clean": "03_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "alaska four two one contact portland approach one two four point three five"
+ },
+ {
+  "file": "03_jet_snr-5.wav",
+  "clean": "03_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "alaska four two one contact portland approach one two four point three five"
+ },
+ {
+  "file": "04_jet_snr+5.wav",
+  "clean": "04_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "alaska four two one reduce speed to two one zero knots"
+ },
+ {
+  "file": "04_jet_snr+0.wav",
+  "clean": "04_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "alaska four two one reduce speed to two one zero knots"
+ },
+ {
+  "file": "04_jet_snr-5.wav",
+  "clean": "04_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "alaska four two one reduce speed to two one zero knots"
+ },
+ {
+  "file": "05_jet_snr+5.wav",
+  "clean": "05_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "alaska four two one cleared ils runway one zero right approach"
+ },
+ {
+  "file": "05_jet_snr+0.wav",
+  "clean": "05_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "alaska four two one cleared ils runway one zero right approach"
+ },
+ {
+  "file": "05_jet_snr-5.wav",
+  "clean": "05_clean.wav",
+  "speaker": "atc",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "alaska four two one cleared ils runway one zero right approach"
+ },
+ {
+  "file": "06_piston_snr+5.wav",
+  "clean": "06_clean.wav",
+  "speaker": "atc",
+  "engine": "piston",
+  "snr_db": 5,
+  "text": "cessna three four five charlie papa squawk four three two one"
+ },
+ {
+  "file": "06_piston_snr+0.wav",
+  "clean": "06_clean.wav",
+  "speaker": "atc",
+  "engine": "piston",
+  "snr_db": 0,
+  "text": "cessna three four five charlie papa squawk four three two one"
+ },
+ {
+  "file": "06_piston_snr-5.wav",
+  "clean": "06_clean.wav",
+  "speaker": "atc",
+  "engine": "piston",
+  "snr_db": -5,
+  "text": "cessna three four five charlie papa squawk four three two one"
+ },
+ {
+  "file": "07_piston_snr+5.wav",
+  "clean": "07_clean.wav",
+  "speaker": "atc",
+  "engine": "piston",
+  "snr_db": 5,
+  "text": "cessna three four five charlie papa maintain three thousand five hundred"
+ },
+ {
+  "file": "07_piston_snr+0.wav",
+  "clean": "07_clean.wav",
+  "speaker": "atc",
+  "engine": "piston",
+  "snr_db": 0,
+  "text": "cessna three four five charlie papa maintain three thousand five hundred"
+ },
+ {
+  "file": "07_piston_snr-5.wav",
+  "clean": "07_clean.wav",
+  "speaker": "atc",
+  "engine": "piston",
+  "snr_db": -5,
+  "text": "cessna three four five charlie papa maintain three thousand five hundred"
+ },
+ {
+  "file": "08_jet_snr+5.wav",
+  "clean": "08_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "flaps fifteen"
+ },
+ {
+  "file": "08_jet_snr+0.wav",
+  "clean": "08_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "flaps fifteen"
+ },
+ {
+  "file": "08_jet_snr-5.wav",
+  "clean": "08_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "flaps fifteen"
+ },
+ {
+  "file": "09_jet_snr+5.wav",
+  "clean": "09_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "positive rate gear up"
+ },
+ {
+  "file": "09_jet_snr+0.wav",
+  "clean": "09_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "positive rate gear up"
+ },
+ {
+  "file": "09_jet_snr-5.wav",
+  "clean": "09_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "positive rate gear up"
+ },
+ {
+  "file": "10_jet_snr+5.wav",
+  "clean": "10_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "set heading two seven zero"
+ },
+ {
+  "file": "10_jet_snr+0.wav",
+  "clean": "10_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "set heading two seven zero"
+ },
+ {
+  "file": "10_jet_snr-5.wav",
+  "clean": "10_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "set heading two seven zero"
+ },
+ {
+  "file": "11_jet_snr+5.wav",
+  "clean": "11_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "climb flight level two four zero alaska four two one"
+ },
+ {
+  "file": "11_jet_snr+0.wav",
+  "clean": "11_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "climb flight level two four zero alaska four two one"
+ },
+ {
+  "file": "11_jet_snr-5.wav",
+  "clean": "11_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "climb flight level two four zero alaska four two one"
+ },
+ {
+  "file": "12_piston_snr+5.wav",
+  "clean": "12_clean.wav",
+  "speaker": "crew",
+  "engine": "piston",
+  "snr_db": 5,
+  "text": "mayday mayday mayday cessna three four five charlie papa engine failure"
+ },
+ {
+  "file": "12_piston_snr+0.wav",
+  "clean": "12_clean.wav",
+  "speaker": "crew",
+  "engine": "piston",
+  "snr_db": 0,
+  "text": "mayday mayday mayday cessna three four five charlie papa engine failure"
+ },
+ {
+  "file": "12_piston_snr-5.wav",
+  "clean": "12_clean.wav",
+  "speaker": "crew",
+  "engine": "piston",
+  "snr_db": -5,
+  "text": "mayday mayday mayday cessna three four five charlie papa engine failure"
+ },
+ {
+  "file": "13_jet_snr+5.wav",
+  "clean": "13_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 5,
+  "text": "one thousand stabilized"
+ },
+ {
+  "file": "13_jet_snr+0.wav",
+  "clean": "13_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": 0,
+  "text": "one thousand stabilized"
+ },
+ {
+  "file": "13_jet_snr-5.wav",
+  "clean": "13_clean.wav",
+  "speaker": "crew",
+  "engine": "jet",
+  "snr_db": -5,
+  "text": "one thousand stabilized"
+ }
+]
