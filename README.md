@@ -15,7 +15,7 @@ measured against.
 
 | Scenario | What happens | Crosscheck says | First result |
 | --- | --- | --- | --- |
-| Altitude bust | Cleared to 11,000, MCP set to 12,000 | "Cleared one-one thousand, set one-two thousand." | Called 10.7 s after the mis-set, 15.9 s before the 737 passed 11,000 |
+| Altitude bust | Cleared to 11,000, MCP set to 12,000 | "Cleared one-one thousand, set one-two thousand." | Called 9.0 s after the mis-set, 17.2 s before the 737 passed 11,000 (earlier run: 10.7 s / 15.9 s) |
 | Readback error | Cleared 11,000, read back 12,000 | "Readback one-two thousand, cleared one-one thousand." | Called as soon as the readback was transcribed |
 | Correct setting | Cleared and set 11,000 | (silence) | No callout |
 | Autothrottle not in speed on final (the Asiana 214 pattern) | 737 on approach to Portland 10R; autothrottle drops out, speed decays | "Speed. Autothrottle not in speed." | Called 9.9 s after the fault, 3.1 s before speed was 10 kt below target; no false callouts in the 25 s before |
@@ -69,6 +69,11 @@ The debrief viewer replays each recorded scenario: the cockpit frames Crosscheck
 what was said (as Voice Transcribe heard it), what was set and what the aircraft was doing (as
 read from the panel), and each callout, spoken at the moment it fired — on one timeline with
 X-Plane's own values drawn dashed, for scoring only. A static page; no server or simulator.
+
+During a live run, `uv run python cli.py live` serves the tablet display on port 8770 (open it
+from an iPad on the same network): the current callout in one band, what was said, set and done
+in three columns, the camera's latest frame and a log. It follows whichever scenario is
+recording by tailing its event log, so it cannot slow down or change the monitoring loop.
 
 ## Run it yourself
 

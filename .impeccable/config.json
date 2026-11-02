@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "ui/live.html"
+        ],
+        "createdAt": "2026-11-02T10:33:20.550Z",
+        "reason": "Claude: img starts hidden ([hidden]{display:none!important}) and JS sets src when the first camera frame arrives"
+      }
+    ]
+  }
+}
