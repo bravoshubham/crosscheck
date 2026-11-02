@@ -59,6 +59,17 @@ X-Plane truth (10 Hz) ───────────────────�
 | SAM 3D Body | Opt-in pilot watch (slumping, unresponsive) | Weights ready; GPU run pending |
 | MMS-TTS, MMS ASR | Crosscheck's voice; interim speech baseline | Working |
 
+## See it
+
+```bash
+uv run python cli.py debrief      # then open site/index.html
+```
+
+The debrief viewer replays each recorded scenario: the cockpit frames Crosscheck's camera saw,
+what was said (as Voice Transcribe heard it), what was set and what the aircraft was doing (as
+read from the panel), and each callout, spoken at the moment it fired — on one timeline with
+X-Plane's own values drawn dashed, for scoring only. A static page; no server or simulator.
+
 ## Run it yourself
 
 ```bash

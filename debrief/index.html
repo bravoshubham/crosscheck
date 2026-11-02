@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crosscheck Debrief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d11; --panel: #11161d; --panel-2: #161c25; --line: #232c38;
+  --text: #e7ecf2; --muted: #8995a3; --faint: #7f8a97;
+  --said: #79b8ff; --set: #e46bf0; --doing: #f1f4f7; --callout: #ff5c5c; --ok: #4fd18b; --truth: #8b96a3;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--sans); }
+a { color: var(--said); }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 24px 24px 64px; }
+header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+.brand { font-weight: 600; font-size: 22px; letter-spacing: .02em; }
+.brand span { color: var(--muted); font-weight: 400; }
+.lede { color: var(--muted); max-width: 860px; margin: 0 0 20px; }
+.lede b { color: var(--text); font-weight: 500; }
+.k-said { color: var(--said); } .k-set { color: var(--set); } .k-doing { color: var(--doing); } .k-call { color: var(--callout); }
+
+.tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 18px; }
+.tab { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+  color: var(--text); font: inherit; cursor: pointer; transition: border-color .15s, background .15s; }
+.tab:hover { border-color: #33404f; }
+.tab[aria-selected="true"] { border-color: var(--text); background: var(--panel-2); }
+.tab .t { font-weight: 600; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.tab .d { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.badge { font: 500 11px/1 var(--mono); padding: 4px 6px; border-radius: 4px; letter-spacing: .04em; white-space: nowrap; }
+.badge.pass { color: var(--ok); background: rgba(79,209,139,.12); }
+.badge.fail { color: var(--callout); background: rgba(255,92,92,.12); }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.viewer { overflow: hidden; }
+.frame { position: relative; aspect-ratio: 1940 / 970; background: #000; }
+.frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.frame .nofr { position: absolute; inset: 0; display: grid; place-items: center; color: var(--faint); }
+.caption { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); max-width: 92%;
+  background: rgba(10,13,17,.88); border: 1px solid var(--callout); color: var(--text); border-radius: 8px;
+  padding: 8px 14px; font-weight: 500; display: none; align-items: center; gap: 10px; }
+.caption.on { display: flex; }
+.caption .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--callout); flex: none; }
+.radio { position: absolute; left: 12px; top: 12px; max-width: 70%; background: rgba(10,13,17,.85);
+  border-left: 3px solid var(--said); padding: 6px 10px; border-radius: 4px; font-size: 13px; display: none; }
+.radio.on { display: block; }
+.radio .who { color: var(--said); font: 500 11px var(--mono); letter-spacing: .06em; }
+.transport { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--line); }
+.btn { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); border-radius: 8px;
+  padding: 7px 12px; font: 500 13px var(--sans); cursor: pointer; min-width: 44px; }
+.btn:hover { border-color: #3a4757; }
+.btn:focus-visible, .tab:focus-visible { outline: 2px solid var(--said); outline-offset: 2px; }
+.clock { font: 500 13px var(--mono); color: var(--muted); }
+.spacer { flex: 1; }
+label.mute { color: var(--muted); font-size: 13px; display: flex; gap: 6px; align-items: center; cursor: pointer; }
+
+.now { display: grid; gap: 10px; align-content: start; }
+.now .card { padding: 12px 14px; }
+.lab { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; }
+.lab small { color: var(--faint); letter-spacing: .02em; text-transform: none; font-family: var(--sans); }
+.big { font: 500 22px/1.2 var(--mono); }
+.sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.sim { color: var(--truth); font-size: 12px; margin-top: 6px; font-family: var(--mono); }
+.quote { font-size: 14px; }
+.quote q { quotes: "\201C" "\201D"; }
+.fact { font: 500 12px var(--mono); color: var(--said); margin-top: 6px; }
+.verdict.card { border-color: var(--line); }
+.verdict.alert { border-color: var(--callout); }
+.verdict .big { font-family: var(--sans); font-size: 17px; font-weight: 600; }
+
+.timeline { margin-top: 14px; padding: 12px 14px 8px; }
+.timeline svg { width: 100%; display: block; cursor: crosshair; touch-action: none; user-select: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 12px; margin: 2px 0 6px; }
+.legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
+.result { margin-top: 14px; padding: 14px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; }
+.result h3 { margin: 0 0 6px; font-size: 13px; color: var(--muted); font-weight: 500; letter-spacing: .02em; }
+.result p { margin: 0; }
+.result ul { margin: 0; padding-left: 18px; }
+.note { color: var(--muted); font-size: 13px; margin-top: 18px; max-width: 900px; }
+code { font-family: var(--mono); font-size: .92em; color: var(--text); }
+
+@media (max-width: 900px) {
+  .stage { grid-template-columns: 1fr; }
+  .result { grid-template-columns: 1fr; }
+  .wrap { padding: 16px 16px 48px; }
+  .caption { font-size: 12px; padding: 5px 9px; bottom: 8px; }
+  .radio { font-size: 11px; max-width: 86%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="brand">Crosscheck <span>· Debrief</span></div></header>
+  <p class="lede">Crosscheck watches the pilots the way a monitoring pilot does: it hears what was
+    <b class="k-said">said</b>, reads what was <b class="k-set">set</b> on the panel through a camera, and watches
+    what the aircraft is <b class="k-doing">doing</b> — and speaks up when they disagree. Each run below was flown in
+    X-Plane 12 and recorded; this page replays it.</p>
+
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+
+  <section class="stage">
+    <div class="card viewer">
+      <div class="frame" id="frame">
+        <img id="img" hidden alt="Cockpit displays as Crosscheck's camera saw them">
+        <div class="nofr" id="nofr" hidden>No frame</div>
+        <div class="radio" id="radio"><div class="who" id="radioWho"></div><div id="radioText"></div></div>
+        <div class="caption" id="caption" role="status" aria-live="polite"><span class="dot"></span><span id="captionText"></span></div>
+      </div>
+      <div class="transport">
+        <button class="btn" id="play" aria-label="Play">Play</button>
+        <button class="btn" id="speed" aria-label="Playback speed">1×</button>
+        <span class="clock" id="clock">0.0 s</span>
+        <span class="spacer"></span>
+        <label class="mute"><input type="checkbox" id="sound" checked> Sound</label>
+      </div>
+    </div>
+
+    <div class="now">
+      <div class="card"><div class="lab k-said">Said <small>Muse Voice Transcribe</small></div><div id="nowSaid"></div></div>
+      <div class="card"><div class="lab k-set">Set <small>read from the panel</small></div><div id="nowSet"></div></div>
+      <div class="card"><div class="lab k-doing">Doing <small>read from the panel</small></div><div id="nowDoing"></div></div>
+      <div class="card verdict" id="verdictCard"><div class="lab k-call">Crosscheck</div><div id="nowVerdict"></div></div>
+    </div>
+  </section>
+
+  <section class="card timeline">
+    <div class="legend" id="legend"></div>
+    <svg id="tl" role="img" aria-label="Timeline of what was said, set and done, with Crosscheck's callouts"></svg>
+  </section>
+
+  <section class="card result" id="result"></section>
+
+  <p class="note">Crosscheck never reads the simulator's data. It sees the cockpit displays as camera frames
+    (read with Apple's on-device text recognition) and hears speech through Muse Voice Transcribe. The dashed grey
+    lines are X-Plane's own values, recorded only to score the run. Voices are synthetic (Meta MMS-TTS).
+    Every value on this page comes from the recording in <code>replay/</code>; rebuild with
+    <code>uv run python cli.py debrief</code>.</p>
+</div>
+
+<script src="data.js"></script>
+<script>
+"use strict";
+const D = window.DEBRIEF || [];
+const $ = id => document.getElementById(id);
+const fmtAlt = v => v == null ? "—" : Math.round(v).toLocaleString("en-US") + " ft";
+const fmtKt = v => v == null ? "—" : Math.round(v) + " kt";
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback"};
+const WHO = {atc: "ATC · radio", pm: "Crew · intercom", pf: "Crew · intercom"};
+
+let rec = null, t = 0, playing = false, rate = 1, lastWall = 0, played = new Set(), audios = [];
+const preload = new Map();
+
+function last(arr, tt) { let r = null; for (const x of arr) { if (x.t <= tt) r = x; else break; } return r; }
+function nearestTruth(tt) {
+  // nearest row per field: the simulator log interleaves rows that carry different fields
+  const out = {}, bd = {};
+  for (const r of rec.truth) for (const k in r) {
+    if (k === "t" || r[k] == null) continue;
+    const d = Math.abs(r.t - tt); if (!(k in bd) || d < bd[k]) { bd[k] = d; out[k] = r[k]; }
+  }
+  return out;
+}
+
+// ---------- tabs ----------
+function renderTabs() {
+  $("tabs").innerHTML = D.map((r, i) => `
+    <button class="tab" role="tab" data-i="${i}" aria-selected="${r === rec}">
+      <div class="t">${esc(r.title)} <span class="badge ${r.result.pass ? "pass" : "fail"}">${r.result.pass ? "PASS" : "FAIL"}</span></div>
+      <div class="d">${esc(r.blurb)}</div></button>`).join("");
+  $("tabs").querySelectorAll(".tab").forEach(b => b.onclick = () => select(+b.dataset.i));
+}
+
+function select(i) {
+  stop(); rec = D[i]; t = 0; played = new Set();
+  renderTabs(); renderLegend(); renderResult(); drawTimeline(); update();
+  rec.readings.forEach(r => { if (r.frame && !preload.has(r.frame)) { const im = new Image(); im.src = r.frame; preload.set(r.frame, im); } });
+  try { localStorage.setItem("debrief.tab", rec.id); } catch (e) {}
+}
+
+// ---------- the "now" panel ----------
+function update() {
+  const r = last(rec.readings, t);
+  const fr = r || rec.readings[0];  // before the first reading, show the first frame
+  if (fr && fr.frame) { if ($("img").getAttribute("src") !== fr.frame) $("img").src = fr.frame; $("img").hidden = false; $("nofr").hidden = true; }
+  else { $("img").hidden = true; $("nofr").hidden = false; }
+  $("clock").textContent = `${t.toFixed(1)} s / ${rec.duration.toFixed(0)} s`;
+  const tr = nearestTruth(t) || {};
+  const alt = rec.kind === "altitude";
+
+  // SAID
+  const onAir = rec.heard.find(h => t >= h.start && t < h.t);
+  const heard = last(rec.heard, t);
+  if (onAir) {
+    $("radio").classList.add("on"); $("radioWho").textContent = (WHO[onAir.speaker] || onAir.speaker).toUpperCase() + " · TRANSMITTING";
+    $("radioText").textContent = onAir.spoken;
+  } else $("radio").classList.remove("on");
+  if (!rec.heard.length) $("nowSaid").innerHTML = `<div class="sub">No speech in this scenario.</div>`;
+  else if (!heard) $("nowSaid").innerHTML = onAir ? `<div class="sub">Listening to ${esc(WHO[onAir.speaker] || onAir.speaker)}…</div>` : `<div class="sub">Nothing said yet.</div>`;
+  else {
+    const facts = rec.said.filter(s => s.t <= t);
+    $("nowSaid").innerHTML = `<div class="sub">${esc(WHO[heard.speaker] || heard.speaker)} — heard as</div>
+      <div class="quote"><q>${esc(heard.transcript.trim())}</q></div>
+      ${facts.length ? `<div class="sub" style="margin-top:8px">Into the ledger so far:</div>` : ""}
+      ${facts.map(f => `<div class="fact">→ ${KEYS[f.key] || f.key} ${fmtAlt(f.value)} (${f.speaker === "atc" ? "ATC" : "crew"})</div>`).join("")}`;
+  }
+  // SET and DOING
+  if (alt) {
+    $("nowSet").innerHTML = `<div class="big k-set">${r ? fmtAlt(r.selected_altitude) : "—"}</div><div class="sub">MCP altitude</div>
+      <div class="sim">X-Plane: ${tr.sel_alt != null ? fmtAlt(tr.sel_alt) : "—"} (scoring only)</div>`;
+    $("nowDoing").innerHTML = `<div class="big">${r ? fmtAlt(r.altitude) : "—"}</div><div class="sub">Altitude</div>
+      <div class="sim">X-Plane: ${tr.alt != null ? fmtAlt(tr.alt) : "—"} (scoring only)</div>`;
+  } else {
+    const thr = r && r.fma ? (r.fma[0] || "blank") : "—";
+    $("nowSet").innerHTML = `<div class="big k-set">${r ? fmtKt(r.selected_speed) : "—"}</div><div class="sub">MCP speed · thrust mode <b>${esc(thr)}</b></div>
+      <div class="sim">X-Plane: autothrottle ${tr.at === 1 ? "in speed" : tr.at === 0 ? "not in speed" : tr.at === -1 ? "off" : "—"} (scoring only)</div>`;
+    $("nowDoing").innerHTML = `<div class="big">${r ? fmtKt(r.ias) : "—"}</div><div class="sub">Airspeed · target ${rec.meta.target_kt} kt · altitude ${r ? fmtAlt(r.altitude) : "—"}</div>
+      <div class="sim">X-Plane: ${tr.ias != null ? fmtKt(tr.ias) : "—"} (scoring only)</div>`;
+  }
+  // CROSSCHECK
+  const c = last(rec.callouts, t);
+  const speaking = rec.callouts.find(x => t >= x.t && t < x.t + 6);
+  if (speaking) { $("caption").classList.add("on"); $("captionText").textContent = `“${speaking.text}”`; }
+  else $("caption").classList.remove("on");
+  $("verdictCard").classList.toggle("alert", !!c);
+  $("nowVerdict").innerHTML = c
+    ? `<div class="big k-call">“${esc(c.text)}”</div><div class="sub">${esc(ruleText(c))}</div>`
+    : `<div class="big" style="color:var(--ok)">Monitoring</div><div class="sub">Said, set and doing agree${rec.callouts.length ? " so far" : ""}.</div>`;
+  drawPlayhead();
+}
+
+function ruleText(c) {
+  const map = {
+    clearance_vs_set: `Panel shows ${fmtAlt(c.actual)}, cleared ${fmtAlt(c.expected)}. Mismatch held from ${c.since.toFixed(1)} s; called at ${c.t.toFixed(1)} s.`,
+    readback_vs_clearance: `Readback ${fmtAlt(c.actual)} does not match the clearance, ${fmtAlt(c.expected)}.`,
+    mode_vs_phase: `On final, thrust mode is ${c.actual === "BLANK" ? "blank" : c.actual}: nothing is holding speed.`,
+  };
+  return map[c.rule] || c.rule;
+}
+
+// ---------- result ----------
+function renderResult() {
+  const r = rec.result, m = rec.meta;
+  let what = [], how = [];
+  if (rec.kind === "altitude") {
+    what.push(`Cleared ${fmtAlt(r.cleared)}, read back ${fmtAlt(r.readback)}, MCP set ${fmtAlt(r.mcp_set)}.`);
+    const calls = r.callouts.map(c => `“${c.text}” ${c.s_after_set >= 0 ? c.s_after_set + " s after the MCP was set" : Math.abs(c.s_after_set) + " s before the MCP was set"}`);
+    how.push(calls.length ? calls.join("; ") : "No callout — correct, nothing disagreed.");
+    if (r.aircraft_passed_cleared_s_after_set != null) how.push(`The 737 passed ${fmtAlt(r.cleared)} ${r.aircraft_passed_cleared_s_after_set} s after the MCP was set.`);
+    how.push(`False callouts before the clearance: ${r.false_callouts_before_clearance.length}.`);
+  } else {
+    what.push(`On final to ${esc(m.airport || "")}, target ${m.target_kt} kt; the autothrottle drops out ${r.quiet_s ?? 25} s in.`);
+    if (r.callout_s_after_fault != null) how.push(`“${r.callout}” ${r.callout_s_after_fault} s after the fault${r.callout_s_before_10kt_low != null ? `, ${r.callout_s_before_10kt_low} s before speed was 10 kt below target` : ""}.`);
+    how.push(`False callouts before the fault: ${(r.false_callouts_before_fault || []).length}.`);
+  }
+  how.push(`Panel readable in ${Math.round((r.panel_readable ?? 1) * 100)}% of frames.`);
+  $("result").innerHTML = `
+    <div><h3>Scenario</h3><p>${what.join(" ")}</p><p class="sub" style="margin-top:6px">${esc(m.aircraft || "")} · recorded ${esc(m.recorded || "")}<br>Speech: ${esc(m.speech || "none")}</p></div>
+    <div><h3>Result · <span class="badge ${r.pass ? "pass" : "fail"}">${r.pass ? "PASS" : "FAIL"}</span></h3><ul>${how.map(h => `<li>${h}</li>`).join("")}</ul></div>`;
+}
+
+function renderLegend() {
+  const alt = rec.kind === "altitude";
+  $("legend").innerHTML = `
+    <span><i style="border-color:var(--said)"></i>Said (transmission → transcribed)</span>
+    <span><i style="border-color:var(--set)"></i>Set: ${alt ? "MCP altitude" : "thrust mode"} read from the panel</span>
+    <span><i style="border-color:var(--doing)"></i>Doing: ${alt ? "altitude" : "airspeed"} read from the panel</span>
+    <span><i style="border-color:var(--truth);border-top-style:dashed"></i>X-Plane (scoring only)</span>
+    <span><i style="border-color:var(--callout)"></i>Crosscheck callout</span>`;
+}
+
+// ---------- timeline ----------
+const W = 1200, PADL = 92, PADR = 16;
+let LANES = [], H = 0;
+const xOf = tt => PADL + (tt / rec.duration) * (W - PADL - PADR);
+const tOf = x => Math.max(0, Math.min(rec.duration, (x - PADL) / (W - PADL - PADR) * rec.duration));
+
+function drawTimeline() {
+  const svg = $("tl"), alt = rec.kind === "altitude";
+  LANES = [{id: "said", h: 54, label: "SAID"}, {id: "set", h: alt ? 96 : 54, label: "SET"},
+           {id: "doing", h: 120, label: "DOING"}, {id: "call", h: 40, label: "CROSSCHECK"}];
+  let y = 8; LANES.forEach(l => { l.y = y; y += l.h + 10; }); H = y + 18;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  let s = "";
+  const lane = id => LANES.find(l => l.id === id);
+  LANES.forEach(l => {
+    s += `<rect x="${PADL}" y="${l.y}" width="${W - PADL - PADR}" height="${l.h}" fill="#0d1117" rx="4"/>`;
+    const col = {said: "var(--said)", set: "var(--set)", doing: "var(--doing)", call: "var(--callout)"}[l.id];
+    s += `<text x="${PADL - 10}" y="${l.y + l.h / 2 + 4}" text-anchor="end" fill="${col}" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">${l.label}</text>`;
+  });
+  // axis
+  for (let sec = 0; sec <= rec.duration; sec += 10) {
+    const x = xOf(sec);
+    s += `<line x1="${x}" x2="${x}" y1="8" y2="${H - 18}" stroke="#1b232d"/>`;
+    s += `<text x="${x}" y="${H - 4}" text-anchor="middle" fill="var(--faint)" font-size="11" font-family="IBM Plex Mono, monospace">${sec}s</text>`;
+  }
+  // marks (fault, MCP set)
+  rec.marks.forEach(m => {
+    const x = xOf(m.t);
+    s += `<line x1="${x}" x2="${x}" y1="8" y2="${H - 18}" stroke="#8995a3" stroke-dasharray="3 4"/>`;
+    s += `<title>${esc(m.label)}</title>`;
+    s += `<text x="${x + 4}" y="${lane("doing").y + 12}" fill="var(--muted)" font-size="11">${esc(m.label)}</text>`;
+  });
+  // SAID: transmission bars
+  const ls = lane("said");
+  rec.heard.forEach((h, i) => {
+    const x1 = xOf(h.start), x2 = xOf(h.t), yy = ls.y + 8 + (i % 2) * 22;
+    s += `<rect x="${x1}" y="${yy}" width="${Math.max(4, x2 - x1)}" height="16" rx="3" fill="rgba(121,184,255,.18)" stroke="var(--said)"/>`;
+    const f = rec.said.find(f => Math.abs(f.t - h.t) < 0.05 && f.speaker === h.speaker);
+    const lab = `${h.speaker === "atc" ? "ATC" : "Crew"}: ${f ? (KEYS[f.key] || f.key) + " " + fmtAlt(f.value) : "no value"}`;
+    s += `<text x="${x2 + 6}" y="${yy + 12}" fill="var(--said)" font-size="12">${esc(lab)}</text>`;
+    s += `<title>${esc(h.transcript)}</title>`;
+  });
+  // series helper
+  const series = (pts, l, lo, hi, color, dash, step) => {
+    const yOf = v => l.y + l.h - 6 - (v - lo) / (hi - lo) * (l.h - 12);
+    let d = "", prev = null, out = "";
+    pts.forEach(p => {
+      if (p.v == null) return;
+      if (p.v < lo || p.v > hi) {  // misread: mark it at the lane edge, don't stretch the scale
+        const yy = p.v < lo ? l.y + l.h - 3 : l.y + 3;
+        out += `<circle cx="${xOf(p.t)}" cy="${yy}" r="2.5" fill="none" stroke="${color}"><title>read ${Math.round(p.v)} (misread)</title></circle>`;
+        return;
+      }
+      const x = xOf(p.t), y = yOf(p.v);
+      d += prev == null ? `M${x},${y}` : step ? `H${x}V${y}` : `L${x},${y}`;
+      prev = p;
+    });
+    return `<path d="${d}" fill="none" stroke="${color}" stroke-width="${dash ? 1.5 : 2}" ${dash ? 'stroke-dasharray="5 4"' : ""}/>` + out;
+  };
+  const ticks = (l, lo, hi, vals, fmt) => vals.map(v => {
+    const yy = l.y + l.h - 6 - (v - lo) / (hi - lo) * (l.h - 12);
+    return `<text x="${W - PADR - 4}" y="${yy - 3}" text-anchor="end" fill="var(--faint)" font-size="10" font-family="IBM Plex Mono, monospace">${fmt(v)}</text>
+            <line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="#1b232d" stroke-dasharray="2 4"/>`;
+  }).join("");
+  const R = rec.readings, T = rec.truth;
+  if (alt) {
+    const lset = lane("set"), ld = lane("doing");
+    const vals = T.flatMap(r => [r.alt, r.sel_alt]).filter(v => v != null);
+    const lo = Math.floor((Math.min(...vals) - 300) / 500) * 500, hi = Math.ceil((Math.max(...vals) + 500) / 500) * 500;
+    const sLo = 8500, sHi = Math.max(12500, hi);
+    s += ticks(lset, sLo, sHi, [9000, 11000, 12000].filter(v => v > sLo && v < sHi), v => v / 1000 + "k");
+    s += series(T.map(r => ({t: r.t, v: r.sel_alt})), lset, sLo, sHi, "var(--truth)", true, true);
+    s += series(R.map(r => ({t: r.t, v: r.selected_altitude})), lset, sLo, sHi, "var(--set)", false, true);
+    s += ticks(ld, lo, hi, [9000, 10000, 11000, 12000].filter(v => v > lo && v < hi), v => v / 1000 + "k");
+    if (rec.meta.cleared) { const yy = ld.y + ld.h - 6 - (rec.meta.cleared - lo) / (hi - lo) * (ld.h - 12);
+      s += `<line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="var(--said)" stroke-opacity=".5" stroke-dasharray="6 5"/>`;
+      s += `<text x="${PADL + 6}" y="${yy - 4}" fill="var(--said)" font-size="11">cleared ${fmtAlt(rec.meta.cleared)}</text>`; }
+    s += series(T.map(r => ({t: r.t, v: r.alt})), ld, lo, hi, "var(--truth)", true, false);
+    s += series(R.map(r => ({t: r.t, v: r.altitude})), ld, lo, hi, "var(--doing)", false, false);
+  } else {
+    const lset = lane("set"), ld = lane("doing");
+    // thrust mode as labelled bands
+    let segs = [];
+    R.forEach(r => { const m = r.fma && r.fma.some(Boolean) ? (r.fma[0] || "blank") : null;
+      if (m == null) return; const sg = segs[segs.length - 1];
+      if (sg && sg.m === m) sg.t2 = r.t; else segs.push({m, t1: r.t, t2: r.t}); });
+    segs.forEach((sg, i) => { const nx = segs[i + 1]; const x1 = xOf(sg.t1), x2 = xOf(nx ? nx.t1 : sg.t2);
+      const blank = sg.m === "blank";
+      s += `<rect x="${x1}" y="${lset.y + 12}" width="${Math.max(2, x2 - x1)}" height="22" rx="3" fill="${blank ? "rgba(255,92,92,.14)" : "rgba(228,107,240,.16)"}" stroke="${blank ? "var(--callout)" : "var(--set)"}"/>`;
+      if (x2 - x1 > 60) s += `<text x="${x1 + 8}" y="${lset.y + 27}" fill="${blank ? "var(--callout)" : "var(--set)"}" font-size="12" font-family="IBM Plex Mono, monospace">${esc(sg.m)}</text>`; });
+    const vals = T.map(r => r.ias).filter(v => v != null).sort((a, b) => a - b);
+    const q = p => vals[Math.floor(p * (vals.length - 1))];
+    const tgt = rec.meta.target_kt;
+    const lo = Math.floor((Math.min(q(0.01), tgt - 10) - 4) / 5) * 5, hi = Math.ceil((Math.max(q(0.99), tgt) + 4) / 5) * 5;
+    s += ticks(ld, lo, hi, [tgt, tgt - 10], v => v === tgt ? `target ${v} kt` : `${v} kt (10 below)`);
+    s += series(T.map(r => ({t: r.t, v: r.ias})), ld, lo, hi, "var(--truth)", true, false);
+    s += series(R.map(r => ({t: r.t, v: r.ias})), ld, lo, hi, "var(--doing)", false, false);
+  }
+  // CROSSCHECK lane
+  const lc = lane("call");
+  rec.callouts.forEach(c => {
+    const xs = xOf(c.since), x = xOf(c.t);
+    if (c.t - c.since > 0.3) s += `<rect x="${xs}" y="${lc.y + 6}" width="${x - xs}" height="${lc.h - 12}" fill="rgba(255,92,92,.10)"><title>Mismatch held, within the grace period</title></rect>`;
+    s += `<line x1="${x}" x2="${x}" y1="8" y2="${lc.y + lc.h}" stroke="var(--callout)" stroke-width="1.5"/>`;
+    s += `<circle cx="${x}" cy="${lc.y + lc.h / 2}" r="5" fill="var(--callout)"/>`;
+    const right = x > W * 0.62;
+    s += `<text x="${right ? x - 10 : x + 10}" y="${lc.y + lc.h / 2 + 4}" text-anchor="${right ? "end" : "start"}" fill="var(--text)" font-size="12">“${esc(c.text)}”</text>`;
+  });
+  if (!rec.callouts.length) s += `<text x="${PADL + 10}" y="${lc.y + lc.h / 2 + 4}" fill="var(--ok)" font-size="12">No callout</text>`;
+  s += `<g id="ph"><line id="phl" y1="4" y2="${H - 16}" stroke="var(--text)" stroke-width="1"/><circle id="phc" cy="4" r="4" fill="var(--text)"/></g>`;
+  svg.innerHTML = s;
+  drawPlayhead();
+}
+function drawPlayhead() {
+  const x = xOf(t); const l = $("phl"), c = $("phc");
+  if (l) { l.setAttribute("x1", x); l.setAttribute("x2", x); c.setAttribute("cx", x); }
+}
+
+// seek by click / drag on the timeline
+(() => {
+  const svg = $("tl"); let drag = false;
+  const seek = e => { const b = svg.getBoundingClientRect(); const x = (e.clientX - b.left) / b.width * W;
+    t = tOf(x); played = new Set(rec.audio.filter(a => a.t < t).map(a => a.file)); stopAudio(); update(); };
+  svg.addEventListener("pointerdown", e => { drag = true; svg.setPointerCapture(e.pointerId); seek(e); });
+  svg.addEventListener("pointermove", e => { if (drag) seek(e); });
+  svg.addEventListener("pointerup", () => drag = false);
+})();
+
+// ---------- playback ----------
+function stopAudio() { audios.forEach(a => a.pause()); audios = []; }
+function stop() { playing = false; $("play").textContent = "Play"; $("play").setAttribute("aria-label", "Play"); stopAudio(); }
+function tick(now) {
+  if (!playing) return;
+  const dt = (now - lastWall) / 1000; lastWall = now;
+  t = Math.min(rec.duration, t + dt * rate);
+  if ($("sound").checked) rec.audio.forEach(a => {
+    if (!played.has(a.file) && t >= a.t && t < a.t + a.dur) {
+      played.add(a.file); const au = new Audio(a.file); au.playbackRate = rate; au.currentTime = Math.max(0, t - a.t);
+      au.play().catch(() => {}); audios.push(au);
+    }
+  });
+  update();
+  if (t >= rec.duration) { stop(); return; }
+  requestAnimationFrame(tick);
+}
+$("play").onclick = () => {
+  if (playing) return stop();
+  if (t >= rec.duration - 0.05) { t = 0; played = new Set(); }
+  playing = true; $("play").textContent = "Pause"; $("play").setAttribute("aria-label", "Pause");
+  lastWall = performance.now(); requestAnimationFrame(tick);
+};
+$("speed").onclick = () => { rate = rate === 1 ? 2 : rate === 2 ? 4 : 1; $("speed").textContent = rate + "×"; audios.forEach(a => a.playbackRate = rate); };
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input, button")) return;
+  if (e.code === "Space") { e.preventDefault(); $("play").click(); }
+  if (e.code === "ArrowRight") { t = Math.min(rec.duration, t + 2); update(); }
+  if (e.code === "ArrowLeft") { t = Math.max(0, t - 2); update(); }
+});
+window.addEventListener("resize", drawPlayhead);
+
+// ---------- start ----------
+if (!D.length) document.querySelector(".stage").innerHTML = "<p>No recordings. Run <code>uv run python cli.py debrief</code>.</p>";
+else {
+  let start = 0;
+  try { const id = new URLSearchParams(location.search).get("s") || localStorage.getItem("debrief.tab"); const i = D.findIndex(r => r.id === id); if (i >= 0) start = i; } catch (e) {}
+  select(start);
+}
+</script>
+</body>
+</html>

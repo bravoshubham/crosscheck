@@ -3,6 +3,7 @@
   uv run python cli.py replay replay/altitude_bust        # one recording, saved panel readings
   uv run python cli.py replay --all                       # every recording under replay/
   uv run python cli.py replay --all --recompute           # re-read every saved frame (macOS)
+  uv run python cli.py debrief                            # build the debrief viewer into site/
 
 Replay feeds the panel readings and spoken ("said") facts saved with each recording back
 through the same ledger, rules and scorer as the live run, then compares the result with the
@@ -49,7 +50,12 @@ def main() -> int:
     rp.add_argument("dirs", nargs="*", type=pathlib.Path)
     rp.add_argument("--all", action="store_true")
     rp.add_argument("--recompute", action="store_true", help="re-read the saved frames (macOS: Apple Vision)")
+    sub.add_parser("debrief", help="build the debrief viewer (site/index.html) from replay/")
     args = ap.parse_args()
+    if args.cmd == "debrief":
+        from debrief.build import build
+        print("wrote", build())
+        return 0
     dirs = sorted(p.parent for p in (ROOT / "replay").glob("*/meta.json")) if args.all else args.dirs
     if not dirs:
         ap.error("give recording directories or --all")

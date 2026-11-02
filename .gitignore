@@ -10,3 +10,4 @@ eval/audio/radio_set/*.wav
 eval/recordings/*/[0-9]*.png
 replay/*/replay_events.jsonl
 replay/*/replay_result.json
+site/
