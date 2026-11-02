@@ -24,10 +24,14 @@ PFD_REGIONS = {
     "fma_pitch": ((425, 20, 580, 72), 1),
     "speed": ((10, 340, 140, 440), 3),
 }
-ALT_BIG = (630, 345, 690, 420)   # thousands and hundreds, large digits
+ALT_BIG = (608, 345, 690, 420)   # thousands and hundreds, large digits (room for 5 digits)
 ALT_ROLL = (686, 345, 740, 420)  # rolling tens column, 20 ft labels
 ROLL_PX_PER_20FT = 22.4          # measured on the T1 view
 FMA_WORDS = re.compile(r"[A-Z][A-Z /]+")
+# Anchor: the barometric setting under the altitude tape ("29.92 IN." or "STD"), always present.
+# Its top-left in the calibration PFD crop; regions shift with it when the view moves.
+BARO_ANCHOR = (590, 665)
+BARO = re.compile(r"^(\d{2}\.\d{2}|STD\b|\d{3,4}\s*HPA)")
 
 
 @dataclass
@@ -42,6 +46,18 @@ class PanelReading:
 
 def _ocr(img: Image.Image) -> list[tuple[str, float, tuple]]:
     return ocrmac.OCR(img, recognition_level="accurate").recognize(px=True)
+
+
+def _shift(box: tuple, dx: int, dy: int) -> tuple:
+    return (box[0] + dx, box[1] + dy, box[2] + dx, box[3] + dy)
+
+
+def _anchor_offset(pfd: Image.Image) -> tuple[int, int]:
+    """Offset of this frame's view from the calibration view, from the baro readout position."""
+    for text, _, (x0, y0, x1, y1) in _ocr(pfd):
+        if y0 > pfd.height * 0.7 and x0 > pfd.width * 0.6 and BARO.match(text.strip()):
+            return round(x0 - BARO_ANCHOR[0]), round(y0 - BARO_ANCHOR[1])
+    return 0, 0
 
 
 def _crop(img: Image.Image, box: tuple, scale: int) -> Image.Image:
@@ -62,32 +78,32 @@ def _number_near_centre(results, height: float, lo: int, hi: int) -> int | None:
     return None if best is None else best[1]
 
 
-def _altitude(pfd: Image.Image, out: PanelReading) -> None:
-    big = _ocr(_crop(pfd, ALT_BIG, 4))
+def _altitude(pfd: Image.Image, out: PanelReading, dx: int = 0, dy: int = 0) -> None:
+    big = _ocr(_crop(pfd, _shift(ALT_BIG, dx, dy), 4))
     out.raw["alt_big"] = [t for t, _, _ in big]
     hundreds = [int(d) for t, _, _ in big if (d := re.sub(r"\D", "", t)) and len(d) <= 3]
     if not hundreds:
         return
     base = hundreds[0] * 100
-    scale = 5
-    roll = _ocr(_crop(pfd, ALT_ROLL, scale))
-    out.raw["alt_roll"] = [t for t, _, _ in roll]
-    centre = (ALT_ROLL[3] - ALT_ROLL[1]) * scale / 2
-    px_per_ft = ROLL_PX_PER_20FT * scale / 20
-    estimates = []
-    for text, _, (x0, y0, x1, y1) in roll:
-        d = re.sub(r"\D", "", text)
-        if len(d) != 2 or int(d) % 20:
-            continue
-        v = int(d)
-        # label above the pointer line reads higher; a label of 80-ish below "00" belongs to the hundred below
-        offset_ft = ((y0 + y1) / 2 - centre) / px_per_ft
-        at_centre = v + offset_ft
-        if at_centre > 110:      # e.g. "80" sitting just below a 00 that belongs to this hundred
-            at_centre -= 100
-        elif at_centre < -10:
-            at_centre += 100
-        estimates.append(at_centre)
+    estimates: list[float] = []
+    for scale in (5, 4, 6, 3):  # text recognition on the rolling digits is scale-sensitive
+        roll = _ocr(_crop(pfd, _shift(ALT_ROLL, dx, dy), scale))
+        out.raw.setdefault("alt_roll", []).extend(t for t, _, _ in roll)
+        centre = (ALT_ROLL[3] - ALT_ROLL[1]) * scale / 2
+        px_per_ft = ROLL_PX_PER_20FT * scale / 20
+        for text, _, (x0, y0, x1, y1) in roll:
+            d = re.sub(r"\D", "", text)
+            if len(d) != 2 or int(d) % 20:
+                continue
+            # a label above the pointer line reads higher; wrap across the hundred
+            at_centre = int(d) + ((y0 + y1) / 2 - centre) / px_per_ft
+            if at_centre > 110:
+                at_centre -= 100
+            elif at_centre < -10:
+                at_centre += 100
+            estimates.append(at_centre)
+        if estimates:
+            break
     if estimates:
         out.altitude = int(round(base + sorted(estimates)[len(estimates) // 2]))
         out.altitude_method = "roll"
@@ -99,8 +115,10 @@ def _altitude(pfd: Image.Image, out: PanelReading) -> None:
 def read_frame(frame: Image.Image) -> PanelReading:
     out = PanelReading()
     pfd = frame.crop(CALIBRATION["pfd"])
+    dx, dy = _anchor_offset(pfd)
+    out.raw["offset"] = [f"{dx},{dy}"]
     for name, (box, scale) in PFD_REGIONS.items():
-        crop = _crop(pfd, box, scale)
+        crop = _crop(pfd, _shift(box, dx, dy), scale)
         res = _ocr(crop)
         out.raw[name] = [t for t, _, _ in res]
         if name.startswith("fma_"):
@@ -108,10 +126,16 @@ def read_frame(frame: Image.Image) -> PanelReading:
             out.fma.append(m.group(0).strip() if (m := FMA_WORDS.search(words)) else "")
         elif name == "speed":
             out.ias = _number_near_centre(res, crop.height, 30, 400)
-    _altitude(pfd, out)
-    nd = _ocr(frame.crop(CALIBRATION["nd_top"]))
+            for retry in (4, 2, 5):  # the rolling last digit makes recognition scale-sensitive
+                if out.ias is not None:
+                    break
+                c2 = _crop(pfd, _shift(box, dx, dy), retry)
+                out.ias = _number_near_centre(_ocr(c2), c2.height, 30, 400)
+    _altitude(pfd, out, dx, dy)
+    nd = _ocr(frame.crop(_shift(CALIBRATION["nd_top"], dx, dy)))
     out.raw["nd_top"] = [t for t, _, _ in nd]
-    for text, _, _ in nd:
-        if m := re.search(r"(?:TRK|HDG)\s*(\d{3})", text):
-            out.track_mag = int(m.group(1)) % 360
+    # the readout box border often splits or prefixes the digits: "TRK", "1246] MAG"
+    text = " ".join(t for t, _, _ in sorted(nd, key=lambda r: r[2][0]))
+    if m := re.search(r"(?:TRK|HDG)\D{0,6}(\d{3,4})", text):
+        out.track_mag = int(m.group(1)[-3:]) % 360
     return out

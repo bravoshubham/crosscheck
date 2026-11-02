@@ -1,0 +1,51 @@
+{
+ "frames": 60,
+ "reader": "senses.panel (Apple Vision OCR on calibrated crops)",
+ "read_s_median": 0.615,
+ "ias": {
+  "read": "59/60",
+  "median_err": 0.4,
+  "max_err": 71.2,
+  "within_target": "57/60",
+  "target": 2
+ },
+ "alt": {
+  "read": "58/60",
+  "median_err": 6.9,
+  "max_err": 107.1,
+  "within_target": "43/60",
+  "target": 20
+ },
+ "trk": {
+  "read": "54/60",
+  "median_err": 0.7,
+  "max_err": 1.4,
+  "within_target": "54/60",
+  "target": 2
+ },
+ "ias_window": {
+  "read": "59/60",
+  "median_err": 0.2,
+  "max_err": 70.4,
+  "within_target": "58/60",
+  "target": 2
+ },
+ "alt_window": {
+  "read": "58/60",
+  "median_err": 5.0,
+  "max_err": 105.8,
+  "within_target": "52/60",
+  "target": 20
+ },
+ "altitude_method": {
+  "roll": 58,
+  "": 2
+ },
+ "fma_strings": {
+  " |  | MCP SPD": 9,
+  "NI |  | MCP SPU": 1,
+  "TN |  | ": 1,
+  "TNI |  | ME": 1,
+  "MCP SPD |  | ALT HOLD": 48
+ }
+}

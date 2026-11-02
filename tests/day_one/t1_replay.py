@@ -14,7 +14,7 @@ from PIL import Image
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
 from senses.panel import read_frame  # noqa: E402
 
-TARGETS = {"ias": 2, "alt": 20, "trk": 2}
+TARGETS = {"ias": 2, "alt": 20, "trk": 2, "ias_window": 2, "alt_window": 20}
 THRUST = {1: "MCP SPD", 0: "ARM", -1: ""}  # autothrottle_enabled -> expected thrust cell (LVL CHG may show RETARD/N1)
 
 
@@ -32,8 +32,17 @@ def main(rec: pathlib.Path) -> int:
         dt = time.monotonic() - t0
         b, a = m["before"], m["after"]
         truth = {"ias": (b["ias"] + a["ias"]) / 2, "alt": (b["alt"] + a["alt"]) / 2,
-                 "trk": (a["trk_true"] - a["magvar"]) % 360}
+                 "trk": (a["trk_true"] + a["magvar"]) % 360}  # X-Plane magvar is negative for east
         e = {}
+        # "in-window" error: zero if the reading lies between the truth just before and just after
+        # the capture (a screenshot takes ~0.5-1 s, during a climb the altitude moves 60-130 ft)
+        def win(read, lo, hi):
+            lo, hi = min(lo, hi), max(lo, hi)
+            return 0.0 if lo <= read <= hi else min(abs(read - lo), abs(read - hi))
+        if r.ias is not None:
+            e["ias_window"] = win(r.ias, b["ias"], a["ias"])
+        if r.altitude is not None:
+            e["alt_window"] = win(r.altitude, b["alt"], a["alt"])
         if r.ias is not None:
             e["ias"] = abs(r.ias - truth["ias"])
         if r.altitude is not None:

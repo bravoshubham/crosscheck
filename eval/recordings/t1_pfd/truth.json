@@ -1,0 +1,1622 @@
+[
+ {
+  "i": 0,
+  "t": 1793595358.6833768,
+  "before": {
+   "ias": 180.2531280517578,
+   "alt": 8899.4111328125,
+   "hdg": 251.658203125,
+   "trk_true": 267.50640869140625,
+   "magvar": -14.438396453857422
+  },
+  "after": {
+   "ias": 179.7425537109375,
+   "alt": 8889.1513671875,
+   "hdg": 250.93017578125,
+   "trk_true": 266.5199890136719,
+   "magvar": -14.438607215881348
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 1,
+  "t": 1793595360.5360792,
+  "before": {
+   "ias": 179.35501098632812,
+   "alt": 8882.0908203125,
+   "hdg": 250.35833740234375,
+   "trk_true": 265.7164611816406,
+   "magvar": -14.438798904418945
+  },
+  "after": {
+   "ias": 179.14744567871094,
+   "alt": 8876.5302734375,
+   "hdg": 249.5997772216797,
+   "trk_true": 264.8643798828125,
+   "magvar": -14.43902587890625
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 2,
+  "t": 1793595362.244138,
+  "before": {
+   "ias": 179.3313751220703,
+   "alt": 8874.27734375,
+   "hdg": 249.01710510253906,
+   "trk_true": 264.2446594238281,
+   "magvar": -14.439202308654785
+  },
+  "after": {
+   "ias": 180.03765869140625,
+   "alt": 8873.7333984375,
+   "hdg": 248.42449951171875,
+   "trk_true": 263.60137939453125,
+   "magvar": -14.43939208984375
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 3,
+  "t": 1793595363.969101,
+  "before": {
+   "ias": 181.21739196777344,
+   "alt": 8874.904296875,
+   "hdg": 247.9036865234375,
+   "trk_true": 263.03363037109375,
+   "magvar": -14.439563751220703
+  },
+  "after": {
+   "ias": 183.04556274414062,
+   "alt": 8878.0146484375,
+   "hdg": 247.28868103027344,
+   "trk_true": 262.40313720703125,
+   "magvar": -14.439759254455566
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 4,
+  "t": 1793595365.67794,
+  "before": {
+   "ias": 184.91763305664062,
+   "alt": 8882.4794921875,
+   "hdg": 246.72332763671875,
+   "trk_true": 261.84014892578125,
+   "magvar": -14.439931869506836
+  },
+  "after": {
+   "ias": 187.203125,
+   "alt": 8889.763671875,
+   "hdg": 246.0839385986328,
+   "trk_true": 261.21661376953125,
+   "magvar": -14.440120697021484
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 5,
+  "t": 1793595367.3275719,
+  "before": {
+   "ias": 189.38482666015625,
+   "alt": 8899.4921875,
+   "hdg": 245.4840850830078,
+   "trk_true": 260.63201904296875,
+   "magvar": -14.440291404724121
+  },
+  "after": {
+   "ias": 191.650634765625,
+   "alt": 8913.376953125,
+   "hdg": 244.85256958007812,
+   "trk_true": 260.01019287109375,
+   "magvar": -14.440470695495605
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 6,
+  "t": 1793595369.0525172,
+  "before": {
+   "ias": 193.7578125,
+   "alt": 8931.439453125,
+   "hdg": 244.2276611328125,
+   "trk_true": 259.39239501953125,
+   "magvar": -14.440644264221191
+  },
+  "after": {
+   "ias": 195.96328735351562,
+   "alt": 8957.6845703125,
+   "hdg": 243.52899169921875,
+   "trk_true": 258.705078125,
+   "magvar": -14.440832138061523
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 7,
+  "t": 1793595370.808173,
+  "before": {
+   "ias": 197.78128051757812,
+   "alt": 8987.9580078125,
+   "hdg": 242.89010620117188,
+   "trk_true": 258.0785217285156,
+   "magvar": -14.440999031066895
+  },
+  "after": {
+   "ias": 199.5619354248047,
+   "alt": 9032.2197265625,
+   "hdg": 242.13882446289062,
+   "trk_true": 257.3346862792969,
+   "magvar": -14.441194534301758
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 8,
+  "t": 1793595372.577754,
+  "before": {
+   "ias": 200.76644897460938,
+   "alt": 9077.9365234375,
+   "hdg": 241.49319458007812,
+   "trk_true": 256.68890380859375,
+   "magvar": -14.441360473632812
+  },
+  "after": {
+   "ias": 201.75094604492188,
+   "alt": 9142.1982421875,
+   "hdg": 240.73594665527344,
+   "trk_true": 255.9370574951172,
+   "magvar": -14.441545486450195
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 9,
+  "t": 1793595374.367671,
+  "before": {
+   "ias": 202.21694946289062,
+   "alt": 9204.5859375,
+   "hdg": 240.1015625,
+   "trk_true": 255.2958526611328,
+   "magvar": -14.441702842712402
+  },
+  "after": {
+   "ias": 202.3341827392578,
+   "alt": 9291.6494140625,
+   "hdg": 239.33544921875,
+   "trk_true": 254.5220947265625,
+   "magvar": -14.441889762878418
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 10,
+  "t": 1793595376.176024,
+  "before": {
+   "ias": 202.06541442871094,
+   "alt": 9372.4521484375,
+   "hdg": 238.70361328125,
+   "trk_true": 253.88104248046875,
+   "magvar": -14.44204330444336
+  },
+  "after": {
+   "ias": 201.30633544921875,
+   "alt": 9480.994140625,
+   "hdg": 237.95123291015625,
+   "trk_true": 253.11663818359375,
+   "magvar": -14.442217826843262
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 11,
+  "t": 1793595377.977556,
+  "before": {
+   "ias": 200.38339233398438,
+   "alt": 9576.2255859375,
+   "hdg": 237.33836364746094,
+   "trk_true": 252.50140380859375,
+   "magvar": -14.442357063293457
+  },
+  "after": {
+   "ias": 198.8842010498047,
+   "alt": 9701.47265625,
+   "hdg": 236.60853576660156,
+   "trk_true": 251.75241088867188,
+   "magvar": -14.442523956298828
+  },
+  "modes": {
+   "autothrottle_enabled": 2,
+   "heading_status": 0,
+   "altitude_hold_status": 1,
+   "speed_status": 2,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 12,
+  "t": 1793595379.759184,
+  "before": {
+   "ias": 197.40109252929688,
+   "alt": 9808.986328125,
+   "hdg": 236.04476928710938,
+   "trk_true": 251.15560913085938,
+   "magvar": -14.442656517028809
+  },
+  "after": {
+   "ias": 195.41311645507812,
+   "alt": 9943.43359375,
+   "hdg": 235.48313903808594,
+   "trk_true": 250.49447631835938,
+   "magvar": -14.442806243896484
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 13,
+  "t": 1793595381.4755268,
+  "before": {
+   "ias": 193.56289672851562,
+   "alt": 10058.69140625,
+   "hdg": 235.0854034423828,
+   "trk_true": 250.00425720214844,
+   "magvar": -14.442928314208984
+  },
+  "after": {
+   "ias": 191.0349578857422,
+   "alt": 10188.826171875,
+   "hdg": 234.68368530273438,
+   "trk_true": 249.5129852294922,
+   "magvar": -14.443060874938965
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 14,
+  "t": 1793595383.2256808,
+  "before": {
+   "ias": 188.33253479003906,
+   "alt": 10302.033203125,
+   "hdg": 234.35694885253906,
+   "trk_true": 249.12261962890625,
+   "magvar": -14.443177223205566
+  },
+  "after": {
+   "ias": 184.5073699951172,
+   "alt": 10432.908203125,
+   "hdg": 233.98150634765625,
+   "trk_true": 248.70547485351562,
+   "magvar": -14.44330883026123
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 15,
+  "t": 1793595385.0426738,
+  "before": {
+   "ias": 181.0322723388672,
+   "alt": 10535.984375,
+   "hdg": 233.6668243408203,
+   "trk_true": 248.37474060058594,
+   "magvar": -14.443418502807617
+  },
+  "after": {
+   "ias": 176.7808074951172,
+   "alt": 10655.181640625,
+   "hdg": 233.27139282226562,
+   "trk_true": 247.9749755859375,
+   "magvar": -14.443553924560547
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 16,
+  "t": 1793595386.83274,
+  "before": {
+   "ias": 173.98281860351562,
+   "alt": 10741.9423828125,
+   "hdg": 232.94906616210938,
+   "trk_true": 247.65431213378906,
+   "magvar": -14.443660736083984
+  },
+  "after": {
+   "ias": 171.54371643066406,
+   "alt": 10835.8681640625,
+   "hdg": 232.55113220214844,
+   "trk_true": 247.2696533203125,
+   "magvar": -14.443785667419434
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 17,
+  "t": 1793595388.661194,
+  "before": {
+   "ias": 170.42005920410156,
+   "alt": 10904.5625,
+   "hdg": 232.21649169921875,
+   "trk_true": 246.94583129882812,
+   "magvar": -14.443889617919922
+  },
+  "after": {
+   "ias": 170.01914978027344,
+   "alt": 10979.732421875,
+   "hdg": 231.79872131347656,
+   "trk_true": 246.53280639648438,
+   "magvar": -14.444018363952637
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 18,
+  "t": 1793595390.5579379,
+  "before": {
+   "ias": 170.42819213867188,
+   "alt": 11031.4208984375,
+   "hdg": 231.46900939941406,
+   "trk_true": 246.19630432128906,
+   "magvar": -14.444124221801758
+  },
+  "after": {
+   "ias": 171.88157653808594,
+   "alt": 11088.939453125,
+   "hdg": 231.02894592285156,
+   "trk_true": 245.75473022460938,
+   "magvar": -14.444262504577637
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 19,
+  "t": 1793595392.469321,
+  "before": {
+   "ias": 173.4790802001953,
+   "alt": 11122.677734375,
+   "hdg": 230.70877075195312,
+   "trk_true": 245.42623901367188,
+   "magvar": -14.444365501403809
+  },
+  "after": {
+   "ias": 176.04331970214844,
+   "alt": 11157.3427734375,
+   "hdg": 230.28329467773438,
+   "trk_true": 244.98631286621094,
+   "magvar": -14.44450569152832
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 20,
+  "t": 1793595394.509016,
+  "before": {
+   "ias": 177.98446655273438,
+   "alt": 11174.232421875,
+   "hdg": 229.96307373046875,
+   "trk_true": 244.6638641357422,
+   "magvar": -14.444609642028809
+  },
+  "after": {
+   "ias": 180.79183959960938,
+   "alt": 11185.48828125,
+   "hdg": 229.39036560058594,
+   "trk_true": 244.1597900390625,
+   "magvar": -14.444766998291016
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 21,
+  "t": 1793595396.610972,
+  "before": {
+   "ias": 182.43910217285156,
+   "alt": 11183.904296875,
+   "hdg": 228.96832275390625,
+   "trk_true": 243.7950439453125,
+   "magvar": -14.444868087768555
+  },
+  "after": {
+   "ias": 184.6536102294922,
+   "alt": 11169.802734375,
+   "hdg": 228.2563934326172,
+   "trk_true": 243.17132568359375,
+   "magvar": -14.445023536682129
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 22,
+  "t": 1793595398.5508401,
+  "before": {
+   "ias": 185.9785614013672,
+   "alt": 11153.87890625,
+   "hdg": 227.7303924560547,
+   "trk_true": 242.7068328857422,
+   "magvar": -14.445128440856934
+  },
+  "after": {
+   "ias": 187.40216064453125,
+   "alt": 11127.8525390625,
+   "hdg": 226.9958038330078,
+   "trk_true": 242.03713989257812,
+   "magvar": -14.44526481628418
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 23,
+  "t": 1793595400.661109,
+  "before": {
+   "ias": 188.16064453125,
+   "alt": 11107.9501953125,
+   "hdg": 226.45751953125,
+   "trk_true": 241.53831481933594,
+   "magvar": -14.44536018371582
+  },
+  "after": {
+   "ias": 188.9376983642578,
+   "alt": 11077.4814453125,
+   "hdg": 225.59710693359375,
+   "trk_true": 240.7213134765625,
+   "magvar": -14.44550609588623
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 24,
+  "t": 1793595402.6873431,
+  "before": {
+   "ias": 189.19985961914062,
+   "alt": 11058.478515625,
+   "hdg": 225.01368713378906,
+   "trk_true": 240.15850830078125,
+   "magvar": -14.445600509643555
+  },
+  "after": {
+   "ias": 189.28102111816406,
+   "alt": 11035.248046875,
+   "hdg": 224.2188262939453,
+   "trk_true": 239.35049438476562,
+   "magvar": -14.445731163024902
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 25,
+  "t": 1793595404.84421,
+  "before": {
+   "ias": 189.18450927734375,
+   "alt": 11022.9013671875,
+   "hdg": 223.69802856445312,
+   "trk_true": 238.82330322265625,
+   "magvar": -14.445815086364746
+  },
+  "after": {
+   "ias": 188.7895050048828,
+   "alt": 11007.6005859375,
+   "hdg": 222.8621826171875,
+   "trk_true": 237.97567749023438,
+   "magvar": -14.445944786071777
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 26,
+  "t": 1793595406.8942149,
+  "before": {
+   "ias": 188.39967346191406,
+   "alt": 11000.4345703125,
+   "hdg": 222.32516479492188,
+   "trk_true": 237.4329833984375,
+   "magvar": -14.446025848388672
+  },
+  "after": {
+   "ias": 187.70326232910156,
+   "alt": 10993.453125,
+   "hdg": 221.5371856689453,
+   "trk_true": 236.64031982421875,
+   "magvar": -14.446138381958008
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 27,
+  "t": 1793595409.069231,
+  "before": {
+   "ias": 187.19886779785156,
+   "alt": 10990.7109375,
+   "hdg": 221.02691650390625,
+   "trk_true": 236.12942504882812,
+   "magvar": -14.446208000183105
+  },
+  "after": {
+   "ias": 186.32513427734375,
+   "alt": 10988.4033203125,
+   "hdg": 220.1754913330078,
+   "trk_true": 235.26992797851562,
+   "magvar": -14.446320533752441
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 28,
+  "t": 1793595411.09501,
+  "before": {
+   "ias": 185.82444763183594,
+   "alt": 10988.005859375,
+   "hdg": 219.6696319580078,
+   "trk_true": 234.75872802734375,
+   "magvar": -14.446385383605957
+  },
+  "after": {
+   "ias": 185.13580322265625,
+   "alt": 10988.2509765625,
+   "hdg": 218.91693115234375,
+   "trk_true": 234.00244140625,
+   "magvar": -14.446475982666016
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 29,
+  "t": 1793595413.318976,
+  "before": {
+   "ias": 184.71900939941406,
+   "alt": 10988.767578125,
+   "hdg": 218.41705322265625,
+   "trk_true": 233.5009765625,
+   "magvar": -14.446533203125
+  },
+  "after": {
+   "ias": 184.1010284423828,
+   "alt": 10989.9384765625,
+   "hdg": 217.57818603515625,
+   "trk_true": 232.6564178466797,
+   "magvar": -14.446625709533691
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 30,
+  "t": 1793595415.373953,
+  "before": {
+   "ias": 183.73751831054688,
+   "alt": 10990.78125,
+   "hdg": 217.0330352783203,
+   "trk_true": 232.11764526367188,
+   "magvar": -14.446681022644043
+  },
+  "after": {
+   "ias": 183.27838134765625,
+   "alt": 10991.9443359375,
+   "hdg": 216.25013732910156,
+   "trk_true": 231.33639526367188,
+   "magvar": -14.446755409240723
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 31,
+  "t": 1793595417.448257,
+  "before": {
+   "ias": 183.01043701171875,
+   "alt": 10992.658203125,
+   "hdg": 215.7415771484375,
+   "trk_true": 230.82962036132812,
+   "magvar": -14.446802139282227
+  },
+  "after": {
+   "ias": 182.67025756835938,
+   "alt": 10993.5908203125,
+   "hdg": 214.9959716796875,
+   "trk_true": 230.08128356933594,
+   "magvar": -14.44686508178711
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 32,
+  "t": 1793595419.523369,
+  "before": {
+   "ias": 182.45346069335938,
+   "alt": 10994.1796875,
+   "hdg": 214.46763610839844,
+   "trk_true": 229.5598907470703,
+   "magvar": -14.446906089782715
+  },
+  "after": {
+   "ias": 182.17518615722656,
+   "alt": 10994.9375,
+   "hdg": 213.68402099609375,
+   "trk_true": 228.7794952392578,
+   "magvar": -14.446962356567383
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 33,
+  "t": 1793595421.952628,
+  "before": {
+   "ias": 182.02210998535156,
+   "alt": 10995.3779296875,
+   "hdg": 213.185791015625,
+   "trk_true": 228.2824249267578,
+   "magvar": -14.44699478149414
+  },
+  "after": {
+   "ias": 181.8030548095703,
+   "alt": 10996.013671875,
+   "hdg": 212.34774780273438,
+   "trk_true": 227.44105529785156,
+   "magvar": -14.44704532623291
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 34,
+  "t": 1793595424.069928,
+  "before": {
+   "ias": 181.65597534179688,
+   "alt": 10996.474609375,
+   "hdg": 211.673095703125,
+   "trk_true": 226.77195739746094,
+   "magvar": -14.447080612182617
+  },
+  "after": {
+   "ias": 181.50863647460938,
+   "alt": 10997.0439453125,
+   "hdg": 210.8209228515625,
+   "trk_true": 225.9221649169922,
+   "magvar": -14.44711971282959
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 35,
+  "t": 1793595426.269521,
+  "before": {
+   "ias": 181.4399871826172,
+   "alt": 10997.3623046875,
+   "hdg": 210.3248291015625,
+   "trk_true": 225.4228515625,
+   "magvar": -14.447139739990234
+  },
+  "after": {
+   "ias": 181.35830688476562,
+   "alt": 10997.873046875,
+   "hdg": 209.4838409423828,
+   "trk_true": 224.58303833007812,
+   "magvar": -14.447169303894043
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 36,
+  "t": 1793595428.4734762,
+  "before": {
+   "ias": 181.31126403808594,
+   "alt": 10998.1669921875,
+   "hdg": 208.91761779785156,
+   "trk_true": 224.01873779296875,
+   "magvar": -14.447183609008789
+  },
+  "after": {
+   "ias": 181.25271606445312,
+   "alt": 10998.5595703125,
+   "hdg": 207.99131774902344,
+   "trk_true": 223.0941925048828,
+   "magvar": -14.4472017288208
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 37,
+  "t": 1793595430.74455,
+  "before": {
+   "ias": 181.2304229736328,
+   "alt": 10998.7529296875,
+   "hdg": 207.49343872070312,
+   "trk_true": 222.59678649902344,
+   "magvar": -14.447208404541016
+  },
+  "after": {
+   "ias": 181.20750427246094,
+   "alt": 10999.044921875,
+   "hdg": 206.7187957763672,
+   "trk_true": 221.8170166015625,
+   "magvar": -14.44721508026123
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 38,
+  "t": 1793595432.660914,
+  "before": {
+   "ias": 181.1979217529297,
+   "alt": 10999.30859375,
+   "hdg": 206.08261108398438,
+   "trk_true": 221.18722534179688,
+   "magvar": -14.447216033935547
+  },
+  "after": {
+   "ias": 181.19619750976562,
+   "alt": 10999.59375,
+   "hdg": 205.3990478515625,
+   "trk_true": 220.50289916992188,
+   "magvar": -14.447212219238281
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 39,
+  "t": 1793595434.727752,
+  "before": {
+   "ias": 181.1991424560547,
+   "alt": 10999.8271484375,
+   "hdg": 204.8966064453125,
+   "trk_true": 219.99673461914062,
+   "magvar": -14.4472074508667
+  },
+  "after": {
+   "ias": 181.2092742919922,
+   "alt": 11000.181640625,
+   "hdg": 204.15640258789062,
+   "trk_true": 219.25074768066406,
+   "magvar": -14.447196006774902
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 40,
+  "t": 1793595436.6610649,
+  "before": {
+   "ias": 181.22010803222656,
+   "alt": 11000.43359375,
+   "hdg": 203.6258544921875,
+   "trk_true": 218.72616577148438,
+   "magvar": -14.447183609008789
+  },
+  "after": {
+   "ias": 181.238037109375,
+   "alt": 11000.78125,
+   "hdg": 202.9250946044922,
+   "trk_true": 218.02685546875,
+   "magvar": -14.447165489196777
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 41,
+  "t": 1793595438.6610508,
+  "before": {
+   "ias": 181.2527313232422,
+   "alt": 11001.0,
+   "hdg": 202.42706298828125,
+   "trk_true": 217.5284881591797,
+   "magvar": -14.447148323059082
+  },
+  "after": {
+   "ias": 181.27655029296875,
+   "alt": 11001.2890625,
+   "hdg": 201.7132110595703,
+   "trk_true": 216.81350708007812,
+   "magvar": -14.447121620178223
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 42,
+  "t": 1793595440.575936,
+  "before": {
+   "ias": 181.29563903808594,
+   "alt": 11001.4814453125,
+   "hdg": 201.1945343017578,
+   "trk_true": 216.2924346923828,
+   "magvar": -14.447097778320312
+  },
+  "after": {
+   "ias": 181.32240295410156,
+   "alt": 11001.70703125,
+   "hdg": 200.50430297851562,
+   "trk_true": 215.60281372070312,
+   "magvar": -14.447063446044922
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 43,
+  "t": 1793595442.602595,
+  "before": {
+   "ias": 181.34237670898438,
+   "alt": 11001.833984375,
+   "hdg": 200.00042724609375,
+   "trk_true": 215.10081481933594,
+   "magvar": -14.447036743164062
+  },
+  "after": {
+   "ias": 181.3713836669922,
+   "alt": 11001.974609375,
+   "hdg": 199.2867889404297,
+   "trk_true": 214.3859100341797,
+   "magvar": -14.446991920471191
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 44,
+  "t": 1793595444.544352,
+  "before": {
+   "ias": 181.39259338378906,
+   "alt": 11002.0615234375,
+   "hdg": 198.75608825683594,
+   "trk_true": 213.85687255859375,
+   "magvar": -14.4469575881958
+  },
+  "after": {
+   "ias": 181.4199676513672,
+   "alt": 11002.146484375,
+   "hdg": 198.05267333984375,
+   "trk_true": 213.15049743652344,
+   "magvar": -14.446906089782715
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 45,
+  "t": 1793595446.5942268,
+  "before": {
+   "ias": 181.43846130371094,
+   "alt": 11002.181640625,
+   "hdg": 197.55020141601562,
+   "trk_true": 212.65008544921875,
+   "magvar": -14.446866989135742
+  },
+  "after": {
+   "ias": 181.46449279785156,
+   "alt": 11002.212890625,
+   "hdg": 196.8105926513672,
+   "trk_true": 211.90682983398438,
+   "magvar": -14.446805000305176
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 46,
+  "t": 1793595448.508924,
+  "before": {
+   "ias": 181.48150634765625,
+   "alt": 11002.2216796875,
+   "hdg": 196.28518676757812,
+   "trk_true": 211.38558959960938,
+   "magvar": -14.446759223937988
+  },
+  "after": {
+   "ias": 181.5017547607422,
+   "alt": 11002.220703125,
+   "hdg": 195.60350036621094,
+   "trk_true": 210.7001495361328,
+   "magvar": -14.446694374084473
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 47,
+  "t": 1793595450.5192041,
+  "before": {
+   "ias": 181.51541137695312,
+   "alt": 11002.2275390625,
+   "hdg": 195.10496520996094,
+   "trk_true": 210.2020721435547,
+   "magvar": -14.44664478302002
+  },
+  "after": {
+   "ias": 181.533203125,
+   "alt": 11002.21484375,
+   "hdg": 194.3849639892578,
+   "trk_true": 209.48316955566406,
+   "magvar": -14.446568489074707
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 48,
+  "t": 1793595452.442282,
+  "before": {
+   "ias": 181.54452514648438,
+   "alt": 11002.2109375,
+   "hdg": 193.8683624267578,
+   "trk_true": 208.96475219726562,
+   "magvar": -14.446511268615723
+  },
+  "after": {
+   "ias": 181.55792236328125,
+   "alt": 11002.20703125,
+   "hdg": 193.1803436279297,
+   "trk_true": 208.27662658691406,
+   "magvar": -14.446431159973145
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 49,
+  "t": 1793595454.5024152,
+  "before": {
+   "ias": 181.56637573242188,
+   "alt": 11002.19921875,
+   "hdg": 192.6861114501953,
+   "trk_true": 207.7848358154297,
+   "magvar": -14.446371078491211
+  },
+  "after": {
+   "ias": 181.57737731933594,
+   "alt": 11002.19140625,
+   "hdg": 191.93692016601562,
+   "trk_true": 207.03189086914062,
+   "magvar": -14.446273803710938
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 50,
+  "t": 1793595456.427565,
+  "before": {
+   "ias": 181.58438110351562,
+   "alt": 11002.181640625,
+   "hdg": 191.4116668701172,
+   "trk_true": 206.50828552246094,
+   "magvar": -14.446205139160156
+  },
+  "after": {
+   "ias": 181.59188842773438,
+   "alt": 11002.166015625,
+   "hdg": 190.7232666015625,
+   "trk_true": 205.8209991455078,
+   "magvar": -14.446109771728516
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 51,
+  "t": 1793595458.444215,
+  "before": {
+   "ias": 181.59664916992188,
+   "alt": 11002.15234375,
+   "hdg": 190.22039794921875,
+   "trk_true": 205.31832885742188,
+   "magvar": -14.446038246154785
+  },
+  "after": {
+   "ias": 181.6023406982422,
+   "alt": 11002.142578125,
+   "hdg": 189.5070343017578,
+   "trk_true": 204.60400390625,
+   "magvar": -14.445929527282715
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 52,
+  "t": 1793595460.360798,
+  "before": {
+   "ias": 181.60572814941406,
+   "alt": 11002.130859375,
+   "hdg": 188.98162841796875,
+   "trk_true": 204.077880859375,
+   "magvar": -14.445850372314453
+  },
+  "after": {
+   "ias": 181.6094512939453,
+   "alt": 11002.119140625,
+   "hdg": 188.29942321777344,
+   "trk_true": 203.3952178955078,
+   "magvar": -14.445741653442383
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 53,
+  "t": 1793595462.394191,
+  "before": {
+   "ias": 181.61184692382812,
+   "alt": 11002.1064453125,
+   "hdg": 187.79270935058594,
+   "trk_true": 202.88851928710938,
+   "magvar": -14.445656776428223
+  },
+  "after": {
+   "ias": 181.6145782470703,
+   "alt": 11002.1005859375,
+   "hdg": 187.06837463378906,
+   "trk_true": 202.1648406982422,
+   "magvar": -14.445531845092773
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 54,
+  "t": 1793595464.335768,
+  "before": {
+   "ias": 181.61558532714844,
+   "alt": 11002.1005859375,
+   "hdg": 186.54327392578125,
+   "trk_true": 201.63905334472656,
+   "magvar": -14.445442199707031
+  },
+  "after": {
+   "ias": 181.61663818359375,
+   "alt": 11002.072265625,
+   "hdg": 185.84481811523438,
+   "trk_true": 200.94203186035156,
+   "magvar": -14.445314407348633
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 55,
+  "t": 1793595466.3693,
+  "before": {
+   "ias": 181.61721801757812,
+   "alt": 11002.07421875,
+   "hdg": 185.34840393066406,
+   "trk_true": 200.44309997558594,
+   "magvar": -14.445220947265625
+  },
+  "after": {
+   "ias": 181.6172332763672,
+   "alt": 11002.05859375,
+   "hdg": 184.619873046875,
+   "trk_true": 199.71206665039062,
+   "magvar": -14.445079803466797
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 56,
+  "t": 1793595468.3364851,
+  "before": {
+   "ias": 181.6168975830078,
+   "alt": 11002.05078125,
+   "hdg": 184.0934600830078,
+   "trk_true": 199.19107055664062,
+   "magvar": -14.444978713989258
+  },
+  "after": {
+   "ias": 181.6160125732422,
+   "alt": 11002.0322265625,
+   "hdg": 183.36793518066406,
+   "trk_true": 198.46473693847656,
+   "magvar": -14.444829940795898
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 57,
+  "t": 1793595470.39416,
+  "before": {
+   "ias": 181.61532592773438,
+   "alt": 11002.0234375,
+   "hdg": 182.87608337402344,
+   "trk_true": 197.97177124023438,
+   "magvar": -14.44472885131836
+  },
+  "after": {
+   "ias": 181.61415100097656,
+   "alt": 11002.0087890625,
+   "hdg": 182.129150390625,
+   "trk_true": 197.219482421875,
+   "magvar": -14.444568634033203
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 58,
+  "t": 1793595472.33588,
+  "before": {
+   "ias": 181.6136016845703,
+   "alt": 11002.0078125,
+   "hdg": 181.6019744873047,
+   "trk_true": 196.6959991455078,
+   "magvar": -14.44445514678955
+  },
+  "after": {
+   "ias": 181.6122589111328,
+   "alt": 11001.9912109375,
+   "hdg": 180.90342712402344,
+   "trk_true": 195.99978637695312,
+   "magvar": -14.44429874420166
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ },
+ {
+  "i": 59,
+  "t": 1793595474.377459,
+  "before": {
+   "ias": 181.61146545410156,
+   "alt": 11001.986328125,
+   "hdg": 180.40223693847656,
+   "trk_true": 195.4964599609375,
+   "magvar": -14.444184303283691
+  },
+  "after": {
+   "ias": 181.60997009277344,
+   "alt": 11001.99609375,
+   "hdg": 179.66796875,
+   "trk_true": 194.7601776123047,
+   "magvar": -14.444009780883789
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  }
+ }
+]
