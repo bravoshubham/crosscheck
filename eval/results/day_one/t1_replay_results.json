@@ -1,7 +1,7 @@
 {
  "frames": 60,
  "reader": "senses.panel (Apple Vision OCR on calibrated crops)",
- "read_s_median": 0.615,
+ "read_s_median": 0.673,
  "ias": {
   "read": "59/60",
   "median_err": 0.4,
@@ -11,9 +11,9 @@
  },
  "alt": {
   "read": "58/60",
-  "median_err": 6.9,
-  "max_err": 107.1,
-  "within_target": "43/60",
+  "median_err": 1.8,
+  "max_err": 102.1,
+  "within_target": "44/60",
   "target": 20
  },
  "trk": {
@@ -32,9 +32,9 @@
  },
  "alt_window": {
   "read": "58/60",
-  "median_err": 5.0,
-  "max_err": 105.8,
-  "within_target": "52/60",
+  "median_err": 0.0,
+  "max_err": 98.6,
+  "within_target": "54/60",
   "target": 20
  },
  "altitude_method": {

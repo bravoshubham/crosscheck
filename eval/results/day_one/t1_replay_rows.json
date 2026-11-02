@@ -8,7 +8,7 @@
   },
   "read": {
    "ias": 180,
-   "alt": 8903,
+   "alt": 8897,
    "alt_method": "roll",
    "trk": 253,
    "fma": [
@@ -19,9 +19,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 3.6,
+   "alt_window": 0.0,
    "ias": 0.0,
-   "alt": 8.7,
+   "alt": 2.7,
    "trk": 0.9
   },
   "modes": {
@@ -33,7 +33,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.795
+  "read_s": 0.745
  },
  {
   "i": 1,
@@ -44,7 +44,7 @@
   },
   "read": {
    "ias": 179,
-   "alt": 8887,
+   "alt": 8882,
    "alt_method": "roll",
    "trk": 251,
    "fma": [
@@ -55,9 +55,9 @@
   },
   "err": {
    "ias_window": 0.1,
-   "alt_window": 4.9,
+   "alt_window": 0.0,
    "ias": 0.3,
-   "alt": 7.7,
+   "alt": 2.7,
    "trk": 0.6
   },
   "modes": {
@@ -69,7 +69,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.688
+  "read_s": 0.634
  },
  {
   "i": 2,
@@ -80,7 +80,7 @@
   },
   "read": {
    "ias": 179,
-   "alt": 8881,
+   "alt": 8875,
    "alt_method": "roll",
    "trk": null,
    "fma": [
@@ -91,9 +91,9 @@
   },
   "err": {
    "ias_window": 0.3,
-   "alt_window": 6.7,
+   "alt_window": 0.7,
    "ias": 0.7,
-   "alt": 7.0
+   "alt": 1.0
   },
   "modes": {
    "autothrottle_enabled": 2,
@@ -104,7 +104,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.591
+  "read_s": 0.574
  },
  {
   "i": 3,
@@ -115,7 +115,7 @@
   },
   "read": {
    "ias": 181,
-   "alt": 8883,
+   "alt": 8877,
    "alt_method": "roll",
    "trk": 249,
    "fma": [
@@ -126,9 +126,9 @@
   },
   "err": {
    "ias_window": 0.2,
-   "alt_window": 5.0,
+   "alt_window": 0.0,
    "ias": 1.1,
-   "alt": 6.5,
+   "alt": 0.5,
    "trk": 1.0
   },
   "modes": {
@@ -140,7 +140,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.618
+  "read_s": 0.604
  },
  {
   "i": 4,
@@ -174,7 +174,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.576
+  "read_s": 0.572
  },
  {
   "i": 5,
@@ -185,7 +185,7 @@
   },
   "read": {
    "ias": 190,
-   "alt": 8908,
+   "alt": 8902,
    "alt_method": "roll",
    "trk": 246,
    "fma": [
@@ -198,7 +198,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.5,
-   "alt": 1.6,
+   "alt": 4.4,
    "trk": 0.4
   },
   "modes": {
@@ -210,7 +210,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.93
+  "read_s": 0.923
  },
  {
   "i": 6,
@@ -221,7 +221,7 @@
   },
   "read": {
    "ias": 194,
-   "alt": 8942,
+   "alt": 8935,
    "alt_method": "roll",
    "trk": 245,
    "fma": [
@@ -234,7 +234,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.9,
-   "alt": 2.6,
+   "alt": 9.6,
    "trk": 0.7
   },
   "modes": {
@@ -246,7 +246,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.542
+  "read_s": 0.614
  },
  {
   "i": 7,
@@ -257,7 +257,7 @@
   },
   "read": {
    "ias": 198,
-   "alt": 9000,
+   "alt": 8993,
    "alt_method": "roll",
    "trk": 244,
    "fma": [
@@ -270,7 +270,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.7,
-   "alt": 10.1,
+   "alt": 17.1,
    "trk": 1.1
   },
   "modes": {
@@ -282,7 +282,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.537
+  "read_s": 0.61
  },
  {
   "i": 8,
@@ -293,7 +293,7 @@
   },
   "read": {
    "ias": null,
-   "alt": 9090,
+   "alt": 9085,
    "alt_method": "roll",
    "trk": 242,
    "fma": [
@@ -304,7 +304,7 @@
   },
   "err": {
    "alt_window": 0.0,
-   "alt": 20.1,
+   "alt": 25.1,
    "trk": 0.5
   },
   "modes": {
@@ -316,7 +316,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.802
+  "read_s": 0.865
  },
  {
   "i": 9,
@@ -327,7 +327,7 @@
   },
   "read": {
    "ias": 202,
-   "alt": 9220,
+   "alt": 9214,
    "alt_method": "roll",
    "trk": 241,
    "fma": [
@@ -340,7 +340,7 @@
    "ias_window": 0.2,
    "alt_window": 0.0,
    "ias": 0.3,
-   "alt": 28.1,
+   "alt": 34.1,
    "trk": 0.9
   },
   "modes": {
@@ -352,7 +352,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.848
+  "read_s": 0.846
  },
  {
   "i": 10,
@@ -386,7 +386,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.558
+  "read_s": 0.575
  },
  {
   "i": 11,
@@ -397,7 +397,7 @@
   },
   "read": {
    "ias": 200,
-   "alt": 9595,
+   "alt": 9589,
    "alt_method": "roll",
    "trk": 238,
    "fma": [
@@ -410,7 +410,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.4,
-   "alt": 43.8,
+   "alt": 49.8,
    "trk": 0.7
   },
   "modes": {
@@ -422,7 +422,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.675
+  "read_s": 0.683
  },
  {
   "i": 12,
@@ -433,7 +433,7 @@
   },
   "read": {
    "ias": 197,
-   "alt": 9827,
+   "alt": 9822,
    "alt_method": "roll",
    "trk": 237,
    "fma": [
@@ -446,7 +446,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.6,
-   "alt": 49.2,
+   "alt": 54.2,
    "trk": 0.9
   },
   "modes": {
@@ -458,7 +458,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.553
+  "read_s": 0.623
  },
  {
   "i": 13,
@@ -469,7 +469,7 @@
   },
   "read": {
    "ias": 193,
-   "alt": 10077,
+   "alt": 10072,
    "alt_method": "roll",
    "trk": 236,
    "fma": [
@@ -482,7 +482,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.7,
-   "alt": 46.8,
+   "alt": 51.8,
    "trk": 0.9
   },
   "modes": {
@@ -494,7 +494,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.548
+  "read_s": 0.618
  },
  {
   "i": 14,
@@ -505,7 +505,7 @@
   },
   "read": {
    "ias": 188,
-   "alt": 10321,
+   "alt": 10315,
    "alt_method": "roll",
    "trk": null,
    "fma": [
@@ -518,7 +518,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 1.6,
-   "alt": 46.5
+   "alt": 52.5
   },
   "modes": {
    "autothrottle_enabled": 1,
@@ -529,7 +529,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.549
+  "read_s": 0.621
  },
  {
   "i": 15,
@@ -540,7 +540,7 @@
   },
   "read": {
    "ias": 181,
-   "alt": 10552,
+   "alt": 10547,
    "alt_method": "roll",
    "trk": 234,
    "fma": [
@@ -553,7 +553,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 2.1,
-   "alt": 43.6,
+   "alt": 48.6,
    "trk": 0.5
   },
   "modes": {
@@ -565,7 +565,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.542
+  "read_s": 0.622
  },
  {
   "i": 16,
@@ -576,7 +576,7 @@
   },
   "read": {
    "ias": 174,
-   "alt": 10758,
+   "alt": 10752,
    "alt_method": "roll",
    "trk": 233,
    "fma": [
@@ -589,7 +589,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 1.2,
-   "alt": 30.9,
+   "alt": 36.9,
    "trk": 0.2
   },
   "modes": {
@@ -601,7 +601,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.541
+  "read_s": 0.618
  },
  {
   "i": 17,
@@ -612,7 +612,7 @@
   },
   "read": {
    "ias": 170,
-   "alt": 10920,
+   "alt": 10914,
    "alt_method": "roll",
    "trk": 232,
    "fma": [
@@ -625,7 +625,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.2,
-   "alt": 22.1,
+   "alt": 28.1,
    "trk": 0.1
   },
   "modes": {
@@ -637,7 +637,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.565
+  "read_s": 0.624
  },
  {
   "i": 18,
@@ -648,7 +648,7 @@
   },
   "read": {
    "ias": 100,
-   "alt": 11044,
+   "alt": 11039,
    "alt_method": "roll",
    "trk": 232,
    "fma": [
@@ -661,7 +661,7 @@
    "ias_window": 70.4,
    "alt_window": 0.0,
    "ias": 71.2,
-   "alt": 16.2,
+   "alt": 21.2,
    "trk": 0.7
   },
   "modes": {
@@ -673,7 +673,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.583
+  "read_s": 0.624
  },
  {
   "i": 19,
@@ -684,7 +684,7 @@
   },
   "read": {
    "ias": 174,
-   "alt": 11134,
+   "alt": 11129,
    "alt_method": "roll",
    "trk": 231,
    "fma": [
@@ -697,7 +697,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 0.8,
-   "alt": 6.0,
+   "alt": 11.0,
    "trk": 0.5
   },
   "modes": {
@@ -709,7 +709,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.579
+  "read_s": 0.626
  },
  {
   "i": 20,
@@ -720,7 +720,7 @@
   },
   "read": {
    "ias": 178,
-   "alt": 11184,
+   "alt": 11178,
    "alt_method": "roll",
    "trk": 230,
    "fma": [
@@ -733,7 +733,7 @@
    "ias_window": 0.0,
    "alt_window": 0.0,
    "ias": 1.4,
-   "alt": 4.1,
+   "alt": 1.9,
    "trk": 0.3
   },
   "modes": {
@@ -745,7 +745,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.619
+  "read_s": 0.644
  },
  {
   "i": 21,
@@ -756,7 +756,7 @@
   },
   "read": {
    "ias": 183,
-   "alt": 11189,
+   "alt": 11183,
    "alt_method": "roll",
    "trk": 229,
    "fma": [
@@ -767,9 +767,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 5.1,
+   "alt_window": 0.0,
    "ias": 0.5,
-   "alt": 12.1,
+   "alt": 6.1,
    "trk": 0.3
   },
   "modes": {
@@ -781,7 +781,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.607
+  "read_s": 0.641
  },
  {
   "i": 22,
@@ -792,7 +792,7 @@
   },
   "read": {
    "ias": 186,
-   "alt": 11159,
+   "alt": 11152,
    "alt_method": "roll",
    "trk": null,
    "fma": [
@@ -803,9 +803,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 5.1,
+   "alt_window": 0.0,
    "ias": 0.7,
-   "alt": 18.1
+   "alt": 11.1
   },
   "modes": {
    "autothrottle_enabled": 1,
@@ -816,7 +816,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.594
+  "read_s": 0.656
  },
  {
   "i": 23,
@@ -827,7 +827,7 @@
   },
   "read": {
    "ias": 188,
-   "alt": 11112,
+   "alt": 11106,
    "alt_method": "roll",
    "trk": 227,
    "fma": [
@@ -838,9 +838,9 @@
   },
   "err": {
    "ias_window": 0.2,
-   "alt_window": 4.0,
+   "alt_window": 0.0,
    "ias": 0.5,
-   "alt": 19.3,
+   "alt": 13.3,
    "trk": 0.7
   },
   "modes": {
@@ -852,7 +852,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.592
+  "read_s": 0.662
  },
  {
   "i": 24,
@@ -863,7 +863,7 @@
   },
   "read": {
    "ias": 189,
-   "alt": 11063,
+   "alt": 11056,
    "alt_method": "roll",
    "trk": 226,
    "fma": [
@@ -874,9 +874,9 @@
   },
   "err": {
    "ias_window": 0.2,
-   "alt_window": 4.5,
+   "alt_window": 0.0,
    "ias": 0.2,
-   "alt": 16.1,
+   "alt": 9.1,
    "trk": 1.1
   },
   "modes": {
@@ -888,7 +888,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.558
+  "read_s": 0.666
  },
  {
   "i": 25,
@@ -899,7 +899,7 @@
   },
   "read": {
    "ias": 189,
-   "alt": 11026,
+   "alt": 11021,
    "alt_method": "roll",
    "trk": null,
    "fma": [
@@ -910,9 +910,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 3.1,
+   "alt_window": 0.0,
    "ias": 0.0,
-   "alt": 10.7
+   "alt": 5.7
   },
   "modes": {
    "autothrottle_enabled": 1,
@@ -923,7 +923,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.567
+  "read_s": 0.675
  },
  {
   "i": 26,
@@ -934,7 +934,7 @@
   },
   "read": {
    "ias": 188,
-   "alt": 11104,
+   "alt": 11099,
    "alt_method": "roll",
    "trk": 223,
    "fma": [
@@ -945,9 +945,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 103.6,
+   "alt_window": 98.6,
    "ias": 0.1,
-   "alt": 107.1,
+   "alt": 102.1,
    "trk": 0.8
   },
   "modes": {
@@ -959,7 +959,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.63
+  "read_s": 0.675
  },
  {
   "i": 27,
@@ -970,7 +970,7 @@
   },
   "read": {
    "ias": 187,
-   "alt": 10997,
+   "alt": 10990,
    "alt_method": "roll",
    "trk": 222,
    "fma": [
@@ -981,9 +981,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 6.3,
+   "alt_window": 0.0,
    "ias": 0.2,
-   "alt": 7.4,
+   "alt": 0.4,
    "trk": 1.2
   },
   "modes": {
@@ -995,7 +995,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.602
+  "read_s": 0.651
  },
  {
   "i": 28,
@@ -1006,7 +1006,7 @@
   },
   "read": {
    "ias": 186,
-   "alt": 10995,
+   "alt": 10988,
    "alt_method": "roll",
    "trk": 220,
    "fma": [
@@ -1017,9 +1017,9 @@
   },
   "err": {
    "ias_window": 0.2,
-   "alt_window": 6.7,
+   "alt_window": 0.0,
    "ias": 0.5,
-   "alt": 6.9,
+   "alt": 0.1,
    "trk": 0.4
   },
   "modes": {
@@ -1031,7 +1031,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.616
+  "read_s": 0.669
  },
  {
   "i": 29,
@@ -1042,7 +1042,7 @@
   },
   "read": {
    "ias": 185,
-   "alt": 10995,
+   "alt": 10988,
    "alt_method": "roll",
    "trk": 219,
    "fma": [
@@ -1053,9 +1053,9 @@
   },
   "err": {
    "ias_window": 0.3,
-   "alt_window": 5.1,
+   "alt_window": 0.8,
    "ias": 0.6,
-   "alt": 5.6,
+   "alt": 1.4,
    "trk": 0.8
   },
   "modes": {
@@ -1067,7 +1067,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.616
+  "read_s": 0.664
  },
  {
   "i": 30,
@@ -1078,7 +1078,7 @@
   },
   "read": {
    "ias": 184,
-   "alt": 10997,
+   "alt": 10991,
    "alt_method": "roll",
    "trk": 218,
    "fma": [
@@ -1089,9 +1089,9 @@
   },
   "err": {
    "ias_window": 0.3,
-   "alt_window": 5.1,
+   "alt_window": 0.0,
    "ias": 0.5,
-   "alt": 5.6,
+   "alt": 0.4,
    "trk": 1.1
   },
   "modes": {
@@ -1103,7 +1103,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.613
+  "read_s": 0.66
  },
  {
   "i": 31,
@@ -1114,7 +1114,7 @@
   },
   "read": {
    "ias": 183,
-   "alt": 11000,
+   "alt": 10993,
    "alt_method": "roll",
    "trk": 216,
    "fma": [
@@ -1125,9 +1125,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 6.4,
+   "alt_window": 0.0,
    "ias": 0.2,
-   "alt": 6.9,
+   "alt": 0.1,
    "trk": 0.4
   },
   "modes": {
@@ -1139,7 +1139,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.611
+  "read_s": 0.646
  },
  {
   "i": 32,
@@ -1150,7 +1150,7 @@
   },
   "read": {
    "ias": 182,
-   "alt": 11001,
+   "alt": 10994,
    "alt_method": "roll",
    "trk": null,
    "fma": [
@@ -1161,9 +1161,9 @@
   },
   "err": {
    "ias_window": 0.2,
-   "alt_window": 6.1,
+   "alt_window": 0.2,
    "ias": 0.3,
-   "alt": 6.4
+   "alt": 0.6
   },
   "modes": {
    "autothrottle_enabled": 1,
@@ -1174,7 +1174,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.701
+  "read_s": 0.722
  },
  {
   "i": 33,
@@ -1185,7 +1185,7 @@
   },
   "read": {
    "ias": 182,
-   "alt": 11003,
+   "alt": 10996,
    "alt_method": "roll",
    "trk": 214,
    "fma": [
@@ -1196,9 +1196,9 @@
   },
   "err": {
    "ias_window": 0.0,
-   "alt_window": 7.0,
+   "alt_window": 0.0,
    "ias": 0.1,
-   "alt": 7.3,
+   "alt": 0.3,
    "trk": 1.0
   },
   "modes": {
@@ -1210,7 +1210,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.611
+  "read_s": 0.653
  },
  {
   "i": 34,
@@ -1221,7 +1221,7 @@
   },
   "read": {
    "ias": 182,
-   "alt": 11003,
+   "alt": 10997,
    "alt_method": "roll",
    "trk": 212,
    "fma": [
@@ -1232,9 +1232,9 @@
   },
   "err": {
    "ias_window": 0.3,
-   "alt_window": 6.0,
+   "alt_window": 0.0,
    "ias": 0.4,
-   "alt": 6.2,
+   "alt": 0.2,
    "trk": 0.5
   },
   "modes": {
@@ -1246,7 +1246,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.72
+  "read_s": 0.755
  },
  {
   "i": 35,
@@ -1257,7 +1257,7 @@
   },
   "read": {
    "ias": 181,
-   "alt": 11004,
+   "alt": 10998,
    "alt_method": "roll",
    "trk": 211,
    "fma": [
@@ -1268,10 +1268,801 @@
   },
   "err": {
    "ias_window": 0.4,
-   "alt_window": 6.1,
+   "alt_window": 0.1,
    "ias": 0.4,
-   "alt": 6.4,
+   "alt": 0.4,
    "trk": 0.9
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.889
+ },
+ {
+  "i": 36,
+  "truth": {
+   "ias": 181.3,
+   "alt": 10998.4,
+   "trk": 208.6
+  },
+  "read": {
+   "ias": 181,
+   "alt": 10999,
+   "alt_method": "roll",
+   "trk": 210,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.3,
+   "alt_window": 0.4,
+   "ias": 0.3,
+   "alt": 0.6,
+   "trk": 1.4
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.715
+ },
+ {
+  "i": 37,
+  "truth": {
+   "ias": 181.2,
+   "alt": 10998.9,
+   "trk": 207.4
+  },
+  "read": {
+   "ias": 181,
+   "alt": 10999,
+   "alt_method": "roll",
+   "trk": 208,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.2,
+   "alt_window": 0.0,
+   "ias": 0.2,
+   "alt": 0.1,
+   "trk": 0.6
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.718
+ },
+ {
+  "i": 38,
+  "truth": {
+   "ias": 181.2,
+   "alt": 10999.5,
+   "trk": 206.1
+  },
+  "read": {
+   "ias": 181,
+   "alt": 10999,
+   "alt_method": "roll",
+   "trk": 207,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.2,
+   "alt_window": 0.3,
+   "ias": 0.2,
+   "alt": 0.5,
+   "trk": 0.9
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.714
+ },
+ {
+  "i": 39,
+  "truth": {
+   "ias": 181.2,
+   "alt": 11000.0,
+   "trk": 204.8
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11001,
+   "alt_method": "roll",
+   "trk": null,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.2,
+   "alt_window": 0.8,
+   "ias": 0.2,
+   "alt": 1.0
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.81
+ },
+ {
+  "i": 40,
+  "truth": {
+   "ias": 181.2,
+   "alt": 11000.6,
+   "trk": 203.6
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11000,
+   "alt_method": "roll",
+   "trk": 204,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.2,
+   "alt_window": 0.4,
+   "ias": 0.2,
+   "alt": 0.6,
+   "trk": 0.4
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.823
+ },
+ {
+  "i": 41,
+  "truth": {
+   "ias": 181.3,
+   "alt": 11001.1,
+   "trk": 202.4
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11001,
+   "alt_method": "roll",
+   "trk": 203,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.3,
+   "alt_window": 0.0,
+   "ias": 0.3,
+   "alt": 0.1,
+   "trk": 0.6
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.815
+ },
+ {
+  "i": 42,
+  "truth": {
+   "ias": 181.3,
+   "alt": 11001.6,
+   "trk": 201.2
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11002,
+   "alt_method": "roll",
+   "trk": 202,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.3,
+   "alt_window": 0.3,
+   "ias": 0.3,
+   "alt": 0.4,
+   "trk": 0.8
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.779
+ },
+ {
+  "i": 43,
+  "truth": {
+   "ias": 181.4,
+   "alt": 11001.9,
+   "trk": 199.9
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11002,
+   "alt_method": "roll",
+   "trk": 201,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.3,
+   "alt_window": 0.0,
+   "ias": 0.4,
+   "alt": 0.1,
+   "trk": 1.1
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.778
+ },
+ {
+  "i": 44,
+  "truth": {
+   "ias": 181.4,
+   "alt": 11002.1,
+   "trk": 198.7
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11039,
+   "alt_method": "roll",
+   "trk": 199,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 36.9,
+   "ias": 0.4,
+   "alt": 36.9,
+   "trk": 0.3
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.775
+ },
+ {
+  "i": 45,
+  "truth": {
+   "ias": 181.5,
+   "alt": 11002.2,
+   "trk": 197.5
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11004,
+   "alt_method": "roll",
+   "trk": 198,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 1.8,
+   "ias": 0.5,
+   "alt": 1.8,
+   "trk": 0.5
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.853
+ },
+ {
+  "i": 46,
+  "truth": {
+   "ias": 181.5,
+   "alt": 11002.2,
+   "trk": 196.3
+  },
+  "read": {
+   "ias": 181,
+   "alt": 11004,
+   "alt_method": "roll",
+   "trk": 197,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.5,
+   "alt_window": 1.8,
+   "ias": 0.5,
+   "alt": 1.8,
+   "trk": 0.7
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.755
+ },
+ {
+  "i": 47,
+  "truth": {
+   "ias": 181.5,
+   "alt": 11002.2,
+   "trk": 195.0
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11003,
+   "alt_method": "roll",
+   "trk": 196,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.5,
+   "alt_window": 0.8,
+   "ias": 0.5,
+   "alt": 0.8,
+   "trk": 1.0
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.654
+ },
+ {
+  "i": 48,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.2,
+   "trk": 193.8
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11004,
+   "alt_method": "roll",
+   "trk": 194,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 1.8,
+   "ias": 0.4,
+   "alt": 1.8,
+   "trk": 0.2
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.896
+ },
+ {
+  "i": 49,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.2,
+   "trk": 192.6
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11004,
+   "alt_method": "roll",
+   "trk": 193,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 1.8,
+   "ias": 0.4,
+   "alt": 1.8,
+   "trk": 0.4
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.672
+ },
+ {
+  "i": 50,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.2,
+   "trk": 191.4
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11003,
+   "alt_method": "roll",
+   "trk": 192,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 0.8,
+   "ias": 0.4,
+   "alt": 0.8,
+   "trk": 0.6
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.673
+ },
+ {
+  "i": 51,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.1,
+   "trk": 190.2
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11005,
+   "alt_method": "roll",
+   "trk": 191,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 2.8,
+   "ias": 0.4,
+   "alt": 2.9,
+   "trk": 0.8
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.672
+ },
+ {
+  "i": 52,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.1,
+   "trk": 188.9
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11004,
+   "alt_method": "roll",
+   "trk": 190,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 1.9,
+   "ias": 0.4,
+   "alt": 1.9,
+   "trk": 1.1
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.672
+ },
+ {
+  "i": 53,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.1,
+   "trk": 187.7
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11004,
+   "alt_method": "roll",
+   "trk": 188,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 1.9,
+   "ias": 0.4,
+   "alt": 1.9,
+   "trk": 0.3
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.68
+ },
+ {
+  "i": 54,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.1,
+   "trk": 186.5
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11039,
+   "alt_method": "roll",
+   "trk": 187,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 36.9,
+   "ias": 0.4,
+   "alt": 36.9,
+   "trk": 0.5
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.674
+ },
+ {
+  "i": 55,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.1,
+   "trk": 185.3
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11039,
+   "alt_method": "roll",
+   "trk": 186,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 36.9,
+   "ias": 0.4,
+   "alt": 36.9,
+   "trk": 0.7
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.778
+ },
+ {
+  "i": 56,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.0,
+   "trk": 184.0
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11002,
+   "alt_method": "roll",
+   "trk": 185,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 0.0,
+   "ias": 0.4,
+   "alt": 0.0,
+   "trk": 1.0
+  },
+  "modes": {
+   "autothrottle_enabled": 1,
+   "heading_status": 0,
+   "altitude_hold_status": 2,
+   "speed_status": 0,
+   "vvi_status": 0,
+   "pitch_status": 0,
+   "roll_status": 2
+  },
+  "read_s": 0.781
+ },
+ {
+  "i": 57,
+  "truth": {
+   "ias": 181.6,
+   "alt": 11002.0,
+   "trk": 182.8
+  },
+  "read": {
+   "ias": 182,
+   "alt": 11002,
+   "alt_method": "roll",
+   "trk": 183,
+   "fma": [
+    "MCP SPD",
+    "",
+    "ALT HOLD"
+   ]
+  },
+  "err": {
+   "ias_window": 0.4,
+   "alt_window": 0.0,
+   "ias": 0.4,
+   "alt": 0.0,
+   "trk": 0.2
   },
   "modes": {
    "autothrottle_enabled": 1,
@@ -1285,797 +2076,6 @@
   "read_s": 0.782
  },
  {
-  "i": 36,
-  "truth": {
-   "ias": 181.3,
-   "alt": 10998.4,
-   "trk": 208.6
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11004,
-   "alt_method": "roll",
-   "trk": 210,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.3,
-   "alt_window": 5.4,
-   "ias": 0.3,
-   "alt": 5.6,
-   "trk": 1.4
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.615
- },
- {
-  "i": 37,
-  "truth": {
-   "ias": 181.2,
-   "alt": 10998.9,
-   "trk": 207.4
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11004,
-   "alt_method": "roll",
-   "trk": 208,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.2,
-   "alt_window": 5.0,
-   "ias": 0.2,
-   "alt": 5.1,
-   "trk": 0.6
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.614
- },
- {
-  "i": 38,
-  "truth": {
-   "ias": 181.2,
-   "alt": 10999.5,
-   "trk": 206.1
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11004,
-   "alt_method": "roll",
-   "trk": 207,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.2,
-   "alt_window": 4.4,
-   "ias": 0.2,
-   "alt": 4.5,
-   "trk": 0.9
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.615
- },
- {
-  "i": 39,
-  "truth": {
-   "ias": 181.2,
-   "alt": 11000.0,
-   "trk": 204.8
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11106,
-   "alt_method": "roll",
-   "trk": null,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.2,
-   "alt_window": 105.8,
-   "ias": 0.2,
-   "alt": 106.0
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.717
- },
- {
-  "i": 40,
-  "truth": {
-   "ias": 181.2,
-   "alt": 11000.6,
-   "trk": 203.6
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11106,
-   "alt_method": "roll",
-   "trk": 204,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.2,
-   "alt_window": 105.2,
-   "ias": 0.2,
-   "alt": 105.4,
-   "trk": 0.4
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.704
- },
- {
-  "i": 41,
-  "truth": {
-   "ias": 181.3,
-   "alt": 11001.1,
-   "trk": 202.4
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11006,
-   "alt_method": "roll",
-   "trk": 203,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.3,
-   "alt_window": 4.7,
-   "ias": 0.3,
-   "alt": 4.9,
-   "trk": 0.6
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.681
- },
- {
-  "i": 42,
-  "truth": {
-   "ias": 181.3,
-   "alt": 11001.6,
-   "trk": 201.2
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11007,
-   "alt_method": "roll",
-   "trk": 202,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.3,
-   "alt_window": 5.3,
-   "ias": 0.3,
-   "alt": 5.4,
-   "trk": 0.8
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.711
- },
- {
-  "i": 43,
-  "truth": {
-   "ias": 181.4,
-   "alt": 11001.9,
-   "trk": 199.9
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11007,
-   "alt_method": "roll",
-   "trk": 201,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.3,
-   "alt_window": 5.0,
-   "ias": 0.4,
-   "alt": 5.1,
-   "trk": 1.1
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.724
- },
- {
-  "i": 44,
-  "truth": {
-   "ias": 181.4,
-   "alt": 11002.1,
-   "trk": 198.7
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11046,
-   "alt_method": "roll",
-   "trk": 199,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 43.9,
-   "ias": 0.4,
-   "alt": 43.9,
-   "trk": 0.3
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.729
- },
- {
-  "i": 45,
-  "truth": {
-   "ias": 181.5,
-   "alt": 11002.2,
-   "trk": 197.5
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11008,
-   "alt_method": "roll",
-   "trk": 198,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 5.8,
-   "ias": 0.5,
-   "alt": 5.8,
-   "trk": 0.5
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.769
- },
- {
-  "i": 46,
-  "truth": {
-   "ias": 181.5,
-   "alt": 11002.2,
-   "trk": 196.3
-  },
-  "read": {
-   "ias": 181,
-   "alt": 11006,
-   "alt_method": "roll",
-   "trk": 197,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.5,
-   "alt_window": 3.8,
-   "ias": 0.5,
-   "alt": 3.8,
-   "trk": 0.7
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.652
- },
- {
-  "i": 47,
-  "truth": {
-   "ias": 181.5,
-   "alt": 11002.2,
-   "trk": 195.0
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11008,
-   "alt_method": "roll",
-   "trk": 196,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.5,
-   "alt_window": 5.8,
-   "ias": 0.5,
-   "alt": 5.8,
-   "trk": 1.0
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.616
- },
- {
-  "i": 48,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.2,
-   "trk": 193.8
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11009,
-   "alt_method": "roll",
-   "trk": 194,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 6.8,
-   "ias": 0.4,
-   "alt": 6.8,
-   "trk": 0.2
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.832
- },
- {
-  "i": 49,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.2,
-   "trk": 192.6
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11007,
-   "alt_method": "roll",
-   "trk": 193,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 4.8,
-   "ias": 0.4,
-   "alt": 4.8,
-   "trk": 0.4
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.555
- },
- {
-  "i": 50,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.2,
-   "trk": 191.4
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11009,
-   "alt_method": "roll",
-   "trk": 192,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 6.8,
-   "ias": 0.4,
-   "alt": 6.8,
-   "trk": 0.6
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.591
- },
- {
-  "i": 51,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.1,
-   "trk": 190.2
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11009,
-   "alt_method": "roll",
-   "trk": 191,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 6.8,
-   "ias": 0.4,
-   "alt": 6.9,
-   "trk": 0.8
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.554
- },
- {
-  "i": 52,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.1,
-   "trk": 188.9
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11008,
-   "alt_method": "roll",
-   "trk": 190,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 5.9,
-   "ias": 0.4,
-   "alt": 5.9,
-   "trk": 1.1
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.547
- },
- {
-  "i": 53,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.1,
-   "trk": 187.7
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11006,
-   "alt_method": "roll",
-   "trk": 188,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 3.9,
-   "ias": 0.4,
-   "alt": 3.9,
-   "trk": 0.3
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.569
- },
- {
-  "i": 54,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.1,
-   "trk": 186.5
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11046,
-   "alt_method": "roll",
-   "trk": 187,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 43.9,
-   "ias": 0.4,
-   "alt": 43.9,
-   "trk": 0.5
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.547
- },
- {
-  "i": 55,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.1,
-   "trk": 185.3
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11046,
-   "alt_method": "roll",
-   "trk": 186,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 43.9,
-   "ias": 0.4,
-   "alt": 43.9,
-   "trk": 0.7
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.652
- },
- {
-  "i": 56,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.0,
-   "trk": 184.0
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11007,
-   "alt_method": "roll",
-   "trk": 185,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 4.9,
-   "ias": 0.4,
-   "alt": 5.0,
-   "trk": 1.0
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.645
- },
- {
-  "i": 57,
-  "truth": {
-   "ias": 181.6,
-   "alt": 11002.0,
-   "trk": 182.8
-  },
-  "read": {
-   "ias": 182,
-   "alt": 11007,
-   "alt_method": "roll",
-   "trk": 183,
-   "fma": [
-    "MCP SPD",
-    "",
-    "ALT HOLD"
-   ]
-  },
-  "err": {
-   "ias_window": 0.4,
-   "alt_window": 5.0,
-   "ias": 0.4,
-   "alt": 5.0,
-   "trk": 0.2
-  },
-  "modes": {
-   "autothrottle_enabled": 1,
-   "heading_status": 0,
-   "altitude_hold_status": 2,
-   "speed_status": 0,
-   "vvi_status": 0,
-   "pitch_status": 0,
-   "roll_status": 2
-  },
-  "read_s": 0.648
- },
- {
   "i": 58,
   "truth": {
    "ias": 181.6,
@@ -2084,7 +2084,7 @@
   },
   "read": {
    "ias": 182,
-   "alt": 11007,
+   "alt": 11002,
    "alt_method": "roll",
    "trk": 182,
    "fma": [
@@ -2095,9 +2095,9 @@
   },
   "err": {
    "ias_window": 0.4,
-   "alt_window": 5.0,
+   "alt_window": 0.0,
    "ias": 0.4,
-   "alt": 5.0,
+   "alt": 0.0,
    "trk": 0.4
   },
   "modes": {
@@ -2109,7 +2109,7 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.667
+  "read_s": 0.777
  },
  {
   "i": 59,
@@ -2120,7 +2120,7 @@
   },
   "read": {
    "ias": 182,
-   "alt": 11007,
+   "alt": 11002,
    "alt_method": "roll",
    "trk": 181,
    "fma": [
@@ -2131,9 +2131,9 @@
   },
   "err": {
    "ias_window": 0.4,
-   "alt_window": 5.0,
+   "alt_window": 0.0,
    "ias": 0.4,
-   "alt": 5.0,
+   "alt": 0.0,
    "trk": 0.7
   },
   "modes": {
@@ -2145,6 +2145,6 @@
    "pitch_status": 0,
    "roll_status": 2
   },
-  "read_s": 0.668
+  "read_s": 0.782
  }
 ]

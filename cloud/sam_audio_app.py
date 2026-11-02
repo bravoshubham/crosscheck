@@ -20,7 +20,7 @@ image = (modal.Image.debian_slim(python_version="3.11")
          .pip_install("git+https://github.com/facebookresearch/sam-audio"))
 
 
-@app.cls(image=image, gpu="A10G", volumes={"/models": models}, timeout=1800, scaledown_window=120)
+@app.cls(image=image, gpu="T4", volumes={"/models": models}, timeout=1800, scaledown_window=120)
 class SamAudio:
     @modal.enter()
     def load(self):

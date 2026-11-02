@@ -23,10 +23,14 @@ PFD_REGIONS = {
     "fma_roll": ((290, 20, 425, 72), 1),
     "fma_pitch": ((425, 20, 580, 72), 1),
     "speed": ((10, 340, 140, 440), 3),
+    "selected_speed": ((30, 60, 140, 115), 2),  # magenta MCP speed above the speed tape
 }
 ALT_BIG = (608, 345, 690, 420)   # thousands and hundreds, large digits (room for 5 digits)
 ALT_ROLL = (686, 345, 740, 420)  # rolling tens column, 20 ft labels
-ROLL_PX_PER_20FT = 22.4          # measured on the T1 view
+# Fitted against X-Plane truth on the even frames of eval/recordings/t1_pfd (held-out odd
+# frames: 29/30 within 20 ft, vs 27/30 with the eyeballed 37.5 px / 22.4 px).
+ROLL_CENTRE_PX = 43.0            # pointer line, native px from the top of ALT_ROLL
+ROLL_PX_PER_20FT = 25.8
 FMA_WORDS = re.compile(r"[A-Z][A-Z /]+")
 # Anchor: the barometric setting under the altitude tape ("29.92 IN." or "STD"), always present.
 # Its top-left in the calibration PFD crop; regions shift with it when the view moves.
@@ -37,11 +41,14 @@ BARO = re.compile(r"^(\d{2}\.\d{2}|STD\b|\d{3,4}\s*HPA)")
 @dataclass
 class PanelReading:
     ias: int | None = None
+    selected_speed: int | None = None
     altitude: int | None = None
     altitude_method: str = ""  # "roll" (to the pointer line) or "hundreds" (+/-50 ft)
     track_mag: int | None = None
     fma: list[str] = field(default_factory=list)
     raw: dict[str, list[str]] = field(default_factory=dict)
+    alt_base: int | None = None
+    roll_labels: list[tuple[int, float]] = field(default_factory=list)  # (label, y in native crop px)
 
 
 def _ocr(img: Image.Image) -> list[tuple[str, float, tuple]]:
@@ -85,27 +92,29 @@ def _altitude(pfd: Image.Image, out: PanelReading, dx: int = 0, dy: int = 0) -> 
     if not hundreds:
         return
     base = hundreds[0] * 100
+    out.alt_base = base
     estimates: list[float] = []
     for scale in (5, 4, 6, 3):  # text recognition on the rolling digits is scale-sensitive
         roll = _ocr(_crop(pfd, _shift(ALT_ROLL, dx, dy), scale))
         out.raw.setdefault("alt_roll", []).extend(t for t, _, _ in roll)
-        centre = (ALT_ROLL[3] - ALT_ROLL[1]) * scale / 2
+        centre = ROLL_CENTRE_PX * scale
         px_per_ft = ROLL_PX_PER_20FT * scale / 20
         for text, _, (x0, y0, x1, y1) in roll:
             d = re.sub(r"\D", "", text)
             if len(d) != 2 or int(d) % 20:
                 continue
-            # a label above the pointer line reads higher; wrap across the hundred
-            at_centre = int(d) + ((y0 + y1) / 2 - centre) / px_per_ft
-            if at_centre > 110:
-                at_centre -= 100
-            elif at_centre < -10:
-                at_centre += 100
-            estimates.append(at_centre)
+            out.roll_labels.append((int(d), (y0 + y1) / 2 / scale))
+            # labels above the pointer line read higher. The pointer's place within the hundred is
+            # each label's estimate mod 100: a "00" above the line is the next hundred, an "80"
+            # below it may be the previous one.
+            estimates.append((int(d) + ((y0 + y1) / 2 - centre) / px_per_ft) % 100)
         if estimates:
             break
     if estimates:
-        out.altitude = int(round(base + sorted(estimates)[len(estimates) // 2]))
+        # unwrap around the first estimate so 98 and 2 average to 100, not 50
+        ref = estimates[0]
+        unwrapped = sorted(e - 100 if e - ref > 50 else e + 100 if ref - e > 50 else e for e in estimates)
+        out.altitude = int(round(base + unwrapped[len(unwrapped) // 2]))
         out.altitude_method = "roll"
     else:
         out.altitude = base + 50
@@ -124,6 +133,8 @@ def read_frame(frame: Image.Image) -> PanelReading:
         if name.startswith("fma_"):
             words = " ".join(t for t, _, _ in sorted(res, key=lambda r: r[2][0]))
             out.fma.append(m.group(0).strip() if (m := FMA_WORDS.search(words)) else "")
+        elif name == "selected_speed":
+            out.selected_speed = _number_near_centre(res, crop.height, 80, 400)
         elif name == "speed":
             out.ias = _number_near_centre(res, crop.height, 30, 400)
             for retry in (4, 2, 5):  # the rolling last digit makes recognition scale-sensitive
