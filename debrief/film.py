@@ -261,11 +261,14 @@ def build(repo: str | None = None) -> pathlib.Path:
                 if anchor:  # a recording: narration over its lead-in, then its own sound
                     rec = data[what]
                     t0, t1 = window(rec, anchor, speak_s)
-                    dur = t1 - t0
-                    seek = lambda i: t0 + i / FPS
+                    # if the recording's quiet lead-in is shorter than the narration, hold its first frame
+                    # until the narration is done, so no radio line or callout plays under it
+                    hold = max(0.0, 0.6 + speak_s + 0.8 - (window_first(rec, anchor) - t0))
+                    dur = t1 - t0 + hold
+                    seek = lambda i, t0=t0, hold=hold: t0 + max(0.0, i / FPS - hold)
                     for a in rec["audio"]:
                         if t0 - 0.5 <= a["t"] <= t1:
-                            track.append((a["t"] - t0, load(SITE / a["file"]), 0.9 if a["kind"] == "callout" else 0.75))
+                            track.append((a["t"] - t0 + hold, load(SITE / a["file"]), 0.9 if a["kind"] == "callout" else 0.8))
                     narr_at = 0.6
                 elif what == "report":
                     dur = speak_s + 3.0
@@ -280,7 +283,7 @@ def build(repo: str | None = None) -> pathlib.Path:
                 count = int(round(dur * FPS))
                 t_scene = time.time()
                 # a recording opens on the whole cockpit and moves in to the instruments 2.5 s before its first event
-                switch = (window_first(data[what], anchor) - 2.5 - t0) * FPS if anchor else -1
+                switch = (window_first(data[what], anchor) - 2.5 - t0 + hold) * FPS if anchor else -1
                 shown = None
                 for i in range(count):
                     if anchor:
