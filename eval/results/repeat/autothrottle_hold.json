@@ -1,7 +1,7 @@
 {
  "scenario": "autothrottle_hold",
- "scored": 3,
- "passed": 3,
+ "scored": 5,
+ "passed": 5,
  "errors": 0,
  "runs": [
   {
@@ -33,6 +33,24 @@
    "false_callouts_before_fault": [],
    "truth_below_target_minus_10_s": 12.8,
    "panel_readable": 0.95
+  },
+  {
+   "run": 3,
+   "pass": true,
+   "recorded": "2026-11-03 10:17:48 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 5.8,
+   "truth_below_target_minus_10_s": 10.7,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse highlight in the wide frames"
+  },
+  {
+   "run": 4,
+   "pass": true,
+   "recorded": "2026-11-03 11:21:08 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 6.2,
+   "truth_below_target_minus_10_s": 11.1,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse-flying box in the frames"
   }
  ]
 }

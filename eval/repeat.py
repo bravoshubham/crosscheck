@@ -39,8 +39,10 @@ def run(spec: str, i: int) -> dict:
     if not results:
         return {"run": i, "error": (p.stderr or p.stdout)[-600:], "seconds": round(time.time() - t)}
     r = json.loads(results[0].read_text())
+    review = results[0].parent / "review.json"  # the pilot watch on video: Muse Wonder's second opinion
+    wonder = {k: v for k, v in json.loads(review.read_text()).items() if k in ("state", "from_s", "agrees_with_truth")} if review.exists() else None
     return {"run": i, "pass": r["pass"], "callouts": r.get("callouts") or r.get("callout"),
-            "seconds": round(time.time() - t), **timing(r)}
+            "seconds": round(time.time() - t), **timing(r), **({"wonder": wonder} if wonder else {})}
 
 
 TIMING = ("callout_s_after_fault", "truth_below_target_minus_10_s", "aircraft_passed_cleared_s_after_set",

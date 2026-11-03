@@ -108,3 +108,22 @@ async def read_line(text: str, speaker: str, own_digits: str, client: httpx.Asyn
         return [], {"error": str(e)[:200]}
     t = time.time()
     return [Fact(f.stream, f.key, f.value, t, f.speaker, source=f.source) for f in facts], answer
+
+
+async def hear(pcm, speaker: str, own_digits: str, led=None) -> tuple[dict, list[Fact], dict | None, str | None]:
+    """One line, heard: Voice Transcribe, then code and the guarded Spark reader. If what was heard
+    contradicts the aircraft (brain/live.py's implausible: a climb to below it), listen again: the
+    same audio goes to Voice Transcribe once more, which often hears it right the second time.
+    Returns (transcript result, facts, Spark's answer, the first transcript if it was heard again)."""
+    from brain.live import implausible
+    from senses.speech import transcribe
+    r = await transcribe(pcm)
+    facts, spark = await read_line(r["text"], speaker, own_digits)
+    if led is None or not any(implausible(f, led, r["text"]) for f in facts):
+        return r, facts, spark, None
+    first = r["text"]
+    r2 = await transcribe(pcm)
+    facts2, spark2 = await read_line(r2["text"], speaker, own_digits)
+    if facts2 and not any(implausible(f, led, r2["text"]) for f in facts2):
+        return r2, facts2, spark2, first
+    return r, facts, spark, first  # heard wrong twice: the guard rejects it and Crosscheck asks

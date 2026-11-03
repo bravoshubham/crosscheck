@@ -56,6 +56,9 @@ header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margi
 .viewer { overflow: hidden; }
 .frame { position: relative; aspect-ratio: 1940 / 970; background: #000; }
 .frame img, .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.frame .boxes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.frame .views { position: absolute; right: 10px; top: 10px; display: flex; gap: 4px; }
+.frame .views .seg { background: rgba(10,13,17,.78); font-size: 12px; padding: 4px 10px; }
 .frame .gen { position: absolute; right: 10px; bottom: 10px; font-size: 11px; color: rgba(231,236,242,.75);
   background: rgba(10,13,17,.6); padding: 2px 7px; border-radius: 4px; }
 .frame .nofr { position: absolute; inset: 0; display: grid; place-items: center; color: var(--faint); }
@@ -111,6 +114,7 @@ body.film .transport, body.film .readers, body.film .note, body.film header .bac
 body.film .wrap { padding-top: 22px; }
 body.film header { margin-bottom: 14px; }
 body.film .stage { align-items: start; }
+body.film .views { display: none !important; }
 @media (max-width: 900px) {
   .stage { grid-template-columns: 1fr; }
   .result { grid-template-columns: 1fr; }
@@ -139,6 +143,11 @@ body.film .stage { align-items: start; }
         <img id="img" hidden alt="Cockpit displays as Crosscheck's camera saw them">
         <video id="vid" hidden muted playsinline preload="auto" aria-label="The pilot camera, as Crosscheck saw it"></video>
         <div class="gen" id="gen" hidden>Generated footage (LTX-2.5 from Muse Image photos)</div>
+        <svg class="boxes" id="boxes" hidden preserveAspectRatio="none"></svg>
+        <div class="views" id="views" hidden role="radiogroup" aria-label="View">
+          <button class="seg" role="radio" data-v="inst" aria-checked="true">Instruments</button>
+          <button class="seg" role="radio" data-v="wide" aria-checked="false">Whole cockpit</button>
+        </div>
         <div class="nofr" id="nofr" hidden>No frame</div>
         <div class="radio" id="radio"><div class="who" id="radioWho"></div><div id="radioText"></div></div>
         <div class="caption" id="caption" role="status" aria-live="polite"><span class="dot"></span><span id="captionText"></span></div>
@@ -190,6 +199,7 @@ const fmtFlaps = v => v == null ? "—" : v === 0 ? "UP" : String(Math.round(v *
 const fmtFact = f => f.key === "callout.flaps" ? "flaps " + fmtFlaps(f.value) : f.key === "pilot.voice" ? "(answered)" : fmtAlt(f.value);
 const WHO = {atc: "ATC · radio", pm: "Crew · intercom", pf: "Crew · intercom", capt: "Captain · intercom"};
 
+let view = "inst";  // "inst": the crop the readers use; "wide": the whole cockpit
 let rec = null, t = 0, playing = false, rate = 1, lastWall = 0, played = new Set(), audios = [];
 const preload = new Map();
 
@@ -237,7 +247,11 @@ function renderTabs() {
 
 function select(i) {
   stop(); rec = D[i]; t = 0; played = new Set();
-  $("frame").style.aspectRatio = rec.aspect || "1940 / 970";
+  if (!rec.wide) view = "inst";
+  $("views").hidden = !rec.wide;
+  document.querySelectorAll("#views .seg").forEach(b => b.setAttribute("aria-checked", b.dataset.v === view));
+  $("frame").style.aspectRatio = view === "wide" ? rec.wide.aspect : (rec.aspect || "1940 / 970");
+  drawBoxes();
   const fl = rec.kind === "flaps", pw = rec.kind === "pilot_watch";
   $("setSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "not in the camera's view" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
   $("doingSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "flap gauge, read by Muse Spark" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
@@ -245,9 +259,33 @@ function select(i) {
   if (rec.video) { if (v.getAttribute("src") !== rec.video) v.src = rec.video; v.currentTime = 0; }
   v.hidden = !rec.video; $("gen").hidden = !rec.video;
   renderTabs(); renderLegend(); renderResult(); drawTimeline(); update();
-  rec.readings.forEach(r => { if (r.frame && !preload.has(r.frame)) { const im = new Image(); im.src = r.frame; preload.set(r.frame, im); } });
+  rec.readings.forEach(r => [r.frame, r.wide].forEach(f => { if (f && !preload.has(f)) { const im = new Image(); im.src = f; preload.set(f, im); } }));
   try { localStorage.setItem("debrief.tab", rec.id); } catch (e) {}
 }
+
+// ---------- the whole-cockpit view ----------
+function drawBoxes() {
+  const svg = $("boxes");
+  // (toggleAttribute: an SVG element's .hidden property does not reach the attribute)
+  if (view !== "wide" || !rec.wide) { svg.toggleAttribute("hidden", true); return; }
+  const W = rec.wide.aspect.split(" / ").map(Number), k = rec.wide.scale;
+  svg.setAttribute("viewBox", `0 0 ${W[0]} ${W[1]}`); svg.toggleAttribute("hidden", false);
+  const c = rec.wide.crop;
+  const m = rec.wide.match;
+  // every screen SAM 3.1 found; for gauges (it finds every dial in the cockpit) only the flap gauge
+  const shown = rec.wide.concept === "gauge" ? (m ? [m] : []) : rec.wide.found;
+  let s = shown.map(b => `<rect x="${b[0]}" y="${b[1]}" width="${b[2] - b[0]}" height="${b[3] - b[1]}" fill="none" stroke="#6cc4ff" stroke-width="${m && b.join() === m.join() ? 6 : 3}" opacity="${m && b.join() === m.join() ? 1 : .7}"/>`).join("");
+  if (m) s += `<text x="${m[0] + 8}" y="${m[1] - 16}" fill="#6cc4ff" font-size="44" font-family="B612">SAM 3.1 found the ${rec.wide.concept === "gauge" ? "gauge" : "displays"}</text>`;
+  s += `<rect x="${c[0]}" y="${c[1]}" width="${c[2] - c[0]}" height="${c[3] - c[1]}" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="22 14"/>
+    <text x="${c[0] + 10}" y="${c[3] + 52}" fill="#fff" font-size="44" font-family="B612">what Crosscheck reads</text>`;
+  svg.innerHTML = s;
+}
+document.querySelectorAll("#views .seg").forEach(b => b.onclick = () => {
+  view = b.dataset.v;
+  document.querySelectorAll("#views .seg").forEach(x => x.setAttribute("aria-checked", x.dataset.v === view));
+  $("frame").style.aspectRatio = view === "wide" ? rec.wide.aspect : (rec.aspect || "1940 / 970");
+  drawBoxes(); update();
+});
 
 // ---------- the "now" panel ----------
 function update() {
@@ -257,7 +295,9 @@ function update() {
     const v = $("vid"); $("img").hidden = true; $("nofr").hidden = true;
     if (playing) { v.playbackRate = rate; if (v.paused) v.play().catch(() => {}); if (Math.abs(v.currentTime - t) > 0.3) v.currentTime = t; }
     else { if (!v.paused) v.pause(); if (Math.abs(v.currentTime - t) > 0.04) v.currentTime = t; }
-  } else if (fr && fr.frame) { if ($("img").getAttribute("src") !== fr.frame) $("img").src = fr.frame; $("img").hidden = false; $("nofr").hidden = true; }
+  } else if (fr && (view === "wide" ? fr.wide : fr.frame)) {
+    const src = view === "wide" ? fr.wide : fr.frame;
+    if ($("img").getAttribute("src") !== src) $("img").src = src; $("img").hidden = false; $("nofr").hidden = true; }
   else { $("img").hidden = true; $("nofr").hidden = false; }
   $("clock").textContent = `${t.toFixed(1)} s / ${rec.duration.toFixed(0)} s`;
   const tr = nearestTruth(t) || {};
@@ -587,6 +627,7 @@ if (new URLSearchParams(location.search).has("film")) document.body.classList.ad
 window.film = {
   select: id => { const i = D.findIndex(r => r.id === id); if (i >= 0) select(i); return !!rec; },
   duration: () => rec.duration,
+  view: v => { if (rec.wide || v === "inst") { view = v; $("frame").style.aspectRatio = v === "wide" ? rec.wide.aspect : (rec.aspect || "1940 / 970"); drawBoxes(); update(); } return view; },
   seek: t1 => new Promise(done => {
     t = Math.max(0, Math.min(rec.duration, t1)); playing = false; update(); drawPlayhead();
     const v = $("vid");

@@ -33,7 +33,7 @@ from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.audio.make_radio_set import radio  # noqa: E402
 from eval.scoring import score  # noqa: E402
 from senses.speech import transcribe  # noqa: E402
-from senses.speech_spark import read_line  # noqa: E402
+from senses.speech_spark import hear, read_line  # noqa: E402
 from voice.crew import CREW, say  # noqa: E402
 
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
@@ -149,11 +149,11 @@ async def main(speak: bool, minutes: float) -> int:
         t_start = time.time()
         if speak:
             play(audio[text], 16000)
-        r = await transcribe(audio[text])
+        r, facts, spark, first = await hear(audio[text], who, OWN, cc.ledger)  # listens again if it heard the impossible
         t = time.time()
-        facts, spark = await read_line(r["text"], who, OWN)
         heard.append({"speaker": who, "spoken": text, "transcript": r["text"], "audio_s": r["audio_s"],
-                      "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark})
+                      "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark,
+                      **({"first_heard": first} if first else {})})
         cc.event("heard", t, speaker=who, transcript=r["text"], spoken=text)
         for f in facts:
             cc.said(f, transcript=r["text"])

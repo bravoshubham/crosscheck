@@ -7,9 +7,9 @@
  "called": 15,
  "selected": 15,
  "expect_rule": null,
- "t_start": 1793618386.041204,
- "t_call": 1793618394.0424461,
- "t_move": 1793618397.991179,
+ "t_start": 1793688931.9830358,
+ "t_call": 1793688939.984878,
+ "t_move": 1793688943.92062,
  "frame_box": [
   2300,
   250,
@@ -22,6 +22,7 @@
   "pilots_head_the": -30.0,
   "field_of_view_deg": 60.0
  },
+ "fact_time": "captured",
  "speech": "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
  "heard": [
   {
@@ -29,14 +30,32 @@
    "spoken": "flaps fifteen",
    "transcript": "Flaps 15.",
    "audio_s": 1.76,
-   "s_from_start": 2.95,
+   "s_from_start": 2.93,
    "facts": [
     [
      "callout.flaps",
      15
     ]
-   ]
+   ],
+   "spark": null
   }
  ],
- "recorded": "2026-11-02 16:50:30 IST"
+ "camera_check": {
+  "model": "sam-3.1",
+  "gauge": {
+   "box": [
+    2493,
+    382,
+    2631,
+    543
+   ],
+   "inside": [
+    2470,
+    340,
+    2700,
+    560
+   ]
+  }
+ },
+ "recorded": "2026-11-03 12:26:16 IST"
 }

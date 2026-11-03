@@ -1,7 +1,7 @@
 {
  "scenario": "altitude_correct",
- "scored": 3,
- "passed": 3,
+ "scored": 8,
+ "passed": 7,
  "errors": 0,
  "runs": [
   {
@@ -30,6 +30,57 @@
    "false_callouts_before_clearance": [],
    "aircraft_passed_cleared_s_after_set": 28.3,
    "panel_readable": 0.98
+  },
+  {
+   "run": 3,
+   "pass": false,
+   "recorded": "2026-11-03 10:46:12 IST",
+   "callouts": [
+    {
+     "s_after_set": -6.7,
+     "text": "Confirm cleared altitude."
+    }
+   ],
+   "unexpected_callouts": [
+    "Confirm cleared altitude."
+   ],
+   "note": "recording attempt, 3 Nov 10:44: Voice Transcribe heard ATC as \u201cclimb and maintain 1000\u201d; Crosscheck said \u201cConfirm cleared altitude.\u201d (before \u201clisten again\u201d)"
+  },
+  {
+   "run": 4,
+   "pass": true,
+   "callouts": null,
+   "seconds": 105,
+   "aircraft_passed_cleared_s_after_set": 28.0,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 0.93
+  },
+  {
+   "run": 5,
+   "pass": true,
+   "callouts": null,
+   "seconds": 101,
+   "aircraft_passed_cleared_s_after_set": 28.0,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 0.93
+  },
+  {
+   "run": 6,
+   "pass": true,
+   "recorded": "2026-11-03 10:51:16 IST",
+   "callouts": [],
+   "unexpected_callouts": [],
+   "aircraft_passed_cleared_s_after_set": 28.0,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse highlight in the wide frames"
+  },
+  {
+   "run": 7,
+   "pass": true,
+   "recorded": "2026-11-03 11:13:49 IST",
+   "callouts": [],
+   "unexpected_callouts": [],
+   "aircraft_passed_cleared_s_after_set": 28.2,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse-flying box in the frames"
   }
  ]
 }

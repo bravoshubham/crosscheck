@@ -1,0 +1,12 @@
+{
+ "minutes": 15.0,
+ "false_callouts": [],
+ "lines_heard": 22,
+ "altitude_and_flap_facts_parsed": "14/14",
+ "minutes_below_2500ft": 3.6,
+ "readings": 755,
+ "paused_during_run": false,
+ "pass": true,
+ "panel_readable": 0.98,
+ "non_cockpit_frames": 0
+}

@@ -32,6 +32,7 @@ FRAME_ORIGIN = (1240, 1230)
 FRAME_BOX = (1240, 1230, 3180, 2200)
 SCREEN_SIZE = (3600, 2338)
 READING_FIELDS = [f.name for f in fields(PanelReading) if f.name not in ("raw", "roll_labels")]
+WIDE_W = 1024  # the whole-cockpit frame kept with each reading, for the debrief and the film
 SPARK_PERIOD_S = 1.0  # capture rate with the Muse Spark reader; reads overlap (~3 s each)
 SPARK_READERS = ("spark", "spark-flaps")  # PFD values; flap gauge (flaps view)
 
@@ -42,6 +43,32 @@ def _spark_reader(reader: str):
         return read_flaps_spark
     from senses.panel_spark import read_frame_spark
     return read_frame_spark
+
+
+MISHEARD_MARGIN_FT = 300
+
+
+def implausible(fact: Fact, led: Ledger, transcript: str) -> str | None:
+    """Why a heard altitude cannot be what was said, or None. A climb to below the aircraft, or a
+    descent to above it, is a misheard number (altitude_correct_spark, 3 Nov: "one one thousand"
+    came back from Voice Transcribe as "climb and maintain 1000", at 9,000 ft)."""
+    if fact.key not in ("clearance.altitude", "readback.altitude"):
+        return None
+    alts = sorted(f.value for f in [f for f in led.since("doing", "altitude", 0) if f.t <= fact.t][-3:])
+    if not alts:
+        return None
+    alt = alts[len(alts) // 2]  # the median of the last three: one misread (68,193 ft at 9,000) must not reject a clearance
+    words = transcript.lower()
+    if "climb" in words and fact.value < alt - MISHEARD_MARGIN_FT:
+        return f"a climb to {fact.value} ft from {alt} ft"
+    if "descend" in words and fact.value > alt + MISHEARD_MARGIN_FT:
+        return f"a descent to {fact.value} ft from {alt} ft"
+    if fact.key == "readback.altitude":  # a readback on the wrong side of the aircraft from its clearance
+        clr = led.latest("said", "clearance.altitude", before=fact.t, speaker="atc")
+        if clr is not None and (clr.value > alt + MISHEARD_MARGIN_FT) != (fact.value > alt + MISHEARD_MARGIN_FT) \
+                and abs(clr.value - alt) > MISHEARD_MARGIN_FT and abs(fact.value - alt) > MISHEARD_MARGIN_FT:
+            return f"a readback of {fact.value} ft at {alt} ft, to a clearance to {clr.value} ft"
+    return None
 
 
 def capture_screen() -> Image.Image:
@@ -80,6 +107,7 @@ class Crosscheck:
         self.n = 0
         if frames:
             (out_dir / "frames").mkdir(exist_ok=True)
+            (out_dir / "wide").mkdir(exist_ok=True)
 
     def event(self, kind: str, t: float, **data) -> None:
         with self._log_lock:
@@ -88,7 +116,15 @@ class Crosscheck:
 
     def said(self, fact: Fact, **extra) -> None:
         """A spoken clearance, readback or callout (from speech, or from a scenario script).
-        extra (e.g. the transcript) is logged with the event but does not enter the ledger."""
+        extra (e.g. the transcript) is logged with the event but does not enter the ledger.
+        A value the aircraft's own state contradicts is logged as rejected and not used."""
+        why = implausible(fact, self.ledger, extra.get("transcript") or "")
+        if why:
+            self.event("said_rejected", fact.t, key=fact.key, value=fact.value, speaker=fact.speaker, source=fact.source,
+                       reason=why, **extra)
+            if fact.key == "clearance.altitude":  # Crosscheck could not understand ATC: it says so (brain/rules.py)
+                self.ledger.add(Fact("said", "clearance.unclear", fact.value, fact.t, fact.speaker, source="guard"))
+            return
         self.ledger.add(fact)
         self.event("said", fact.t, key=fact.key, value=fact.value, speaker=fact.speaker, source=fact.source, **extra)
 
@@ -140,10 +176,14 @@ class Crosscheck:
         return new
 
     def _save(self, frame: Image.Image) -> str | None:
+        """The crop the readers use, and (for people looking at the recording) the whole cockpit,
+        downscaled to WIDE_W: wide/<same name>."""
         name = None
         if self.frames:
             name = f"frames/{self.n:05d}.jpg"
             frame.crop(self.frame_box).convert("RGB").save(self.dir / name, quality=85)
+            w = frame.convert("RGB").resize((WIDE_W, round(frame.height * WIDE_W / frame.width)), Image.LANCZOS)
+            w.save(self.dir / name.replace("frames/", "wide/"), quality=78)
         self.n += 1
         return name
 
@@ -230,9 +270,10 @@ def replay(rec_dir: pathlib.Path, out_dir: pathlib.Path, recompute: bool = False
         frames = [e["frame"] for e in events if e["kind"] == "reading" and e.get("frame")]
         spark = _spark_readings(rec_dir, frames, reader, tuple(meta.get("frame_box", FRAME_BOX))[:2])
     cc = Crosscheck(out_dir, log_name="replay_events.jsonl")
-    for e in sorted((e for e in events if e["kind"] in ("reading", "said", "pilot")), key=lambda e: (e["t"], e["kind"] != "said")):
-        if e["kind"] == "said":
-            cc.said(Fact("said", e["key"], e["value"], e["t"], e["speaker"], source=e["source"]))
+    for e in sorted((e for e in events if e["kind"] in ("reading", "said", "said_rejected", "pilot")),
+                    key=lambda e: (e["t"], not e["kind"].startswith("said"))):
+        if e["kind"] in ("said", "said_rejected"):  # the plausibility guard decides again, from the same transcript
+            cc.said(Fact("said", e["key"], e["value"], e["t"], e["speaker"], source=e["source"]), transcript=e.get("transcript"))
             continue  # live, decisions happen on camera frames only
         if e["kind"] == "pilot":  # postures are always replayed as recorded (re-posing needs the GPU)
             cc.observe_pilot({k: e[k] for k in ("neck_flex", "wrists", "slumped", "reasons")}, e["t"], e.get("frame"))

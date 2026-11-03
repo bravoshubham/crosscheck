@@ -1,19 +1,19 @@
 {
- "text": "The pilot flying called \"Flaps 15.\" The PM does not move the flap lever and the flap gauge showed 5 then 2 then 5. Crosscheck said \"Flaps fifteen called, five set.\" at 24.2 s.",
+ "text": "The pilot flying called flaps 15. The pilot monitoring did not move the flap lever and the gauge showed flaps 5. Crosscheck said at 30 s that fifteen was called and five was set.",
  "verified": true,
  "unsupported_numbers": [],
  "model": "muse-spark-1.3",
  "usage": {
-  "completion_tokens": 948,
-  "prompt_tokens": 375,
-  "total_tokens": 1323,
+  "completion_tokens": 803,
+  "prompt_tokens": 420,
+  "total_tokens": 1223,
   "completion_tokens_details": {
-   "reasoning_tokens": 888
+   "reasoning_tokens": 751
   },
   "prompt_tokens_details": {
    "cached_tokens": 0
   }
  },
  "attempts": 1,
- "timeline": "Scenario: Flaps: not moved. \u201cFlaps fifteen\u201d called; nobody moves the lever. (Boeing 737-800 near Portland)\n 11.0 s  heard from pilot flying on the intercom: \"Flaps 15.\"\n 11.0 s  parsed from speech: callout.flaps = 15\n 12.0 s  crew action: PM does not move the flap lever\n 13.3 s  panel: flap gauge 5\n 24.2 s  CROSSCHECK SAID: \"Flaps fifteen called, five set.\" (expected 15, saw 5)\n 29.3 s  panel: flap gauge 2\n 39.8 s  panel: flap gauge 5\n(set-up: callout spoken at 8.0 s)\nScored against the recorded ground truth: pass"
+ "timeline": "Scenario: Flaps: not moved. \u201cFlaps fifteen\u201d called; nobody moves the lever. (Boeing 737-800 near Portland)\n 11.0 s  heard from pilot flying on the intercom: \"Flaps 15.\"\n 11.0 s  parsed from speech: callout.flaps = 15\n 12.0 s  crew action: PM does not move the flap lever\n 17.2 s  panel: flap gauge 5\n 30.0 s  CROSSCHECK SAID: \"Flaps fifteen called, five set.\" (expected 15, saw 5)\n(set-up: callout spoken at 8.0 s)\nScored against the recorded ground truth: pass"
 }

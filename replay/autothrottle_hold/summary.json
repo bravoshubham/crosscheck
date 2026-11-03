@@ -1,19 +1,19 @@
 {
- "text": "The crew had 139 set with MCP SPD and 2500 set while on final to Portland 10R at speed 141 and altitude 2113. Speed decayed to 121 at altitude 2368 and the autothrottle mode later showed blank after a fault injected at 25.0 s. Speed fell further to 109 at altitude 2329 before increasing to 128 at altitude 1939. Crosscheck said \"Speed. Autothrottle not in speed.\" at 34.9 s, which matched the recorded truth for a pass.",
+ "text": "The MCP showed 2,500 ft and 142 kt with the autothrottle in MCP SPD on final to Portland 10R in the 737-800. Speed climbed to 146 kt then decayed to 110 kt while altitude held near 2,309 ft and then descended to 1,763 ft, after the autothrottle mode went blank following the fault injected at 25 s. Crosscheck said \"Speed. Autothrottle not in speed.\" at 30 s, and that call matched the recorded ground truth.",
  "verified": true,
  "unsupported_numbers": [],
  "model": "muse-spark-1.3",
  "usage": {
-  "completion_tokens": 971,
-  "prompt_tokens": 620,
-  "total_tokens": 1591,
+  "completion_tokens": 994,
+  "prompt_tokens": 681,
+  "total_tokens": 1675,
   "completion_tokens_details": {
-   "reasoning_tokens": 848
+   "reasoning_tokens": 875
   },
   "prompt_tokens_details": {
    "cached_tokens": 0
   }
  },
  "attempts": 1,
- "timeline": "Scenario: Autothrottle not in speed. 737 on final to Portland 10R; the autothrottle drops out and speed decays (the Asiana 214 pattern). (Boeing 737-800, KPDX 10R)\n  0.5 s  panel: speed 141, altitude 2113\n  2.2 s  panel: MCP altitude 2500, MCP speed 139, autothrottle mode MCP SPD\n  4.7 s  panel: speed 129, altitude 2208\n  9.0 s  panel: speed 123, altitude 2309\n 13.4 s  panel: speed 121, altitude 2368\n 17.7 s  panel: speed 121, altitude 2380\n 21.8 s  panel: speed 133, altitude 2399\n 26.0 s  panel: speed 144, altitude 2446\n 28.1 s  panel: autothrottle mode blank\n 30.6 s  panel: speed 143, altitude 2456\n 34.9 s  panel: speed 138, altitude 2408\n 34.9 s  CROSSCHECK SAID: \"Speed. Autothrottle not in speed.\" (expected speed mode, saw BLANK)\n 38.9 s  panel: speed 134, altitude 2366\n 44.0 s  panel: speed 125, altitude 2346\n 48.7 s  panel: speed 117, altitude 2340\n 53.5 s  panel: speed 109, altitude 2329\n 58.4 s  panel: speed 111, altitude 2260\n 62.4 s  panel: speed 119, altitude 2118\n 66.6 s  panel: speed 128, altitude 1939\n(set-up: autothrottle fault injected at 25.0 s)\nScored against the recorded ground truth: pass"
+ "timeline": "Scenario: Autothrottle not in speed. 737 on final to Portland 10R; the autothrottle drops out and speed decays (the Asiana 214 pattern). (Boeing 737-800, KPDX 10R)\n  0.7 s  panel: speed 130, altitude 2182\n  3.7 s  panel: MCP altitude 2500, MCP speed 142, autothrottle mode MCP SPD\n  5.2 s  panel: speed 127, altitude 2289\n  9.5 s  panel: speed 136, altitude 2361\n 14.0 s  panel: speed 142, altitude 2409\n 18.3 s  panel: speed 145, altitude 2408\n 22.6 s  panel: speed 146, altitude 2384\n 27.1 s  panel: speed 145, altitude 2364\n 30.1 s  panel: autothrottle mode blank\n 30.1 s  CROSSCHECK SAID: \"Speed. Autothrottle not in speed.\" (expected speed mode, saw BLANK)\n 31.7 s  panel: speed 139, altitude 2351\n 36.3 s  panel: speed 132, altitude 2333\n 40.4 s  panel: speed 126, altitude 2317\n 44.6 s  panel: speed 118, altitude 2309\n 48.8 s  panel: speed 110, altitude 2400\n 53.4 s  panel: speed 110\n 58.0 s  panel: speed 116\n 62.8 s  panel: speed 127, altitude 1935\n 67.3 s  panel: speed 133, altitude 1763\n(set-up: autothrottle fault injected at 25.0 s)\nScored against the recorded ground truth: pass"
 }

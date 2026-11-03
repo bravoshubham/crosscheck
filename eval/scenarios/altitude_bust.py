@@ -42,7 +42,7 @@ from eval.audio.make_radio_set import radio  # noqa: E402
 from eval.scoring import score  # noqa: E402
 from senses.mic import Mic  # noqa: E402
 from senses.speech import transcribe  # noqa: E402
-from senses.speech_spark import read_line  # noqa: E402
+from senses.speech_spark import hear, read_line  # noqa: E402
 
 VIEW = {"pilots_head_the": -22.0, "pilots_head_psi": 0.0, "field_of_view_deg": 50.0}
 FLIGHT = {
@@ -122,7 +122,8 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
     say = mic.speak if mic else None
     if speak and not mic:
         from voice.tts import speak as say
-    cc = Crosscheck(out, speak=say, frames=True, reader=reader, explain=not scripted)
+    cc = Crosscheck(out, speak=say, frames=True, reader=reader, explain=not scripted,
+                    fact_time="captured" if reader == "spark" else "arrival")  # Spark readings are about their capture time
     truth_rows = []
     bring_to_front()  # the panel reader captures the screen
     cam = camera_check_or_stop(out)  # SAM 3.1 pre-flight check of the panel camera
@@ -152,13 +153,13 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
             playing = asyncio.create_task(mic.play(audio[who], 16000))
         elif speak:
             play(audio[who], 16000)
-        r = await transcribe(audio[who])
+        r, facts, spark, first = await hear(audio[who], who, OWN, cc.ledger)  # listens again if it heard the impossible
         if mic:
             await playing
         t = time.time()
-        facts, spark = await read_line(r["text"], who, OWN)
         heard.append({"speaker": who, "spoken": lines[who], "transcript": r["text"], "audio_s": r["audio_s"],
-                      "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark})
+                      "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark,
+                      **({"first_heard": first} if first else {})})
         cc.event("heard", t, speaker=who, transcript=r["text"], spoken=lines[who])
         for f in facts:
             cc.said(f, transcript=r["text"])
@@ -203,7 +204,7 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
             f.write(json.dumps(r) + "\n")
     (out / "meta.json").write_text(json.dumps({
         "scenario": name, "scorer": "altitude", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "area": "Portland",
-        "variant": variant, "cleared": cleared, "readback": readback, "mcp_set": mcp,
+        "variant": variant, "fact_time": cc.fact_time, "cleared": cleared, "readback": readback, "mcp_set": mcp,
         "expect_rule": expected_rule(cleared, readback, mcp) if mic else EXPECT[variant], "t_start": t0, "t_clear": t0 + T_CLEAR, "t_set": t_set,
         "speech": "Muse Voice Transcribe, live: ATC in MMS-TTS (radio-filtered), the readback a person on the "
                   "Mac's microphone" if mic else "scripted (said facts from the scenario script)" if scripted else

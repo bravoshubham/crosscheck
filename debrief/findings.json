@@ -34,7 +34,7 @@
   "date": "3 Nov",
   "area": "Autothrottle, Muse Spark",
   "found": "Spark’s readings arrive 3.5–5 s after the frame is taken, so its callout came after speed was already 10 kt low: 0 of 4 runs in time.",
-  "fix": "Call on the speed trend (where speed will be in 10 s, like the PFD’s trend arrow), with each reading timed at capture and applied the moment it arrives. 6 of 6 fresh runs in time.",
+  "fix": "Call on the speed trend (where speed will be in 10 s, like the PFD’s trend arrow), with each reading timed at capture and applied the moment it arrives. Then in time in 6 of 6 fresh runs; over later runs 5 of 8. Spark is too slow for this alert about a third of the time; the on-device reader was in time in every run.",
   "evidence": "eval/results/repeat/autothrottle_hold_spark.before_*.json"
  },
  {
@@ -71,6 +71,32 @@
   "found": "The readback “descend and maintain 4,000 LAS for 421” was dropped (“for” joined the callsign into 4421), and with no readback heard the MCP check fired 1 s before the crew set it.",
   "fix": "The callsign is also matched in the raw transcript; with no readback heard, the crew gets 15 s.",
   "evidence": "eval/results/nominal_run3/"
+ },
+ {
+  "date": "3 Nov",
+  "area": "Altitude, Muse Spark",
+  "found": "Spark’s readings arrive ~3.5 s after the frame; the crew set 11,000 at 26 s, Spark’s readings of it arrived from 33 s, and the 8 s grace had run out by the clock: a false “set niner thousand”.",
+  "fix": "The grace is counted to the newest selector reading, not the clock, and Spark’s facts carry their capture time."
+ },
+ {
+  "date": "3 Nov",
+  "area": "Altitude, speech",
+  "found": "Voice Transcribe heard “climb and maintain one one thousand” as “climb and maintain 1000”, at 9,000 ft, in 3 runs in a row (and correctly in the others). In the first, Crosscheck flagged the correct readback against it; in the next two the guard below rejected it, leaving nothing to check: the bust and the readback error went uncalled. Once it heard a correct readback as \\u201cmaintained 1000\\u201d, adding a wrong readback callout to a caught bust.",
+  "fix": "A climb to below the aircraft, or a descent to above it, is rejected as misheard and logged, and Crosscheck says “Confirm cleared altitude.” The two missed runs are counted as failures in the test matrix. The scorer now counts any unexpected callout as a wrong run. Since the last of these, a line whose value contradicts the aircraft is sent to Voice Transcribe a second time (“listen again”); it has not been needed in the runs since."
+ },
+ {
+  "date": "3 Nov",
+  "area": "Altitude, the guard",
+  "found": "The misheard-number guard itself rejected a correct \\u201cclimb and maintain 11000\\u201d, because one altitude reading was misread as 68,193 ft at 9,000.",
+  "fix": "The guard uses the median of the last three altitude readings, like the flight phase.",
+  "evidence": "eval/results/altitude_correct_guard_bug/"
+ },
+ {
+  "date": "3 Nov",
+  "area": "Flaps, Muse Spark",
+  "found": "Spark was slow (readings 6–9 s after capture); four readings of the moving needle arrived together, looked settled at 5 when stamped on arrival, and Crosscheck said “five set” for 10.",
+  "fix": "The flap facts carry their capture time, as the autothrottle’s do. Replayed that way, every recorded flaps run is right, this one included (“ten set”).",
+  "evidence": "eval/results/flaps_wrong_arrival_time/"
  },
  {
   "date": "3 Nov",

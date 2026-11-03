@@ -1,0 +1,27 @@
+{
+ "variant": "correct",
+ "cleared": 11000,
+ "readback": 11000,
+ "mcp_set": 11000,
+ "false_callouts_before_clearance": [],
+ "callouts": [
+  {
+   "s_after_set": -6.7,
+   "text": "Confirm cleared altitude."
+  }
+ ],
+ "aircraft_passed_cleared_s_after_set": 27.8,
+ "max_altitude_in_run": 11236,
+ "mcp_read_from_screen": [
+  9000,
+  9600,
+  11000
+ ],
+ "paused_during_run": false,
+ "unexpected_callouts": [
+  "Confirm cleared altitude."
+ ],
+ "pass": false,
+ "panel_readable": 1.0,
+ "non_cockpit_frames": 0
+}

@@ -1,13 +1,13 @@
 {
- "selected_speed_truth": 139.1,
+ "selected_speed_truth": 141.6,
  "false_callouts_before_fault": [],
  "callout": "Speed. Autothrottle not in speed.",
- "callout_s_after_fault": 9.9,
- "truth_below_target_minus_5_s": 13.2,
- "truth_below_target_minus_10_s": 16.5,
- "readings": 72,
+ "callout_s_after_fault": 5.1,
+ "truth_below_target_minus_5_s": 7.8,
+ "truth_below_target_minus_10_s": 11.1,
+ "readings": 48,
  "paused_during_run": false,
  "pass": true,
- "panel_readable": 0.97,
+ "panel_readable": 0.96,
  "non_cockpit_frames": 0
 }

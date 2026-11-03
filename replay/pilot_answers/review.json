@@ -1,0 +1,22 @@
+{
+ "model": "muse-wonder-1.0",
+ "state": "recovered",
+ "from_s": 11,
+ "evidence": "At about 11s the captain closes his eyes, lowers his head and releases the yoke with hands in his lap, remaining slumped and unresponsive until about 24s when he raises his head, opens his eyes and retakes the controls.",
+ "s": 9.8,
+ "usage": {
+  "completion_tokens": 402,
+  "prompt_tokens": 7137,
+  "total_tokens": 7539,
+  "completion_tokens_details": {
+   "reasoning_tokens": 323
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "raw": null,
+ "expected_state": "recovered",
+ "agrees_with_truth": true,
+ "change_s": 10.0
+}

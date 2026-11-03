@@ -1,0 +1,54 @@
+{
+ "scenario": "pilot_watch_slumped_video",
+ "scored": 2,
+ "passed": 2,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_change": 12.4,
+     "text": "Captain, are you OK?"
+    },
+    {
+     "s_after_change": 21.2,
+     "text": "Captain not responding. First officer, take control."
+    }
+   ],
+   "seconds": 69,
+   "asked_s_after_change": 12.4,
+   "alert_s_after_change": 21.2,
+   "false_callouts_before_change": [],
+   "wonder": {
+    "state": "incapacitated",
+    "from_s": 11,
+    "agrees_with_truth": true
+   }
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_change": 12.2,
+     "text": "Captain, are you OK?"
+    },
+    {
+     "s_after_change": 20.9,
+     "text": "Captain not responding. First officer, take control."
+    }
+   ],
+   "seconds": 71,
+   "asked_s_after_change": 12.2,
+   "alert_s_after_change": 20.9,
+   "false_callouts_before_change": [],
+   "wonder": {
+    "state": "incapacitated",
+    "from_s": 11,
+    "agrees_with_truth": true
+   }
+  }
+ ]
+}

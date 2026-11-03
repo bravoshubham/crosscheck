@@ -1,0 +1,92 @@
+{
+ "scenario": "altitude_bust_spark",
+ "scored": 6,
+ "passed": 4,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 15.5,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "seconds": 111,
+   "aircraft_passed_cleared_s_after_set": 26.4,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 20.5,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "seconds": 107,
+   "aircraft_passed_cleared_s_after_set": 26.4,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 2,
+   "pass": false,
+   "callouts": [],
+   "recorded": "2026-11-03 04:28:59 IST",
+   "aircraft_passed_cleared_s_after_set": 26.4,
+   "note": "first recording attempt: Voice Transcribe heard ATC's clearance as \u201cclimb and maintain 1000\u201d; the plausibility guard rejected it, so there was no clearance to check (before \u201cConfirm cleared altitude\u201d existed)"
+  },
+  {
+   "run": 3,
+   "pass": false,
+   "callouts": [
+    {
+     "s_after_set": -0.4,
+     "text": "Readback one thousand, cleared one-one thousand."
+    },
+    {
+     "s_after_set": 17.9,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "recorded": "2026-11-03 09:55:50 IST",
+   "aircraft_passed_cleared_s_after_set": 26.3,
+   "unexpected_callouts": [
+    "Readback one thousand, cleared one-one thousand."
+   ],
+   "note": "second recording attempt: the bust was caught, but Voice Transcribe heard the readback as \\u201cmaintained 1000\\u201d and Crosscheck also said \\u201cReadback one thousand, cleared one-one thousand.\\u201d"
+  },
+  {
+   "run": 4,
+   "pass": true,
+   "recorded": "2026-11-03 10:12:27 IST",
+   "callouts": [
+    {
+     "s_after_set": 17.4,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "unexpected_callouts": [],
+   "aircraft_passed_cleared_s_after_set": 25.9,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse highlight in the wide frames"
+  },
+  {
+   "run": 5,
+   "pass": true,
+   "recorded": "2026-11-03 11:15:48 IST",
+   "callouts": [
+    {
+     "s_after_set": 22.8,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "unexpected_callouts": [],
+   "aircraft_passed_cleared_s_after_set": 26.2,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse-flying box in the frames"
+  }
+ ]
+}

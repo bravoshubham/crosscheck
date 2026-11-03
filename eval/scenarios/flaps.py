@@ -101,7 +101,9 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
     say_cc = mic.speak if mic else None
     if speak and not mic:
         from voice.tts import speak as say_cc
-    cc = Crosscheck(out, speak=say_cc, frames=True, reader="spark-flaps", frame_box=FRAME_BOX, explain=True)
+    # facts at capture time: a slow Spark once delivered four readings of a moving needle together, and
+    # stamped on arrival they looked settled (flaps_wrong, 3 Nov 11:22: "five set" for 10)
+    cc = Crosscheck(out, speak=say_cc, frames=True, reader="spark-flaps", frame_box=FRAME_BOX, explain=True, fact_time="captured")
     heard, truth_rows = [], []
     bring_to_front()  # the camera captures the screen
     from brain.live import capture_screen
@@ -183,7 +185,7 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
         "called": called, "selected": selects,
         "expect_rule": ("callout_vs_set" if (selects if selects is not None else 5) != called else None) if mic else EXPECT[variant],
         "t_start": t0, "t_call": t_call, "t_move": t_move, "frame_box": list(FRAME_BOX),
-        "panel_reader": "muse-spark-flaps", "view": FLAPS_VIEW,
+        "panel_reader": "muse-spark-flaps", "view": FLAPS_VIEW, "fact_time": cc.fact_time,
         "speech": "Muse Voice Transcribe, live: a person on the Mac's microphone, parsed by senses/speech.py" if mic else
                   "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
         "heard": heard, "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))

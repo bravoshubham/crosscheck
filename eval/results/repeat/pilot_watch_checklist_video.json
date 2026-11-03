@@ -1,0 +1,36 @@
+{
+ "scenario": "pilot_watch_checklist_video",
+ "scored": 2,
+ "passed": 2,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": null,
+   "seconds": 70,
+   "asked_s_after_change": null,
+   "alert_s_after_change": null,
+   "false_callouts_before_change": [],
+   "wonder": {
+    "state": "normal",
+    "from_s": null,
+    "agrees_with_truth": true
+   }
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": null,
+   "seconds": 70,
+   "asked_s_after_change": null,
+   "alert_s_after_change": null,
+   "false_callouts_before_change": [],
+   "wonder": {
+    "state": "normal",
+    "from_s": null,
+    "agrees_with_truth": true
+   }
+  }
+ ]
+}

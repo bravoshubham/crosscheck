@@ -1,19 +1,19 @@
 {
- "text": "ATC cleared Alaska 421 to climb and maintain one one thousand. The pilot monitoring called back one two thousand for Alaska four two one, then the pilot flying set 11000 and climbed from 8980 to 11180. Crosscheck said at 25.9 s, \"Readback one-two thousand, cleared one-one thousand.\"",
+ "text": "ATC cleared Alaska 421 to climb and maintain 11,000 ft, and the pilot monitoring called back 12,000 ft. The pilot flying set 11,000 ft and climbed, with the aircraft rising from 8,980 ft through 10,180 ft to 11,120 ft. Crosscheck said \"Readback one-two thousand, cleared one-one thousand\" at 32 s, which caught the wrong readback even though the set altitude matched the clearance.",
  "verified": true,
  "unsupported_numbers": [],
  "model": "muse-spark-1.3",
  "usage": {
-  "completion_tokens": 510,
-  "prompt_tokens": 676,
-  "total_tokens": 1186,
+  "completion_tokens": 1001,
+  "prompt_tokens": 772,
+  "total_tokens": 1773,
   "completion_tokens_details": {
-   "reasoning_tokens": 433
+   "reasoning_tokens": 895
   },
   "prompt_tokens_details": {
    "cached_tokens": 0
   }
  },
  "attempts": 1,
- "timeline": "Scenario: Readback error. Cleared to 11,000; the crew reads back 12,000. (Boeing 737-800 near Portland)\n  4.7 s  panel: speed 191, altitude 8980\n  7.4 s  panel: MCP altitude 9000, MCP speed 191, autothrottle mode MCP SPD\n  9.6 s  panel: speed 197, altitude 9020\n 14.2 s  panel: speed 199, altitude 9020\n 18.2 s  heard from ATC on the radio: \"Alaska 421 climb and maintain one one thousand.\"\n 18.2 s  parsed from speech: clearance.altitude = 11000\n 19.2 s  panel: speed 198, altitude 9000\n 24.2 s  panel: speed 196, altitude 8980\n 24.7 s  heard from pilot monitoring on the intercom: \"Plan een mensen one two thousand Alaska four two one.\"\n 24.7 s  parsed from speech: readback.altitude = 12000\n 25.9 s  CROSSCHECK SAID: \"Readback one-two thousand, cleared one-one thousand.\" (expected 11000, saw 12000)\n 26.0 s  crew action: PF sets MCP 11000 and climbs\n 31.0 s  panel: speed 194, altitude 8980\n 34.4 s  panel: MCP altitude 11000, MCP speed 194, autothrottle mode N1\n 37.0 s  panel: speed 209, altitude 8980\n 41.7 s  panel: speed 213, altitude 9080\n 47.6 s  panel: speed 217, altitude 9320\n 53.4 s  panel: autothrottle mode MCP SPD, speed 202, altitude 10400\n 57.6 s  panel: speed 183, altitude 10980\n 62.7 s  panel: speed 183, altitude 11180\n(set-up: ATC clearance sent at 12.0 s)\n(set-up: MCP changed by the crew at 26.0 s)\nScored against the recorded ground truth: pass"
+ "timeline": "Scenario: Readback error. Cleared to 11,000; the crew reads back 12,000. (Boeing 737-800 near Portland)\n  6.1 s  panel: speed 197, altitude 9020\n  9.6 s  panel: MCP altitude 9000, MCP speed 191, autothrottle mode MCP SPD\n 11.4 s  panel: speed 198, altitude 9020\n 16.4 s  panel: speed 197, altitude 8980\n 21.7 s  panel: speed 195, altitude 8980\n 24.3 s  parsed from speech: clearance.altitude = 11000\n 24.3 s  heard from ATC on the radio: \"Alaska 421 climb and maintain one one thousand\"\n 25.8 s  panel: speed 193, altitude 8980\n 30.9 s  parsed from speech: readback.altitude = 12000\n 30.9 s  heard from pilot monitoring on the intercom: \"Plan een mensen one 2000 Alaska 421..\"\n 30.9 s  crew action: PF sets MCP 11000 and climbs\n 32.4 s  panel: speed 192, altitude 8980\n 32.4 s  CROSSCHECK SAID: \"Readback one-two thousand, cleared one-one thousand.\" (expected 11000, saw 12000)\n 37.1 s  panel: speed 191, altitude 8980\n 40.7 s  panel: MCP altitude 11000, MCP speed 192, autothrottle mode N1\n 42.5 s  panel: speed 202, altitude 9000\n 47.4 s  panel: speed 211, altitude 9080\n 52.5 s  panel: speed 213, altitude 9680\n 57.6 s  panel: speed 205, altitude 10180\n 58.2 s  panel: autothrottle mode MCP SPD\n 64.3 s  panel: speed 180, altitude 10900\n 68.5 s  panel: speed 189, altitude 11120\n(set-up: ATC clearance sent at 12.0 s)\n(set-up: MCP changed by the crew at 30.9 s)\nScored against the recorded ground truth: pass"
 }

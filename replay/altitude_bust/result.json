@@ -10,15 +10,16 @@
    "text": "Cleared one-one thousand, set one-two thousand."
   }
  ],
- "aircraft_passed_cleared_s_after_set": 26.2,
- "max_altitude_in_run": 12003,
+ "aircraft_passed_cleared_s_after_set": 26.4,
+ "max_altitude_in_run": 12004,
  "mcp_read_from_screen": [
   1200,
   9000,
-  9600,
   12000
  ],
  "paused_during_run": false,
+ "unexpected_callouts": [],
  "pass": true,
- "panel_readable": 1.0
+ "panel_readable": 0.98,
+ "non_cockpit_frames": 0
 }

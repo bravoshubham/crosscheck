@@ -7,17 +7,26 @@
  "answer": null,
  "expect_ask": false,
  "expect_alert": false,
- "t_start": 1793620581.262728,
- "t_change": 1793620591.262728,
+ "t_start": 1793657026.385677,
+ "t_change": 1793657036.385677,
  "frame_box": [
   0,
   0,
-  800,
-  800
+  704,
+  704
  ],
  "pilot_camera": true,
  "pose": "SAM 3D Body (facebook/sam-3d-body-vith) on Modal T4, one call per frame",
+ "pilot_box": [
+  168,
+  105,
+  525,
+  509
+ ],
+ "pilot_box_from": "SAM 3.1, on the first frame",
+ "camera": "generated video: LTX-2.5 clips anchored on Muse Image set b",
+ "video": "camera.mp4",
  "speech": "none",
  "heard": [],
- "recorded": "2026-11-02 17:27:06 IST"
+ "recorded": "2026-11-03 03:34:35 IST"
 }

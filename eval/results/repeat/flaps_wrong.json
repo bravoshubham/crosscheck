@@ -1,7 +1,7 @@
 {
  "scenario": "flaps_wrong",
- "scored": 3,
- "passed": 3,
+ "scored": 7,
+ "passed": 7,
  "errors": 0,
  "runs": [
   {
@@ -45,6 +45,62 @@
    "false_callouts_before_call": [],
    "flaps_settled_s_after_call": 8.9,
    "panel_readable": 1.0
+  },
+  {
+   "run": 3,
+   "pass": true,
+   "recorded": "2026-11-03 10:21:00 IST",
+   "callouts": [
+    {
+     "s_after_call": 20.0,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "unexpected_callouts": [],
+   "flaps_settled_s_after_call": 9.2,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse highlight in the wide frames"
+  },
+  {
+   "run": 4,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 20.4,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 86,
+   "flaps_settled_s_after_call": 8.9,
+   "false_callouts_before_call": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 5,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 24.1,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 89,
+   "flaps_settled_s_after_call": 8.8,
+   "false_callouts_before_call": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 6,
+   "pass": true,
+   "recorded": "2026-11-03 11:48:15 IST",
+   "callouts": [
+    {
+     "s_after_call": 26.0,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "unexpected_callouts": [],
+   "flaps_settled_s_after_call": 8.8,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse-flying box in the frames"
   }
  ]
 }

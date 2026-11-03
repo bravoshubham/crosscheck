@@ -6,19 +6,19 @@
  "false_callouts_before_clearance": [],
  "callouts": [
   {
-   "s_after_set": -0.4,
+   "s_after_set": 0.1,
    "text": "Readback one-two thousand, cleared one-one thousand."
   }
  ],
- "aircraft_passed_cleared_s_after_set": 28.0,
- "max_altitude_in_run": 11249,
+ "aircraft_passed_cleared_s_after_set": 28.1,
+ "max_altitude_in_run": 11248,
  "mcp_read_from_screen": [
-  1100,
   9000,
-  9600,
   11000
  ],
  "paused_during_run": false,
+ "unexpected_callouts": [],
  "pass": true,
- "panel_readable": 1.0
+ "panel_readable": 1.0,
+ "non_cockpit_frames": 0
 }

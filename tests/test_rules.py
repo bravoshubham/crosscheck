@@ -23,10 +23,19 @@ def test_phraseology():
 def test_altitude_bust_flagged_after_grace():
     led = ledger(("said", "clearance.altitude", 24000, 0.0, "atc"),
                  ("said", "readback.altitude", 24000, 3.0, "pm"),
-                 ("set", "mcp.altitude", 25000, 5.0))
+                 *[("set", "mcp.altitude", 25000, float(t)) for t in range(5, 15)])  # a reading a second
     assert evaluate(led, 10.0) == []  # inside the grace period
     flags = evaluate(led, 14.0)
     assert [f.callout for f in flags] == ["Cleared two-four-zero, set two-five-zero."]
+
+
+def test_the_grace_runs_on_the_readers_evidence_not_the_clock():
+    # Muse Spark ~3.5 s behind: at 33 s the newest selector reading is from 29.7 s, 4.8 s after the
+    # readback; the crew set the right value at 26 s and it has not been read three times yet
+    led = ledger(("said", "clearance.altitude", 11000, 18.1, "atc"), ("said", "readback.altitude", 11000, 24.9, "pm"),
+                 *[("set", "mcp.altitude", 9000, t) for t in (18.1, 19.7, 21.3, 23.0, 24.7, 26.3)],
+                 ("set", "mcp.altitude", 11000, 28.0), ("set", "mcp.altitude", 11000, 29.7))
+    assert evaluate(led, 33.1) == []
 
 
 def test_altitude_set_correctly_is_silent():
@@ -252,3 +261,47 @@ def test_without_a_readback_the_crew_gets_the_time_a_readback_takes():
     for i in range(10, 14):
         led.add(Fact("set", "mcp.altitude", 5000, i * 1.2))
     assert [f.rule for f in evaluate(led, 16.0)] == ["clearance_vs_set"]
+
+
+def test_a_climb_to_below_the_aircraft_is_a_misheard_number(tmp_path):
+    from brain.live import Crosscheck
+    cc = Crosscheck(tmp_path)
+    cc.ledger.add(Fact("doing", "altitude", 8980, 17.0))
+    cc.said(Fact("said", "clearance.altitude", 1000, 18.2, "atc"), transcript="Alaska 421 climb and maintain 1000.")
+    cc.said(Fact("said", "readback.altitude", 11000, 24.9, "pm"), transcript="Fland and maintain one 1000 Alaska 421.")
+    assert cc.ledger.value_at("said", "clearance.altitude", 30.0) is None
+    assert cc.ledger.value_at("said", "readback.altitude", 30.0) == 11000
+
+
+
+def test_a_misheard_clearance_is_asked_about(tmp_path):
+    from brain.live import Crosscheck
+    cc = Crosscheck(tmp_path)
+    cc.ledger.add(Fact("doing", "altitude", 9020, 17.0))
+    cc.said(Fact("said", "clearance.altitude", 1000, 18.2, "atc"), transcript="Alaska 421 climb and maintain 1000.")
+    assert [f.callout for f in evaluate(cc.ledger, 19.0)] == ["Confirm cleared altitude."]
+    cc.said(Fact("said", "clearance.altitude", 11000, 30.0, "atc"), transcript="Alaska 421 climb and maintain one one thousand.")
+    assert "Confirm cleared altitude." not in [f.callout for f in evaluate(cc.ledger, 31.0)]
+
+
+def test_one_misread_altitude_does_not_reject_a_correct_clearance(tmp_path):
+    # 3 Nov: one reading of 68,193 ft at 9,000 made the guard reject "climb and maintain 11000"
+    from brain.live import Crosscheck
+    cc = Crosscheck(tmp_path)
+    for t, alt in ((15.0, 8990), (16.0, 68193), (17.0, 8985)):
+        cc.ledger.add(Fact("doing", "altitude", alt, t))
+    cc.said(Fact("said", "clearance.altitude", 11000, 18.2, "atc"), transcript="Alaska 421 climb and maintain 11000")
+    assert cc.ledger.value_at("said", "clearance.altitude", 19.0) == 11000
+
+
+
+def test_a_readback_on_the_wrong_side_of_the_aircraft_is_misheard(tmp_path):
+    from brain.live import Crosscheck, implausible
+    cc = Crosscheck(tmp_path)
+    for t in (15.0, 16.0, 17.0):
+        cc.ledger.add(Fact("doing", "altitude", 9000, t))
+    cc.said(Fact("said", "clearance.altitude", 11000, 18.0, "atc"), transcript="Alaska 421 climb and maintain one one thousand")
+    heard_wrong = Fact("said", "readback.altitude", 1000, 25.0, "pm")
+    assert implausible(heard_wrong, cc.ledger, "Planned and maintained 1000 Alaska 421.")
+    real_error = Fact("said", "readback.altitude", 12000, 25.0, "pm")  # a real readback error stays a readback error
+    assert implausible(real_error, cc.ledger, "climb and maintain one two thousand Alaska 421") is None

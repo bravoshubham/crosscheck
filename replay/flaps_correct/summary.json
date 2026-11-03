@@ -1,19 +1,19 @@
 {
- "text": "The pilot flying called \"Flaps 15\" at 10.9 s. The pilot monitoring selected flaps 15 at 11.9 s, and the flap gauge read 5 and then 15 at 29.3 s. Crosscheck stayed silent, which was right because the call matched the selection and the flaps needed about 13 s to travel.",
+ "text": "At 10.9 s the pilot flying called flaps 15. At 11.9 s the pilot monitoring selected flaps 15 and the flap gauge moved from 5 at 9.8 s to 15 at 28.9 s. Crosscheck stayed silent, which was right because the call, the selection and the gauge agreed.",
  "verified": true,
  "unsupported_numbers": [],
  "model": "muse-spark-1.3",
  "usage": {
-  "completion_tokens": 780,
-  "prompt_tokens": 341,
-  "total_tokens": 1121,
+  "completion_tokens": 1020,
+  "prompt_tokens": 413,
+  "total_tokens": 1433,
   "completion_tokens_details": {
-   "reasoning_tokens": 695
+   "reasoning_tokens": 939
   },
   "prompt_tokens_details": {
-   "cached_tokens": 0
+   "cached_tokens": 227
   }
  },
  "attempts": 1,
- "timeline": "Scenario: Flaps: correct. \u201cFlaps fifteen\u201d called and selected. The needle takes ~13 s; Crosscheck should stay silent. (Boeing 737-800 near Portland)\n 10.9 s  heard from pilot flying on the intercom: \"Flaps 15.\"\n 10.9 s  parsed from speech: callout.flaps = 15\n 11.9 s  crew action: PM selects flaps 15\n 29.3 s  panel: flap gauge 5\n 29.3 s  panel: flap gauge 15\n(set-up: callout spoken at 8.0 s)\nScored against the recorded ground truth: pass"
+ "timeline": "Scenario: Flaps: correct. \u201cFlaps fifteen\u201d called and selected. The needle takes ~13 s; Crosscheck should stay silent. (Boeing 737-800 near Portland)\n  9.8 s  panel: flap gauge 5\n 10.9 s  heard from pilot flying on the intercom: \"Flaps 15.\"\n 10.9 s  parsed from speech: callout.flaps = 15\n 11.9 s  crew action: PM selects flaps 15\n 28.9 s  panel: flap gauge 15\n(set-up: callout spoken at 8.0 s)\nScored against the recorded ground truth: pass"
 }

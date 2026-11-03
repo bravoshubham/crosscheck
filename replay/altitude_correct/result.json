@@ -6,13 +6,15 @@
  "false_callouts_before_clearance": [],
  "callouts": [],
  "aircraft_passed_cleared_s_after_set": 28.2,
- "max_altitude_in_run": 11250,
+ "max_altitude_in_run": 11240,
  "mcp_read_from_screen": [
   1100,
   9000,
   11000
  ],
  "paused_during_run": false,
+ "unexpected_callouts": [],
  "pass": true,
- "panel_readable": 0.98
+ "panel_readable": 1.0,
+ "non_cockpit_frames": 0
 }

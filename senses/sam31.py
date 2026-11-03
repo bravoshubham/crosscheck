@@ -41,7 +41,11 @@ def find(image: Image.Image | bytes, concept: str, client: httpx.Client | None =
     finally:
         if own:
             client.close()
-    text = "".join(c.get("text", "") for o in r.json().get("output", []) for c in o.get("content", []))
+    return parse_boxes("".join(c.get("text", "") for o in r.json().get("output", []) for c in o.get("content", [])))
+
+
+def parse_boxes(text: str) -> list[tuple[int, int, int, int]]:
+    """Every "<|box;x1=..;y1=..;x2=..;y2=..;w=..;h=..|>" in SAM 3.1's answer."""
     boxes = []
     for b in re.findall(r"<\|box;([^|]*)\|>", text):
         v = {k: float(x) for k, x in re.findall(r"(\w+)=([\d.]+)", b)}

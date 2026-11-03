@@ -59,11 +59,14 @@ def score_altitude(events: list[dict], truth: list[dict], meta: dict) -> dict:
         "mcp_read_from_screen": sorted({e["selected_altitude"] for e in events
                                         if e["kind"] == "reading" and e.get("selected_altitude")}),
         "paused_during_run": any(r.get("paused") for r in rows),
+        # strict: any callout other than the expected one is wrong, whenever it came (a misheard
+        # readback once added "Readback one thousand, cleared one-one thousand" to a caught bust)
+        "unexpected_callouts": [c["callout"] for c in callouts if c["rule"] != want],
     }
     if want is None:
         result["pass"] = not callouts and not result["paused_during_run"]
     else:
-        result["pass"] = (hit is not None and not result["false_callouts_before_clearance"]
+        result["pass"] = (hit is not None and not result["unexpected_callouts"]
                           and (t_pass is None or hit["t"] < t_pass) and not result["paused_during_run"])
     return result
 
@@ -92,7 +95,8 @@ def score_flaps(events: list[dict], truth: list[dict], meta: dict) -> dict:
     if want is None:
         result["pass"] = not callouts and not result["paused_during_run"]
     else:
-        result["pass"] = (hit is not None and hit["actual"] == result["flaps_final_truth"]
+        result["unexpected_callouts"] = [c["callout"] for c in callouts if c["rule"] != want]  # strict, as for altitude
+        result["pass"] = (hit is not None and hit["actual"] == result["flaps_final_truth"] and not result["unexpected_callouts"]
                           and not result["false_callouts_before_call"] and not result["paused_during_run"])
     return result
 

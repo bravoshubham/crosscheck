@@ -56,7 +56,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         return round(t - t0, 2)
 
     readings, said, heard, callouts, actions = [], [], [], [], []
-    last_frame = None
+    last_frame = last_wide = None
     for e in events:
         k = e["kind"]
         if k == "reading":
@@ -64,7 +64,13 @@ def build_one(rec: pathlib.Path, synth) -> dict:
             if e.get("frame") and (rec / e["frame"]).exists():
                 shutil.copy(rec / e["frame"], out / e["frame"])
                 last_frame = e["frame"]
+                w = e["frame"].replace("frames/", "wide/")
+                if (rec / w).exists():  # the whole cockpit, for people (the readers use the crop)
+                    (out / "wide").mkdir(exist_ok=True)
+                    shutil.copy(rec / w, out / w)
+                    last_wide = w
             readings.append({"t": rel(e["t"]), "frame": f"rec/{name}/{last_frame}" if last_frame else None,
+                             "wide": f"rec/{name}/{last_wide}" if last_wide else None,
                              **{f: e.get(f) for f in ("ias", "selected_speed", "selected_altitude", "altitude", "track_mag",
                                                       "flaps", "flaps_clock")},
                              "fma": e.get("fma"), "fma_armed": e.get("fma_armed")})
@@ -155,6 +161,14 @@ def build_one(rec: pathlib.Path, synth) -> dict:
     if meta.get("video") and (rec / meta["video"]).exists():  # pilot watch on generated footage
         shutil.copy(rec / meta["video"], out / meta["video"])
         video = f"rec/{name}/{meta['video']}"
+    wide = None
+    if any(r.get("wide") for r in readings):  # where SAM 3.1 found the displays, and the crop the readers use
+        from brain.live import SCREEN_SIZE, WIDE_W
+        cc = json.loads((rec / "camera_check.json").read_text()) if (rec / "camera_check.json").exists() else {}
+        concept = next(iter(cc.get("matches", {})), None)
+        match = next((m.get("box") for m in cc.get("matches", {}).values() if m.get("box")), None)
+        wide = {"scale": WIDE_W / SCREEN_SIZE[0], "aspect": f"{SCREEN_SIZE[0]} / {SCREEN_SIZE[1]}", "found": cc.get("found", []), "match": match,
+                "concept": "gauge" if concept == "gauge" else "screen", "crop": meta.get("frame_box", [1240, 1230, 3180, 2200])}
     rv = rec / "review.json"  # Muse Wonder's independent review of the pilot camera (brain/review.py)
     review = {k: v for k, v in json.loads(rv.read_text()).items() if k in ("model", "state", "from_s", "evidence", "agrees_with_truth", "expected_state", "s")} if rv.exists() else None
     sp = rec / "summary.json"  # Muse Spark debrief summary (brain/summary.py), if written
@@ -166,7 +180,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
                              "called", "selected", "state", "answer", "pose") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
-        "truth": tr, "audio": audio, "result": result, "summary": summary, "video": video, "actions": actions, "review": review}
+        "truth": tr, "audio": audio, "result": result, "summary": summary, "video": video, "actions": actions, "review": review, "wide": wide}
 
 
 # The test matrix on the overview: recording, repeat-run summaries (eval/results/repeat/), what each
@@ -176,6 +190,10 @@ MATRIX = [
      "aircraft_passed_cleared_s_after_set", "the 737 passed 11,000"),
     ("altitude_readback", ["altitude_readback"], "Cleared to 11,000; the crew reads back 12,000.", "after the MCP was set", None, None),
     ("altitude_correct", ["altitude_correct"], "Cleared, read back and set to 11,000.", None, None, None),
+    ("altitude_bust_spark", ["altitude_bust_spark"], "The bust, with Muse Spark reading the panel.", "after the MCP was set",
+     "aircraft_passed_cleared_s_after_set", "the 737 passed 11,000"),
+    ("altitude_readback_spark", ["altitude_readback_spark"], "The readback error, with Muse Spark reading the panel.", "after the MCP was set", None, None),
+    ("altitude_correct_spark", ["altitude_correct_spark"], "The correct setting, with Muse Spark reading the panel.", None, None, None),
     ("autothrottle_hold", ["autothrottle_hold"], "On final the autothrottle drops out and speed decays.", "after the fault",
      "truth_below_target_minus_10_s", "speed was 10 kt low"),
     ("autothrottle_hold_spark", ["autothrottle_hold_spark"], "The same, with Muse Spark reading the panel.", "after the fault",
@@ -183,19 +201,26 @@ MATRIX = [
     ("flaps_wrong", ["flaps_wrong"], "\u201cFlaps fifteen\u201d called; the lever goes to 10.", "after the call", None, None),
     ("flaps_forgot", ["flaps_forgot"], "\u201cFlaps fifteen\u201d called; nobody moves the lever.", "after the call", None, None),
     ("flaps_correct", ["flaps_correct"], "\u201cFlaps fifteen\u201d called and selected.", None, None, None),
-    ("pilot_slumped", ["pilot_watch_slumped"], "The captain slumps forward and does not answer.", "after the slump", None, None),
-    ("pilot_asleep", ["pilot_watch_asleep"], "The captain falls asleep against the side window.", "after the slump", None, None),
-    ("pilot_checklist", ["pilot_watch_checklist"], "The captain looks down at a checklist.", None, None, None),
-    ("pilot_answers", ["pilot_watch_answers"], "The captain slumps, then answers when asked.", "after the slump", None, None),
+    ("pilot_slumped", ["pilot_watch_slumped_video"], "The captain slumps forward and does not answer.", "after the slump", None, None),
+    ("pilot_asleep", ["pilot_watch_asleep_video"], "The captain falls asleep against the side window.", "after the slump", None, None),
+    ("pilot_checklist", ["pilot_watch_checklist_video"], "The captain looks down at a checklist.", None, None, None),
+    ("pilot_answers", ["pilot_watch_answers_video"], "The captain slumps, then answers when asked.", "after the slump", None, None),
     ("nominal", [], "Fifteen minutes flown correctly: six descents, four turns, four flap calls.", None, None, None),
 ]
 SAYS = {"altitude_bust": "Cleared one-one thousand, set one-two thousand.",
         "altitude_readback": "Readback one-two thousand, cleared one-one thousand.",
+        "altitude_bust_spark": "Cleared one-one thousand, set one-two thousand.",
+        "altitude_readback_spark": "Readback one-two thousand, cleared one-one thousand.",
         "autothrottle_hold": "Speed. Autothrottle not in speed.", "autothrottle_hold_spark": "Speed. Autothrottle not in speed.",
         "flaps_wrong": "Flaps fifteen called, ten set.", "flaps_forgot": "Flaps fifteen called, five set.",
         "pilot_slumped": "Captain, are you OK?\u201d then \u201cFirst officer, take control.",
         "pilot_asleep": "Captain, are you OK?\u201d then \u201cFirst officer, take control.",
         "pilot_answers": "Captain, are you OK?"}
+
+
+def nominal_since_fixes() -> list[pathlib.Path]:
+    return [ROOT / "eval" / "results" / f"nominal_run{i}" / "result.json" for i in range(4, 10)
+            if (ROOT / "eval" / "results" / f"nominal_run{i}" / "result.json").exists()]
 
 
 def _first_time(run: dict) -> float | None:
@@ -232,8 +257,11 @@ def models(data: list[dict]) -> list[dict]:
     out.append({"model": "Muse Spark", "job": "Reads the flight displays and the analog flap gauge from camera frames on any computer; reads radio lines the parser cannot; writes a sentence under each callout and each recording's debrief.", "measured": m})
     reviews = [load(ROOT / "replay" / r["id"] / "review.json") for r in data if r["kind"] == "pilot_watch"]
     reviews = [x for x in reviews if x]
+    for sp in sorted((R / "repeat").glob("pilot_watch_*_video.json")):  # and the repeat runs
+        reviews += [run["wonder"] for run in json.loads(sp.read_text())["runs"] if run.get("wonder")]
     out.append({"model": "Muse Wonder", "job": "Watches the pilot-camera recording after each run and judges it on its own, without the poses or Crosscheck's alerts.",
-                "measured": [f"Agreed with the ground truth on {sum(x['agrees_with_truth'] for x in reviews)} of {len(reviews)} recordings"] if reviews else []})
+                "measured": [f"Agreed with the ground truth on {sum(x['agrees_with_truth'] for x in reviews)} of {len(reviews)} pilot-camera runs "
+                             "(slumped, asleep, reading a checklist, slumped then answering)"] if reviews else []})
     checks = [load(ROOT / "replay" / r["id"] / "camera_check.json") for r in data]
     checks = [c for c in checks if c]
     sb = load(R / "pilot_sam_boxes.json")
@@ -262,6 +290,8 @@ def overview(data: list[dict]) -> dict:
             if p.exists():
                 runs += [{"pass": x["pass"], "t": _first_time(x), "deadline": x.get(deadline_key) if deadline_key else None}
                          for x in json.loads(p.read_text())["runs"] if "pass" in x]
+        if rid == "nominal":  # the earlier flights since the fixes count too; runs 1-3 found the fixes and are evidence
+            runs += [{"pass": json.loads(p.read_text())["pass"], "t": None, "deadline": None} for p in nominal_since_fixes()]
         rec = by_id[rid]
         res = rec["result"]
         live = {"pass": res["pass"], "t": _first_time(res), "deadline": res.get(deadline_key) if deadline_key else None, "recording": True}
@@ -270,11 +300,12 @@ def overview(data: list[dict]) -> dict:
         totals["right"] += sum(r["pass"] for r in runs)
         rows.append({"id": rid, "title": rec["title"], "what": what, "says": SAYS.get(rid), "measured": measured,
                      "deadline_label": deadline_label, "runs": runs, "kind": rec["kind"]})
-    hero = by_id.get("altitude_bust")
+    hero = by_id.get("altitude_bust_spark") or by_id.get("altitude_bust")  # the panel read by Muse Spark, if recorded
     if hero:
         c = hero["callouts"][0]
-        frame = next((r["frame"] for r in hero["readings"] if r["t"] >= c["t"] and r.get("frame")), None)
-        hero = {"id": hero["id"], "frame": frame, "callout": c, "duration": hero["duration"],
+        at = next((r for r in hero["readings"] if r["t"] >= c["t"] and r.get("frame")), {})
+        hero = {"id": hero["id"], "frame": at.get("wide") or at.get("frame"), "wide": hero.get("wide") if at.get("wide") else None,
+                "reader": hero["meta"].get("panel_reader"), "callout": c, "duration": hero["duration"],
                 "said": [f for f in hero["said"]],
                 "set": [[r["t"], r["selected_altitude"]] for r in hero["readings"] if r.get("selected_altitude")],
                 "doing": [[r["t"], r["altitude"]] for r in hero["readings"] if r.get("altitude")],
@@ -284,7 +315,7 @@ def overview(data: list[dict]) -> dict:
         n = by_id["nominal"]
         res = n["result"]
         earlier = []
-        for d, label in (("nominal_before_fixes", "Run 1"), ("nominal_run2", "Run 2"), ("nominal_run3", "Run 3")):
+        for d, label in (("nominal_before_fixes", "Run 1"), ("nominal_run2", "Run 2"), ("nominal_run3", "Run 3"), ("nominal_run4", "Run 4"), ("nominal_run5", "Run 5"), ("nominal_run6", "Run 6")):
             p = ROOT / "eval" / "results" / d / "result.json"
             if p.exists():
                 earlier.append({"label": label, "false_callouts": json.loads(p.read_text())["false_callouts"]})

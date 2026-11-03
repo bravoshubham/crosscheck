@@ -4,9 +4,11 @@
   uv run python cli.py replay --all                       # every recording under replay/
   uv run python cli.py replay --all --recompute           # re-read every saved frame (macOS)
   uv run python cli.py replay --all --recompute --reader spark   # re-read with Muse Spark (any OS)
-  uv run python cli.py debrief                            # build the debrief viewer into site/
+  uv run python cli.py debrief                            # build the site: overview, report, recordings (site/)
+  uv run python cli.py film                               # film the site's pages with narration (site/crosscheck_film.mp4)
+  uv run python cli.py summary | review                   # Muse Spark debriefs; Muse Wonder's pilot-camera reviews
   uv run python cli.py live                               # tablet display of the run in progress (:8770)
-  uv run python cli.py video                              # demo video from the debrief data (site/crosscheck_demo.mp4)
+  uv run python cli.py demo altitude | flaps | pilot | replay <recording>   # present live (docs/DEMO.md)
 
 Replay feeds the panel readings and spoken ("said") facts saved with each recording back
 through the same ledger, rules and scorer as the live run, then compares the result with the
@@ -65,7 +67,6 @@ def main() -> int:
     sm.add_argument("--force", action="store_true", help="rewrite cached summaries")
     fm = sub.add_parser("film", help="film the debrief pages with narration (site/crosscheck_film.mp4; run debrief first)")
     fm.add_argument("--repo", help="repository address shown on the closing card")
-    sub.add_parser("video", help="render a demo video from the debrief data (run debrief first)")
     dm = sub.add_parser("demo", help="present live: tablet + a scenario with your voice, or re-enact a recording (docs/DEMO.md)")
     dm.add_argument("what", nargs="*", help="altitude | flaps | pilot | replay <recording>")
     lv = sub.add_parser("live", help="tablet display of the scenario being recorded")
@@ -74,10 +75,6 @@ def main() -> int:
     if args.cmd == "film":
         from debrief.film import build as film
         print("wrote", film(args.repo))
-        return 0
-    if args.cmd == "video":
-        from debrief.video import build as build_video
-        print("wrote", build_video())
         return 0
     if args.cmd == "review":
         from brain.review import run as review

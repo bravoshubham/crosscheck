@@ -1,0 +1,44 @@
+{
+ "scenario": "altitude_correct_spark",
+ "scored": 4,
+ "passed": 4,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": null,
+   "seconds": 106,
+   "aircraft_passed_cleared_s_after_set": 28.1,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": null,
+   "seconds": 109,
+   "aircraft_passed_cleared_s_after_set": 28.1,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "recorded": "2026-11-03 10:16:06 IST",
+   "callouts": [],
+   "unexpected_callouts": [],
+   "aircraft_passed_cleared_s_after_set": 27.5,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse highlight in the wide frames"
+  },
+  {
+   "run": 3,
+   "pass": true,
+   "recorded": "2026-11-03 11:19:29 IST",
+   "callouts": [],
+   "unexpected_callouts": [],
+   "aircraft_passed_cleared_s_after_set": 28.0,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse-flying box in the frames"
+  }
+ ]
+}

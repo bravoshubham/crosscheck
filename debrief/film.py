@@ -61,39 +61,71 @@ def sections() -> dict[str, str]:
 
 
 # ---------------------------------------------------------------- narration
+CACHE = ROOT / ".cache" / "film_voice"  # synthetic narration, keyed on the text: re-renders reuse it
+
+
 def tts(texts: dict[str, str], out: pathlib.Path) -> dict[str, np.ndarray]:
+    import hashlib
     out.mkdir(parents=True, exist_ok=True)
+    CACHE.mkdir(parents=True, exist_ok=True)
     voices = {}
     todo = {}
+    key = lambda text: hashlib.sha1((NARRATOR + "|" + text).encode()).hexdigest()[:16]
     for k, text in texts.items():
         own = OWN_VOICE / f"{k}.wav"
         if own.exists():
             voices[k] = load(own)
+        elif (CACHE / f"{key(text)}.wav").exists():
+            voices[k] = load(CACHE / f"{key(text)}.wav")
         else:
             todo[k] = text
     if todo and (OMNIVOICE / ".venv" / "bin" / "python").exists():
+        # two takes of each line on the CPU (the Apple GPU path crashes here); the take Muse Voice
+        # Transcribe hears closest to the script is kept, so the narration is measured, not hoped for
         job = out / "omnivoice.json"
-        job.write_text(json.dumps({"instruct": NARRATOR, "lines": todo, "out": str(out)}))
+        job.write_text(json.dumps({"instruct": NARRATOR, "lines": todo, "out": str(out), "takes": TAKES}))
         code = (
             "import json, sys, torch, soundfile as sf\n"
             "from omnivoice.models.omnivoice import OmniVoice\n"
             "j = json.load(open(sys.argv[1]))\n"
-            "m = OmniVoice.from_pretrained('k2-fsa/OmniVoice', device_map='mps', dtype=torch.float16)\n"
+            "m = OmniVoice.from_pretrained('k2-fsa/OmniVoice', device_map='cpu', dtype=torch.float32)\n"
             "for k, text in j['lines'].items():\n"
-            "    torch.manual_seed(7)\n"
-            "    a = m.generate(text=text, language='en', instruct=j['instruct'], num_step=40, guidance_scale=2.2, speed=0.95)[0]\n"
-            "    sf.write(f\"{j['out']}/{k}.wav\", a, m.sampling_rate)\n")
+            "    for take in range(j['takes']):\n"
+            "        torch.manual_seed(7 + 100 * take)\n"
+            "        a = m.generate(text=text, language='en', instruct=j['instruct'], num_step=32, guidance_scale=2.2, speed=0.95)[0]\n"
+            "        sf.write(f\"{j['out']}/{k}_{take}.wav\", a, m.sampling_rate)\n")
         subprocess.run([str(OMNIVOICE / ".venv" / "bin" / "python"), "-c", code, str(job)], cwd=OMNIVOICE,
                        env={**os.environ, "HF_HUB_OFFLINE": "1"}, check=False)
+        for k, text in todo.items():
+            takes = [out / f"{k}_{i}.wav" for i in range(TAKES) if (out / f"{k}_{i}.wav").exists()]
+            if takes:
+                best = max(takes, key=lambda f: heard_as(f, text))
+                shutil.copy(best, out / f"{k}.wav")
     for k, text in todo.items():
         f = out / f"{k}.wav"
-        if not f.exists():  # the Mac's own voice, as a last resort
+        if not f.exists():  # the Mac's own voice, as a last resort (not cached: OmniVoice should be tried again)
             aiff = out / f"{k}.aiff"
             subprocess.run(["say", "-v", "Samantha", "-r", "175", "-o", str(aiff), text], check=True)
             voices[k] = load(aiff)
         else:
+            shutil.copy(f, CACHE / f"{key(text)}.wav")
             voices[k] = load(f)
     return voices
+
+
+TAKES = 2
+
+
+def heard_as(path: pathlib.Path, text: str) -> float:
+    """How closely Muse Voice Transcribe hears a take as the script (0-1, word level)."""
+    import difflib
+    from senses.speech import normalise, transcribe
+    x, sr = sf.read(path, always_2d=True)
+    x = resample_poly(x.mean(axis=1), 16000, sr)
+    heard = asyncio.run(transcribe(x.astype(np.float32)))["text"]
+    score = difflib.SequenceMatcher(None, normalise(text).split(), normalise(heard).split()).ratio()
+    print(f"    {path.name}: {score:.2f}  \"{heard[:70]}\"", flush=True)
+    return score
 
 
 def load(path: pathlib.Path) -> np.ndarray:
@@ -160,6 +192,12 @@ def serve_site() -> int:
 
 
 # ---------------------------------------------------------------- scenes
+def window_first(rec: dict, anchor: str) -> float:
+    events = {"clearance": [h["start"] for h in rec["heard"]], "call": [h["start"] for h in rec["heard"]],
+              "fault": [m["t"] for m in rec["marks"]], "change": [m["t"] for m in rec["marks"]]}[anchor]
+    return min(events) if events else 2.0
+
+
 def window(rec: dict, anchor: str, lead: float) -> tuple[float, float]:
     """The part of a recording to show: the narration's length before the first thing that
     happens, then until a little after the last callout of the event."""
@@ -241,7 +279,14 @@ def build(repo: str | None = None) -> pathlib.Path:
                 track.append((narr_at, v, 1.0))
                 count = int(round(dur * FPS))
                 t_scene = time.time()
+                # a recording opens on the whole cockpit and moves in to the instruments 2.5 s before its first event
+                switch = (window_first(data[what], anchor) - 2.5 - t0) * FPS if anchor else -1
+                shown = None
                 for i in range(count):
+                    if anchor:
+                        want_view = "wide" if i < switch else "inst"
+                        if want_view != shown:
+                            shown = await page.js(f"window.film.view({json.dumps(want_view)})")
                     await page.js(f"window.film.seek({seek(i):.4f})")
                     await page.shot(frames / f"{n:06d}.jpg")
                     n += 1

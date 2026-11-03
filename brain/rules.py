@@ -78,7 +78,12 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
     # no readback heard (missed by the recognizer, or not yet made): when the crew acknowledged is
     # unknown, so allow the time a readback takes as well (15-minute flight, 345 s: a readback lost
     # to speech recognition made this fire 1 s before the PF set the MCP)
-    if now - since < (grace if heard_rb else NO_READBACK_GRACE_S):
+    # the grace is counted to the newest selector reading, not to the clock: a slow reader (Muse Spark,
+    # ~3.5 s behind) must not blame the crew for a setting it has not seen yet (altitude_correct_spark,
+    # 3 Nov: the crew set 11,000 at 26 s, Spark's readings of it arrived from 33 s, and it fired at 33.1)
+    newest = led.latest("set", "mcp.altitude", before=now)
+    seen_until = newest.t if newest is not None else now
+    if seen_until - since < (grace if heard_rb else NO_READBACK_GRACE_S):
         return []
     return [Flag("clearance_vs_set", "altitude", clr.value, value, since,
                  f"Cleared {say.altitude(clr.value)}, set {say.altitude(value)}.")]
@@ -221,7 +226,20 @@ def pilot_watch(led: Ledger, now: float) -> list[Flag]:
     return flags
 
 
-RULES = (readback_vs_clearance, clearance_vs_set, callout_vs_set, mode_vs_phase, pilot_watch)
+
+
+def clearance_unclear(led: Ledger, now: float) -> list[Flag]:
+    """The last altitude clearance was misheard (brain/live.py's plausibility guard rejected it):
+    nothing to check the selector against, so ask, as a monitoring pilot would. Cleared by the
+    next clearance that is understood."""
+    bad = led.latest("said", "clearance.unclear", before=now)
+    good = led.latest("said", "clearance.altitude", before=now, speaker="atc")
+    if bad is None or (good is not None and good.t >= bad.t):
+        return []
+    return [Flag("clearance_unclear", "altitude", "a clearance", bad.value, bad.t, "Confirm cleared altitude.")]
+
+
+RULES = (readback_vs_clearance, clearance_vs_set, clearance_unclear, callout_vs_set, mode_vs_phase, pilot_watch)
 
 
 def evaluate(led: Ledger, now: float) -> list[Flag]:

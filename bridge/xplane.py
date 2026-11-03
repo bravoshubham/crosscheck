@@ -18,9 +18,17 @@ WS = "ws://127.0.0.1:8086/api/v3"
 
 
 def bring_to_front() -> None:
-    """The panel reader captures the screen, so X-Plane must be the window in front."""
+    """The panel reader captures the screen, so X-Plane must be the window in front. The mouse is
+    parked over the sky in the windscreen: X-Plane outlines whatever switch it rests on, and that
+    outline would be in every frame."""
     subprocess.run(["open", "-a", "X-Plane"], check=False)
     time.sleep(1.0)
+    try:
+        import Quartz
+        b = Quartz.CGDisplayBounds(Quartz.CGMainDisplayID())
+        Quartz.CGWarpMouseCursorPosition((b.size.width * 0.06, b.size.height * 0.08))
+    except ImportError:
+        pass
 
 
 class XPlaneError(RuntimeError):
@@ -113,6 +121,9 @@ class XPlane:
         end = time.monotonic() + timeout
         while time.monotonic() < end:
             if (n := await self.dataref_count()) > 0:
+                # with no joystick, X-Plane draws its mouse-flying box on the screen the camera reads;
+                # the autopilot flies every scenario, so the joystick input is switched off
+                await self.set("sim/operation/override/override_joystick", 1)
                 return n
             await asyncio.sleep(1)
         raise XPlaneError("no datarefs after waiting; is a flight loaded?")

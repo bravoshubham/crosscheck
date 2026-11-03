@@ -20,7 +20,7 @@ from brain.summary import unsupported
 MODEL = "muse-spark-1.3"
 WINDOW_S = 45.0
 STEP = {"altitude": 100, "ias": 3}  # smaller changes are left out of the facts
-KEEP = ("clearance.altitude", "readback.altitude", "callout.flaps", "pilot.voice", "mcp.altitude", "mcp.speed",
+KEEP = ("clearance.altitude", "clearance.unclear", "readback.altitude", "callout.flaps", "pilot.voice", "mcp.altitude", "mcp.speed",
         "altitude", "ias", "fma.thrust", "fma.pitch", "flaps", "pilot.slumped")
 PROMPT = (
     "You are Crosscheck, an AI monitoring pilot on a Boeing 737 flight deck. You just made the standard callout "

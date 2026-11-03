@@ -1,19 +1,19 @@
 {
- "text": "ATC cleared Alaska 421 to climb and maintain one one thousand, and the pilot monitoring read back one 1000 for Alaska 421. The PF set 12000 and climbed, with altitude rising from 8984 to 11745. Crosscheck said \"Cleared one-one thousand, set one-two thousand.\" at 35.0 s.",
+ "text": "ATC cleared Alaska 421 to climb and maintain 11,000 ft and the pilot monitoring read back 11,000 ft. The pilot flying set 12,000 ft in the MCP and climbed, with the aircraft reaching 11,130 ft then 11,639 ft. At 35 s Crosscheck said cleared 11,000, set 12,000, which correctly called the mismatch.",
  "verified": true,
  "unsupported_numbers": [],
  "model": "muse-spark-1.3",
  "usage": {
-  "completion_tokens": 763,
-  "prompt_tokens": 694,
-  "total_tokens": 1457,
+  "completion_tokens": 830,
+  "prompt_tokens": 779,
+  "total_tokens": 1609,
   "completion_tokens_details": {
-   "reasoning_tokens": 683
+   "reasoning_tokens": 739
   },
   "prompt_tokens_details": {
    "cached_tokens": 0
   }
  },
  "attempts": 1,
- "timeline": "Scenario: Altitude bust. Cleared to 11,000; the MCP is set to 12,000. (Boeing 737-800 near Portland)\n  0.6 s  panel: speed 185, altitude 8985\n  3.4 s  panel: MCP altitude 9000, MCP speed 191, autothrottle mode MCP SPD\n  5.9 s  panel: speed 189, altitude 8950\n 11.1 s  panel: speed 193, altitude 9002\n 16.3 s  panel: speed 194, altitude 9006\n 18.2 s  heard from ATC on the radio: \"Alaska 421 climb and maintain one one thousand.\"\n 18.2 s  parsed from speech: clearance.altitude = 11000\n 21.4 s  panel: speed 194, altitude 8994\n 24.9 s  heard from pilot monitoring on the intercom: \"Fland and maintain one 1000 Alaska 421.\"\n 24.9 s  parsed from speech: readback.altitude = 11000\n 25.5 s  panel: speed 193, altitude 8989\n 26.0 s  crew action: PF sets MCP 12000 and climbs\n 29.5 s  panel: MCP altitude 12000, MCP speed 193, speed 194, altitude 8984\n 33.8 s  panel: speed 203, altitude 8998\n 35.0 s  panel: autothrottle mode N1\n 35.0 s  CROSSCHECK SAID: \"Cleared one-one thousand, set one-two thousand.\" (expected 11000, saw 12000)\n 38.7 s  panel: speed 215, altitude 9160\n 43.5 s  panel: speed 216, altitude 9619\n 48.6 s  panel: speed 205, altitude 10349\n 53.5 s  panel: autothrottle mode MCP SPD, speed 189, altitude 11137\n 58.7 s  panel: speed 177, altitude 11745\n(set-up: ATC clearance sent at 12.0 s)\n(set-up: MCP changed by the crew at 26.0 s)\nScored against the recorded ground truth: pass"
+ "timeline": "Scenario: Altitude bust. Cleared to 11,000; the MCP is set to 12,000. (Boeing 737-800 near Portland)\n  0.6 s  panel: speed 183, altitude 8983\n  3.4 s  panel: MCP altitude 9000, MCP speed 190, autothrottle mode MCP SPD\n  4.7 s  panel: speed 187\n  8.9 s  panel: speed 190, altitude 9006\n 13.2 s  panel: speed 191, altitude 9009\n 18.1 s  parsed from speech: clearance.altitude = 11000\n 18.1 s  heard from ATC on the radio: \"Alaska 421 climb and maintain 11000.\"\n 18.4 s  panel: speed 192, altitude 6199\n 22.5 s  panel: speed 192, altitude 8991\n 24.7 s  parsed from speech: readback.altitude = 11000\n 24.7 s  heard from pilot monitoring on the intercom: \"Fland and maintained one 1,000 Alaska 421.\"\n 26.0 s  crew action: PF sets MCP 12000 and climbs\n 26.7 s  panel: speed 192, altitude 8986\n 29.6 s  panel: MCP altitude 12000, MCP speed 192, autothrottle mode N1\n 30.9 s  panel: speed 194, altitude 89188\n 35.0 s  panel: speed 206, altitude 9025\n 35.0 s  CROSSCHECK SAID: \"Cleared one-one thousand, set one-two thousand.\" (expected 11000, saw 12000)\n 39.1 s  panel: speed 214, altitude 9197\n 44.2 s  panel: speed 213, altitude 9709\n 48.3 s  panel: speed 204, altitude 10305\n 53.5 s  panel: autothrottle mode MCP SPD, speed 187, altitude 11130\n 57.5 s  panel: speed 176, altitude 11639\n(set-up: ATC clearance sent at 12.0 s)\n(set-up: MCP changed by the crew at 26.0 s)\nScored against the recorded ground truth: pass"
 }

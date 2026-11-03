@@ -4,11 +4,24 @@
  "panel_reader": "apple-vision",
  "aircraft": "B738",
  "airport": "KPDX 10R",
- "t_start": 1793644567.393404,
- "t_fault": 1793644592.395303,
+ "t_start": 1793688535.481432,
+ "t_fault": 1793688560.4831161,
+ "fact_time": "arrival",
  "target_kt": 145.0,
  "quiet_s": 25,
  "fault_s": 45,
  "speech": "none",
- "recorded": "2026-11-03 00:07:18 IST"
+ "camera_check": {
+  "model": "sam-3.1",
+  "pfd": {
+   "box": [
+    1349,
+    1311,
+    2131,
+    2075
+   ],
+   "iou": 0.89
+  }
+ },
+ "recorded": "2026-11-03 12:20:06 IST"
 }

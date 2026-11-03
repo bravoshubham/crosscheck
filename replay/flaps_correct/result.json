@@ -3,14 +3,13 @@
  "called": 15,
  "selected": 15,
  "flaps_final_truth": 15,
- "flaps_settled_s_after_call": 13.3,
+ "flaps_settled_s_after_call": 13.6,
  "heard_callout": [
   15
  ],
  "false_callouts_before_call": [],
  "callouts": [],
  "gauge_read": [
-  2,
   5,
   10,
   15

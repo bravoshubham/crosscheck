@@ -30,3 +30,22 @@ def test_a_bare_number_from_the_crew_is_not_a_flap_call():
 def test_the_channel_decides_clearance_or_readback():
     text = "Alaska four two one descend and maintain one one thousand"
     assert guarded({**OURS, "kind": "readback", "value": 11000}, text, "atc", 0, "421") == []
+
+
+def test_listen_again_when_the_first_hearing_is_impossible(monkeypatch, tmp_path):
+    # Voice Transcribe dropped a "one" (3 Nov): heard again, the same audio usually comes back right
+    import asyncio
+    import senses.speech as speech
+    from brain.ledger import Fact, Ledger
+    from senses.speech_spark import hear
+    heard = iter(["Alaska 421 climb and maintain 1000.", "Alaska 421 climb and maintain one one thousand."])
+
+    async def fake(pcm, key=None):
+        return {"text": next(heard), "audio_s": 4.0}
+    monkeypatch.setattr(speech, "transcribe", fake)
+    led = Ledger()
+    for t in (1.0, 2.0, 3.0):
+        led.add(Fact("doing", "altitude", 9000, t))
+    r, facts, spark, first = asyncio.run(hear(None, "atc", "421", led))
+    assert first == "Alaska 421 climb and maintain 1000."
+    assert [(f.key, f.value) for f in facts] == [("clearance.altitude", 11000)]

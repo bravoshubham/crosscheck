@@ -4,7 +4,7 @@
  "panel_reader": "apple-vision",
  "aircraft": "B738",
  "area": "Portland",
- "t_start": 1793649768.923006,
+ "t_start": 1793689093.662991,
  "run_s": 900.0,
  "plan": [
   [
@@ -95,84 +95,108 @@
    "spoken": "alaska four two one descend and maintain six thousand",
    "transcript": "Alaska 421 descend and maintain 6000.",
    "audio_s": 3.6,
-   "s_from_start": 4.9,
+   "s_from_start": 4.95,
    "facts": [
     [
      "clearance.altitude",
      6000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pm",
    "spoken": "descend and maintain six thousand alaska four two one",
-   "transcript": "descend and mate in 6000 Alaska 421.",
+   "transcript": "Descend and made in 6000 Alaska 421.",
    "audio_s": 3.68,
-   "s_from_start": 4.89,
+   "s_from_start": 4.94,
    "facts": [
     [
      "readback.altitude",
      6000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "atc",
    "spoken": "alaska four two one turn left heading one two zero",
-   "transcript": "Alaska Fort Two one turn left hitting one two zero.",
+   "transcript": "Alaska Fort two one turn left hitting one two zero.",
    "audio_s": 4.08,
-   "s_from_start": 5.38,
-   "facts": []
+   "s_from_start": 9.3,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "pm",
    "spoken": "left heading one two zero alaska four two one",
-   "transcript": "Left heading one two zero will ask for two one..",
+   "transcript": "Left heading 120 will ask for 21.",
    "audio_s": 3.44,
-   "s_from_start": 4.75,
-   "facts": []
+   "s_from_start": 8.93,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "atc",
    "spoken": "alaska four two one descend and maintain five thousand",
    "transcript": "Alaska 421 descend and maintain 5000.",
    "audio_s": 4.72,
-   "s_from_start": 6.09,
+   "s_from_start": 6.03,
    "facts": [
     [
      "clearance.altitude",
      5000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pm",
    "spoken": "descend and maintain five thousand alaska four two one",
    "transcript": "We send and maintain 5,000 Alaska 421.",
    "audio_s": 4.32,
-   "s_from_start": 5.77,
+   "s_from_start": 5.63,
    "facts": [
     [
      "readback.altitude",
      5000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "atc",
    "spoken": "alaska four two one turn right heading three zero zero",
-   "transcript": "Alaska 421 turn right heading 300",
+   "transcript": "Alaska 421 turn right heading 300.",
    "audio_s": 4.08,
-   "s_from_start": 5.36,
-   "facts": []
+   "s_from_start": 7.87,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "pm",
    "spoken": "right heading three zero zero alaska four two one",
-   "transcript": "Right heading 300 will ask for 21.",
+   "transcript": "Right heading 300 will ask 421.",
    "audio_s": 3.68,
-   "s_from_start": 5.0,
-   "facts": []
+   "s_from_start": 9.54,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "atc",
@@ -185,157 +209,199 @@
      "clearance.altitude",
      4000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pm",
    "spoken": "descend and maintain four thousand alaska four two one",
-   "transcript": "Descend and maintain 4,000 alas 421.",
+   "transcript": "descend and maintain 4,000 Alaska 421.",
    "audio_s": 4.08,
-   "s_from_start": 5.39,
+   "s_from_start": 5.3,
    "facts": [
     [
      "readback.altitude",
      4000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pf",
    "spoken": "flaps one",
-   "transcript": "Flaps one,",
+   "transcript": "Flaps one.",
    "audio_s": 1.52,
-   "s_from_start": 2.78,
+   "s_from_start": 2.7,
    "facts": [
     [
      "callout.flaps",
      1
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "atc",
    "spoken": "alaska four two one descend and maintain three thousand",
-   "transcript": "Alaska 421 Descendant maintain 3000.",
+   "transcript": "Alaska 421 Descend and maintain three thousand.",
    "audio_s": 3.92,
-   "s_from_start": 5.18,
+   "s_from_start": 5.21,
    "facts": [
     [
      "clearance.altitude",
      3000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pm",
    "spoken": "descend and maintain three thousand alaska four two one",
-   "transcript": "Descend and maintain 3,000 Alaska 421.",
+   "transcript": " descend and maintain 3,000 Alaska 421.",
    "audio_s": 4.08,
-   "s_from_start": 5.34,
+   "s_from_start": 5.41,
    "facts": [
     [
      "readback.altitude",
      3000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pf",
    "spoken": "flaps five",
    "transcript": "Flaps five.",
    "audio_s": 1.52,
-   "s_from_start": 2.85,
+   "s_from_start": 2.76,
    "facts": [
     [
      "callout.flaps",
      5
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "atc",
    "spoken": "alaska four two one turn left heading one two zero",
-   "transcript": "Alaska for two one turn left hitting one two zero.",
+   "transcript": "Alaska Fort 21 turn left hitting 120.",
    "audio_s": 4.08,
-   "s_from_start": 5.45,
-   "facts": []
+   "s_from_start": 8.67,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "pm",
    "spoken": "left heading one two zero alaska four two one",
-   "transcript": "Left heading one two zero will ask for four two one.",
+   "transcript": "Left heading 120 will ask 421.",
    "audio_s": 3.44,
-   "s_from_start": 4.71,
-   "facts": []
+   "s_from_start": 8.28,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "atc",
    "spoken": "alaska four two one descend and maintain two thousand",
-   "transcript": " Alaska 421 Descendant maintain 2000.",
+   "transcript": "Alaska 421 descendant maintain 2000..",
    "audio_s": 3.92,
-   "s_from_start": 5.19,
+   "s_from_start": 5.27,
    "facts": [
     [
      "clearance.altitude",
      2000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pm",
    "spoken": "descend and maintain two thousand alaska four two one",
-   "transcript": " descend and maintain 2000 Alaska 421.",
+   "transcript": "Descend and maintain 2,000 Alaska 421..",
    "audio_s": 3.92,
-   "s_from_start": 5.27,
+   "s_from_start": 5.37,
    "facts": [
     [
      "readback.altitude",
      2000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pf",
    "spoken": "flaps ten",
    "transcript": "Flaps 10.",
    "audio_s": 1.52,
-   "s_from_start": 2.79,
+   "s_from_start": 2.86,
    "facts": [
     [
      "callout.flaps",
      10
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "atc",
    "spoken": "alaska four two one turn right heading three zero zero",
    "transcript": "Alaska 421 turn right heading 300.",
    "audio_s": 4.08,
-   "s_from_start": 5.36,
-   "facts": []
+   "s_from_start": 10.94,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "pm",
    "spoken": "right heading three zero zero alaska four two one",
-   "transcript": "Right heading three zero zero will ask for two one.",
+   "transcript": "Right heading three zero zero will ask four two one.",
    "audio_s": 3.68,
-   "s_from_start": 4.91,
-   "facts": []
+   "s_from_start": 9.47,
+   "facts": [],
+   "spark": {
+    "kind": "none",
+    "value": null,
+    "for_us": true
+   }
   },
   {
    "speaker": "pf",
    "spoken": "flaps fifteen",
    "transcript": "Flaps 15.",
    "audio_s": 1.76,
-   "s_from_start": 2.99,
+   "s_from_start": 3.08,
    "facts": [
     [
      "callout.flaps",
      15
     ]
-   ]
+   ],
+   "spark": null
   }
  ],
- "recorded": "2026-11-03 01:47:50 IST"
+ "camera_check": {
+  "model": "sam-3.1",
+  "pfd": {
+   "box": [
+    1350,
+    1346,
+    2130,
+    2107
+   ],
+   "iou": 0.93
+  }
+ },
+ "recorded": "2026-11-03 12:43:14 IST"
 }

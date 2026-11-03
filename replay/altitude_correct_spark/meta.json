@@ -5,41 +5,56 @@
  "aircraft": "B738",
  "area": "Portland",
  "variant": "correct",
+ "fact_time": "captured",
  "cleared": 11000,
  "readback": 11000,
  "mcp_set": 11000,
  "expect_rule": null,
- "t_start": 1793616450.079935,
- "t_clear": 1793616462.079935,
- "t_set": 1793616476.081595,
+ "t_start": 1793688439.711518,
+ "t_clear": 1793688451.711518,
+ "t_set": 1793688465.712281,
  "speech": "Muse Voice Transcribe, live (MMS-TTS lines; ATC radio-filtered), parsed by senses/speech.py",
  "heard": [
   {
    "speaker": "atc",
    "spoken": "alaska four two one climb and maintain one one thousand",
-   "transcript": "Alaska 421 climb and maintain one one thousand",
+   "transcript": "Alaska 421 climb and maintain one one thousand.",
    "audio_s": 4.88,
-   "s_from_start": 6.11,
+   "s_from_start": 6.19,
    "facts": [
     [
      "clearance.altitude",
      11000
     ]
-   ]
+   ],
+   "spark": null
   },
   {
    "speaker": "pm",
    "spoken": "climb and maintain one one thousand alaska four two one",
-   "transcript": "Fland and maintain one 1000 Alaska 421.",
+   "transcript": " Fland and maintain one 1000 Alaska 421.",
    "audio_s": 4.4,
-   "s_from_start": 5.62,
+   "s_from_start": 5.66,
    "facts": [
     [
      "readback.altitude",
      11000
     ]
-   ]
+   ],
+   "spark": null
   }
  ],
- "recorded": "2026-11-02 16:18:36 IST"
+ "camera_check": {
+  "model": "sam-3.1",
+  "pfd": {
+   "box": [
+    1351,
+    1347,
+    2129,
+    2107
+   ],
+   "iou": 0.92
+  }
+ },
+ "recorded": "2026-11-03 12:18:25 IST"
 }

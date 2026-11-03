@@ -17,3 +17,4 @@ replay/*_webcam/frames/
 !eval/pilot_watch/video/*/*.mp4
 !replay/pilot_*/camera.mp4
 demo_runs/
+.cache/

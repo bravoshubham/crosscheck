@@ -4,59 +4,59 @@
  "answer": "I'm fine, just reaching for my pen.",
  "postures": [
   {
-   "s_after_change": -7.7,
+   "s_after_change": -7.5,
    "slumped": false,
-   "neck_flex": 22.7,
+   "neck_flex": 21.8,
    "wrists": 0.44
   },
   {
-   "s_after_change": -1.5,
+   "s_after_change": -0.8,
    "slumped": false,
-   "neck_flex": 22.7,
+   "neck_flex": 22.1,
    "wrists": 0.44
   },
   {
-   "s_after_change": 6.3,
+   "s_after_change": 5.6,
    "slumped": true,
-   "neck_flex": 51.1,
-   "wrists": 0.23
+   "neck_flex": 50.5,
+   "wrists": 0.25
   },
   {
-   "s_after_change": 13.7,
+   "s_after_change": 12.2,
    "slumped": true,
-   "neck_flex": 51.1,
-   "wrists": 0.23
+   "neck_flex": 50.7,
+   "wrists": 0.24
   },
   {
-   "s_after_change": 19.9,
-   "slumped": true,
-   "neck_flex": 51.1,
-   "wrists": 0.23
+   "s_after_change": 19.5,
+   "slumped": false,
+   "neck_flex": 21.8,
+   "wrists": 0.44
   },
   {
    "s_after_change": 26.0,
-   "slumped": true,
-   "neck_flex": 51.1,
-   "wrists": 0.23
+   "slumped": false,
+   "neck_flex": 21.9,
+   "wrists": 0.44
   },
   {
-   "s_after_change": 32.2,
-   "slumped": true,
-   "neck_flex": 51.1,
-   "wrists": 0.23
+   "s_after_change": 32.5,
+   "slumped": false,
+   "neck_flex": 21.9,
+   "wrists": 0.44
   }
  ],
  "heard": [
-  "I'm fine. Just reaching for my pen."
+  "I'm fine, just reaching for my pen."
  ],
  "false_callouts_before_change": [],
  "callouts": [
   {
-   "s_after_change": 11.1,
+   "s_after_change": 12.2,
    "text": "Captain, are you OK?"
   }
  ],
- "asked_s_after_change": 11.1,
+ "asked_s_after_change": 12.2,
  "alert_s_after_change": null,
  "pass": true
 }
