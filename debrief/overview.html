@@ -84,7 +84,7 @@ td.when { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: 14
 .nw { white-space: nowrap; }
 #matrix { table-layout: fixed; }
 td.rec a { font-weight: 600; white-space: nowrap; }
-.marks { display: flex; flex-wrap: wrap; gap: 4px; width: 132px; margin-top: 5px; }
+.marks { display: flex; flex-wrap: wrap; gap: 3px; max-width: 100%; margin-top: 5px; padding-right: 8px; }
 .m { width: 13px; height: 13px; border-radius: 2px; background: var(--p-ok); }
 .m.bad { background: none; border: 2px solid var(--p-call); }
 
@@ -332,7 +332,8 @@ let lastGroup = null, rowsHtml = "";
 O.matrix.forEach(r => {
   const group = r.kind === "altitude" && r.id.endsWith("_spark") ? "altitude_spark" : r.kind;
   if (group !== lastGroup) { rowsHtml += `<tr class="group"><td colspan="6">${GROUPS[group] || group}</td></tr>`; lastGroup = group; }
-  const ts = r.runs.map(x => x.t).filter(v => v != null), dl = r.runs.map(x => x.deadline).filter(v => v != null);
+  // timing from the runs that were right; the misses are the hollow marks
+  const ok = r.runs.filter(x => x.pass), ts = ok.map(x => x.t).filter(v => v != null), dl = ok.map(x => x.deadline).filter(v => v != null);
   let when;
   if (r.id === "nominal") when = `${n.result.minutes} minutes, ${n.result.minutes_below_2500ft} of them below 2,500 ft`;
   else if (!r.measured) when = "Silent in every run";
@@ -355,7 +356,7 @@ $("matrix").querySelector("tbody").innerHTML = rowsHtml;
   const rows = O.matrix.filter(r => r.runs.some(x => x.deadline != null));
   if (!rows.length) return;
   const W = 1200, L = 340, R = 30, rowH = 30, gap = 26;
-  const all = rows.flatMap(r => r.runs.flatMap(x => [x.t, x.deadline])).filter(v => v != null);
+  const all = rows.flatMap(r => r.runs.flatMap(x => [x.pass ? x.t : null, x.deadline])).filter(v => v != null);
   const hi = Math.ceil(Math.max(...all) / 5) * 5 + 2;
   const x = v => L + v / hi * (W - L - R);
   let y = 30, s = "";
@@ -363,16 +364,21 @@ $("matrix").querySelector("tbody").innerHTML = rowsHtml;
   rows.forEach(r => {
     s += `<text x="0" y="${y + 4}" font-size="14" font-weight="600" fill="#15181b" font-family="Public Sans">${esc(r.title.replace(" · Spark reader", ", Muse Spark"))}</text>`;
     s += `<text x="0" y="${y + 21}" font-size="12" fill="#4a5057" font-family="Public Sans">${esc(r.measured)}; ${esc(r.deadline_label)}</text>`;
-    r.runs.filter(x => x.deadline != null && x.t != null).forEach((run, i) => {
+    r.runs.filter(x => x.deadline != null).forEach((run, i) => {
       const yy = y + i * 9;
-      s += `<line x1="${x(run.t)}" x2="${x(run.deadline)}" y1="${yy}" y2="${yy}" stroke="${run.pass ? "#1e6b3f" : "#b3261e"}" stroke-width="2"/>`;
-      s += `<circle cx="${x(run.t)}" cy="${yy}" r="4" fill="#b3261e"/><line x1="${x(run.deadline)}" x2="${x(run.deadline)}" y1="${yy - 4}" y2="${yy + 4}" stroke="#15181b" stroke-width="2"/>`;
+      if (run.pass && run.t != null) {
+        s += `<line x1="${x(Math.max(0, run.t))}" x2="${x(run.deadline)}" y1="${yy}" y2="${yy}" stroke="#1e6b3f" stroke-width="2"/>`;
+        s += `<circle cx="${x(Math.max(0, run.t))}" cy="${yy}" r="4" fill="#b3261e"/>`;
+      } else {  // a miss: nothing in time, so only a ring at the point of no return
+        s += `<circle cx="${x(run.deadline)}" cy="${yy}" r="4.5" fill="none" stroke="#b3261e" stroke-width="2"/>`;
+      }
+      s += `<line x1="${x(run.deadline)}" x2="${x(run.deadline)}" y1="${yy - 4}" y2="${yy + 4}" stroke="#15181b" stroke-width="2"/>`;
     });
     y += Math.max(rowH, r.runs.length * 9) + gap;
   });
   s = s.replace(/y2="9999"/g, `y2="${y - gap}"`);
   $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${y}" role="img" aria-label="Callout time against the deadline for each run">${s}</svg>
-    <div class="mk"><span><svg width="14" height="10"><circle cx="5" cy="5" r="4" fill="#b3261e"/></svg> Crosscheck speaks</span><span><svg width="14" height="10"><line x1="6" x2="6" y1="1" y2="9" stroke="#15181b" stroke-width="2"/></svg> point of no return</span><span><svg width="24" height="10"><line x1="0" x2="24" y1="5" y2="5" stroke="#1e6b3f" stroke-width="2"/></svg> time the crew had left</span></div>`;
+    <div class="mk"><span><svg width="14" height="10"><circle cx="5" cy="5" r="4" fill="#b3261e"/></svg> Crosscheck speaks</span><span><svg width="14" height="12"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#b3261e" stroke-width="2"/></svg> a miss</span><span><svg width="14" height="10"><line x1="6" x2="6" y1="1" y2="9" stroke="#15181b" stroke-width="2"/></svg> point of no return</span><span><svg width="24" height="10"><line x1="0" x2="24" y1="5" y2="5" stroke="#1e6b3f" stroke-width="2"/></svg> time the crew had left</span></div>`;
 })();
 
 // ---------- the 15-minute flight ----------
@@ -425,7 +431,8 @@ window.film = {
       const k = Math.max(0, Math.min(1, (t - 1.5) / span)), e = k * k * (3 - 2 * k);  // ease in and out
       window.scrollTo(0, a + (b - a) * e);
     }
-    requestAnimationFrame(() => requestAnimationFrame(() => done(true)));
+    // a long page repaints in tiles after a scroll: give it time, or the screenshot shows stale tiles
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => done(true), window.film.scene === "hero" ? 0 : 120)));
   }),
 };
 
