@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crosscheck</title>
+<meta name="description" content="An AI monitoring pilot: it hears the radio and intercom, reads the panel through a camera, and speaks up when what was said, set and done disagree. Flown and scored in X-Plane 12.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=B612:wght@400;700&family=B612+Mono&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* the flight deck: display black and the Boeing colour code */
+  --display: #000; --display-2: #0b0f14; --bezel: #1c2229; --legend: #c9d1d9; --dim: #8b949e;
+  --said: #6cc4ff; --set: #f062e0; --doing: #ffffff; --call: #ff4d4d; --mode: #3ddc84;
+  /* the report: cool grey paper and ink, with the same colour code darkened for print */
+  --paper: #eceee9; --paper-2: #e2e5df; --rule: #b8bdb3; --ink: #15181b; --ink-2: #4a5057;
+  --p-said: #1d5f9c; --p-set: #9c1f8c; --p-call: #b3261e; --p-ok: #1e6b3f;
+  --cockpit: "B612", "Helvetica Neue", Arial, sans-serif;
+  --cockpit-mono: "B612 Mono", ui-monospace, Menlo, monospace;
+  --report: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body { margin: 0; font: 16px/1.55 var(--report); color: var(--ink); background: var(--paper); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--said); outline-offset: 3px; }
+
+/* ---------- the flight deck ---------- */
+.deck { background: var(--display); color: var(--legend); font-family: var(--cockpit); }
+.deck-in { max-width: 1240px; margin: 0 auto; padding: 22px 24px 40px; }
+.bar { display: flex; align-items: center; gap: 28px; margin-bottom: 36px; }
+.mark { font: 700 19px var(--cockpit); color: var(--doing); letter-spacing: .01em; text-decoration: none; }
+.bar nav { display: flex; gap: 22px; margin-left: auto; font-size: 14px; }
+.bar nav a { color: var(--dim); text-decoration: none; }
+.bar nav a:hover { color: var(--doing); }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.screen { position: relative; border: 1px solid var(--bezel); border-radius: 6px; overflow: hidden; background: #000; }
+.screen img { display: block; width: 100%; height: auto; }
+.screen .hb { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.tx { position: absolute; left: 12px; top: 12px; max-width: 74%; background: rgba(0,0,0,.82); border: 1px solid rgba(108,196,255,.5);
+  border-radius: 4px; padding: 6px 10px; font-size: 13px; color: var(--doing); opacity: 0; transition: opacity .4s; }
+.tx b { display: block; color: var(--said); font: 400 11px var(--cockpit-mono); }
+.cc { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); width: max-content; max-width: 92%;
+  background: rgba(0,0,0,.88); border: 1px solid var(--call); border-radius: 4px; padding: 8px 14px; color: var(--doing);
+  font-weight: 700; font-size: 15px; opacity: 0; transition: opacity .3s; }
+.on { opacity: 1; }
+
+h1 { font: 700 clamp(34px, 4.6vw, 60px)/1.02 var(--cockpit); margin: 0 0 22px; color: var(--doing); letter-spacing: -.01em; }
+h1 .l { display: block; }
+h1 .said { color: var(--said); } h1 .set { color: var(--set); }
+.claim { font-size: 17px; line-height: 1.55; color: var(--legend); max-width: 46ch; margin: 0 0 14px; }
+.claim + .claim { color: var(--dim); font-size: 15px; }
+.go { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.btn { font: 700 14px var(--cockpit); text-decoration: none; padding: 11px 16px; border-radius: 4px; border: 1px solid var(--legend); color: var(--doing); }
+.btn.primary { background: var(--doing); color: #000; border-color: var(--doing); }
+.btn:hover { border-color: var(--doing); }
+
+.traces { margin-top: 34px; border-top: 1px solid var(--bezel); padding-top: 18px; }
+.traces svg { display: block; width: 100%; height: auto; }
+.traces p { margin: 8px 0 0; font-size: 13px; color: var(--dim); }
+
+/* ---------- the report ---------- */
+.report { max-width: 1240px; margin: 0 auto; padding: 56px 24px 80px; }
+.report h2 { font: 700 30px/1.15 var(--report); margin: 0 0 10px; letter-spacing: -.01em; }
+.report h3 { font: 700 19px/1.3 var(--report); margin: 56px 0 8px; }
+.lead { max-width: 68ch; color: var(--ink-2); margin: 0 0 28px; }
+.res { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); margin: 0 0 8px; }
+.res div { padding: 14px 18px 16px 0; }
+.res div + div { padding-left: 18px; border-left: 1px solid var(--rule); }
+.res dt { font-size: 14px; color: var(--ink-2); }
+.res dd { margin: 2px 0 0; font: 700 26px/1.2 var(--report); font-variant-numeric: tabular-nums; }
+
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+caption { text-align: left; color: var(--ink-2); font-size: 14px; padding-bottom: 10px; }
+th { text-align: left; font-weight: 600; font-size: 13px; color: var(--ink-2); border-bottom: 2px solid var(--ink); padding: 8px 14px 8px 0; vertical-align: bottom; }
+td { border-bottom: 1px solid var(--rule); padding: 12px 14px 12px 0; vertical-align: top; }
+tbody tr.group td { border-bottom: none; padding: 26px 0 6px; font-weight: 700; font-size: 13px; color: var(--ink-2); }
+td.sc { font-weight: 600; min-width: 150px; }
+td.says { color: var(--p-call); }
+td.says.quiet { font-style: normal; color: var(--ink-2); }
+td.when { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: 14px; }
+.nw { white-space: nowrap; }
+#matrix { table-layout: fixed; }
+td.rec a { font-weight: 600; white-space: nowrap; }
+.marks { display: flex; flex-wrap: wrap; gap: 3px; max-width: 100%; margin-top: 5px; padding-right: 8px; }
+.m { width: 13px; height: 13px; border-radius: 2px; background: var(--p-ok); }
+.m.bad { background: none; border: 2px solid var(--p-call); }
+
+.mk { font-size: 13px; color: var(--ink-2); margin-top: 10px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.mk span { display: inline-flex; gap: 6px; align-items: center; }
+
+.chart > svg, .flight > svg { display: block; width: 100%; height: auto; }
+.mk svg { flex: none; }
+.flight { margin-top: 8px; }
+.earlier { margin: 14px 0 0; padding: 0; list-style: none; font-size: 15px; }
+.earlier li { padding: 6px 0; border-bottom: 1px solid var(--rule); }
+.earlier b { display: inline-block; min-width: 64px; }
+
+.find td.d { white-space: nowrap; color: var(--ink-2); width: 70px; }
+.find td.a { font-weight: 600; width: 190px; }
+.find td.fix { color: var(--ink-2); }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.cols ul { margin: 0; padding-left: 20px; }
+.cols li { margin-bottom: 8px; max-width: 62ch; }
+.models td:first-child { font-weight: 600; white-space: nowrap; }
+.models td.meas { color: var(--ink-2); font-size: 14px; font-variant-numeric: tabular-nums; }
+.models td.meas div + div { margin-top: 4px; }
+footer { border-top: 1px solid var(--rule); margin-top: 64px; padding-top: 18px; color: var(--ink-2); font-size: 14px; }
+footer p { max-width: 90ch; margin: 0 0 6px; }
+
+@media (max-width: 920px) {
+  .hero, .cols { grid-template-columns: 1fr; gap: 28px; }
+  .res { grid-template-columns: 1fr; }
+  .res div + div { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); }
+  .bar nav { gap: 14px; }
+  .wide { overflow-x: auto; }
+  .wide table { min-width: 760px; }
+}
+@media (max-width: 520px) {
+  .deck-in, .report { padding-left: 16px; padding-right: 16px; }
+  .cc { font-size: 12px; padding: 5px 9px; bottom: 8px; }
+  .tx { font-size: 11px; padding: 4px 7px; left: 8px; top: 8px; }
+  .traces { overflow-x: auto; }
+  .traces svg, .flight > svg, .chart > svg { min-width: 760px; }
+  .flight, .chart { overflow-x: auto; }
+  .bar { flex-wrap: wrap; gap: 10px; }
+  .bar nav { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .tx, .cc { transition: none; } }
+</style>
+</head>
+<body>
+<header class="deck">
+  <div class="deck-in">
+    <div class="bar">
+      <a class="mark" href="./">Crosscheck</a>
+      <nav aria-label="Sections">
+        <a href="debrief.html">Recordings</a>
+        <a href="#report">Test report</a>
+        <a href="#caught">What testing caught</a>
+        <a id="src" href="https://github.com/bravoshubham/crosscheck">Source</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div class="screen" id="screen">
+        <img id="heroImg" alt="The 737's flight deck in X-Plane 12, as Crosscheck's camera saw it">
+        <svg id="heroBoxes" class="hb" hidden preserveAspectRatio="none"></svg>
+        <div class="tx" id="heroTx"><b>ATC, radio, as heard</b><span id="heroTxText"></span></div>
+        <div class="cc" id="heroCc" role="status"></div>
+      </div>
+      <div>
+        <h1><span class="l said" id="h1Said">Said 11,000.</span><span class="l set" id="h1Set">Set 12,000.</span></h1>
+        <p class="claim" id="heroClaim">Crosscheck heard the clearance on the radio, read the altitude selector through a camera,
+          and spoke up before the aircraft got there.</p>
+        <p class="claim">It is a monitoring pilot that only sees and hears, like the person in the right seat: what was
+          said, what was set and what the aircraft is doing, checked against each other, with a callout in standard
+          words when they disagree.</p>
+        <div class="go">
+          <a class="btn primary" href="debrief.html">Watch the recordings</a>
+          <a class="btn" href="#report">Read the test report</a>
+        </div>
+      </div>
+    </div>
+    <div class="traces">
+      <svg id="traces" viewBox="0 0 1200 200" role="img" aria-label="The altitude bust recording: the clearance said, the selector set, the aircraft's altitude, and Crosscheck's callout"></svg>
+      <p id="tracesNote"></p>
+    </div>
+  </div>
+</header>
+
+<main class="report" id="report">
+  <h2>Flight-test report</h2>
+  <p class="lead">Every scenario was flown live in X-Plane 12. Crosscheck saw only the screen and heard only the audio;
+    the simulator's own data was logged only to score it. Each run below was scored automatically against that data,
+    and every recording replays from this repository without the simulator.</p>
+
+  <dl class="res" id="res"></dl>
+
+  <h3>Test matrix</h3>
+  <div class="wide">
+    <table id="matrix">
+      <caption>Each mark is one live run, scored against the simulator; the first is the recording you can watch.</caption>
+      <colgroup><col style="width:17%"><col style="width:23%"><col style="width:20%"><col style="width:11%"><col style="width:22%"><col style="width:7%"></colgroup>
+      <thead><tr><th scope="col">Scenario</th><th scope="col">What goes wrong</th><th scope="col">Crosscheck says</th><th scope="col">Runs</th><th scope="col">When</th><th scope="col"><span class="vh">Recording</span></th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="mk"><span><i class="m"></i> right</span><span><i class="m bad"></i> wrong</span></div>
+
+  <h3>Did it speak in time?</h3>
+  <p class="lead">Where a fault has a point of no return, each run's callout against it. The gap between the two is the time the crew had left.</p>
+  <div class="chart" id="chart"></div>
+
+  <h3>Fifteen minutes of normal flying</h3>
+  <p class="lead" id="flightLead">A monitor that cries wolf gets switched off. This flight does everything right, so any callout is a false alarm.</p>
+  <div class="flight" id="flight"></div>
+  <ul class="earlier" id="earlier"></ul>
+
+  <h3>Meta models in the loop</h3>
+  <p class="lead">Each model has one job it is good at, and every number below is read from this repository's result files.
+    The pilot-camera footage is animated with LTX-2.5 (Lightricks, open weights) from Muse Image photos; it is test material, not part of Crosscheck.</p>
+  <div class="wide"><table class="models" id="models"><colgroup><col style="width:19%"><col style="width:40%"><col style="width:41%"></colgroup>
+    <thead><tr><th scope="col">Model</th><th scope="col">Its job here</th><th scope="col">Measured</th></tr></thead><tbody></tbody></table></div>
+
+  <h3 id="caught">What testing caught</h3>
+  <p class="lead">Problems found by the scored runs, and what changed. Runs used to find a problem are kept as evidence but not counted: each fix was confirmed on fresh runs.</p>
+  <div class="wide"><table class="find" id="find"><thead><tr><th scope="col">Date</th><th scope="col">Where</th><th scope="col">Found</th><th scope="col">Changed</th></tr></thead><tbody></tbody></table></div>
+
+  <h3>How it was tested, and what it does not show</h3>
+  <div class="cols">
+    <ul>
+      <li>Speech is real speech recognition: every line is synthesised, played as audio and transcribed live by Muse Voice Transcribe. Only what comes back is parsed.</li>
+      <li>The panel is read from screen captures of X-Plane 12's 737 by on-device text recognition or by Muse Spark; never from the simulator's data.</li>
+      <li>The pilot camera is generated footage: Muse Image photos of synthetic pilots, animated with LTX-2.5 and anchored on the labelled photos. No real person is filmed.</li>
+    </ul>
+    <ul>
+      <li>A simulator, not an aircraft. One aircraft type, one region, daylight, the X-Plane demo's default weather.</li>
+      <li>Short runs of one fault each, repeated 2–6 times, and one 15-minute false-alarm flight: enough to show the method works, not a measured false-alarm rate.</li>
+      <li>Not certified, not for operational use.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>Built during the Meta AI Developer Hackathon, 27 October to 4 November 2026. Code MIT; MMS-TTS is CC-BY-NC 4.0.
+      The pilot-camera footage is machine-generated (LTX-2.5 under the LTX-2 Community License, from Muse Image photos).</p>
+    <p>X-Plane is a trademark of Laminar Research; this project is not affiliated with or endorsed by Laminar Research, Boeing or Meta.</p>
+  </footer>
+</main>
+
+<script src="overview.js"></script>
+<script>
+const O = window.OVERVIEW;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const ft = v => Math.round(v).toLocaleString("en-US");
+const s1 = v => (Math.round(v * 10) / 10).toFixed(1);
+// ?still: the finished state at once (reduced motion, and screenshots for the README)
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("still");
+const filmMode = new URLSearchParams(location.search).has("film");
+
+// ---------- hero: the altitude bust, replayed once ----------
+(function hero() {
+  const h = O.hero; if (!h) return;
+  $("heroImg").src = h.frame;
+  if (h.wide) {  // the whole flight deck, with the displays SAM 3.1 found before the run
+    const [w, hh] = h.wide.aspect.split(" / ").map(Number);
+    $("heroBoxes").setAttribute("viewBox", `0 0 ${w} ${hh}`);
+    const m = h.wide.match || h.wide.found[0];
+    $("heroBoxes").innerHTML = h.wide.found.map(b => `<rect x="${b[0]}" y="${b[1]}" width="${b[2] - b[0]}" height="${b[3] - b[1]}" fill="none" stroke="#6cc4ff" stroke-width="${b === m || (m && b.join() === m.join()) ? 6 : 3}" opacity="${m && b.join() === m.join() ? 1 : .65}"/>`).join("")
+      + (m ? `<text x="${m[0] + 8}" y="${m[1] - 18}" fill="#6cc4ff" font-family="B612" font-size="46">SAM 3.1 found the displays</text>` : "");
+    $("heroBoxes").toggleAttribute("hidden", false);
+  }
+  const clr = h.said.find(f => f.key === "clearance.altitude"), c = h.callout;
+  $("heroTxText").textContent = clr && clr.transcript ? clr.transcript : "";
+  $("heroCc").textContent = "“" + c.text + "”";
+  $("h1Said").textContent = `Said ${ft(c.expected)}.`; $("h1Set").textContent = `Set ${ft(c.actual)}.`;
+  const bust = O.matrix.find(r => r.id === h.id), live = bust && bust.runs.find(r => r.recording);
+  if (live && live.t != null && live.deadline != null)
+    $("heroClaim").textContent = (h.reader === "muse-spark"
+      ? `Muse Voice Transcribe heard the clearance on the radio. Muse Spark read the altitude selector through a camera. Crosscheck spoke ${s1(live.t)} s after the selector was set: ${s1(live.deadline - live.t)} s before the 737 passed ${ft(c.expected)} ft.`
+      : `Crosscheck heard the clearance on the radio, read the altitude selector through a camera, and spoke ${s1(live.t)} s after the selector was set: ${s1(live.deadline - live.t)} s before the 737 passed ${ft(c.expected)} ft.`);
+  const t0 = Math.max(0, (clr ? clr.t : 0) - 8), t1 = Math.min(h.duration, c.t + 10);
+  const W = 1200, L = 70, R = 120, H = 200;
+  const x = t => L + (t - t0) / (t1 - t0) * (W - L - R);
+  // one altitude scale for what was set and what the aircraft did, so "set above cleared" is visible;
+  // single misread frames (an MCP read as 1,200) are left out of the lines
+  const near = v => Math.abs(v - c.expected) < 4000;
+  // the selector as the rule takes it: a new value only after three matching readings (brain/rules.py)
+  const set = [];
+  h.set.forEach((p, i) => { const run = h.set.slice(Math.max(0, i - 2), i + 1);
+    if (run.length === 3 && run.every(q => q[1] === p[1]) && (!set.length || set[set.length - 1][1] !== p[1])) set.push(p);
+    else if (set.length) set.push([p[0], set[set.length - 1][1]]); });
+  const inWin = p => p[0] >= t0 && p[0] <= t1;
+  const setW = set.filter(inWin), doing = h.doing.filter(p => near(p[1]) && inWin(p));
+  const vals = setW.concat(doing).map(p => p[1]).concat([c.expected, c.actual]);
+  const lo = Math.floor((Math.min(...vals) - 400) / 500) * 500, hi = Math.ceil((Math.max(...vals) + 400) / 500) * 500;
+  const top = 46, bot = H - 26, y = v => bot - (v - lo) / (hi - lo) * (bot - top);
+  const path = (pts, step) => pts.map((p, i) => i ? (step ? `H${x(p[0]).toFixed(1)}V${y(p[1]).toFixed(1)}` : `L${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`)
+                                                 : `M${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
+  let s = `<text x="0" y="22" fill="var(--said)" font-family="B612" font-size="14">Said</text>
+    <line x1="${L}" x2="${W - R}" y1="34" y2="34" stroke="#1c2229"/>`;
+  for (let v = lo + 500; v < hi; v += 1000) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#141a20"/>
+    <text x="${L - 10}" y="${y(v) + 4}" text-anchor="end" fill="#6e7781" font-family="B612" font-size="11">${ft(v)}</text>`;
+  if (clr) s += `<g class="ev" data-t="${clr.t}"><circle cx="${x(clr.t)}" cy="18" r="5" fill="var(--said)"/>
+    <text x="${x(clr.t) + 10}" y="22" fill="var(--said)" font-family="B612" font-size="13">cleared ${ft(clr.value)}</text>
+    <line x1="${x(clr.t)}" x2="${W - R}" y1="${y(clr.value)}" y2="${y(clr.value)}" stroke="var(--said)" stroke-dasharray="6 5" stroke-width="1.5"/></g>`;
+  const rb = h.said.find(f => f.key === "readback.altitude");
+  if (rb) s += `<g class="ev" data-t="${rb.t}"><circle cx="${x(rb.t)}" cy="18" r="5" fill="none" stroke="var(--said)" stroke-width="2"/>
+    <text x="${x(rb.t) + 10}" y="22" fill="var(--said)" font-family="B612" font-size="13">read back ${ft(rb.value)}</text></g>`;
+  s += `<path d="${path(setW, true)}" fill="none" stroke="var(--set)" stroke-width="2.5"/>`;  // a selector moves in steps
+  s += `<path d="${path(doing)}" fill="none" stroke="var(--doing)" stroke-width="2"/>`;
+  const lastSet = setW[setW.length - 1], lastDo = doing[doing.length - 1];
+  // end labels, nudged apart when two lines finish close together
+  const labels = [[lastSet && y(lastSet[1]), "set", "var(--set)"], [clr && y(clr.value), "cleared", "var(--said)"], [lastDo && y(lastDo[1]), "aircraft", "var(--doing)"]]
+    .filter(l => l[0] != null).sort((a, b) => a[0] - b[0]);
+  labels.forEach((l, i) => { if (i && l[0] - labels[i - 1][0] < 22) l[0] = labels[i - 1][0] + 22; });
+  labels.forEach(([yy, text, col]) => s += `<text x="${W - R + 8}" y="${yy + 4}" fill="${col}" font-family="B612" font-size="13">${text}</text>`);
+  s += `<g class="ev" data-t="${c.t}"><line x1="${x(c.t)}" x2="${x(c.t)}" y1="6" y2="${H - 12}" stroke="var(--call)" stroke-width="2"/>
+    <text x="${x(c.t) + 8}" y="${H - 6}" fill="var(--call)" font-family="B612" font-size="13" font-weight="700">Crosscheck speaks</text></g>`;
+  s += `<rect id="wipe" x="${L}" y="0" width="${W - L}" height="${H}" fill="#000"/>`;
+  $("traces").innerHTML = s;
+  $("tracesNote").textContent = `The recording above, ${Math.round(t1 - t0)} s of it: values as Crosscheck heard and read them (the selector once three readings agree, as its rule takes it), not the simulator's.`;
+  const wipe = $("wipe"), evs = [...document.querySelectorAll(".ev")];
+  const show = tt => {  // reveal the traces up to time tt
+    wipe.setAttribute("x", Math.min(W, x(tt))); wipe.setAttribute("width", tt >= t1 ? 0 : Math.max(0, W - x(tt)));
+    evs.forEach(e => e.style.opacity = +e.dataset.t <= tt ? 1 : 0);
+    $("heroTx").classList.toggle("on", clr && tt >= clr.t - 4 && tt < c.t);
+    $("heroCc").classList.toggle("on", tt >= c.t);
+  };
+  window.heroShow = k => show(t0 + Math.max(0, Math.min(1, k)) * (t1 - t0));  // film mode drives it (below)
+  if (filmMode) return show(t0);
+  if (reduce) return show(t1);
+  const dur = 8000, start = performance.now() + 600;
+  const step = now => { const k = Math.max(0, Math.min(1, (now - start) / dur)); show(t0 + k * (t1 - t0)); if (k < 1) requestAnimationFrame(step); };
+  show(t0); requestAnimationFrame(step);
+})();
+
+// ---------- results ----------
+const n = O.nominal;
+$("res").innerHTML = [
+  ["Live runs called right", `${O.totals.right} of ${O.totals.runs}`],
+  ["False alarms in 15 minutes of normal flying", n ? String(n.result.false_callouts.length) : "—"],
+  ["Spoken values parsed right on that flight", n ? n.result.altitude_and_flap_facts_parsed.replace("/", " of ") : "—"],
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+// ---------- test matrix ----------
+const GROUPS = {altitude: "Altitude: the clearance against the selector", autothrottle_hold: "Autothrottle on final (the Asiana 214 pattern)", altitude_spark: "Altitude, with Muse Spark reading the panel",
+  flaps: "Flaps: the callout against the gauge", pilot_watch: "Pilot watch: the optional camera on the captain", nominal: "False-alarm test"};
+let lastGroup = null, rowsHtml = "";
+O.matrix.forEach(r => {
+  const group = r.kind === "altitude" && r.id.endsWith("_spark") ? "altitude_spark" : r.kind;
+  if (group !== lastGroup) { rowsHtml += `<tr class="group"><td colspan="6">${GROUPS[group] || group}</td></tr>`; lastGroup = group; }
+  // timing from the runs that were right; the misses are the hollow marks
+  const ok = r.runs.filter(x => x.pass), ts = ok.map(x => x.t).filter(v => v != null), dl = ok.map(x => x.deadline).filter(v => v != null);
+  let when;
+  if (r.id === "nominal") when = `${n.result.minutes} minutes, ${n.result.minutes_below_2500ft} of them below 2,500 ft`;
+  else if (!r.measured) when = "Silent in every run";
+  else if (ts.length) {
+    const a = Math.min(...ts), b = Math.max(...ts), what = r.measured.replace(/^after /, "");
+    const range = (lo, hi, n) => `<span class="nw">${s1(lo)}${n > 1 && hi !== lo ? "\u2013" + s1(hi) : ""} s</span>`;
+    when = a < 0 ? `<span class="nw">${s1(-a)} s</span> before to <span class="nw">${s1(b)} s</span> after ${what}` : `${range(a, b, ts.length)} ${r.measured}`;
+    if (dl.length) when += `; ${r.deadline_label} at ${range(Math.min(...dl), Math.max(...dl), dl.length)}`;
+  } else when = "—";
+  const says = r.says ? `“${esc(r.says)}”` : "Nothing";
+  const marks = r.runs.map(x => `<i class="m${x.pass ? "" : " bad"}" title="${x.recording ? "Shipped recording: " : "Repeat run: "}${x.pass ? "right" : "wrong"}${x.t != null ? ", " + s1(x.t) + " s" : ""}"></i>`).join("");
+  rowsHtml += `<tr><td class="sc">${esc(r.title.replace(" · Spark reader", ", read by Muse Spark"))}</td><td>${esc(r.what)}</td>
+    <td class="says${r.says ? "" : " quiet"}">${says}</td><td><div class="marks" aria-label="${r.runs.filter(x => x.pass).length} of ${r.runs.length} runs right">${marks}</div></td>
+    <td class="when">${when}</td><td class="rec"><a href="debrief.html?s=${encodeURIComponent(r.id)}">Watch</a></td></tr>`;
+});
+$("matrix").querySelector("tbody").innerHTML = rowsHtml;
+
+// ---------- timing chart: callout against the point of no return ----------
+(function chart() {
+  const rows = O.matrix.filter(r => r.runs.some(x => x.deadline != null));
+  if (!rows.length) return;
+  const W = 1200, L = 340, R = 30, rowH = 30, gap = 26;
+  const all = rows.flatMap(r => r.runs.flatMap(x => [x.pass ? x.t : null, x.deadline])).filter(v => v != null);
+  const hi = Math.ceil(Math.max(...all) / 5) * 5 + 2;
+  const x = v => L + v / hi * (W - L - R);
+  let y = 30, s = "";
+  for (let v = 0; v <= hi; v += 5) s += `<line x1="${x(v)}" x2="${x(v)}" y1="18" y2="9999" stroke="#cfd3cb"/><text x="${x(v)}" y="12" text-anchor="middle" font-size="12" fill="#4a5057" font-family="Public Sans">${v} s</text>`;
+  rows.forEach(r => {
+    s += `<text x="0" y="${y + 4}" font-size="14" font-weight="600" fill="#15181b" font-family="Public Sans">${esc(r.title.replace(" · Spark reader", ", Muse Spark"))}</text>`;
+    s += `<text x="0" y="${y + 21}" font-size="12" fill="#4a5057" font-family="Public Sans">${esc(r.measured)}; ${esc(r.deadline_label)}</text>`;
+    r.runs.filter(x => x.deadline != null).forEach((run, i) => {
+      const yy = y + i * 9;
+      if (run.pass && run.t != null) {
+        s += `<line x1="${x(Math.max(0, run.t))}" x2="${x(run.deadline)}" y1="${yy}" y2="${yy}" stroke="#1e6b3f" stroke-width="2"/>`;
+        s += `<circle cx="${x(Math.max(0, run.t))}" cy="${yy}" r="4" fill="#b3261e"/>`;
+      } else {  // a miss: nothing in time, so only a ring at the point of no return
+        s += `<circle cx="${x(run.deadline)}" cy="${yy}" r="4.5" fill="none" stroke="#b3261e" stroke-width="2"/>`;
+      }
+      s += `<line x1="${x(run.deadline)}" x2="${x(run.deadline)}" y1="${yy - 4}" y2="${yy + 4}" stroke="#15181b" stroke-width="2"/>`;
+    });
+    y += Math.max(rowH, r.runs.length * 9) + gap;
+  });
+  s = s.replace(/y2="9999"/g, `y2="${y - gap}"`);
+  $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${y}" role="img" aria-label="Callout time against the deadline for each run">${s}</svg>
+    <div class="mk"><span><svg width="14" height="10"><circle cx="5" cy="5" r="4" fill="#b3261e"/></svg> Crosscheck speaks</span><span><svg width="14" height="12"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#b3261e" stroke-width="2"/></svg> a miss</span><span><svg width="14" height="10"><line x1="6" x2="6" y1="1" y2="9" stroke="#15181b" stroke-width="2"/></svg> point of no return</span><span><svg width="24" height="10"><line x1="0" x2="24" y1="5" y2="5" stroke="#1e6b3f" stroke-width="2"/></svg> time the crew had left</span></div>`;
+})();
+
+// ---------- the 15-minute flight ----------
+(function flight() {
+  if (!n) return;
+  const W = 1200, L = 96, R = 24, H = 270, top = 16, bot = 170;
+  const x = t => L + t / n.duration * (W - L - R);
+  const alts = n.alt.map(p => p[1]).filter(v => v > 500 && v < 8000);
+  const lo = 1500, hi = Math.ceil(Math.max(...alts) / 1000) * 1000;
+  const y = v => bot - (v - lo) / (hi - lo) * (bot - top);
+  let s = "";
+  for (let v = 2000; v <= hi; v += 1000) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#cfd3cb"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="12" fill="#4a5057">${v / 1000}k</text>`;
+  s += `<rect x="${L}" y="${y(2500)}" width="${W - L - R}" height="${bot - y(2500)}" fill="rgba(29,95,156,.07)"/><text x="${W - R - 4}" y="${y(2500) - 6}" text-anchor="end" font-size="12" fill="#1d5f9c">below 2,500 ft the autothrottle watch is on</text>`;
+  // the median of five readings: a misread frame or two is not a dive
+  const raw = n.alt.filter(p => p[1] > 500 && p[1] < 8000);
+  const med = i => raw.slice(Math.max(0, i - 2), i + 3).map(q => q[1]).sort((a, b) => a - b);
+  const pts = raw.map((p, i) => { const m = med(i); return [p[0], m[Math.floor(m.length / 2)]]; });
+  s += `<path d="${pts.map((p, i) => `${i ? "L" : "M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("")}" fill="none" stroke="#15181b" stroke-width="2"/>`;
+  for (let m = 0; m <= Math.floor(n.duration / 60); m += 3) s += `<line x1="${x(m * 60)}" x2="${x(m * 60)}" y1="${bot}" y2="${bot + 5}" stroke="#4a5057"/>
+    <text x="${x(m * 60)}" y="${bot + 19}" text-anchor="${m === 0 ? "start" : "middle"}" font-size="12" fill="#4a5057">${m} min</text>`;
+  const lane = (yy, label, col) => `<text x="${L - 8}" y="${yy + 4}" text-anchor="end" font-size="12" fill="${col}" font-weight="600">${label}</text>`;
+  s += lane(bot + 46, "Said", "#1d5f9c");
+  n.heard.forEach(([a, b, who]) => s += `<rect x="${x(a)}" y="${bot + 40}" width="${Math.max(2, x(b) - x(a))}" height="12" rx="1" fill="${who === "atc" ? "#1d5f9c" : "#6d8fb3"}"/>`);
+  s += lane(bot + 78, "Crosscheck", "#1e6b3f");
+  s += `<line x1="${L}" x2="${W - R}" y1="${bot + 74}" y2="${bot + 74}" stroke="#1e6b3f" stroke-width="2"/>
+    <text x="${L + 6}" y="${bot + 92}" font-size="12" fill="#1e6b3f">${n.result.false_callouts.length ? n.result.false_callouts.length + " callouts" : "no callout in " + n.result.minutes + " minutes"}</text>`;
+  $("flight").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Altitude over the 15-minute flight with every transmission, and no callout">${s}</svg>
+    <div class="mk">Altitude as Crosscheck read it from the panel (median of five readings); each bar below it is one radio or intercom transmission, transcribed live.</div>`;
+  $("flightLead").textContent += ` The shipped run: ${n.result.false_callouts.length ? n.result.false_callouts.length + " false alarms" : "no callout in " + n.result.minutes + " minutes"}, with ${n.result.lines_heard} lines spoken and transcribed live. The first three such flights found the problems listed below; every flight since the fixes has been silent. All are kept.`;
+  const grouped = fc => Object.entries(fc.reduce((g, c) => ((g[c.text] = g[c.text] || []).push(Math.round(c.s / 60)), g), {}))
+    .map(([text, mins]) => `\u201c${esc(text)}\u201d at ${mins.join(", ")} min`).join("; ");
+  $("earlier").innerHTML = n.earlier.map(e => `<li><b>${e.label}</b> ${e.false_callouts.length ? e.false_callouts.length + " false alarm" + (e.false_callouts.length === 1 ? "" : "s") + ": " + grouped(e.false_callouts) : "none, after the fixes"}</li>`).join("")
+    + `<li><b>Run ${n.earlier.length + 1}</b> none: the recording you can watch.</li>`;
+})();
+
+// ---------- models ----------
+$("models").querySelector("tbody").innerHTML = O.models.map(m => `<tr><td>${esc(m.model)}</td><td>${esc(m.job)}</td>
+  <td class="meas">${m.measured.length ? m.measured.map(x => `<div>${esc(x)}</div>`).join("") : "—"}</td></tr>`).join("");
+
+// ---------- film mode: debrief/film.py steps the page ----------
+// select("hero"): the hero replays over 8 s of film time; select("report"): the page scrolls from
+// the report's top to What testing caught, so the evidence passes at reading speed.
+window.film = {
+  scene: "hero",
+  select: id => { window.film.scene = id; return true; },
+  seek: t => new Promise(done => {
+    if (window.film.scene === "hero") { window.scrollTo(0, 0); window.heroShow && window.heroShow(t / 8); }
+    else {
+      const a = $("report").offsetTop - 30, b = $("caught").offsetTop - 120, span = window.film.span || 30;
+      const k = Math.max(0, Math.min(1, (t - 1.5) / span)), e = k * k * (3 - 2 * k);  // ease in and out
+      window.scrollTo(0, a + (b - a) * e);
+    }
+    // a long page repaints in tiles after a scroll: give it time, or the screenshot shows stale tiles
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => done(true), window.film.scene === "hero" ? 0 : 120)));
+  }),
+};
+
+// ---------- findings ----------
+$("find").querySelector("tbody").innerHTML = O.findings.map(f => `<tr><td class="d">${esc(f.date)}</td><td class="a">${esc(f.area)}</td><td>${esc(f.found)}</td><td class="fix">${esc(f.fix)}</td></tr>`).join("");
+</script>
+</body>
+</html>

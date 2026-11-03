@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920">
+<title>Crosscheck film scenes</title>
+<link href="https://fonts.googleapis.com/css2?family=B612:wght@400;700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Scenes for debrief/film.py, drawn at 1920x1080 and stepped with film.seek(t): nothing moves on its own. */
+:root { --display: #000; --legend: #c9d1d9; --dim: #8b949e; --said: #6cc4ff; --set: #f062e0; --doing: #fff; --call: #ff4d4d;
+  --paper: #eceee9; --ink: #15181b; --ink-2: #4a5057; --rule: #b8bdb3; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+.scene { position: absolute; inset: 0; display: none; padding: 150px 170px; font-family: "B612", sans-serif; color: var(--legend); }
+.scene.on { display: block; }
+[data-at] { opacity: 0; transform: translateY(14px); }
+h1 { font: 700 150px/1 "B612"; color: #fff; margin: 230px 0 34px; letter-spacing: -.01em; }
+.sub { font-size: 44px; color: var(--legend); }
+.fine { position: absolute; left: 170px; bottom: 120px; font-size: 26px; color: var(--dim); }
+.big { font: 700 210px/1 "B612"; color: #fff; margin: 120px 0 30px; }
+.big b { color: var(--call); }
+.why p { font-size: 50px; line-height: 1.35; max-width: 1400px; margin: 0 0 30px; color: var(--legend); }
+.why .src { font-size: 26px; color: var(--dim); }
+.how { background: var(--paper); padding: 90px 120px; }
+.how h2 { font: 700 54px "Public Sans"; color: var(--ink); margin: 0 0 40px; }
+.how img { width: 1680px; display: block; }
+.models h2 { font: 700 60px "B612"; color: #fff; margin: 0 0 56px; }
+.row { display: grid; grid-template-columns: 560px 1fr; gap: 40px; padding: 22px 0; border-top: 1px solid #1c2229; font-size: 34px; }
+.row .m { color: #fff; font-weight: 700; }
+.row .j { color: var(--legend); line-height: 1.35; }
+.close h1 { margin-top: 300px; }
+.close .sub span { color: var(--said); }
+</style>
+</head>
+<body>
+<section class="scene" id="title">
+  <h1 data-at="0.3">Crosscheck</h1>
+  <div class="sub" data-at="1.2">A monitoring pilot that only sees and hears.</div>
+  <div class="fine" data-at="2">Flown and scored in X-Plane 12. Built on Meta's models for the Meta AI Developer Hackathon, November 2026.</div>
+</section>
+<section class="scene why" id="why">
+  <div class="big" data-at="0.2"><b>31</b> of 37</div>
+  <p data-at="1.5">airline accidents involving the crew, reviewed by the NTSB, had the same failure: someone did not monitor, or did not challenge.</p>
+  <div class="src" data-at="2.5">NTSB Safety Study SS-94/01, 1978–1990</div>
+</section>
+<section class="scene how" id="how">
+  <h2 data-at="0.2">Said, set and doing, checked against each other</h2>
+  <img data-at="0.8" src="how-it-works.svg" alt="">
+</section>
+<section class="scene models" id="models">
+  <h2 data-at="0.2">Seven Meta models, each with one job</h2>
+  <div id="modelRows"></div>
+</section>
+<section class="scene close" id="close">
+  <h1 data-at="0.3">Crosscheck</h1>
+  <div class="sub" data-at="1.2">One more pair of eyes and ears on the flight deck.</div>
+  <div class="fine" data-at="2.2">Every number in this film comes from a scored run. Recordings, report and code: <span id="repo">the repository</span>.</div>
+</section>
+<script src="overview.js"></script>
+<script>
+const O = window.OVERVIEW || {models: []};
+const JOBS = {  // shorter than the report's, for the screen
+  "Muse Voice Transcribe": "hears the radio and the intercom, live",
+  "Muse Spark": "reads the displays and gauges, reads garbled radio lines, explains each callout",
+  "Muse Wonder": "watches the pilot camera afterwards and gives a second opinion",
+  "SAM 3.1": "checks the camera sees the displays; finds the pilot",
+  "SAM 3D Body": "measures the pilot's posture on every frame",
+  "Muse Image": "made the synthetic pilots: no real person is filmed",
+  "MMS-TTS": "Crosscheck's voice",
+};
+document.getElementById("modelRows").innerHTML = O.models.map((m, i) =>
+  `<div class="row" data-at="${(0.9 + i * 0.55).toFixed(2)}"><div class="m">${m.model}</div><div class="j">${JOBS[m.model] || m.job}</div></div>`).join("");
+const repo = new URLSearchParams(location.search).get("repo"); if (repo) document.getElementById("repo").textContent = repo;
+window.film = {
+  select: id => { document.querySelectorAll(".scene").forEach(s => s.classList.toggle("on", s.id === id)); return !!document.getElementById(id); },
+  seek: t => new Promise(done => {
+    document.querySelectorAll(".scene.on [data-at]").forEach(el => {
+      const k = Math.max(0, Math.min(1, (t - +el.dataset.at) / 0.6)), e = 1 - Math.pow(1 - k, 3);  // ease out over 0.6 s
+      el.style.opacity = e; el.style.transform = `translateY(${(1 - e) * 14}px)`;
+    });
+    requestAnimationFrame(() => done(true));
+  }),
+};
+</script>
+</body>
+</html>
