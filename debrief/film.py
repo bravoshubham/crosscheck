@@ -1,6 +1,7 @@
 """The film: the real debrief pages, filmed frame by frame, with narration.
 
   uv run python cli.py debrief && uv run python cli.py film      # writes site/crosscheck_film.mp4
+  uv run python cli.py film --cut short                          # under 3 minutes: site/crosscheck_film_short.mp4
 
 Nothing in the picture is drawn for the film: headless Chrome loads the debrief site (site/), and
 each page's own film hook (window.film.select / seek) sets its clock to the frame's time before a
@@ -9,8 +10,10 @@ sets each one up over its quiet lead-in, then the recording's own radio lines an
 with nothing over them.
 
 Narration is docs/film_script.md, one section per scene. A recording of your own voice in
-docs/narration/NN.wav is used if it exists; otherwise OmniVoice (k2-fsa, CC-BY-NC, local, if
-OMNIVOICE_DIR has it), otherwise the Mac's voice.
+docs/narration/NN.wav is used if it exists; otherwise Fish Audio Drama 3 (local, if DRAMA3_DIR has
+it) reads each section in the narrator's voice, docs/voice/narrator.wav: a voice Drama 3 designed
+from a written description (docs/voice/narrator.json), not a copy of anyone's. Without Drama 3,
+OmniVoice (k2-fsa, CC-BY-NC, local, if OMNIVOICE_DIR has it), otherwise the Mac's voice.
 """
 import asyncio
 import base64
@@ -34,9 +37,13 @@ from scipy.signal import resample_poly
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 SCRIPT = ROOT / "docs" / "film_script.md"
+# each cut: its script and its file; a cut films the sections its script has, in the order of SCENES
+CUTS = {"full": (SCRIPT, "crosscheck_film.mp4"), "short": (ROOT / "docs" / "film_script_short.md", "crosscheck_film_short.mp4")}
 OWN_VOICE = ROOT / "docs" / "narration"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 OMNIVOICE = pathlib.Path(os.environ.get("OMNIVOICE_DIR", pathlib.Path.home() / "llm-stack" / "omnivoice"))
+DRAMA3 = pathlib.Path(os.environ.get("DRAMA3_DIR", pathlib.Path.home() / "llm-stack" / "drama3"))
+VOICE = ROOT / "docs" / "voice"
 W, H, FPS, SR = 1920, 1080, 30, 48000
 NARRATOR = "male, middle-aged, low pitch, american accent"
 # scene: (section in the script, page, what to select, recording window or None)
@@ -55,8 +62,8 @@ SCENES = [
 AFTER_S = {"clearance": 4.0, "fault": 4.0, "call": 4.0, "change": 3.0}  # after the last callout in the window
 
 
-def sections() -> dict[str, str]:
-    text = SCRIPT.read_text()
+def sections(script: pathlib.Path = SCRIPT) -> dict[str, str]:
+    text = script.read_text()
     return {m.group(1): " ".join(m.group(2).split()) for m in re.finditer(r"^## (\d\d) · [^\n]*\n(.*?)(?=^## |\Z)", text, re.S | re.M)}
 
 
@@ -68,9 +75,10 @@ def tts(texts: dict[str, str], out: pathlib.Path) -> dict[str, np.ndarray]:
     import hashlib
     out.mkdir(parents=True, exist_ok=True)
     CACHE.mkdir(parents=True, exist_ok=True)
+    engine = narrator()
     voices = {}
     todo = {}
-    key = lambda text: hashlib.sha1((NARRATOR + "|" + text).encode()).hexdigest()[:16]
+    key = lambda text: hashlib.sha1((engine["id"] + "|" + text).encode()).hexdigest()[:16]
     for k, text in texts.items():
         own = OWN_VOICE / f"{k}.wav"
         if own.exists():
@@ -79,31 +87,18 @@ def tts(texts: dict[str, str], out: pathlib.Path) -> dict[str, np.ndarray]:
             voices[k] = load(CACHE / f"{key(text)}.wav")
         else:
             todo[k] = text
-    if todo and (OMNIVOICE / ".venv" / "bin" / "python").exists():
-        # two takes of each line on the CPU (the Apple GPU path crashes here); the take Muse Voice
-        # Transcribe hears closest to the script is kept, so the narration is measured, not hoped for
-        job = out / "omnivoice.json"
-        job.write_text(json.dumps({"instruct": NARRATOR, "lines": todo, "out": str(out), "takes": TAKES}))
-        code = (
-            "import json, sys, torch, soundfile as sf\n"
-            "from omnivoice.models.omnivoice import OmniVoice\n"
-            "j = json.load(open(sys.argv[1]))\n"
-            "m = OmniVoice.from_pretrained('k2-fsa/OmniVoice', device_map='cpu', dtype=torch.float32)\n"
-            "for k, text in j['lines'].items():\n"
-            "    for take in range(j['takes']):\n"
-            "        torch.manual_seed(7 + 100 * take)\n"
-            "        a = m.generate(text=text, language='en', instruct=j['instruct'], num_step=32, guidance_scale=2.2, speed=0.95)[0]\n"
-            "        sf.write(f\"{j['out']}/{k}_{take}.wav\", a, m.sampling_rate)\n")
-        subprocess.run([str(OMNIVOICE / ".venv" / "bin" / "python"), "-c", code, str(job)], cwd=OMNIVOICE,
-                       env={**os.environ, "HF_HUB_OFFLINE": "1"}, check=False)
+    if todo and engine["run"]:
+        # several takes of each line; the take Muse Voice Transcribe hears closest to the script is kept
+        # (ties: the one nearest the narrator's own pace), so the narration is measured, not hoped for
+        engine["run"](todo, out)
         for k, text in todo.items():
-            takes = [out / f"{k}_{i}.wav" for i in range(TAKES) if (out / f"{k}_{i}.wav").exists()]
+            takes = [out / f"{k}_{i}.wav" for i in range(engine["takes"]) if (out / f"{k}_{i}.wav").exists()]
             if takes:
-                best = max(takes, key=lambda f: heard_as(f, text))
+                best = max(takes, key=lambda f: (round(heard_as(f, text), 2), -abs(pace(f, text) - engine["pace"])))
                 shutil.copy(best, out / f"{k}.wav")
     for k, text in todo.items():
         f = out / f"{k}.wav"
-        if not f.exists():  # the Mac's own voice, as a last resort (not cached: OmniVoice should be tried again)
+        if not f.exists():  # the Mac's own voice, as a last resort (not cached: the engine should be tried again)
             aiff = out / f"{k}.aiff"
             subprocess.run(["say", "-v", "Samantha", "-r", "175", "-o", str(aiff), text], check=True)
             voices[k] = load(aiff)
@@ -113,7 +108,64 @@ def tts(texts: dict[str, str], out: pathlib.Path) -> dict[str, np.ndarray]:
     return voices
 
 
-TAKES = 2
+def narrator() -> dict:
+    """The synthetic narrator: Drama 3 in the designed voice if both are here, else OmniVoice from
+    the description in NARRATOR, else none (the Mac's voice)."""
+    import hashlib
+    ref = VOICE / "narrator.wav"
+    if (DRAMA3 / ".venv" / "bin" / "python").exists() and ref.exists():
+        ref_text = json.loads((VOICE / "narrator.json").read_text())["text"]
+        return {"id": "drama3:" + hashlib.sha1(ref.read_bytes()).hexdigest()[:12], "takes": 3, "pace": pace(ref, ref_text),
+                "run": lambda todo, out: drama3(todo, out, ref, ref_text, 3)}
+    if (OMNIVOICE / ".venv" / "bin" / "python").exists():
+        return {"id": NARRATOR, "takes": 2, "pace": 2.6, "run": lambda todo, out: omnivoice(todo, out, 2)}
+    return {"id": "say", "takes": 0, "pace": 0, "run": None}
+
+
+def drama3(todo: dict[str, str], out: pathlib.Path, ref: pathlib.Path, ref_text: str, takes: int) -> None:
+    """Fish Audio Drama 3 (bf16, about 74 GB while generating) reads each line in the voice of ref."""
+    job = out / "drama3.json"
+    job.write_text(json.dumps({"lines": todo, "out": str(out), "takes": takes, "ref": str(ref), "ref_text": ref_text}))
+    code = (
+        "import json, sys, numpy as np, soundfile as sf, mlx.core as mx\n"
+        "from mlx_audio.tts.utils import load_model\n"
+        "j = json.load(open(sys.argv[1]))\n"
+        "m = load_model('mlx-community/fish-audio-drama-3-bf16')\n"
+        "for k, text in j['lines'].items():\n"
+        "    for take in range(j['takes']):\n"
+        "        mx.random.seed(7 + 100 * take)\n"
+        "        outs = list(m.generate(text=text, ref_audio=j['ref'], ref_text=j['ref_text'], temperature=0.8))\n"
+        "        a = np.concatenate([np.array(o.audio, dtype=np.float32).reshape(-1) for o in outs])\n"
+        "        sf.write(f\"{j['out']}/{k}_{take}.wav\", a, outs[0].sample_rate)\n"
+        "        print(k, take, f'{len(a) / outs[0].sample_rate:.1f} s', flush=True)\n")
+    subprocess.run([str(DRAMA3 / ".venv" / "bin" / "python"), "-c", code, str(job)], cwd=DRAMA3,
+                   env={**os.environ, "HF_HUB_OFFLINE": "1"}, check=False)
+
+
+def omnivoice(todo: dict[str, str], out: pathlib.Path, takes: int) -> None:
+    """OmniVoice on the CPU (the Apple GPU path crashes here), voice from the NARRATOR description."""
+    job = out / "omnivoice.json"
+    job.write_text(json.dumps({"instruct": NARRATOR, "lines": todo, "out": str(out), "takes": takes}))
+    code = (
+        "import json, sys, torch, soundfile as sf\n"
+        "from omnivoice.models.omnivoice import OmniVoice\n"
+        "j = json.load(open(sys.argv[1]))\n"
+        "m = OmniVoice.from_pretrained('k2-fsa/OmniVoice', device_map='cpu', dtype=torch.float32)\n"
+        "for k, text in j['lines'].items():\n"
+        "    for take in range(j['takes']):\n"
+        "        torch.manual_seed(7 + 100 * take)\n"
+        "        a = m.generate(text=text, language='en', instruct=j['instruct'], num_step=32, guidance_scale=2.2, speed=0.95)[0]\n"
+        "        sf.write(f\"{j['out']}/{k}_{take}.wav\", a, m.sampling_rate)\n")
+    subprocess.run([str(OMNIVOICE / ".venv" / "bin" / "python"), "-c", code, str(job)], cwd=OMNIVOICE,
+                   env={**os.environ, "HF_HUB_OFFLINE": "1"}, check=False)
+
+
+def pace(path: pathlib.Path, text: str) -> float:
+    """Words a second, counting the speech from its first sound to its last."""
+    x, sr = sf.read(path, always_2d=True)
+    x = np.abs(x.mean(axis=1))
+    loud = np.flatnonzero(x > 0.02 * x.max())
+    return len(text.split()) / max(0.5, (loud[-1] - loud[0]) / sr) if len(loud) else 0.0
 
 
 def heard_as(path: pathlib.Path, text: str) -> float:
@@ -210,15 +262,16 @@ def window(rec: dict, anchor: str, lead: float) -> tuple[float, float]:
     return t0, t1
 
 
-def build(repo: str | None = None) -> pathlib.Path:
+def build(repo: str | None = None, cut: str = "full") -> pathlib.Path:
     import websockets
     data = {r["id"]: r for r in json.loads((SITE / "data.js").read_text().removeprefix("window.DEBRIEF = ").rstrip().rstrip(";"))}
     for name in ("film.html",):
         shutil.copy(pathlib.Path(__file__).parent / name, SITE / name)
     shutil.copy(ROOT / "docs" / "how-it-works.svg", SITE / "how-it-works.svg")
-    text = sections()
+    script, out_name = CUTS[cut]
+    text = sections(script)
     only = os.environ.get("FILM_SCENES")  # e.g. "01,04" for a quick check of some scenes
-    scenes = [sc for sc in SCENES if not only or sc[0] in only.split(",")]
+    scenes = [sc for sc in SCENES if sc[0] in text and (not only or sc[0] in only.split(","))]
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="film_"))
     voice = tts({k: text[k] for k, *_ in scenes}, tmp / "voice")
     port = serve_site()
@@ -312,7 +365,7 @@ def build(repo: str | None = None) -> pathlib.Path:
     wav = np.concatenate(mix)
     wav = np.clip(wav / max(1.0, np.abs(wav).max() / 0.95), -1, 1)
     sf.write(tmp / "sound.wav", wav, SR)
-    out = SITE / "crosscheck_film.mp4"
+    out = SITE / out_name
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", str(FPS), "-i", str(frames / "%06d.jpg"),
                     "-i", str(tmp / "sound.wav"), "-vf", f"scale={W}:{H}", "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
                     "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "-shortest", str(out)], check=True)

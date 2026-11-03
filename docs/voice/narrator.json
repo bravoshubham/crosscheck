@@ -1,0 +1,15 @@
+{
+ "what": "The film's narrator: a voice Fish Audio Drama 3 designed from the description below, with no reference audio, so it copies no real person. Every section of the film is read by Drama 3 in this voice (ref_audio = narrator.wav, ref_text = text).",
+ "model": "mlx-community/fish-audio-drama-3-bf16",
+ "description": "[an airline pilot in his forties, relaxed and friendly, explaining something to a passenger, plain everyday speech]",
+ "text": "When the NTSB reviewed thirty-seven airline accidents where the crew played a part, it found the same thing in thirty-one of them. Someone didn't monitor, or didn't challenge. Crosscheck is the colleague who always does.",
+ "seed": 48,
+ "temperature": 0.8,
+ "chosen_from": "12 takes, 4 descriptions x 3 seeds; every take was heard word for word by Muse Voice Transcribe. This one: pitch near 100 Hz with moderate movement, 2.5 words a second, pauses between sentences.",
+ "measured": {
+  "heard": 0.88,
+  "pace": 2.5,
+  "longest_pause_s": 1.17,
+  "s": 14.9
+ }
+}

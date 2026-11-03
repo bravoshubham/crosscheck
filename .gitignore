@@ -18,3 +18,5 @@ replay/*_webcam/frames/
 !replay/pilot_*/camera.mp4
 demo_runs/
 .cache/
+!docs/voice/*.wav
+SUBMISSION_KIT.md

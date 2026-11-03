@@ -329,9 +329,12 @@ def overview(data: list[dict]) -> dict:
 
 def build() -> pathlib.Path:
     from voice.tts import synth
+    films = {p.name: p.read_bytes() for p in SITE.glob("crosscheck_film*.mp4")}  # cli.py film made these: keep them
     if SITE.exists():
         shutil.rmtree(SITE)
     SITE.mkdir()
+    for name, b in films.items():
+        (SITE / name).write_bytes(b)
     recs = {p.parent.name: p.parent for p in (ROOT / "replay").glob("*/meta.json")}
     data = [build_one(recs[n], synth) for n in ORDER if n in recs]
     data += [build_one(p, synth) for n, p in sorted(recs.items()) if n not in ORDER]

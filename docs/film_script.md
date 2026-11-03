@@ -1,4 +1,4 @@
-# Crosscheck: the film (about 2 minutes 45 seconds)
+# Crosscheck: the film (about 4 minutes; the short cut is docs/film_script_short.md)
 
 Narration for `uv run python cli.py film`. Each section is one scene; the pictures are real
 recordings from `replay/` (the pilot camera is generated footage, and says so on screen).
@@ -10,7 +10,7 @@ Crosscheck. A monitoring pilot that only sees and hears.
 
 ## 02 · Why
 When the NTSB reviewed thirty-seven airline accidents where the crew played a part, it found the
-same thing in thirty-one of them: someone did not monitor, or did not challenge. Crosscheck is the
+same thing in thirty-one of them. Someone didn't monitor, or didn't challenge. Crosscheck is the
 colleague who always does.
 
 ## 03 · How it works

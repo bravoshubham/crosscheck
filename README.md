@@ -12,7 +12,8 @@ flown and scored in X-Plane 12 against the simulator's own data, which Crosschec
 
 **[Open the live site](https://bravoshubham.github.io/crosscheck/)**: the overview and flight-test
 report, every recording with its cockpit frames, transcripts, callouts and the simulator's truth
-on one timeline, and **[the film](https://bravoshubham.github.io/crosscheck/crosscheck_film.mp4)**.
+on one timeline, and **[the film](https://bravoshubham.github.io/crosscheck/crosscheck_film_short.mp4)**
+(under 3 minutes; [full length](https://bravoshubham.github.io/crosscheck/crosscheck_film.mp4), 4 minutes).
 The same static site builds from this repository (`uv run python cli.py debrief`).
 
 **Try it in three commands** — no simulator, GPU or API key:
@@ -23,7 +24,7 @@ uv run python cli.py replay --all      # every recording through the same ledger
 uv run python cli.py debrief           # then open site/index.html
 ```
 
-**Status (3 Nov 2026):** built during the Meta AI Developer Hackathon. Not certified, not for
+**Status (4 Nov 2026):** built during the Meta AI Developer Hackathon. Not certified, not for
 operational use. The evaluation section says what each number was measured against.
 
 ## What it catches
@@ -123,6 +124,7 @@ the Muse Image photos, anchored on them at the start, halfway and end of each mo
 ```bash
 uv run python cli.py debrief      # site/: the overview and flight-test report (index.html) and every recording
 uv run python cli.py film         # site/crosscheck_film.mp4: the real pages filmed frame by frame, narrated
+uv run python cli.py film --cut short   # site/crosscheck_film_short.mp4: the same in under 3 minutes
 ```
 
 **The overview** (`site/index.html`) opens on a real recording, then the flight-test report: every
@@ -143,8 +145,10 @@ done for the scenario at hand, and the camera's latest frame. It tails the event
 cannot slow down or change the monitoring loop.
 
 **The film** (`cli.py film`) is made from the same pages: headless Chrome steps each page's clock
-frame by frame at 30 fps, so nothing in it is mocked up. Narration is `docs/film_script.md`; put
-your own recordings in `docs/narration/NN.wav` to use your voice.
+frame by frame at 30 fps, so nothing in it is mocked up. Narration is `docs/film_script.md`
+(`docs/film_script_short.md` for the short cut), read by Fish Audio Drama 3 on the Mac in a voice
+it designed from a written description (`docs/voice/`; no real person's voice is copied). Put your
+own recordings in `docs/narration/NN.wav` to use your voice.
 
 **Presenting live** (`docs/DEMO.md`): `uv run python cli.py demo altitude` (read the clearance
 back yourself, right or wrong), `demo flaps`, `demo pilot`, and `demo replay <recording>` as the
@@ -237,5 +241,6 @@ use). SAM Audio and SAM 3D Body weights are gated on Hugging Face and are not re
 X-Plane's engine sounds are used locally to build test audio and are not included;
 `eval/audio/radio_set_open/` uses synthetic engine noise (`eval/audio/synth_noise.py`) and MMS-TTS
 voices (CC-BY-NC 4.0), so it can be published. The pilot-watch images are generated with Muse
-Image; no real person appears in them. All procedures
+Image; no real person appears in them. The film's narration is generated with Fish Audio Drama 3
+under the Fish Audio Community License (non-commercial use). **Built with Fish Audio.** All procedures
 are written from public FAA handbooks; no airline data is used.

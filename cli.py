@@ -67,6 +67,8 @@ def main() -> int:
     sm.add_argument("--force", action="store_true", help="rewrite cached summaries")
     fm = sub.add_parser("film", help="film the debrief pages with narration (site/crosscheck_film.mp4; run debrief first)")
     fm.add_argument("--repo", help="repository address shown on the closing card")
+    fm.add_argument("--cut", choices=["full", "short"], default="full",
+                    help="full: every scene (docs/film_script.md); short: under 3 minutes (docs/film_script_short.md)")
     dm = sub.add_parser("demo", help="present live: tablet + a scenario with your voice, or re-enact a recording (docs/DEMO.md)")
     dm.add_argument("what", nargs="*", help="altitude | flaps | pilot | replay <recording>")
     lv = sub.add_parser("live", help="tablet display of the scenario being recorded")
@@ -74,7 +76,7 @@ def main() -> int:
     args = ap.parse_args()
     if args.cmd == "film":
         from debrief.film import build as film
-        print("wrote", film(args.repo))
+        print("wrote", film(args.repo, args.cut))
         return 0
     if args.cmd == "review":
         from brain.review import run as review
