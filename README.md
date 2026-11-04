@@ -13,6 +13,14 @@ which Crosscheck never sees. Every test flew the Boeing 737-800, the only type t
 checks are not the 737's own: they are the cross-checks every airline crew makes, so another type
 means teaching the panel readers (`senses/`) its displays, not wiring anything into the aircraft.
 
+**Who it is for.** Airline crews first: that is what every test here flew. Pilots who fly alone
+(private pilots, hobbyists, solo flyers) have no second pilot at all, and Crosscheck needs nothing
+wired into the aircraft: a camera and a microphone, reading even analog gauges by sight, with the
+same kinds of checks. Flight schools could use it to check a student's callouts as they fly and to
+debrief each lesson on one timeline, as the recordings here do; it already runs against a
+simulator. Light aircraft and schools are not tested yet. It assists and never acts: it speaks up,
+and the pilot decides.
+
 ![Crosscheck catching an altitude bust: cleared to 11,000, the pilot dialled 12,000 by mistake](docs/overview.png)
 
 > In the NTSB's review of 37 crew-involved US airline accidents (1978–1990), failures to monitor
