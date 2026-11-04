@@ -1,0 +1,282 @@
+{
+ "00_clean.wav": {
+  "text": "alaska four two one climb and maintain flight level two four zero",
+  "s": 2.97,
+  "audio_s": 6.34
+ },
+ "00_jet_snr+0.wav": {
+  "text": "Alastair Ford, two, one, two, two, three, four, five, six, seven, eight, nine, ten, twelve, twelve, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen",
+  "s": 1.32,
+  "audio_s": 6.34
+ },
+ "00_jet_snr+5.wav": {
+  "text": "Alaska four two one climb and maintain flight level two four sir",
+  "s": 0.31,
+  "audio_s": 6.34
+ },
+ "00_jet_snr-5.wav": {
+  "text": "A lot of support was given to one of Mandy's white-skinned two-footer.",
+  "s": 0.42,
+  "audio_s": 6.34
+ },
+ "01_clean.wav": {
+  "text": "Alaska for two one turn left hitting two seven zero",
+  "s": 0.96,
+  "audio_s": 5.01
+ },
+ "01_jet_snr+0.wav": {
+  "text": "Alaska for two one-turn laps, hitting two-seven-zero",
+  "s": 0.34,
+  "audio_s": 5.01
+ },
+ "01_jet_snr+5.wav": {
+  "text": "Alaska four, two-one turn left, hitting 270.",
+  "s": 0.29,
+  "audio_s": 5.01
+ },
+ "01_jet_snr-5.wav": {
+  "text": "In basketball, she won her lap, hitting two seven-zeroes.",
+  "s": 0.31,
+  "audio_s": 5.01
+ },
+ "02_clean.wav": {
+  "text": "alaska four two one descend and maintain one one thousand",
+  "s": 0.67,
+  "audio_s": 4.78
+ },
+ "02_jet_snr+0.wav": {
+  "text": "Alaska four-two-one defended and Nathan won one-thousand.",
+  "s": 0.33,
+  "audio_s": 4.78
+ },
+ "02_jet_snr+5.wav": {
+  "text": "Alaska 421 to defend and Nathan11000.",
+  "s": 0.36,
+  "audio_s": 4.78
+ },
+ "02_jet_snr-5.wav": {
+  "text": "I'll ask for fourteen one percent and make one one thousand.",
+  "s": 0.35,
+  "audio_s": 4.78
+ },
+ "03_clean.wav": {
+  "text": "Alaska for two one contact Portland Approach one two four point three five",
+  "s": 0.53,
+  "audio_s": 6.06
+ },
+ "03_jet_snr+0.wav": {
+  "text": "Alaska four two one contact Portland approach one two four point three five",
+  "s": 0.4,
+  "audio_s": 6.06
+ },
+ "03_jet_snr+5.wav": {
+  "text": "Alaska four two one contact Portland approach one two four point three five",
+  "s": 0.3,
+  "audio_s": 6.06
+ },
+ "03_jet_snr-5.wav": {
+  "text": "I don't know what you're talking about. I don't know what you're talking about. I don't know what you're talking about.",
+  "s": 0.56,
+  "audio_s": 6.06
+ },
+ "04_clean.wav": {
+  "text": "alaska four two one reduced speed to two one zero nuts",
+  "s": 0.34,
+  "audio_s": 4.62
+ },
+ "04_jet_snr+0.wav": {
+  "text": "Alaska four-two-one reduced speed to two-one-zero-nine!",
+  "s": 0.36,
+  "audio_s": 4.62
+ },
+ "04_jet_snr+5.wav": {
+  "text": "Alaska four two one reduced speed to two one zero nuts",
+  "s": 0.34,
+  "audio_s": 4.62
+ },
+ "04_jet_snr-5.wav": {
+  "text": "It's the first time I've seen it. It's the first time I've seen it.",
+  "s": 0.43,
+  "audio_s": 4.62
+ },
+ "05_clean.wav": {
+  "text": "alas before two one clear deals runway one zero right approach",
+  "s": 0.3,
+  "audio_s": 6.48
+ },
+ "05_jet_snr+0.wav": {
+  "text": "Alas, before two-one clear goal, runway one-zero right approach.",
+  "s": 0.34,
+  "audio_s": 6.48
+ },
+ "05_jet_snr+5.wav": {
+  "text": "Alas, before two-one clear goals, runway one-zero right approach.",
+  "s": 0.34,
+  "audio_s": 6.48
+ },
+ "05_jet_snr-5.wav": {
+  "text": "Alaska four two one three zero runway one zero right approach",
+  "s": 0.28,
+  "audio_s": 6.48
+ },
+ "06_clean.wav": {
+  "text": "cesna three four five charlie papa spoke four three two one",
+  "s": 0.3,
+  "audio_s": 4.99
+ },
+ "06_piston_snr+0.wav": {
+  "text": "sesame three four five charlie pappas four four three two one",
+  "s": 0.29,
+  "audio_s": 4.99
+ },
+ "06_piston_snr+5.wav": {
+  "text": "sesame three four five charlie pappas four four three two one",
+  "s": 0.29,
+  "audio_s": 4.99
+ },
+ "06_piston_snr-5.wav": {
+  "text": "Sesma three four five, Charlie Pappas four four three two one!",
+  "s": 0.31,
+  "audio_s": 4.99
+ },
+ "07_clean.wav": {
+  "text": "cesna three four five charlie pamperington three thousand five hundred",
+  "s": 0.31,
+  "audio_s": 6.0
+ },
+ "07_piston_snr+0.wav": {
+  "text": "Cessna, three, four, five, four, five, four, five, five, six, seven, eight, nine, nine, ten, ten, ten, ten, twelve, thirteen, twelve, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thir",
+  "s": 1.32,
+  "audio_s": 6.0
+ },
+ "07_piston_snr+5.wav": {
+  "text": "Cessna, three, four, five, Charlie Papaminton, three thousand five hundred.",
+  "s": 0.38,
+  "audio_s": 6.0
+ },
+ "07_piston_snr-5.wav": {
+  "text": "Cessna, three port via Chubby Path making three thousand five hundred",
+  "s": 0.33,
+  "audio_s": 6.0
+ },
+ "08_clean.wav": {
+  "text": "It 's fifteen .",
+  "s": 0.71,
+  "audio_s": 2.4
+ },
+ "08_jet_snr+0.wav": {
+  "text": "I'm sorry, but I'm going to have to ask you a few questions.",
+  "s": 0.34,
+  "audio_s": 2.4
+ },
+ "08_jet_snr+5.wav": {
+  "text": "It's the 50th.",
+  "s": 0.24,
+  "audio_s": 2.4
+ },
+ "08_jet_snr-5.wav": {
+  "text": "I don't know if I'm going to be able to do it, but I'm not going to be able to do it, and I'm not going to be able to do it, and I'm not going to be able to do it, and I'm not going to be able to do it, and I'm not going to be able to do it.",
+  "s": 1.23,
+  "audio_s": 2.4
+ },
+ "09_clean.wav": {
+  "text": "The positive rate is up.",
+  "s": 0.63,
+  "audio_s": 2.43
+ },
+ "09_jet_snr+0.wav": {
+  "text": "But it's rape here.",
+  "s": 0.23,
+  "audio_s": 2.43
+ },
+ "09_jet_snr+5.wav": {
+  "text": "But it's your rape here, Dad.",
+  "s": 0.25,
+  "audio_s": 2.43
+ },
+ "09_jet_snr-5.wav": {
+  "text": "It's not a problem.",
+  "s": 0.2,
+  "audio_s": 2.43
+ },
+ "10_clean.wav": {
+  "text": "set heading two seven zero",
+  "s": 0.2,
+  "audio_s": 2.86
+ },
+ "10_jet_snr+0.wav": {
+  "text": "but heading 270.",
+  "s": 0.17,
+  "audio_s": 2.86
+ },
+ "10_jet_snr+5.wav": {
+  "text": "Its set heading 270.",
+  "s": 0.22,
+  "audio_s": 2.86
+ },
+ "10_jet_snr-5.wav": {
+  "text": "But there are two steps to it.",
+  "s": 0.23,
+  "audio_s": 2.86
+ },
+ "11_clean.wav": {
+  "text": "Club flight level two four zero Alaska four two one",
+  "s": 0.26,
+  "audio_s": 5.79
+ },
+ "11_jet_snr+0.wav": {
+  "text": "From the white level team to the losing team to the winning team.",
+  "s": 0.3,
+  "audio_s": 5.79
+ },
+ "11_jet_snr+5.wav": {
+  "text": "from flight level two to zero last for two one",
+  "s": 0.25,
+  "audio_s": 5.79
+ },
+ "11_jet_snr-5.wav": {
+  "text": "It's the first time I've ever been to a place like this.",
+  "s": 0.33,
+  "audio_s": 5.79
+ },
+ "12_clean.wav": {
+  "text": "may day may day may day cesna three four five charlie papa engine failure",
+  "s": 0.33,
+  "audio_s": 5.84
+ },
+ "12_piston_snr+0.wav": {
+  "text": "Mayday mayday mayday sets the three four five charlie papa engine failure",
+  "s": 0.35,
+  "audio_s": 5.84
+ },
+ "12_piston_snr+5.wav": {
+  "text": "Mayday, Mayday, Mayday sets the three, four, five Charlie Pappa engine failure.",
+  "s": 0.39,
+  "audio_s": 5.84
+ },
+ "12_piston_snr-5.wav": {
+  "text": "Mayday, Mayday, Mayday, the three, four, five, four, five, six, seven, eight, eight, nine, nine, nine, ten, twelve, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen, thirteen,",
+  "s": 1.33,
+  "audio_s": 5.84
+ },
+ "13_clean.wav": {
+  "text": "one thousand stabilized",
+  "s": 0.18,
+  "audio_s": 3.04
+ },
+ "13_jet_snr+0.wav": {
+  "text": "A thousand stabs to the light.",
+  "s": 0.21,
+  "audio_s": 3.04
+ },
+ "13_jet_snr+5.wav": {
+  "text": "A thousand stabbed to death.",
+  "s": 0.24,
+  "audio_s": 3.04
+ },
+ "13_jet_snr-5.wav": {
+  "text": "One thousand stars to live.",
+  "s": 0.18,
+  "audio_s": 3.04
+ }
+}

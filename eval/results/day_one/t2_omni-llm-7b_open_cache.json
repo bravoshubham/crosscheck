@@ -1,0 +1,282 @@
+{
+ "00_clean.wav": {
+  "text": "alaska for two one clumb and maintain flight level to foresarrow",
+  "s": 5.82,
+  "audio_s": 6.34
+ },
+ "00_jet_snr+0.wav": {
+  "text": "alas the fourth two one clung and made his light level two four there",
+  "s": 1.9,
+  "audio_s": 6.34
+ },
+ "00_jet_snr+5.wav": {
+  "text": "alaska fourth two one clum and manky flight level two four sarah",
+  "s": 1.43,
+  "audio_s": 6.34
+ },
+ "00_jet_snr-5.wav": {
+  "text": "alas the fourth in one twaling and ninety-twight devil peace borders",
+  "s": 1.5,
+  "audio_s": 6.34
+ },
+ "01_clean.wav": {
+  "text": "alaska for to one turn left hitting to seven zero",
+  "s": 2.8,
+  "audio_s": 5.01
+ },
+ "01_jet_snr+0.wav": {
+  "text": "alaska four two one turn laughed hitting two seven zero",
+  "s": 1.29,
+  "audio_s": 5.01
+ },
+ "01_jet_snr+5.wav": {
+  "text": "alaska four two one turn lap hitting two seven zero",
+  "s": 1.15,
+  "audio_s": 5.01
+ },
+ "01_jet_snr-5.wav": {
+  "text": "i last the food she wants to laugh it into seven gears",
+  "s": 1.18,
+  "audio_s": 5.01
+ },
+ "02_clean.wav": {
+  "text": "alaska four two one descend and maintain one one thousand",
+  "s": 2.11,
+  "audio_s": 4.78
+ },
+ "02_jet_snr+0.wav": {
+  "text": "alaska four two one defend and maintained one one thousand",
+  "s": 1.32,
+  "audio_s": 4.78
+ },
+ "02_jet_snr+5.wav": {
+  "text": "alaska four two one descend and maintain one one thousand",
+  "s": 1.26,
+  "audio_s": 4.78
+ },
+ "02_jet_snr-5.wav": {
+  "text": "alas for two one presents and the one one thousand",
+  "s": 1.08,
+  "audio_s": 4.78
+ },
+ "03_clean.wav": {
+  "text": "alassa for two one contact portland approach one two four point three five",
+  "s": 2.04,
+  "audio_s": 6.06
+ },
+ "03_jet_snr+0.wav": {
+  "text": "alaska for two when contact portland approached one two four point three five",
+  "s": 1.67,
+  "audio_s": 6.06
+ },
+ "03_jet_snr+5.wav": {
+  "text": "alaska four two when contact portland approached one two four point three five",
+  "s": 1.67,
+  "audio_s": 6.06
+ },
+ "03_jet_snr-5.wav": {
+  "text": "over the four chino when is that it was a strong the four point two four point two four point two four point two four point two four point two four point",
+  "s": 4.27,
+  "audio_s": 6.06
+ },
+ "04_clean.wav": {
+  "text": "alaska four to one reduced speed to two one zero knots",
+  "s": 1.82,
+  "audio_s": 4.62
+ },
+ "04_jet_snr+0.wav": {
+  "text": "alaska four two one reduced the two one zero nine",
+  "s": 1.11,
+  "audio_s": 4.62
+ },
+ "04_jet_snr+5.wav": {
+  "text": "alaska four two one reduced speed to two one zero not",
+  "s": 1.14,
+  "audio_s": 4.62
+ },
+ "04_jet_snr-5.wav": {
+  "text": "i want to the port two one of the still the two one of the one of",
+  "s": 1.39,
+  "audio_s": 4.62
+ },
+ "05_clean.wav": {
+  "text": "alas before two one clear deals runway one zero right approach",
+  "s": 1.62,
+  "audio_s": 6.48
+ },
+ "05_jet_snr+0.wav": {
+  "text": "alas before two one clear doors runway one zero right approach",
+  "s": 1.37,
+  "audio_s": 6.48
+ },
+ "05_jet_snr+5.wav": {
+  "text": "alas before two one clear deals runway one zero right approach",
+  "s": 1.45,
+  "audio_s": 6.48
+ },
+ "05_jet_snr-5.wav": {
+  "text": "alas afore two worn creed in run with one girl like a spoke",
+  "s": 1.32,
+  "audio_s": 6.48
+ },
+ "06_clean.wav": {
+  "text": "sesson of three four five charlie pampas walk four three two one",
+  "s": 1.68,
+  "audio_s": 4.99
+ },
+ "06_piston_snr+0.wav": {
+  "text": "sessing three four five charlie pampas walked four three two one",
+  "s": 1.44,
+  "audio_s": 4.99
+ },
+ "06_piston_snr+5.wav": {
+  "text": "sessing of three four five charlie pampas walked four three two one",
+  "s": 1.47,
+  "audio_s": 4.99
+ },
+ "06_piston_snr-5.wav": {
+  "text": "set the three four five charlie papis four four three two one",
+  "s": 1.38,
+  "audio_s": 4.99
+ },
+ "07_clean.wav": {
+  "text": "sesna three four five charlie pampaminkton three thousand five hundred",
+  "s": 1.6,
+  "audio_s": 6.0
+ },
+ "07_piston_snr+0.wav": {
+  "text": "sessna three four five charlie papaminkton three thousand five hundred",
+  "s": 1.55,
+  "audio_s": 6.0
+ },
+ "07_piston_snr+5.wav": {
+  "text": "sessna three four five charlie pampaminkton three thousand five hundred",
+  "s": 1.56,
+  "audio_s": 6.0
+ },
+ "07_piston_snr-5.wav": {
+  "text": "sister three four five should be pathaminkin three thousand five hundred",
+  "s": 1.58,
+  "audio_s": 6.0
+ },
+ "08_clean.wav": {
+  "text": "that fifteen",
+  "s": 1.45,
+  "audio_s": 2.4
+ },
+ "08_jet_snr+0.wav": {
+  "text": "thried speedy",
+  "s": 0.42,
+  "audio_s": 2.4
+ },
+ "08_jet_snr+5.wav": {
+  "text": "priority",
+  "s": 0.26,
+  "audio_s": 2.4
+ },
+ "08_jet_snr-5.wav": {
+  "text": "the expected",
+  "s": 0.33,
+  "audio_s": 2.4
+ },
+ "09_clean.wav": {
+  "text": "visitive rate dear up",
+  "s": 0.87,
+  "audio_s": 2.43
+ },
+ "09_jet_snr+0.wav": {
+  "text": "but it is rate you are out",
+  "s": 0.64,
+  "audio_s": 2.43
+ },
+ "09_jet_snr+5.wav": {
+  "text": "but it is rather you are",
+  "s": 0.55,
+  "audio_s": 2.43
+ },
+ "09_jet_snr-5.wav": {
+  "text": "what is the great deal is all",
+  "s": 0.66,
+  "audio_s": 2.43
+ },
+ "10_clean.wav": {
+  "text": "set heading two seven zero",
+  "s": 1.13,
+  "audio_s": 2.86
+ },
+ "10_jet_snr+0.wav": {
+  "text": "set catting two seven zero",
+  "s": 0.61,
+  "audio_s": 2.86
+ },
+ "10_jet_snr+5.wav": {
+  "text": "set catting two seven zero",
+  "s": 0.61,
+  "audio_s": 2.86
+ },
+ "10_jet_snr-5.wav": {
+  "text": "sentence this the media",
+  "s": 0.56,
+  "audio_s": 2.86
+ },
+ "11_clean.wav": {
+  "text": "hlum flight level two four zero alaska four two one",
+  "s": 1.18,
+  "audio_s": 5.79
+ },
+ "11_jet_snr+0.wav": {
+  "text": "clum quite level peeting for the lash for two one",
+  "s": 1.09,
+  "audio_s": 5.79
+ },
+ "11_jet_snr+5.wav": {
+  "text": "quite level two to four zero asker four two one",
+  "s": 1.04,
+  "audio_s": 5.79
+ },
+ "11_jet_snr-5.wav": {
+  "text": "quand quand lay how cure much work war cut cut work",
+  "s": 1.11,
+  "audio_s": 5.79
+ },
+ "12_clean.wav": {
+  "text": "may day may day may day sessing the three four five charry papa injing failure",
+  "s": 1.72,
+  "audio_s": 5.84
+ },
+ "12_piston_snr+0.wav": {
+  "text": "may day may day may day sess the three four five charlie papa injing failure",
+  "s": 1.66,
+  "audio_s": 5.84
+ },
+ "12_piston_snr+5.wav": {
+  "text": "may day may day may day sessing the three four five charlie papa injing failure",
+  "s": 1.67,
+  "audio_s": 5.84
+ },
+ "12_piston_snr-5.wav": {
+  "text": "may they may they may they ses the three four five choi papa inching theodore",
+  "s": 1.65,
+  "audio_s": 5.84
+ },
+ "13_clean.wav": {
+  "text": "one thousand stabilized",
+  "s": 0.85,
+  "audio_s": 3.04
+ },
+ "13_jet_snr+0.wav": {
+  "text": "one thousand stabbed the light",
+  "s": 0.73,
+  "audio_s": 3.04
+ },
+ "13_jet_snr+5.wav": {
+  "text": "one thousand stabbed alive",
+  "s": 0.59,
+  "audio_s": 3.04
+ },
+ "13_jet_snr-5.wav": {
+  "text": "one thousand scaredollars",
+  "s": 0.57,
+  "audio_s": 3.04
+ }
+}

@@ -28,11 +28,16 @@ def parse(spec: str) -> tuple[str, str, str, str]:
     return script, variant, flag, name
 
 
+ONBOARD = os.environ.get("CROSSCHECK_ONBOARD") == "1"  # onboard/run.sh eval/repeat.py ...: no uv (no network), results as <name>_onboard
+
+
 def run(spec: str, i: int) -> dict:
     script, variant, flag, name = parse(spec)
+    name += "_onboard" if ONBOARD else ""
     base = OUT / name / f"run{i:02d}"
     base.mkdir(parents=True, exist_ok=True)
-    cmd = ["uv", "run", "--group", "eval", "python", f"eval/scenarios/{script}.py"] + ([variant] if variant else []) + ([f"--{flag}"] if flag else []) + ["--silent"]
+    py = [sys.executable] if ONBOARD else ["uv", "run", "--group", "eval", "python"]
+    cmd = py + [f"eval/scenarios/{script}.py"] + ([variant] if variant else []) + ([f"--{flag}"] if flag else []) + ["--silent"]
     t = time.time()
     p = subprocess.run(cmd, cwd=ROOT, env={**os.environ, "CROSSCHECK_OUT": str(base)}, capture_output=True, text=True)
     results = list(base.glob("*/result.json"))
@@ -62,7 +67,7 @@ def main() -> int:
     ap.add_argument("--n", type=int, default=3)
     a = ap.parse_args()
     for spec in a.specs:
-        name = parse(spec)[3]
+        name = parse(spec)[3] + ("_onboard" if ONBOARD else "")
         summary_p = OUT / f"{name}.json"
         prev = json.loads(summary_p.read_text())["runs"] if summary_p.exists() else []
         runs = prev[:]

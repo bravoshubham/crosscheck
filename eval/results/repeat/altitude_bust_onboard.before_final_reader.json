@@ -1,0 +1,50 @@
+{
+ "scenario": "altitude_bust_onboard",
+ "scored": 3,
+ "passed": 3,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 19.6,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "seconds": 106,
+   "aircraft_passed_cleared_s_after_set": 26.8,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 0.93
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 24.6,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "seconds": 112,
+   "aircraft_passed_cleared_s_after_set": 26.3,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 24.0,
+     "text": "Cleared one-one thousand, set one-two thousand."
+    }
+   ],
+   "seconds": 114,
+   "aircraft_passed_cleared_s_after_set": 26.5,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "ok": true,
+ "found": [],
+ "matches": {
+  "pfd": {
+   "read": {
+    "ias": 150,
+    "selected_altitude": 2500,
+    "thrust_mode": "MCP SPD"
+   },
+   "ok": true
+  }
+ },
+ "model": "muse-glimmer-30b"
+}

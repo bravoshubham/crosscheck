@@ -1,0 +1,29 @@
+{
+ "voice transcribe (cloud)": {
+  "right": 49,
+  "missed": 0,
+  "wrong": 2,
+  "wrong_lines": [
+   "00_atc_0.wav",
+   "01_pm_0.wav"
+  ]
+ },
+ "seamless-m4t-v2": {
+  "right": 36,
+  "missed": 15,
+  "wrong": 0,
+  "wrong_lines": []
+ },
+ "omnilingual-asr-7b": {
+  "right": 45,
+  "missed": 6,
+  "wrong": 0,
+  "wrong_lines": []
+ },
+ "on-board pair": {
+  "right": 48,
+  "missed": 3,
+  "wrong": 0,
+  "wrong_lines": []
+ }
+}

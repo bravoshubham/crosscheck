@@ -1,0 +1,33 @@
+{
+ "scenario": "autothrottle_hold_onboard",
+ "scored": 2,
+ "passed": 0,
+ "errors": 1,
+ "runs": [
+  {
+   "run": 0,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 108,
+   "callout_s_after_fault": 28.8,
+   "truth_below_target_minus_10_s": 12.7,
+   "false_callouts_before_fault": [],
+   "panel_readable": 0.93
+  },
+  {
+   "run": 1,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 118,
+   "callout_s_after_fault": 38.7,
+   "truth_below_target_minus_10_s": 13.2,
+   "false_callouts_before_fault": [],
+   "panel_readable": 0.88
+  },
+  {
+   "run": 2,
+   "error": "camera check failed: SAM 3.1 did not find the PFD where expected ({'pfd': {'read': {'ias': 150, 'altitude': None, 'selected_altitude': 2500, 'thrust_mode': 'MCP SPD'}, 'complete': False}})\n",
+   "seconds": 28
+  }
+ ]
+}

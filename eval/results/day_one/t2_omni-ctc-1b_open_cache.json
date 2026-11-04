@@ -1,0 +1,282 @@
+{
+ "00_clean.wav": {
+  "text": "alasca four two one clumb hand mainton flight level two four zero",
+  "s": 3.58,
+  "audio_s": 6.34
+ },
+ "00_jet_snr+0.wav": {
+  "text": "         ",
+  "s": 0.04,
+  "audio_s": 6.34
+ },
+ "00_jet_snr+5.wav": {
+  "text": "ala\u0633\u0643a for two on \u0643lum an ma fligh\u062a lel t forr",
+  "s": 0.03,
+  "audio_s": 6.34
+ },
+ "00_jet_snr-5.wav": {
+  "text": "alle te por i one quani an nate qindeble to por te",
+  "s": 0.03,
+  "audio_s": 6.34
+ },
+ "01_clean.wav": {
+  "text": "allaska for to one turn laugh hitting to seven zero",
+  "s": 1.0,
+  "audio_s": 5.01
+ },
+ "01_jet_snr+0.wav": {
+  "text": "         ",
+  "s": 0.03,
+  "audio_s": 5.01
+ },
+ "01_jet_snr+5.wav": {
+  "text": "a for  o t l    ",
+  "s": 0.03,
+  "audio_s": 5.01
+ },
+ "01_jet_snr-5.wav": {
+  "text": "iasfo to on t lap itin to seven er",
+  "s": 0.03,
+  "audio_s": 5.01
+ },
+ "02_clean.wav": {
+  "text": "alaska four two one descend and maintein one one thousand",
+  "s": 0.35,
+  "audio_s": 4.78
+ },
+ "02_jet_snr+0.wav": {
+  "text": "         ",
+  "s": 0.03,
+  "audio_s": 4.78
+ },
+ "02_jet_snr+5.wav": {
+  "text": "alas  for two one descendan mainten on oe thousan",
+  "s": 0.03,
+  "audio_s": 4.78
+ },
+ "02_jet_snr-5.wav": {
+  "text": "alas o for t one percent in paan one one thouand",
+  "s": 0.03,
+  "audio_s": 4.78
+ },
+ "03_clean.wav": {
+  "text": "alasa for two one contact portland approach one two for point three five",
+  "s": 0.4,
+  "audio_s": 6.06
+ },
+ "03_jet_snr+0.wav": {
+  "text": "  t oa   o     ",
+  "s": 0.04,
+  "audio_s": 6.06
+ },
+ "03_jet_snr+5.wav": {
+  "text": "alasa for two one contact portland approach one two for point three fi",
+  "s": 0.03,
+  "audio_s": 6.06
+ },
+ "03_jet_snr-5.wav": {
+  "text": "ola\u179f te p cuw\u17b7n i ta ipo anne p potu por pon ti ba",
+  "s": 0.03,
+  "audio_s": 6.06
+ },
+ "04_clean.wav": {
+  "text": "alaska four two one reduce speed to two one zero knots",
+  "s": 0.08,
+  "audio_s": 4.62
+ },
+ "04_jet_snr+0.wav": {
+  "text": "alase for two one reduce te to two one dir nit",
+  "s": 0.03,
+  "audio_s": 4.62
+ },
+ "04_jet_snr+5.wav": {
+  "text": "ala\u0633\u0643a for to reduce b to two one zr n",
+  "s": 0.03,
+  "audio_s": 4.62
+ },
+ "04_jet_snr-5.wav": {
+  "text": "i lase forty onednte e tru on di nat",
+  "s": 0.03,
+  "audio_s": 4.62
+ },
+ "05_clean.wav": {
+  "text": "alas before two one clear dills run wey one zero right approach",
+  "s": 0.45,
+  "audio_s": 6.48
+ },
+ "05_jet_snr+0.wav": {
+  "text": "alas tefor two one clear dol runway one zerow right a proach",
+  "s": 0.04,
+  "audio_s": 6.48
+ },
+ "05_jet_snr+5.wav": {
+  "text": "alas befor two one clear dos runway one zero right approach",
+  "s": 0.04,
+  "audio_s": 6.48
+ },
+ "05_jet_snr-5.wav": {
+  "text": "alas e fo too oncuden longly on tirow like a cok",
+  "s": 0.04,
+  "audio_s": 6.48
+ },
+ "06_clean.wav": {
+  "text": "sesna three four five charly pampas wok four three two on",
+  "s": 0.51,
+  "audio_s": 4.99
+ },
+ "06_piston_snr+0.wav": {
+  "text": "\u0633\u0633\u0646 \u062b r  \u0634\u0627\u0631\u0644\u064a \u0628a\u0628\u0633 f\u0648   o\u0646",
+  "s": 0.03,
+  "audio_s": 4.99
+ },
+ "06_piston_snr+5.wav": {
+  "text": "sesna three four five charly pampas fork four three two on",
+  "s": 0.03,
+  "audio_s": 4.99
+ },
+ "06_piston_snr-5.wav": {
+  "text": "    \u0634\u0627\u0644\u064a \u0627\u0628\u0633     ",
+  "s": 0.03,
+  "audio_s": 4.99
+ },
+ "07_clean.wav": {
+  "text": "sesna three four fire charli pampemington three thousand five hundred",
+  "s": 0.09,
+  "audio_s": 6.0
+ },
+ "07_piston_snr+0.wav": {
+  "text": "\u0633\u0633\u0646\u0627 \u062b   \u0634\u0627\u0644\u064a \u0627\u0645\u0646\u062a\u0646    ",
+  "s": 0.03,
+  "audio_s": 6.0
+ },
+ "07_piston_snr+5.wav": {
+  "text": "se\u0633na \u062bhree four fir c\u0627rl\u064a pap\u0645i\u0646gton three thousand fivehundr",
+  "s": 0.03,
+  "audio_s": 6.0
+ },
+ "07_piston_snr-5.wav": {
+  "text": "         ",
+  "s": 0.03,
+  "audio_s": 6.0
+ },
+ "08_clean.wav": {
+  "text": "hlats fitin",
+  "s": 0.84,
+  "audio_s": 2.4
+ },
+ "08_jet_snr+0.wav": {
+  "text": "fifity",
+  "s": 0.03,
+  "audio_s": 2.4
+ },
+ "08_jet_snr+5.wav": {
+  "text": "pfity",
+  "s": 0.03,
+  "audio_s": 2.4
+ },
+ "08_jet_snr-5.wav": {
+  "text": "tive city",
+  "s": 0.03,
+  "audio_s": 2.4
+ },
+ "09_clean.wav": {
+  "text": "visitive rate der up",
+  "s": 0.15,
+  "audio_s": 2.43
+ },
+ "09_jet_snr+0.wav": {
+  "text": "bu i is rat",
+  "s": 0.03,
+  "audio_s": 2.43
+ },
+ "09_jet_snr+5.wav": {
+  "text": "\u0628\u0633\u062ai\u0641 \u0631a\u0641\u064a\u0631\u0627\u0628",
+  "s": 0.03,
+  "audio_s": 2.43
+ },
+ "09_jet_snr-5.wav": {
+  "text": "bit is rla",
+  "s": 0.02,
+  "audio_s": 2.43
+ },
+ "10_clean.wav": {
+  "text": "set heading two seven zero",
+  "s": 0.37,
+  "audio_s": 2.86
+ },
+ "10_jet_snr+0.wav": {
+  "text": "s \u0643\u064a t s \u0632\u0631",
+  "s": 0.03,
+  "audio_s": 2.86
+ },
+ "10_jet_snr+5.wav": {
+  "text": "sad ket\u064a two sen z",
+  "s": 0.03,
+  "audio_s": 2.86
+ },
+ "10_jet_snr-5.wav": {
+  "text": "tente to seven ger",
+  "s": 0.03,
+  "audio_s": 2.86
+ },
+ "11_clean.wav": {
+  "text": "hlum flight level too for zero iska for two one",
+  "s": 0.08,
+  "audio_s": 5.79
+ },
+ "11_jet_snr+0.wav": {
+  "text": "clum quite level tuty for telask for two one",
+  "s": 0.03,
+  "audio_s": 5.79
+ },
+ "11_jet_snr+5.wav": {
+  "text": "clum wuite level tuto four zero asca for two one",
+  "s": 0.03,
+  "audio_s": 5.79
+ },
+ "11_jet_snr-5.wav": {
+  "text": " kan  la ho ci  cui te wa c tian",
+  "s": 0.03,
+  "audio_s": 5.79
+ },
+ "12_clean.wav": {
+  "text": "maydey maydey may dey sesna three four five chari papa inging failure",
+  "s": 0.08,
+  "audio_s": 5.84
+ },
+ "12_piston_snr+0.wav": {
+  "text": "mayday mayday mayday sesna three four five chary papa ingin fadur",
+  "s": 0.03,
+  "audio_s": 5.84
+ },
+ "12_piston_snr+5.wav": {
+  "text": "maydey mayday maydey sesna three four five chary papa inging fadur",
+  "s": 0.03,
+  "audio_s": 5.84
+ },
+ "12_piston_snr-5.wav": {
+  "text": "mayday mayday maydayses a tree four five jo aa angin far",
+  "s": 0.04,
+  "audio_s": 5.84
+ },
+ "13_clean.wav": {
+  "text": "one thousand stabilized",
+  "s": 0.15,
+  "audio_s": 3.04
+ },
+ "13_jet_snr+0.wav": {
+  "text": "one thousand scarve eli",
+  "s": 0.03,
+  "audio_s": 3.04
+ },
+ "13_jet_snr+5.wav": {
+  "text": "one thousand stav te li",
+  "s": 0.03,
+  "audio_s": 3.04
+ },
+ "13_jet_snr-5.wav": {
+  "text": "one thousand scav te live",
+  "s": 0.03,
+  "audio_s": 3.04
+ }
+}

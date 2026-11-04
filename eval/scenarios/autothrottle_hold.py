@@ -22,6 +22,8 @@ import time
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from brain.live import Crosscheck  # noqa: E402
+from brain.live import READER_LABEL  # noqa: E402
+from senses.onboard import network_proof, ONBOARD  # noqa: E402
 from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.scoring import score  # noqa: E402
 
@@ -55,8 +57,13 @@ def camera_check_or_stop(out) -> dict:
     a camera that has moved, or a window in front of the simulator, would make every reading wrong."""
     from brain.live import capture_screen
     from senses.panel import CALIBRATION
-    from senses.sam31 import camera_check
-    r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
+    from senses.onboard import ONBOARD
+    if ONBOARD:  # nothing leaves the aircraft: the local Glimmer must read the whole PFD instead
+        from senses.onboard import camera_check
+        r = camera_check(capture_screen(), "pfd")
+    else:
+        from senses.sam31 import camera_check
+        r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
     (out / "camera_check.json").write_text(json.dumps(r, indent=1))
     if not r["ok"]:
         raise SystemExit(f"camera check failed: SAM 3.1 did not find the PFD where expected ({r['matches']})")
@@ -64,7 +71,7 @@ def camera_check_or_stop(out) -> dict:
 
 
 async def main(speak: bool, reader: str = "apple") -> int:
-    name = "autothrottle_hold" + ("_spark" if reader == "spark" else "")
+    name = "autothrottle_hold" + ("_spark" if reader == "spark" else "_onboard" if reader == "glimmer" else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
@@ -89,7 +96,7 @@ async def main(speak: bool, reader: str = "apple") -> int:
     say = None
     if speak:
         from voice.tts import speak as say
-    cc = Crosscheck(out, speak=say, frames=True, reader=reader, fact_time="captured" if reader == "spark" else "arrival", explain=True)
+    cc = Crosscheck(out, speak=say, frames=True, reader=reader, fact_time="captured" if reader in ("spark", "glimmer") else "arrival", explain=True)
     bring_to_front()  # the panel reader captures the screen
     cam = camera_check_or_stop(out)  # SAM 3.1 pre-flight check of the panel camera
     t0 = time.time()
@@ -111,9 +118,10 @@ async def main(speak: bool, reader: str = "apple") -> int:
     await xp.close()
 
     (out / "meta.json").write_text(json.dumps({
-        "scenario": name, "scorer": "autothrottle_hold", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "airport": "KPDX 10R",
+        "scenario": name, "scorer": "autothrottle_hold", "panel_reader": READER_LABEL[reader], "aircraft": "B738", "airport": "KPDX 10R",
         "t_start": t0, "t_fault": t_fault, "fact_time": cc.fact_time, "target_kt": TARGET_KT, "quiet_s": QUIET_S, "fault_s": FAULT_S,
-        "speech": "none", "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+        "speech": "none", "camera_check": {"model": cam["model"], **cam["matches"]},
+        **({"network": network_proof()} if ONBOARD else {}), "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))
@@ -121,4 +129,4 @@ async def main(speak: bool, reader: str = "apple") -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(asyncio.run(main(speak="--silent" not in sys.argv, reader="spark" if "--spark" in sys.argv else "apple")))
+    sys.exit(asyncio.run(main(speak="--silent" not in sys.argv, reader="glimmer" if ONBOARD else "spark" if "--spark" in sys.argv else "apple")))

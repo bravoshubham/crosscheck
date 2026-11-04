@@ -1,0 +1,30 @@
+{
+ "pfd_frames": 77,
+ "right": {
+  "altitude": {
+   "glimmer": "53/77",
+   "apple": "43/54",
+   "muse-spark": "9/23"
+  },
+  "selected_altitude": {
+   "glimmer": "57/63",
+   "apple": "45/46",
+   "muse-spark": "15/17"
+  },
+  "ias": {
+   "glimmer": "30/36",
+   "apple": "29/30",
+   "muse-spark": "2/6"
+  }
+ },
+ "flap_gauge_right": {
+  "glimmer": "19/20",
+  "muse-spark": "18/20"
+ },
+ "glimmer_median_s": 3.89,
+ "tolerance": {
+  "ias": 2,
+  "altitude": 20,
+  "selected_altitude": 0
+ }
+}

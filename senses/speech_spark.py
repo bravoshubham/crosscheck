@@ -72,6 +72,31 @@ def guarded(answer: dict, text: str, speaker: str, t: float, own_digits: str) ->
     return [Fact("said", "clearance.altitude" if kind == "clearance" else "readback.altitude", value, t, speaker, source="muse-spark")]
 
 
+ANSWER = {"type": "object", "properties": {"kind": {"type": "string", "enum": ["clearance", "readback", "flaps", "none"]},
+          "value": {"type": ["integer", "null"]}, "for_us": {"type": "boolean"}}, "required": ["kind", "value", "for_us"]}
+
+
+async def glimmer_facts(texts: list[str], speaker: str, t: float, own_digits: str) -> tuple[list[Fact], dict]:
+    """On board: the same question to the local Muse Glimmer, with both recognizers' transcripts.
+    The guard checks the value against each transcript, and keeps it if either states it."""
+    from senses.onboard import glimmer_json
+    heard = " / ".join(f'"{x}"' for x in texts if x)
+    prompt = PROMPT.format(who=WHO.get(speaker, speaker), text=heard.replace('"', "'")).replace(
+        "This is a speech-recognition transcript", "These are two speech-recognition transcripts (separated by /)").replace(
+        "it may contain recognition errors", "each may contain recognition errors")
+    out, _ = await glimmer_json(prompt, ANSWER, num_predict=60)
+    m = re.search(r"\{.*\}", out, re.S)
+    try:
+        answer = json.loads(m.group()) if m else {}
+    except json.JSONDecodeError:
+        answer = {}
+    for x in texts:
+        facts = guarded(answer, x, speaker, t, own_digits)
+        if facts:
+            return [Fact(f.stream, f.key, f.value, f.t, f.speaker, source="muse-glimmer") for f in facts], answer
+    return [], answer
+
+
 async def spark_facts(text: str, speaker: str, t: float, own_digits: str, client: httpx.AsyncClient | None = None) -> tuple[list[Fact], dict]:
     """Ask Muse Spark about one line; returns (guarded facts, its raw answer)."""
     load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
@@ -95,15 +120,50 @@ async def spark_facts(text: str, speaker: str, t: float, own_digits: str, client
     return guarded(answer, text, speaker, t, own_digits), answer
 
 
-async def read_line(text: str, speaker: str, own_digits: str, client: httpx.AsyncClient | None = None) -> tuple[list[Fact], dict | None]:
+def onboard_facts(text: str, alt: str, speaker: str, t: float, own_digits: str, led=None) -> list[Fact]:
+    """On board, two recognizers heard the line. A value that contradicts the aircraft (a climb to
+    below it: brain/live.py's implausible) is dropped first; then a value counts when both heard
+    it, or when only one heard a value at all. When they heard different values, neither is kept
+    (scenario lines: eval/audio/wer_local.py)."""
+    from brain.live import implausible
+    a = said_facts(text, speaker, t, own_digits, source="seamless-m4t-v2")
+    b = said_facts(alt, speaker, t, own_digits, source="omnilingual-asr")
+    if led is not None:
+        a = [f for f in a if not implausible(f, led, text)]
+        b = [f for f in b if not implausible(f, led, alt)]
+    same = sorted((f.key, f.value) for f in a) == sorted((f.key, f.value) for f in b)
+    if a and b and same:
+        return [Fact(f.stream, f.key, f.value, f.t, f.speaker, source="seamless+omnilingual") for f in a]
+    if a and b:
+        return []
+    return a or b
+
+
+async def read_line(text: str, speaker: str, own_digits: str, client: httpx.AsyncClient | None = None,
+                    alt: str | None = None, led=None) -> tuple[list[Fact], dict | None]:
     """The live path: code first; Muse Spark only for a line code got nothing from. Facts are
-    timed when they are known, so Spark's extra second is part of the record."""
+    timed when they are known, so Spark's extra second is part of the record. On board, `alt` is
+    the second recognizer's transcript and the second reader is the local Muse Glimmer."""
     import time
+    if alt is not None:
+        a = said_facts(text, speaker, time.time(), own_digits)
+        b = said_facts(alt, speaker, time.time(), own_digits)
+        facts = onboard_facts(text, alt, speaker, time.time(), own_digits, led)
+        if facts or (a and b) or not (worth_asking(text) or worth_asking(alt)):
+            return facts, None if facts or not (a and b) else {"disagree": [[f.key, f.value] for f in a + b]}
+        try:
+            facts, answer = await glimmer_facts([text, alt], speaker, 0.0, own_digits)
+        except (httpx.HTTPError, KeyError) as e:
+            return [], {"error": str(e)[:200]}
+        t = time.time()
+        return [Fact(f.stream, f.key, f.value, t, f.speaker, source=f.source) for f in facts], answer
     facts = said_facts(text, speaker, time.time(), own_digits)
     if facts or not worth_asking(text):
         return facts, None
-    try:
-        facts, answer = await spark_facts(text, speaker, 0.0, own_digits, client)
+    from senses.onboard import ONBOARD
+    try:  # on board even a single transcript (a microphone line) goes to the local Glimmer, never the API
+        facts, answer = await (glimmer_facts([text], speaker, 0.0, own_digits) if ONBOARD
+                               else spark_facts(text, speaker, 0.0, own_digits, client))
     except (httpx.HTTPError, KeyError) as e:  # no answer: the line stays unread, as with code alone
         return [], {"error": str(e)[:200]}
     t = time.time()
@@ -118,9 +178,11 @@ async def hear(pcm, speaker: str, own_digits: str, led=None) -> tuple[dict, list
     from brain.live import implausible
     from senses.speech import transcribe
     r = await transcribe(pcm)
-    facts, spark = await read_line(r["text"], speaker, own_digits)
+    facts, spark = await read_line(r["text"], speaker, own_digits, alt=r.get("alt"), led=led)
     if led is None or not any(implausible(f, led, r["text"]) for f in facts):
         return r, facts, spark, None
+    if "alt" in r:  # on board the recognizers are deterministic: hearing it again changes nothing
+        return r, facts, spark, r["text"]
     first = r["text"]
     r2 = await transcribe(pcm)
     facts2, spark2 = await read_line(r2["text"], speaker, own_digits)

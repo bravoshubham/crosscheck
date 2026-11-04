@@ -1,0 +1,50 @@
+{
+ "scenario": "flaps_wrong_onboard",
+ "scored": 3,
+ "passed": 3,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 29.2,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 83,
+   "flaps_settled_s_after_call": 8.0,
+   "false_callouts_before_call": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 37.8,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 89,
+   "flaps_settled_s_after_call": 8.2,
+   "false_callouts_before_call": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_call": 29.4,
+     "text": "Flaps fifteen called, ten set."
+    }
+   ],
+   "seconds": 85,
+   "flaps_settled_s_after_call": 8.3,
+   "false_callouts_before_call": [],
+   "panel_readable": 1.0
+  }
+ ]
+}

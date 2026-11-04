@@ -1,0 +1,92 @@
+{
+ "muse voice transcribe (cloud), pass 1": {
+  "clean": {
+   "numbers_exact": "10/13",
+   "wer": 0.259
+  },
+  "+5 dB": {
+   "numbers_exact": "12/13",
+   "wer": 0.198
+  },
+  "+0 dB": {
+   "numbers_exact": "9/13",
+   "wer": 0.37
+  },
+  "-5 dB": {
+   "numbers_exact": "6/13",
+   "wer": 0.617
+  }
+ },
+ "muse voice transcribe (cloud), pass 2": {
+  "clean": {
+   "numbers_exact": "12/13",
+   "wer": 0.21
+  },
+  "+5 dB": {
+   "numbers_exact": "11/13",
+   "wer": 0.235
+  },
+  "+0 dB": {
+   "numbers_exact": "10/13",
+   "wer": 0.333
+  },
+  "-5 dB": {
+   "numbers_exact": "6/13",
+   "wer": 0.543
+  }
+ },
+ "muse voice transcribe (cloud), pass 3": {
+  "clean": {
+   "numbers_exact": "12/13",
+   "wer": 0.21
+  },
+  "+5 dB": {
+   "numbers_exact": "11/13",
+   "wer": 0.235
+  },
+  "+0 dB": {
+   "numbers_exact": "10/13",
+   "wer": 0.37
+  },
+  "-5 dB": {
+   "numbers_exact": "6/13",
+   "wer": 0.593
+  }
+ },
+ "omni-llm-7b (on board), median 1.37 s a line": {
+  "clean": {
+   "numbers_exact": "10/13",
+   "wer": 0.457
+  },
+  "+5 dB": {
+   "numbers_exact": "8/13",
+   "wer": 0.605
+  },
+  "+0 dB": {
+   "numbers_exact": "7/13",
+   "wer": 0.741
+  },
+  "-5 dB": {
+   "numbers_exact": "4/13",
+   "wer": 1.531
+  }
+ },
+ "seamless (on board), median 0.33 s a line": {
+  "clean": {
+   "numbers_exact": "12/13",
+   "wer": 0.309
+  },
+  "+5 dB": {
+   "numbers_exact": "6/13",
+   "wer": 0.531
+  },
+  "+0 dB": {
+   "numbers_exact": "4/13",
+   "wer": 0.889
+  },
+  "-5 dB": {
+   "numbers_exact": "1/13",
+   "wer": 2.383
+  }
+ }
+}

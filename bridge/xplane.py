@@ -73,13 +73,15 @@ class XPlane:
         if running():
             raise XPlaneError("X-Plane would not quit for a restart")
         subprocess.run(["open", "-a", "X-Plane"], check=False)
-        for _ in range(120):  # the API answers from the main menu on (with 0 datarefs until a flight loads)
+        from bridge.demo_dialogs import dismiss_once
+        for i in range(120):  # the API answers from the main menu on (with 0 datarefs until a flight loads)
             await asyncio.sleep(2)
             try:
                 await self.dataref_count()
                 break
             except httpx.HTTPError:
-                pass
+                if i % 5 == 4:  # after a forced quit X-Plane offers safe mode, and waits for an answer
+                    dismiss_once()
         else:
             raise XPlaneError("X-Plane did not come back after a restart")
         await asyncio.sleep(10)

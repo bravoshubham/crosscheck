@@ -22,7 +22,10 @@ class Flag:
     callout: str
 
 
-def readback_vs_clearance(led: Ledger, now: float, window: float = 20.0) -> list[Flag]:
+READBACK_WINDOW_S = 20.0  # a readback answers the clearance heard at most this long before it
+
+
+def readback_vs_clearance(led: Ledger, now: float, window: float = READBACK_WINDOW_S) -> list[Flag]:
     """ATC cleared one altitude, the crew read back another."""
     clr = led.latest("said", "clearance.altitude", before=now, speaker="atc")
     if clr is None:
@@ -72,7 +75,18 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
     value, first_seen = stable
     if abs(value - clr.value) < 50:
         return []
+    newest = led.latest("set", "mcp.altitude", before=now)
+    if newest is not None and abs(newest.value - value) >= 50:
+        # the newest reading already shows another value: the selector is being set. A slow reader
+        # (Muse Glimmer on board, one read every ~5 s) saw the new setting one reading before the
+        # vote did, and this once blamed the crew for the old one (15-minute flight on board, 180 s)
+        return []
     rb = led.latest("said", "readback.altitude", before=now)
+    if rb is not None and rb.t > clr.t + READBACK_WINDOW_S and abs(rb.value - clr.value) >= 50:
+        # a readback of another value, long after the last clearance heard: it answers a clearance
+        # Crosscheck did not hear (15-minute flight on board, 683 s: "Alaska four two one" lost to
+        # both recognizers), so the cleared altitude is unknown, not the old one
+        return []
     heard_rb = rb is not None and rb.t >= clr.t
     since = max(clr.t, first_seen, rb.t if heard_rb else clr.t)
     # no readback heard (missed by the recognizer, or not yet made): when the crew acknowledged is
@@ -81,9 +95,13 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
     # the grace is counted to the newest selector reading, not to the clock: a slow reader (Muse Spark,
     # ~3.5 s behind) must not blame the crew for a setting it has not seen yet (altitude_correct_spark,
     # 3 Nov: the crew set 11,000 at 26 s, Spark's readings of it arrived from 33 s, and it fired at 33.1)
-    newest = led.latest("set", "mcp.altitude", before=now)
     seen_until = newest.t if newest is not None else now
     if seen_until - since < (grace if heard_rb else NO_READBACK_GRACE_S):
+        return []
+    # and at least two readings since then must show it: a slow reader's one stale read of the old
+    # setting right after the crew changed it is not the crew's mistake (15-minute flight on board,
+    # 356 s and 470 s: Muse Glimmer read 5,000 and 4,000 a second after the MCP went to 4,000 and 3,000)
+    if sum(1 for f in led.since("set", "mcp.altitude", since) if f.t <= now and abs(f.value - value) < 50) < 2:
         return []
     return [Flag("clearance_vs_set", "altitude", clr.value, value, since,
                  f"Cleared {say.altitude(clr.value)}, set {say.altitude(value)}.")]
@@ -154,6 +172,8 @@ TREND_WINDOW_S = 8.0  # speed trend from the readings of the last few seconds (S
 TREND_AHEAD_S = 10.0  # look this far ahead, like the PFD's own speed trend vector
 THRUST_STEADY = 3     # thrust-mode readings in a row that must agree it is not in speed: on-device text recognition once
                       # missed a plain "MCP SPD" on two frames in a row (nominal flight, run 2, 748 s)
+SLOW_PAIR_S = 3.0     # or two readings at least this far apart: a slow reader (Muse Glimmer on board, one read every
+                      # ~4 s on a GPU shared with the simulator) would otherwise take 10 s to see three
 
 
 def _speed_trend(led: Ledger, now: float) -> float | None:
@@ -179,12 +199,15 @@ def mode_vs_phase(led: Ledger, now: float, speed_margin: float = 5.0) -> list[Fl
     reader (Muse Spark, ~4 s a frame) still call it before the speed is 10 kt low."""
     if led.value_at("doing", "phase", now) != "final":
         return []
-    thrust = [f.value for f in led.since("doing", "fma.thrust", 0) if f.t <= now][-THRUST_STEADY:]
+    seen = [f for f in led.since("doing", "fma.thrust", 0) if f.t <= now]
+    thrust = [f.value for f in seen[-THRUST_STEADY:]]
+    pair = seen[-2:]
+    steady = (len(thrust) == THRUST_STEADY and not any(m in SPEED_MODES for m in thrust)) or \
+        (len(pair) == 2 and pair[1].t - pair[0].t >= SLOW_PAIR_S and not any(f.value in SPEED_MODES for f in pair))
     thr = thrust[-1] if thrust else None
     ias = led.value_at("doing", "ias", now)
     target = led.value_at("set", "mcp.speed", now)
-    if (len(thrust) < THRUST_STEADY or any(m in SPEED_MODES for m in thrust) or ias is None or target is None
-            or ias >= target):
+    if not steady or ias is None or target is None or ias >= target:
         return []
     pitch = [f.value for f in led.since("doing", "fma.pitch", 0) if f.t <= now][-THRUST_STEADY:]
     if any(m in SPEED_MODES for m in pitch):

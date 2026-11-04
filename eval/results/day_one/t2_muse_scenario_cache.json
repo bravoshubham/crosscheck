@@ -1,0 +1,254 @@
+{
+ "00_atc_0.wav": {
+  "text": "Alaska 421 climb and maintain 1000.",
+  "audio_s": 4.88
+ },
+ "00_atc_1.wav": {
+  "text": "Alaska 421 climb and maintain 11000.",
+  "audio_s": 4.88
+ },
+ "00_atc_2.wav": {
+  "text": "Alaska 421 climb and maintain one one thousand.",
+  "audio_s": 4.88
+ },
+ "01_pm_0.wav": {
+  "text": " Fland and maintained 1,000 Alaska 421.",
+  "audio_s": 4.4
+ },
+ "01_pm_1.wav": {
+  "text": " Fland and maintained one 1000 Alaska 421.",
+  "audio_s": 4.4
+ },
+ "01_pm_2.wav": {
+  "text": " Fland and maintain one 1,000 Alaska 421.",
+  "audio_s": 4.4
+ },
+ "02_pm_0.wav": {
+  "text": " Plan een mensen one 2000 Alaska 421.",
+  "audio_s": 4.32
+ },
+ "02_pm_1.wav": {
+  "text": " Plan and mention one 2000 Alaska 421.",
+  "audio_s": 4.32
+ },
+ "02_pm_2.wav": {
+  "text": "Plan een mensen one, two thousand Alaska four two one..",
+  "audio_s": 4.32
+ },
+ "03_atc_0.wav": {
+  "text": "Alaska 421 descend and maintain 6000.",
+  "audio_s": 3.6
+ },
+ "03_atc_1.wav": {
+  "text": "Alaska 421 descend and maintain 6000.",
+  "audio_s": 3.6
+ },
+ "03_atc_2.wav": {
+  "text": "Alaska 421 descend and maintain 6000.",
+  "audio_s": 3.6
+ },
+ "04_pm_0.wav": {
+  "text": "Descend and mate in 6,000 Alaska 421.",
+  "audio_s": 3.68
+ },
+ "04_pm_1.wav": {
+  "text": " Descend and mate in 6000 Alaska 421.",
+  "audio_s": 3.68
+ },
+ "04_pm_2.wav": {
+  "text": "Descend and mate in 6000 Alaska 421.",
+  "audio_s": 3.68
+ },
+ "05_atc_0.wav": {
+  "text": "Alaska 421 descend and maintain 5000.",
+  "audio_s": 4.72
+ },
+ "05_atc_1.wav": {
+  "text": "Alaska 421 descend and maintain 5000.",
+  "audio_s": 4.72
+ },
+ "05_atc_2.wav": {
+  "text": "Alaska 421 descend and maintain 5000.",
+  "audio_s": 4.72
+ },
+ "06_pm_0.wav": {
+  "text": "We send and maintain 5,000 Alaska 421.",
+  "audio_s": 4.32
+ },
+ "06_pm_1.wav": {
+  "text": "We send and maintain 5,000 Alaska 421.",
+  "audio_s": 4.32
+ },
+ "06_pm_2.wav": {
+  "text": "We send and maintain 5,000 Alaska 421.",
+  "audio_s": 4.32
+ },
+ "07_atc_0.wav": {
+  "text": "Alaska, 421 descend and maintain 4000.",
+  "audio_s": 4.0
+ },
+ "07_atc_1.wav": {
+  "text": "Alaska 421 descend and maintain 4000.",
+  "audio_s": 4.0
+ },
+ "07_atc_2.wav": {
+  "text": "Alaska, 421 descend and maintain 4000.",
+  "audio_s": 4.0
+ },
+ "08_pm_0.wav": {
+  "text": "Descend and maintain 4,000 Alaska 421.",
+  "audio_s": 4.08
+ },
+ "08_pm_1.wav": {
+  "text": "Descend and maintain 4,000 LS for 421..",
+  "audio_s": 4.08
+ },
+ "08_pm_2.wav": {
+  "text": "Descend and maintain 4,000 Alaska 421.",
+  "audio_s": 4.08
+ },
+ "09_atc_0.wav": {
+  "text": "Alaska 421 Descend and maintain 3000",
+  "audio_s": 3.92
+ },
+ "09_atc_1.wav": {
+  "text": "Alaska 421 Descend and maintain 3000.",
+  "audio_s": 3.92
+ },
+ "09_atc_2.wav": {
+  "text": "Alaska 421 Descend and maintain 3000.",
+  "audio_s": 3.92
+ },
+ "10_pm_0.wav": {
+  "text": "Descend and maintain 3,000 Alaska 421.",
+  "audio_s": 4.08
+ },
+ "10_pm_1.wav": {
+  "text": "Descend and maintain three thousand Alaska four two one.",
+  "audio_s": 4.08
+ },
+ "10_pm_2.wav": {
+  "text": "descend and maintain 3,000 Alaska 421.",
+  "audio_s": 4.08
+ },
+ "11_atc_0.wav": {
+  "text": "Alaska 421 Descendant maintain 2000.",
+  "audio_s": 3.92
+ },
+ "11_atc_1.wav": {
+  "text": "A bus 421 Descendant maintain 2000.",
+  "audio_s": 3.92
+ },
+ "11_atc_2.wav": {
+  "text": "A baseline 421 descendant maintain 2000.",
+  "audio_s": 3.92
+ },
+ "12_pm_0.wav": {
+  "text": "The send and matin 2000 Alaska 421.",
+  "audio_s": 3.92
+ },
+ "12_pm_1.wav": {
+  "text": "Descend and maintain two thousand Alaska four two one..",
+  "audio_s": 3.92
+ },
+ "12_pm_2.wav": {
+  "text": "Descend and maintain 2000 Alaska 421. ",
+  "audio_s": 3.92
+ },
+ "13_atc_0.wav": {
+  "text": "Alaska Fort two one turn left hitting one two zero.",
+  "audio_s": 4.08
+ },
+ "13_atc_1.wav": {
+  "text": "Alaska Fort two one turn left hitting one two zero.",
+  "audio_s": 4.08
+ },
+ "13_atc_2.wav": {
+  "text": "Alaska Fort two one turn left hitting one two zero.",
+  "audio_s": 4.08
+ },
+ "14_pm_0.wav": {
+  "text": "Left heading one two zero will ask for four two one.",
+  "audio_s": 3.44
+ },
+ "14_pm_1.wav": {
+  "text": "Left heading 120 will ask for 421.",
+  "audio_s": 3.44
+ },
+ "14_pm_2.wav": {
+  "text": "Left heading one two zero will ask a four two one.",
+  "audio_s": 3.44
+ },
+ "15_atc_0.wav": {
+  "text": "Alaska 421 turn right heading 300.",
+  "audio_s": 4.08
+ },
+ "15_atc_1.wav": {
+  "text": "Alaska 421 turn right heading 300",
+  "audio_s": 4.08
+ },
+ "15_atc_2.wav": {
+  "text": "Alaska 421 turn right heading 300",
+  "audio_s": 4.08
+ },
+ "16_pm_0.wav": {
+  "text": "Right heading 300 will ask 421.",
+  "audio_s": 3.68
+ },
+ "16_pm_1.wav": {
+  "text": "Right heading three zero zero will ask for two one.",
+  "audio_s": 3.68
+ },
+ "16_pm_2.wav": {
+  "text": "Right heading 300 will ask for 21.",
+  "audio_s": 3.68
+ },
+ "17_pf_0.wav": {
+  "text": "Flaps one.",
+  "audio_s": 1.52
+ },
+ "17_pf_1.wav": {
+  "text": "Flaps one.",
+  "audio_s": 1.52
+ },
+ "17_pf_2.wav": {
+  "text": "Flaps one.",
+  "audio_s": 1.52
+ },
+ "18_pf_0.wav": {
+  "text": "Flaps five.",
+  "audio_s": 1.52
+ },
+ "18_pf_1.wav": {
+  "text": "Flaps five.",
+  "audio_s": 1.52
+ },
+ "18_pf_2.wav": {
+  "text": "Flaps five.",
+  "audio_s": 1.52
+ },
+ "19_pf_0.wav": {
+  "text": "Flaps 10.",
+  "audio_s": 1.52
+ },
+ "19_pf_1.wav": {
+  "text": "Flaps 10.",
+  "audio_s": 1.52
+ },
+ "19_pf_2.wav": {
+  "text": "Flaps 10.",
+  "audio_s": 1.52
+ },
+ "20_pf_0.wav": {
+  "text": "Flaps 15.",
+  "audio_s": 1.76
+ },
+ "20_pf_1.wav": {
+  "text": "Flaps 15.",
+  "audio_s": 1.76
+ },
+ "20_pf_2.wav": {
+  "text": "Flaps 15.",
+  "audio_s": 1.76
+ }
+}

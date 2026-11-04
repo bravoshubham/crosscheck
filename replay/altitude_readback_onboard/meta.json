@@ -1,0 +1,66 @@
+{
+ "scenario": "altitude_readback_onboard",
+ "scorer": "altitude",
+ "panel_reader": "muse-glimmer",
+ "aircraft": "B738",
+ "area": "Portland",
+ "variant": "readback",
+ "fact_time": "captured",
+ "cleared": 11000,
+ "readback": 12000,
+ "mcp_set": 11000,
+ "expect_rule": "readback_vs_clearance",
+ "t_start": 1793790773.433046,
+ "t_clear": 1793790785.433046,
+ "t_set": 1793790800.660414,
+ "speech": "on board: SeamlessM4T v2 and Omnilingual ASR 7B on this computer (onboard/hearing_service.py), values kept when the two agree, the local Muse Glimmer as second reader; parsed by senses/speech.py",
+ "heard": [
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one climb and maintain one one thousand",
+   "transcript": "alaska four two one climb and maintain one one thousand",
+   "audio_s": 4.86,
+   "alt_transcript": "alaska four two one climb and mainton won one thousand",
+   "s_from_start": 7.84,
+   "facts": [
+    [
+     "clearance.altitude",
+     11000
+    ]
+   ],
+   "spark": null
+  },
+  {
+   "speaker": "pm",
+   "spoken": "climb and maintain one two thousand alaska four two one",
+   "transcript": "one two thousand alaska four two one",
+   "audio_s": 4.29,
+   "alt_transcript": "flynn and manson one two thousand alaska four two one",
+   "s_from_start": 6.38,
+   "facts": [
+    [
+     "readback.altitude",
+     12000
+    ]
+   ],
+   "spark": null
+  }
+ ],
+ "camera_check": {
+  "model": "muse-glimmer-30b",
+  "pfd": {
+   "read": {
+    "ias": 191,
+    "selected_altitude": 9000,
+    "thrust_mode": "MCP SPD"
+   },
+   "ok": true
+  }
+ },
+ "network": {
+  "sandbox": "onboard/no_network.sb",
+  "onboard": true,
+  "api.meta.ai:443": "refused: PermissionError"
+ },
+ "recorded": "2026-11-04 16:43:57 IST"
+}

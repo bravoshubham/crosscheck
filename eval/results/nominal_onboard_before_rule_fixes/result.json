@@ -1,0 +1,33 @@
+{
+ "minutes": 15.0,
+ "false_callouts": [
+  {
+   "s": 179.9,
+   "text": "Cleared five thousand, set six thousand.",
+   "rule": "clearance_vs_set"
+  },
+  {
+   "s": 361.9,
+   "text": "Cleared four thousand, set five thousand.",
+   "rule": "clearance_vs_set"
+  },
+  {
+   "s": 482.3,
+   "text": "Cleared three thousand, set four thousand.",
+   "rule": "clearance_vs_set"
+  },
+  {
+   "s": 682.9,
+   "text": "Cleared three thousand, set two thousand.",
+   "rule": "clearance_vs_set"
+  }
+ ],
+ "lines_heard": 22,
+ "altitude_and_flap_facts_parsed": "12/14",
+ "minutes_below_2500ft": 3.6,
+ "readings": 138,
+ "paused_during_run": false,
+ "pass": false,
+ "panel_readable": 0.93,
+ "non_cockpit_frames": 0
+}

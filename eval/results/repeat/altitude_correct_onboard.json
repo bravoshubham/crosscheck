@@ -1,0 +1,35 @@
+{
+ "scenario": "altitude_correct_onboard",
+ "scored": 3,
+ "passed": 3,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": null,
+   "seconds": 98,
+   "aircraft_passed_cleared_s_after_set": 27.6,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": null,
+   "seconds": 103,
+   "aircraft_passed_cleared_s_after_set": 27.6,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": null,
+   "seconds": 98,
+   "aircraft_passed_cleared_s_after_set": 27.6,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  }
+ ]
+}

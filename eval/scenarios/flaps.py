@@ -31,6 +31,7 @@ import soundfile as sf
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from brain.live import Crosscheck  # noqa: E402
+from senses.onboard import network_proof, ONBOARD, ONBOARD_SPEECH  # noqa: E402
 from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.scoring import score  # noqa: E402
 from senses.flaps_spark import FLAPS_VIEW  # noqa: E402
@@ -73,7 +74,7 @@ def play(pcm, sr: int) -> None:
 async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
     selects = VARIANTS[variant]
     called = CALLED
-    name = f"flaps_{variant}" + ("_mic" if mic else "")
+    name = f"flaps_{variant}" + ("_onboard" if ONBOARD else "") + ("_mic" if mic else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     line = "flaps fifteen"
@@ -103,13 +104,17 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
         from voice.tts import speak as say_cc
     # facts at capture time: a slow Spark once delivered four readings of a moving needle together, and
     # stamped on arrival they looked settled (flaps_wrong, 3 Nov 11:22: "five set" for 10)
-    cc = Crosscheck(out, speak=say_cc, frames=True, reader="spark-flaps", frame_box=FRAME_BOX, explain=True, fact_time="captured")
+    cc = Crosscheck(out, speak=say_cc, frames=True, reader="glimmer-flaps" if ONBOARD else "spark-flaps", frame_box=FRAME_BOX, explain=True, fact_time="captured")
     heard, truth_rows = [], []
     bring_to_front()  # the camera captures the screen
     from brain.live import capture_screen
     from senses.flaps_spark import FLAP_GAUGE
-    from senses.sam31 import inside_check
-    cam = inside_check(capture_screen(), "gauge", FLAP_GAUGE)  # SAM 3.1 pre-flight check of the camera
+    if ONBOARD:  # nothing leaves the aircraft: the local Glimmer must read the gauge instead
+        from senses.onboard import camera_check
+        cam = camera_check(capture_screen(), "flaps")
+    else:
+        from senses.sam31 import inside_check
+        cam = inside_check(capture_screen(), "gauge", FLAP_GAUGE)  # SAM 3.1 pre-flight check of the camera
     (out / "camera_check.json").write_text(json.dumps(cam, indent=1))
     if not cam["ok"]:
         raise SystemExit(f"camera check failed: SAM 3.1 found no gauge in the flap reader's view ({cam['found']})")
@@ -158,8 +163,9 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
             play(audio, SR)
         r = await transcribe(audio)
         t = time.time()
-        facts, spark = await read_line(r["text"], "pf", "421")
+        facts, spark = await read_line(r["text"], "pf", "421", alt=r.get("alt"))  # on board: both recognizers
         heard.append({"speaker": "pf", "spoken": line, "transcript": r["text"], "audio_s": r["audio_s"],
+                      **({"alt_transcript": r["alt"]} if "alt" in r else {}),
                       "s_from_start": round(t - t_call, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark})
         cc.event("heard", t, speaker="pf", transcript=r["text"], spoken=line)
         for f in facts:
@@ -185,10 +191,11 @@ async def main(variant: str, speak: bool, mic: Mic | None = None) -> int:
         "called": called, "selected": selects,
         "expect_rule": ("callout_vs_set" if (selects if selects is not None else 5) != called else None) if mic else EXPECT[variant],
         "t_start": t0, "t_call": t_call, "t_move": t_move, "frame_box": list(FRAME_BOX),
-        "panel_reader": "muse-spark-flaps", "view": FLAPS_VIEW, "fact_time": cc.fact_time,
-        "speech": "Muse Voice Transcribe, live: a person on the Mac's microphone, parsed by senses/speech.py" if mic else
+        "panel_reader": "muse-glimmer-flaps" if ONBOARD else "muse-spark-flaps", "view": FLAPS_VIEW, "fact_time": cc.fact_time,
+        "speech": ONBOARD_SPEECH if ONBOARD else "Muse Voice Transcribe, live: a person on the Mac's microphone, parsed by senses/speech.py" if mic else
                   "Muse Voice Transcribe, live (macOS voice on the intercom), parsed by senses/speech.py",
-        "heard": heard, "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+        "heard": heard, "camera_check": {"model": cam["model"], **cam["matches"]},
+        **({"network": network_proof()} if ONBOARD else {}), "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))

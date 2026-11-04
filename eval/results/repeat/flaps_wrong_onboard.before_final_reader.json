@@ -1,0 +1,17 @@
+{
+ "scenario": "flaps_wrong_onboard",
+ "scored": 1,
+ "passed": 0,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": false,
+   "callouts": null,
+   "seconds": 82,
+   "flaps_settled_s_after_call": 8.3,
+   "false_callouts_before_call": [],
+   "panel_readable": 1.0
+  }
+ ]
+}

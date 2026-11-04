@@ -305,3 +305,43 @@ def test_a_readback_on_the_wrong_side_of_the_aircraft_is_misheard(tmp_path):
     assert implausible(heard_wrong, cc.ledger, "Planned and maintained 1000 Alaska 421.")
     real_error = Fact("said", "readback.altitude", 12000, 25.0, "pm")  # a real readback error stays a readback error
     assert implausible(real_error, cc.ledger, "climb and maintain one two thousand Alaska 421") is None
+
+
+def test_autothrottle_two_slow_readings_far_apart_are_enough():
+    # Muse Glimmer on board: one read every ~4 s; two that agree, 4 s apart, count like three in a row
+    led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 140, 0.0), ("doing", "fma.thrust", "MCP SPD", 0.0),
+                 ("doing", "fma.thrust", "BLANK", 4.0), ("doing", "fma.thrust", "BLANK", 8.0))
+    _decaying(led, [141.5, 140, 138.5, 137, 135.5, 134, 132.5, 131], t0=1.0)
+    assert [f.rule for f in evaluate(led, 8.0)] == ["mode_vs_phase"]
+
+
+def test_autothrottle_two_quick_readings_are_not_enough():
+    # two agreeing readings a second apart are still one glance: three are needed
+    led = ledger(("doing", "phase", "final", 0.0), ("set", "mcp.speed", 140, 0.0), ("doing", "fma.thrust", "MCP SPD", 0.0),
+                 ("doing", "fma.thrust", "BLANK", 7.0), ("doing", "fma.thrust", "BLANK", 8.0))
+    _decaying(led, [141.5, 140, 138.5, 137, 135.5, 134, 132.5, 131], t0=1.0)
+    assert evaluate(led, 8.0) == []
+
+
+def test_selector_being_set_is_not_blamed_for_the_old_value():
+    # on board, one read every ~5 s: the new setting appears in the newest reading before the vote changes
+    led = ledger(("said", "clearance.altitude", 5000, 0.0, "atc"), ("said", "readback.altitude", 5000, 8.0, "pm"),
+                 ("set", "mcp.altitude", 6000, -20.0), ("set", "mcp.altitude", 6000, -15.0), ("set", "mcp.altitude", 6000, -10.0),
+                 ("set", "mcp.altitude", 5000, 17.0))
+    assert evaluate(led, 17.0) == []
+
+
+def test_readback_to_an_unheard_clearance_does_not_compare_with_the_old_one():
+    # the clearance to 2,000 was lost; its readback was heard 200 s after the clearance to 3,000
+    led = ledger(("said", "clearance.altitude", 3000, 0.0, "atc"), ("said", "readback.altitude", 3000, 6.0, "pm"),
+                 ("said", "readback.altitude", 2000, 200.0, "pm"),
+                 ("set", "mcp.altitude", 2000, 203.0), ("set", "mcp.altitude", 2000, 208.0), ("set", "mcp.altitude", 2000, 213.0))
+    assert evaluate(led, 230.0) == []
+
+
+def test_one_stale_read_after_the_change_is_not_a_bust():
+    # on board: the MCP went to 4,000 after the readback; one read still shows 5,000
+    led = ledger(("said", "clearance.altitude", 4000, 0.0, "atc"), ("said", "readback.altitude", 4000, 8.0, "pm"),
+                 ("set", "mcp.altitude", 5000, -6.0), ("set", "mcp.altitude", 5000, 7.0), ("set", "mcp.altitude", 4000, 13.0),
+                 ("set", "mcp.altitude", 5000, 19.5))
+    assert evaluate(led, 19.5) == []

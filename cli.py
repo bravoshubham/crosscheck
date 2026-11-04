@@ -16,6 +16,7 @@ one recorded live. Needs no simulator, GPU or API key.
 """
 import argparse
 import json
+import os
 import pathlib
 import sys
 
@@ -73,7 +74,15 @@ def main() -> int:
     dm.add_argument("what", nargs="*", help="altitude | flaps | pilot | replay <recording>")
     lv = sub.add_parser("live", help="tablet display of the scenario being recorded")
     lv.add_argument("--port", type=int, default=8770)
+    ob = sub.add_parser("onboard", help="fly a scenario on board: every model on this computer, network refused (onboard/README.md)")
+    ob.add_argument("scenario", help="altitude_bust | autothrottle_hold | flaps | nominal | pilot_watch")
+    ob.add_argument("rest", nargs=argparse.REMAINDER, help="the scenario's own arguments, e.g. bust --speak")
     args = ap.parse_args()
+    if args.cmd == "onboard":
+        import subprocess
+        if subprocess.run([str(ROOT / "onboard" / "start.sh")]).returncode:
+            return 1
+        os.execv(str(ROOT / "onboard" / "run.sh"), [str(ROOT / "onboard" / "run.sh"), f"eval/scenarios/{args.scenario}.py", *args.rest])
     if args.cmd == "film":
         from debrief.film import build as film
         print("wrote", film(args.repo, args.cut))

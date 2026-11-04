@@ -1,0 +1,59 @@
+{
+ "scenario": "flaps_forgot_onboard",
+ "scorer": "flaps",
+ "aircraft": "B738",
+ "area": "Portland",
+ "variant": "forgot",
+ "called": 15,
+ "selected": null,
+ "expect_rule": "callout_vs_set",
+ "t_start": 1793791062.5028422,
+ "t_call": 1793791070.503715,
+ "t_move": 1793791073.088846,
+ "frame_box": [
+  2300,
+  250,
+  2900,
+  650
+ ],
+ "panel_reader": "muse-glimmer-flaps",
+ "view": {
+  "pilots_head_psi": 22.0,
+  "pilots_head_the": -30.0,
+  "field_of_view_deg": 60.0
+ },
+ "fact_time": "captured",
+ "speech": "on board: SeamlessM4T v2 and Omnilingual ASR 7B on this computer (onboard/hearing_service.py), values kept when the two agree, the local Muse Glimmer as second reader; parsed by senses/speech.py",
+ "heard": [
+  {
+   "speaker": "pf",
+   "spoken": "flaps fifteen",
+   "transcript": "fifteen flaps",
+   "audio_s": 1.74,
+   "alt_transcript": "flaps fifteen",
+   "s_from_start": 1.58,
+   "facts": [
+    [
+     "callout.flaps",
+     15
+    ]
+   ],
+   "spark": null
+  }
+ ],
+ "camera_check": {
+  "model": "muse-glimmer-30b",
+  "flaps": {
+   "read": {
+    "flaps": 5
+   },
+   "ok": true
+  }
+ },
+ "network": {
+  "sandbox": "onboard/no_network.sb",
+  "onboard": true,
+  "api.meta.ai:443": "refused: PermissionError"
+ },
+ "recorded": "2026-11-04 16:48:30 IST"
+}

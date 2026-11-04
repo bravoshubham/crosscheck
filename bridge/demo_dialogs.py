@@ -1,9 +1,10 @@
 """Dismiss the X-Plane 12 demo's own dialogs so scenarios can run unattended.
 
-Only three known dialogs, identified by their titles, and only their harmless button:
+Only four known dialogs, identified by their titles, and only their harmless button:
   "UNLOCK X-PLANE"         -> "Use Demo"   (never "Buy" or "Unlock")
   "DEMO MODE ACTIVATED"    -> "Understood" (the demo allows 60 minutes of flying at a time)
   "LEAVING THE DEMO AREA"  -> "OK"
+  "SAFE MODE"              -> "No Thanks"  (after a forced restart: start with the normal settings)
 Anything else on screen: do nothing. One more is recognised but not clicked: "Your demo time is
 up" (also titled UNLOCK X-PLANE, with only Buy / Unlock buttons). The flight controls stop
 working until X-Plane restarts, so bridge/xplane.py restarts it. The button is found by its text with Apple's on-device
@@ -20,7 +21,8 @@ import Quartz
 from ocrmac import ocrmac
 from PIL import Image
 
-DIALOGS = {"UNLOCK X-PLANE": "Use Demo", "DEMO MODE ACTIVATED": "Understood", "LEAVING THE DEMO AREA": "OK"}
+DIALOGS = {"UNLOCK X-PLANE": "Use Demo", "DEMO MODE ACTIVATED": "Understood", "LEAVING THE DEMO AREA": "OK",
+           "SAFE MODE": "No Thanks"}
 
 
 def _screen() -> Image.Image:

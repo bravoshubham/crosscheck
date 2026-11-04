@@ -43,7 +43,7 @@ What to say about the Meta models, in one breath each:
 | --- | --- |
 | X-Plane is slow, crashes, or shows "demo time is up" | `uv run python cli.py demo replay altitude_readback` re-enacts the recording in real time: same tablet, same callouts, spoken |
 | The microphone mishears you | Say it again. Only a line with our callsign's digits counts. Or re-enact `altitude_readback` |
-| No network (no Voice Transcribe, Spark, SAM 3.1) | The debrief and re-enactments need no network: `site/index.html`, and `cli.py demo replay <recording>` |
+| No network (no Voice Transcribe, Spark, SAM 3.1) | Fly it on board: `uv run python cli.py onboard altitude_bust bust --speak` (local models, the network refused; [`onboard/README.md`](../onboard/README.md)). The debrief and re-enactments need no network either: `site/index.html`, and `cli.py demo replay <recording>` |
 | The camera check refuses to start | Something is in front of X-Plane, or the view moved. Click X-Plane and run again |
 | The tablet shows "reconnecting" | Only one demo command at a time; stop the old one (Ctrl-C) and run again |
 

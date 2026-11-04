@@ -1,4 +1,5 @@
-"""One sentence from Muse Spark under each callout, for the tablet: why Crosscheck spoke.
+"""One sentence from Muse Spark (on board: the local Muse Glimmer) under each callout, for the
+tablet: why Crosscheck spoke.
 
 The callout itself stays fixed phraseology from brain/rules.py and is spoken at once. In the
 background, Muse Spark gets the flag and the ledger's last 45 seconds (what was said, set and
@@ -6,6 +7,7 @@ done, with times) and writes one plain sentence for the crew. Every number in th
 appear in what it was given (brain/summary.py's check); otherwise the sentence is not shown.
 """
 import atexit
+import json
 import os
 import threading
 import time
@@ -48,6 +50,21 @@ def context(led: Ledger, flag: Flag, now: float) -> str:
 
 
 def explain(prompt: str) -> dict:
+    from senses.onboard import GLIMMER_HOST, GLIMMER_MODEL, ONBOARD
+    if ONBOARD:  # the local Muse Glimmer writes the sentence; nothing leaves the aircraft
+        t = time.time()  # held to a JSON schema: without one Glimmer spends its tokens and returns no text
+        body = {"model": GLIMMER_MODEL, "stream": False, "think": False, "keep_alive": "60m",
+                "format": {"type": "object", "properties": {"sentence": {"type": "string"}}, "required": ["sentence"]},
+                "options": {"temperature": 0, "num_predict": 120, "num_ctx": 4096}, "messages": [{"role": "user", "content": prompt}]}
+        r = httpx.post(GLIMMER_HOST + "/api/chat", json=body, timeout=60, trust_env=False)
+        r.raise_for_status()
+        try:
+            text = json.loads((r.json()["message"].get("content") or "").replace("<|eot|>", ""))["sentence"].strip()
+        except (json.JSONDecodeError, KeyError, TypeError):
+            text = ""
+        bad = unsupported(text, prompt)
+        return {"text": text if text and not bad else None, "unsupported_numbers": bad, "s": round(time.time() - t, 2),
+                "model": "muse-glimmer-30b"}
     load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
     body = {"model": MODEL, "max_tokens": 600, "reasoning_effort": "minimal", "messages": [{"role": "user", "content": prompt}]}
     t = time.time()

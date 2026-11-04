@@ -1,0 +1,317 @@
+{
+ "00_atc_0.wav": {
+  "text": "alaska four two one climb and maintain one one thousand",
+  "s": 6.1,
+  "audio_s": 4.86
+ },
+ "00_atc_1.wav": {
+  "text": "alaska four two one climb and maintain one one thousand",
+  "s": 0.47,
+  "audio_s": 4.86
+ },
+ "00_atc_2.wav": {
+  "text": "alaska four two one climb and maintain one one thousand",
+  "s": 0.49,
+  "audio_s": 4.86
+ },
+ "01_pm_0.wav": {
+  "text": "flound and maintain one one thousand alaska four two one",
+  "s": 1.33,
+  "audio_s": 4.35
+ },
+ "01_pm_1.wav": {
+  "text": "flound and maintain one one thousand alaska four two one",
+  "s": 0.45,
+  "audio_s": 4.35
+ },
+ "01_pm_2.wav": {
+  "text": "flound and maintain one one thousand alaska four two one",
+  "s": 0.45,
+  "audio_s": 4.35
+ },
+ "02_pm_0.wav": {
+  "text": "one two thousand alaska four two one",
+  "s": 0.56,
+  "audio_s": 4.29
+ },
+ "02_pm_1.wav": {
+  "text": "one two thousand alaska four two one",
+  "s": 0.36,
+  "audio_s": 4.29
+ },
+ "02_pm_2.wav": {
+  "text": "one two thousand alaska four two one",
+  "s": 0.34,
+  "audio_s": 4.29
+ },
+ "03_atc_0.wav": {
+  "text": "alaska four two one descend and mate in six thousand",
+  "s": 0.62,
+  "audio_s": 3.57
+ },
+ "03_atc_1.wav": {
+  "text": "alaska four two one descend and mate in six thousand",
+  "s": 0.42,
+  "audio_s": 3.57
+ },
+ "03_atc_2.wav": {
+  "text": "alaska four two one descend and mate in six thousand",
+  "s": 0.42,
+  "audio_s": 3.57
+ },
+ "04_pm_0.wav": {
+  "text": "they send and maintain six thousand alaska for two one",
+  "s": 0.78,
+  "audio_s": 3.62
+ },
+ "04_pm_1.wav": {
+  "text": "they send and maintain six thousand alaska for two one",
+  "s": 0.41,
+  "audio_s": 3.62
+ },
+ "04_pm_2.wav": {
+  "text": "they send and maintain six thousand alaska for two one",
+  "s": 0.41,
+  "audio_s": 3.62
+ },
+ "05_atc_0.wav": {
+  "text": "alaska four two one descend and maintain five thousand",
+  "s": 0.83,
+  "audio_s": 4.67
+ },
+ "05_atc_1.wav": {
+  "text": "alaska four two one descend and maintain five thousand",
+  "s": 0.45,
+  "audio_s": 4.67
+ },
+ "05_atc_2.wav": {
+  "text": "alaska four two one descend and maintain five thousand",
+  "s": 0.46,
+  "audio_s": 4.67
+ },
+ "06_pm_0.wav": {
+  "text": "descend and maintain five thousand alaska four two one",
+  "s": 0.42,
+  "audio_s": 4.29
+ },
+ "06_pm_1.wav": {
+  "text": "descend and maintain five thousand alaska four two one",
+  "s": 0.42,
+  "audio_s": 4.29
+ },
+ "06_pm_2.wav": {
+  "text": "descend and maintain five thousand alaska four two one",
+  "s": 0.42,
+  "audio_s": 4.29
+ },
+ "07_atc_0.wav": {
+  "text": "alaska four two one descent and maintain four thousand",
+  "s": 0.78,
+  "audio_s": 3.94
+ },
+ "07_atc_1.wav": {
+  "text": "alaska four two one descent and maintain four thousand",
+  "s": 0.42,
+  "audio_s": 3.94
+ },
+ "07_atc_2.wav": {
+  "text": "alaska four two one descent and maintain four thousand",
+  "s": 0.44,
+  "audio_s": 3.94
+ },
+ "08_pm_0.wav": {
+  "text": "descend and maintain four thousand alaska four to one",
+  "s": 0.9,
+  "audio_s": 4.02
+ },
+ "08_pm_1.wav": {
+  "text": "descend and maintain four thousand alaska four to one",
+  "s": 0.43,
+  "audio_s": 4.02
+ },
+ "08_pm_2.wav": {
+  "text": "descend and maintain four thousand alaska four to one",
+  "s": 0.46,
+  "audio_s": 4.02
+ },
+ "09_atc_0.wav": {
+  "text": "alaska four two one descend and maintain three thousand",
+  "s": 0.6,
+  "audio_s": 3.87
+ },
+ "09_atc_1.wav": {
+  "text": "alaska four two one descend and maintain three thousand",
+  "s": 0.41,
+  "audio_s": 3.87
+ },
+ "09_atc_2.wav": {
+  "text": "alaska four two one descend and maintain three thousand",
+  "s": 0.42,
+  "audio_s": 3.87
+ },
+ "10_pm_0.wav": {
+  "text": "descend and maintain three thousand alaska four to one",
+  "s": 0.46,
+  "audio_s": 4.03
+ },
+ "10_pm_1.wav": {
+  "text": "descend and maintain three thousand alaska four to one",
+  "s": 0.4,
+  "audio_s": 4.03
+ },
+ "10_pm_2.wav": {
+  "text": "descend and maintain three thousand alaska four to one",
+  "s": 0.4,
+  "audio_s": 4.03
+ },
+ "11_atc_0.wav": {
+  "text": "i'll ask for two and descend and maintain two thousand",
+  "s": 0.44,
+  "audio_s": 3.87
+ },
+ "11_atc_1.wav": {
+  "text": "i'll ask for two and descend and maintain two thousand",
+  "s": 0.45,
+  "audio_s": 3.87
+ },
+ "11_atc_2.wav": {
+  "text": "i'll ask for two and descend and maintain two thousand",
+  "s": 0.44,
+  "audio_s": 3.87
+ },
+ "12_pm_0.wav": {
+  "text": "they send and maintain two thousand i'll ask for two one",
+  "s": 0.48,
+  "audio_s": 3.87
+ },
+ "12_pm_1.wav": {
+  "text": "they send and maintain two thousand i'll ask for two one",
+  "s": 0.47,
+  "audio_s": 3.87
+ },
+ "12_pm_2.wav": {
+  "text": "they send and maintain two thousand i'll ask for two one",
+  "s": 0.46,
+  "audio_s": 3.87
+ },
+ "13_atc_0.wav": {
+  "text": "alaska fort two one turn left hitting one two zero",
+  "s": 0.61,
+  "audio_s": 4.06
+ },
+ "13_atc_1.wav": {
+  "text": "alaska fort two one turn left hitting one two zero",
+  "s": 0.43,
+  "audio_s": 4.06
+ },
+ "13_atc_2.wav": {
+  "text": "alaska fort two one turn left hitting one two zero",
+  "s": 0.43,
+  "audio_s": 4.06
+ },
+ "14_pm_0.wav": {
+  "text": "one to two there will ask a four two one",
+  "s": 0.58,
+  "audio_s": 3.44
+ },
+ "14_pm_1.wav": {
+  "text": "one to two there will ask a four two one",
+  "s": 0.4,
+  "audio_s": 3.44
+ },
+ "14_pm_2.wav": {
+  "text": "one to two there will ask a four two one",
+  "s": 0.39,
+  "audio_s": 3.44
+ },
+ "15_atc_0.wav": {
+  "text": "alaska four two one turn right heading three zero zero",
+  "s": 0.45,
+  "audio_s": 4.03
+ },
+ "15_atc_1.wav": {
+  "text": "alaska four two one turn right heading three zero zero",
+  "s": 0.44,
+  "audio_s": 4.03
+ },
+ "15_atc_2.wav": {
+  "text": "alaska four two one turn right heading three zero zero",
+  "s": 0.46,
+  "audio_s": 4.03
+ },
+ "16_pm_0.wav": {
+  "text": "three zero zero i'll ask four two one",
+  "s": 0.46,
+  "audio_s": 3.66
+ },
+ "16_pm_1.wav": {
+  "text": "three zero zero i'll ask four two one",
+  "s": 0.38,
+  "audio_s": 3.66
+ },
+ "16_pm_2.wav": {
+  "text": "three zero zero i'll ask four two one",
+  "s": 0.39,
+  "audio_s": 3.66
+ },
+ "17_pf_0.wav": {
+  "text": "One of the flaps.",
+  "s": 0.92,
+  "audio_s": 1.51
+ },
+ "17_pf_1.wav": {
+  "text": "One of the flaps.",
+  "s": 0.31,
+  "audio_s": 1.51
+ },
+ "17_pf_2.wav": {
+  "text": "One of the flaps.",
+  "s": 0.31,
+  "audio_s": 1.51
+ },
+ "18_pf_0.wav": {
+  "text": "five flaps",
+  "s": 0.29,
+  "audio_s": 1.51
+ },
+ "18_pf_1.wav": {
+  "text": "five flaps",
+  "s": 0.26,
+  "audio_s": 1.51
+ },
+ "18_pf_2.wav": {
+  "text": "five flaps",
+  "s": 0.26,
+  "audio_s": 1.51
+ },
+ "19_pf_0.wav": {
+  "text": "Ten of the flaps.",
+  "s": 0.31,
+  "audio_s": 1.51
+ },
+ "19_pf_1.wav": {
+  "text": "Ten of the flaps.",
+  "s": 0.3,
+  "audio_s": 1.51
+ },
+ "19_pf_2.wav": {
+  "text": "Ten of the flaps.",
+  "s": 0.29,
+  "audio_s": 1.51
+ },
+ "20_pf_0.wav": {
+  "text": "fifteen flaps",
+  "s": 0.77,
+  "audio_s": 1.74
+ },
+ "20_pf_1.wav": {
+  "text": "fifteen flaps",
+  "s": 0.3,
+  "audio_s": 1.74
+ },
+ "20_pf_2.wav": {
+  "text": "fifteen flaps",
+  "s": 0.3,
+  "audio_s": 1.74
+ }
+}

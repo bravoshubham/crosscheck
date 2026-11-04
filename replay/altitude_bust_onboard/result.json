@@ -1,0 +1,24 @@
+{
+ "variant": "bust",
+ "cleared": 11000,
+ "readback": 11000,
+ "mcp_set": 12000,
+ "false_callouts_before_clearance": [],
+ "callouts": [
+  {
+   "s_after_set": 22.6,
+   "text": "Cleared one-one thousand, set one-two thousand."
+  }
+ ],
+ "aircraft_passed_cleared_s_after_set": 26.4,
+ "max_altitude_in_run": 12064,
+ "mcp_read_from_screen": [
+  9000,
+  12000
+ ],
+ "paused_during_run": false,
+ "unexpected_callouts": [],
+ "pass": true,
+ "panel_readable": 1.0,
+ "non_cockpit_frames": 0
+}

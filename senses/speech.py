@@ -62,7 +62,12 @@ async def transcribe_stream(chunks, key: str | None = None) -> dict:
 
 
 async def transcribe(pcm: np.ndarray, key: str | None = None) -> dict:
-    """Stream float or int16 16 kHz mono audio as a live feed; return the final text and billing."""
+    """Stream float or int16 16 kHz mono audio as a live feed; return the final text and billing.
+    On board (senses/onboard.py), the line goes to the local hearing service instead and the
+    result also carries the second recognizer's transcript as "alt"."""
+    from senses.onboard import ONBOARD
+    if ONBOARD:
+        return await transcribe_onboard(pcm)
     if pcm.dtype != np.int16:
         pcm = (np.clip(pcm, -1, 1) * 32767).astype("<i2")
     step = int(SR * PACKET_S)
@@ -72,6 +77,20 @@ async def transcribe(pcm: np.ndarray, key: str | None = None) -> dict:
             yield pcm[i:i + step].tobytes()
             await asyncio.sleep(PACKET_S)
     return await transcribe_stream(paced(), key)
+
+
+async def transcribe_onboard(pcm: np.ndarray) -> dict:
+    """Both on-board recognizers on one line (onboard/hearing_service.py on 127.0.0.1). "text" is
+    SeamlessM4T v2's transcript, "alt" Omnilingual ASR's; senses/speech_spark.py decides which
+    values to keep."""
+    from senses.onboard import HEARING, local_client
+    x = (pcm.astype(np.float32) / 32768.0) if pcm.dtype == np.int16 else pcm.astype(np.float32)
+    async with local_client(60) as c:
+        r = await c.post(HEARING + "/transcribe", content=x.astype("<f4").tobytes())
+        r.raise_for_status()
+    d = r.json()
+    return {"text": d["seamless"].strip(), "alt": d["omni"].strip(), "audio_s": d["audio_s"],
+            "engine": "onboard", "seconds": d["seconds"]}
 
 
 def normalise(text: str) -> str:
@@ -85,10 +104,11 @@ def normalise(text: str) -> str:
     out, run = [], []
     for i, w in enumerate(words):
         if w in SOUNDALIKES:
-            # "to" / "for" are digits only inside a number, or ("for") right before one:
-            # "speed to two one zero" stays "to 210"; "Alaska for 21" and "for two one" become 421
+            # "to" / "for" are digits only inside a number, or ("for", "won") right before one:
+            # "speed to two one zero" stays "to 210"; "Alaska for 21" and "for two one" become 421;
+            # "maintain won one thousand" (Omnilingual ASR, on board) is one one thousand
             nxt = words[i + 1]
-            digit = bool(run) or (w in ("for", "fower") and (nxt.isdigit() or nxt in WORD_DIGITS)
+            digit = bool(run) or (w in ("for", "fower", "won") and (nxt.isdigit() or nxt in WORD_DIGITS)
                                   and nxt not in SOUNDALIKES)
         else:
             digit = w.isdigit() or w in WORD_DIGITS or w in TEENS or (w in SCALE and bool(run))
@@ -143,12 +163,12 @@ def parse_flaps(text: str) -> int | None:
     return v if v in FLAP_DETENTS else None
 
 
-def said_facts(text: str, speaker: str, t: float, own_digits: str) -> list[Fact]:
+def said_facts(text: str, speaker: str, t: float, own_digits: str, source: str = "muse-voice-transcribe") -> list[Fact]:
     """Facts for the ledger from one final transcript on one channel."""
     if speaker != "atc":
         flaps = parse_flaps(text)
         if flaps is not None:  # an intercom callout: our own crew, no callsign
-            return [Fact("said", "callout.flaps", flaps, t, speaker, source="muse-voice-transcribe")]
+            return [Fact("said", "callout.flaps", flaps, t, speaker, source=source)]
     alt = parse_altitude(text)
     if alt is None:
         return []
@@ -159,4 +179,4 @@ def said_facts(text: str, speaker: str, t: float, own_digits: str) -> list[Fact]
         # when the word does not. This also keeps callouts ("one thousand stabilized") out.
         return []
     key = "clearance.altitude" if speaker == "atc" else "readback.altitude"
-    return [Fact("said", key, alt, t, speaker, source="muse-voice-transcribe")]
+    return [Fact("said", key, alt, t, speaker, source=source)]

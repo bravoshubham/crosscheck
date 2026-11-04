@@ -1,0 +1,761 @@
+[
+ {
+  "file": "00_atc_0.wav",
+  "clean": "00_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one climb and maintain one one thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    11000
+   ]
+  ]
+ },
+ {
+  "file": "00_atc_1.wav",
+  "clean": "00_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one climb and maintain one one thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    11000
+   ]
+  ]
+ },
+ {
+  "file": "00_atc_2.wav",
+  "clean": "00_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one climb and maintain one one thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    11000
+   ]
+  ]
+ },
+ {
+  "file": "01_pm_0.wav",
+  "clean": "01_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "climb and maintain one one thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    11000
+   ]
+  ]
+ },
+ {
+  "file": "01_pm_1.wav",
+  "clean": "01_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "climb and maintain one one thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    11000
+   ]
+  ]
+ },
+ {
+  "file": "01_pm_2.wav",
+  "clean": "01_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "climb and maintain one one thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    11000
+   ]
+  ]
+ },
+ {
+  "file": "02_pm_0.wav",
+  "clean": "02_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "climb and maintain one two thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    12000
+   ]
+  ]
+ },
+ {
+  "file": "02_pm_1.wav",
+  "clean": "02_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "climb and maintain one two thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    12000
+   ]
+  ]
+ },
+ {
+  "file": "02_pm_2.wav",
+  "clean": "02_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "climb and maintain one two thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    12000
+   ]
+  ]
+ },
+ {
+  "file": "03_atc_0.wav",
+  "clean": "03_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain six thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    6000
+   ]
+  ]
+ },
+ {
+  "file": "03_atc_1.wav",
+  "clean": "03_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain six thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    6000
+   ]
+  ]
+ },
+ {
+  "file": "03_atc_2.wav",
+  "clean": "03_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain six thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    6000
+   ]
+  ]
+ },
+ {
+  "file": "04_pm_0.wav",
+  "clean": "04_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain six thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    6000
+   ]
+  ]
+ },
+ {
+  "file": "04_pm_1.wav",
+  "clean": "04_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain six thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    6000
+   ]
+  ]
+ },
+ {
+  "file": "04_pm_2.wav",
+  "clean": "04_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain six thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    6000
+   ]
+  ]
+ },
+ {
+  "file": "05_atc_0.wav",
+  "clean": "05_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain five thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    5000
+   ]
+  ]
+ },
+ {
+  "file": "05_atc_1.wav",
+  "clean": "05_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain five thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    5000
+   ]
+  ]
+ },
+ {
+  "file": "05_atc_2.wav",
+  "clean": "05_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain five thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    5000
+   ]
+  ]
+ },
+ {
+  "file": "06_pm_0.wav",
+  "clean": "06_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain five thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    5000
+   ]
+  ]
+ },
+ {
+  "file": "06_pm_1.wav",
+  "clean": "06_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain five thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    5000
+   ]
+  ]
+ },
+ {
+  "file": "06_pm_2.wav",
+  "clean": "06_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain five thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    5000
+   ]
+  ]
+ },
+ {
+  "file": "07_atc_0.wav",
+  "clean": "07_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain four thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    4000
+   ]
+  ]
+ },
+ {
+  "file": "07_atc_1.wav",
+  "clean": "07_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain four thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    4000
+   ]
+  ]
+ },
+ {
+  "file": "07_atc_2.wav",
+  "clean": "07_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain four thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    4000
+   ]
+  ]
+ },
+ {
+  "file": "08_pm_0.wav",
+  "clean": "08_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain four thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    4000
+   ]
+  ]
+ },
+ {
+  "file": "08_pm_1.wav",
+  "clean": "08_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain four thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    4000
+   ]
+  ]
+ },
+ {
+  "file": "08_pm_2.wav",
+  "clean": "08_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain four thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    4000
+   ]
+  ]
+ },
+ {
+  "file": "09_atc_0.wav",
+  "clean": "09_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain three thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    3000
+   ]
+  ]
+ },
+ {
+  "file": "09_atc_1.wav",
+  "clean": "09_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain three thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    3000
+   ]
+  ]
+ },
+ {
+  "file": "09_atc_2.wav",
+  "clean": "09_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain three thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    3000
+   ]
+  ]
+ },
+ {
+  "file": "10_pm_0.wav",
+  "clean": "10_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain three thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    3000
+   ]
+  ]
+ },
+ {
+  "file": "10_pm_1.wav",
+  "clean": "10_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain three thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    3000
+   ]
+  ]
+ },
+ {
+  "file": "10_pm_2.wav",
+  "clean": "10_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain three thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    3000
+   ]
+  ]
+ },
+ {
+  "file": "11_atc_0.wav",
+  "clean": "11_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain two thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    2000
+   ]
+  ]
+ },
+ {
+  "file": "11_atc_1.wav",
+  "clean": "11_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain two thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    2000
+   ]
+  ]
+ },
+ {
+  "file": "11_atc_2.wav",
+  "clean": "11_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one descend and maintain two thousand",
+  "facts": [
+   [
+    "clearance.altitude",
+    2000
+   ]
+  ]
+ },
+ {
+  "file": "12_pm_0.wav",
+  "clean": "12_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain two thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    2000
+   ]
+  ]
+ },
+ {
+  "file": "12_pm_1.wav",
+  "clean": "12_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain two thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    2000
+   ]
+  ]
+ },
+ {
+  "file": "12_pm_2.wav",
+  "clean": "12_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "descend and maintain two thousand alaska four two one",
+  "facts": [
+   [
+    "readback.altitude",
+    2000
+   ]
+  ]
+ },
+ {
+  "file": "13_atc_0.wav",
+  "clean": "13_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one turn left heading one two zero",
+  "facts": []
+ },
+ {
+  "file": "13_atc_1.wav",
+  "clean": "13_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one turn left heading one two zero",
+  "facts": []
+ },
+ {
+  "file": "13_atc_2.wav",
+  "clean": "13_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one turn left heading one two zero",
+  "facts": []
+ },
+ {
+  "file": "14_pm_0.wav",
+  "clean": "14_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "left heading one two zero alaska four two one",
+  "facts": []
+ },
+ {
+  "file": "14_pm_1.wav",
+  "clean": "14_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "left heading one two zero alaska four two one",
+  "facts": []
+ },
+ {
+  "file": "14_pm_2.wav",
+  "clean": "14_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "left heading one two zero alaska four two one",
+  "facts": []
+ },
+ {
+  "file": "15_atc_0.wav",
+  "clean": "15_atc_0.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one turn right heading three zero zero",
+  "facts": []
+ },
+ {
+  "file": "15_atc_1.wav",
+  "clean": "15_atc_1.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one turn right heading three zero zero",
+  "facts": []
+ },
+ {
+  "file": "15_atc_2.wav",
+  "clean": "15_atc_2.wav",
+  "snr_db": 0,
+  "speaker": "atc",
+  "text": "alaska four two one turn right heading three zero zero",
+  "facts": []
+ },
+ {
+  "file": "16_pm_0.wav",
+  "clean": "16_pm_0.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "right heading three zero zero alaska four two one",
+  "facts": []
+ },
+ {
+  "file": "16_pm_1.wav",
+  "clean": "16_pm_1.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "right heading three zero zero alaska four two one",
+  "facts": []
+ },
+ {
+  "file": "16_pm_2.wav",
+  "clean": "16_pm_2.wav",
+  "snr_db": 0,
+  "speaker": "pm",
+  "text": "right heading three zero zero alaska four two one",
+  "facts": []
+ },
+ {
+  "file": "17_pf_0.wav",
+  "clean": "17_pf_0.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps one",
+  "facts": [
+   [
+    "callout.flaps",
+    1
+   ]
+  ]
+ },
+ {
+  "file": "17_pf_1.wav",
+  "clean": "17_pf_1.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps one",
+  "facts": [
+   [
+    "callout.flaps",
+    1
+   ]
+  ]
+ },
+ {
+  "file": "17_pf_2.wav",
+  "clean": "17_pf_2.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps one",
+  "facts": [
+   [
+    "callout.flaps",
+    1
+   ]
+  ]
+ },
+ {
+  "file": "18_pf_0.wav",
+  "clean": "18_pf_0.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps five",
+  "facts": [
+   [
+    "callout.flaps",
+    5
+   ]
+  ]
+ },
+ {
+  "file": "18_pf_1.wav",
+  "clean": "18_pf_1.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps five",
+  "facts": [
+   [
+    "callout.flaps",
+    5
+   ]
+  ]
+ },
+ {
+  "file": "18_pf_2.wav",
+  "clean": "18_pf_2.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps five",
+  "facts": [
+   [
+    "callout.flaps",
+    5
+   ]
+  ]
+ },
+ {
+  "file": "19_pf_0.wav",
+  "clean": "19_pf_0.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps ten",
+  "facts": [
+   [
+    "callout.flaps",
+    10
+   ]
+  ]
+ },
+ {
+  "file": "19_pf_1.wav",
+  "clean": "19_pf_1.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps ten",
+  "facts": [
+   [
+    "callout.flaps",
+    10
+   ]
+  ]
+ },
+ {
+  "file": "19_pf_2.wav",
+  "clean": "19_pf_2.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps ten",
+  "facts": [
+   [
+    "callout.flaps",
+    10
+   ]
+  ]
+ },
+ {
+  "file": "20_pf_0.wav",
+  "clean": "20_pf_0.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps fifteen",
+  "facts": [
+   [
+    "callout.flaps",
+    15
+   ]
+  ]
+ },
+ {
+  "file": "20_pf_1.wav",
+  "clean": "20_pf_1.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps fifteen",
+  "facts": [
+   [
+    "callout.flaps",
+    15
+   ]
+  ]
+ },
+ {
+  "file": "20_pf_2.wav",
+  "clean": "20_pf_2.wav",
+  "snr_db": 0,
+  "speaker": "pf",
+  "text": "flaps fifteen",
+  "facts": [
+   [
+    "callout.flaps",
+    15
+   ]
+  ]
+ }
+]

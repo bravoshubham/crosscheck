@@ -1,0 +1,27 @@
+{
+ "variant": "wrong",
+ "called": 15,
+ "selected": 10,
+ "flaps_final_truth": 10,
+ "flaps_settled_s_after_call": 7.6,
+ "heard_callout": [
+  15
+ ],
+ "false_callouts_before_call": [],
+ "callouts": [
+  {
+   "s_after_call": 32.4,
+   "text": "Flaps fifteen called, ten set."
+  }
+ ],
+ "gauge_read": [
+  2,
+  5,
+  10
+ ],
+ "paused_during_run": false,
+ "unexpected_callouts": [],
+ "pass": true,
+ "panel_readable": 1.0,
+ "non_cockpit_frames": 0
+}

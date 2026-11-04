@@ -1,0 +1,38 @@
+{
+ "scenario": "autothrottle_hold_onboard",
+ "scored": 3,
+ "passed": 0,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 105,
+   "callout_s_after_fault": 32.7,
+   "truth_below_target_minus_10_s": 15.1,
+   "false_callouts_before_fault": [],
+   "panel_readable": 0.62
+  },
+  {
+   "run": 1,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 106,
+   "callout_s_after_fault": 37.8,
+   "truth_below_target_minus_10_s": 14.6,
+   "false_callouts_before_fault": [],
+   "panel_readable": 0.91
+  },
+  {
+   "run": 2,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 99,
+   "callout_s_after_fault": 19.4,
+   "truth_below_target_minus_10_s": 13.9,
+   "false_callouts_before_fault": [],
+   "panel_readable": 0.91
+  }
+ ]
+}

@@ -29,6 +29,7 @@ import soundfile as sf
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from brain.live import Crosscheck  # noqa: E402
+from senses.onboard import network_proof, ONBOARD, ONBOARD_SPEECH  # noqa: E402
 from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.audio.make_radio_set import radio  # noqa: E402
 from eval.scoring import score  # noqa: E402
@@ -88,8 +89,13 @@ def camera_check_or_stop(out) -> dict:
     a camera that has moved, or a window in front of the simulator, would make every reading wrong."""
     from brain.live import capture_screen
     from senses.panel import CALIBRATION
-    from senses.sam31 import camera_check
-    r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
+    from senses.onboard import ONBOARD
+    if ONBOARD:  # nothing leaves the aircraft: the local Glimmer must read the whole PFD instead
+        from senses.onboard import camera_check
+        r = camera_check(capture_screen(), "pfd")
+    else:
+        from senses.sam31 import camera_check
+        r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
     (out / "camera_check.json").write_text(json.dumps(r, indent=1))
     if not r["ok"]:
         raise SystemExit(f"camera check failed: SAM 3.1 did not find the PFD where expected ({r['matches']})")
@@ -109,7 +115,7 @@ async def main(speak: bool, minutes: float) -> int:
                 pcm, sr = synth(text)
                 assert sr == 16000, sr
                 audio[text] = radio(pcm) if who == "atc" else pcm * 0.9 / (np.abs(pcm).max() + 1e-9)
-    name = "nominal"
+    name = "nominal" + ("_onboard" if ONBOARD else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name
     out.mkdir(parents=True, exist_ok=True)
 
@@ -131,7 +137,8 @@ async def main(speak: bool, minutes: float) -> int:
     say_cc = None
     if speak:
         from voice.tts import speak as say_cc
-    cc = Crosscheck(out, speak=say_cc, frames=True, explain=True)
+    cc = Crosscheck(out, speak=say_cc, frames=True, explain=True, reader="glimmer" if ONBOARD else "apple",
+                    fact_time="captured" if ONBOARD else "arrival")
     heard, truth_rows = [], []
     bring_to_front()
     cam = camera_check_or_stop(out)  # SAM 3.1 pre-flight check of the panel camera
@@ -152,6 +159,7 @@ async def main(speak: bool, minutes: float) -> int:
         r, facts, spark, first = await hear(audio[text], who, OWN, cc.ledger)  # listens again if it heard the impossible
         t = time.time()
         heard.append({"speaker": who, "spoken": text, "transcript": r["text"], "audio_s": r["audio_s"],
+                      **({"alt_transcript": r["alt"]} if "alt" in r else {}),
                       "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark,
                       **({"first_heard": first} if first else {})})
         cc.event("heard", t, speaker=who, transcript=r["text"], spoken=text)
@@ -189,10 +197,11 @@ async def main(speak: bool, minutes: float) -> int:
         for row in truth_rows:
             f.write(json.dumps(row) + "\n")
     (out / "meta.json").write_text(json.dumps({
-        "scenario": name, "scorer": "nominal", "panel_reader": "apple-vision", "aircraft": "B738", "area": "Portland",
+        "scenario": name, "scorer": "nominal", "panel_reader": "muse-glimmer" if ONBOARD else "apple-vision", "fact_time": cc.fact_time, "aircraft": "B738", "area": "Portland",
         "t_start": t0, "run_s": run_s, "plan": plan,
-        "speech": "Muse Voice Transcribe, live (MMS-TTS ATC radio-filtered and readbacks; macOS voice for flap callouts)",
-        "heard": heard, "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+        "speech": ONBOARD_SPEECH if ONBOARD else "Muse Voice Transcribe, live (MMS-TTS ATC radio-filtered and readbacks; macOS voice for flap callouts)",
+        "heard": heard, "camera_check": {"model": cam["model"], **cam["matches"]},
+        **({"network": network_proof()} if ONBOARD else {}), "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))

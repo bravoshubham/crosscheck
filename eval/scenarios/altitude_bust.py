@@ -37,6 +37,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from brain.ledger import Fact  # noqa: E402
 from brain.live import Crosscheck  # noqa: E402
+from brain.live import READER_LABEL  # noqa: E402
+from senses.onboard import network_proof, ONBOARD, ONBOARD_SPEECH  # noqa: E402
 from bridge.xplane import XPlane, bring_to_front  # noqa: E402
 from eval.audio.make_radio_set import radio  # noqa: E402
 from eval.scoring import score  # noqa: E402
@@ -72,8 +74,13 @@ def camera_check_or_stop(out) -> dict:
     a camera that has moved, or a window in front of the simulator, would make every reading wrong."""
     from brain.live import capture_screen
     from senses.panel import CALIBRATION
-    from senses.sam31 import camera_check
-    r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
+    from senses.onboard import ONBOARD
+    if ONBOARD:  # nothing leaves the aircraft: the local Glimmer must read the whole PFD instead
+        from senses.onboard import camera_check
+        r = camera_check(capture_screen(), "pfd")
+    else:
+        from senses.sam31 import camera_check
+        r = camera_check(capture_screen(), {"pfd": CALIBRATION["pfd"]})
     (out / "camera_check.json").write_text(json.dumps(r, indent=1))
     if not r["ok"]:
         raise SystemExit(f"camera check failed: SAM 3.1 did not find the PFD where expected ({r['matches']})")
@@ -101,7 +108,7 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
             assert sr == 16000, sr
             audio[who] = radio(pcm) if who == "atc" else pcm * 0.9 / (np.abs(pcm).max() + 1e-9)
     heard = []
-    name = f"altitude_{variant}" + ("_spark" if reader == "spark" else "") + ("_mic" if mic else "")
+    name = f"altitude_{variant}" + ("_spark" if reader == "spark" else "_onboard" if reader == "glimmer" else "") + ("_mic" if mic else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     out.mkdir(parents=True, exist_ok=True)
     xp = XPlane()
@@ -123,7 +130,7 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
     if speak and not mic:
         from voice.tts import speak as say
     cc = Crosscheck(out, speak=say, frames=True, reader=reader, explain=not scripted,
-                    fact_time="captured" if reader == "spark" else "arrival")  # Spark readings are about their capture time
+                    fact_time="captured" if reader in ("spark", "glimmer") else "arrival")  # Spark readings are about their capture time
     truth_rows = []
     bring_to_front()  # the panel reader captures the screen
     cam = camera_check_or_stop(out)  # SAM 3.1 pre-flight check of the panel camera
@@ -158,6 +165,7 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
             await playing
         t = time.time()
         heard.append({"speaker": who, "spoken": lines[who], "transcript": r["text"], "audio_s": r["audio_s"],
+                      **({"alt_transcript": r["alt"]} if "alt" in r else {}),
                       "s_from_start": round(t - t_start, 2), "facts": [(f.key, f.value) for f in facts], "spark": spark,
                       **({"first_heard": first} if first else {})})
         cc.event("heard", t, speaker=who, transcript=r["text"], spoken=lines[who])
@@ -203,14 +211,15 @@ async def main(variant: str, speak: bool, scripted: bool, reader: str = "apple",
         for r in truth_rows:
             f.write(json.dumps(r) + "\n")
     (out / "meta.json").write_text(json.dumps({
-        "scenario": name, "scorer": "altitude", "panel_reader": "muse-spark" if reader == "spark" else "apple-vision", "aircraft": "B738", "area": "Portland",
+        "scenario": name, "scorer": "altitude", "panel_reader": READER_LABEL[reader], "aircraft": "B738", "area": "Portland",
         "variant": variant, "fact_time": cc.fact_time, "cleared": cleared, "readback": readback, "mcp_set": mcp,
         "expect_rule": expected_rule(cleared, readback, mcp) if mic else EXPECT[variant], "t_start": t0, "t_clear": t0 + T_CLEAR, "t_set": t_set,
-        "speech": "Muse Voice Transcribe, live: ATC in MMS-TTS (radio-filtered), the readback a person on the "
+        "speech": ONBOARD_SPEECH if reader == "glimmer" else "Muse Voice Transcribe, live: ATC in MMS-TTS (radio-filtered), the readback a person on the "
                   "Mac's microphone" if mic else "scripted (said facts from the scenario script)" if scripted else
                   "Muse Voice Transcribe, live (MMS-TTS lines; ATC radio-filtered), parsed by senses/speech.py",
         "heard": heard,
-        "camera_check": {"model": cam["model"], **cam["matches"]}, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
+        "camera_check": {"model": cam["model"], **cam["matches"]},
+        **({"network": network_proof()} if ONBOARD else {}), "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
     result = score(out)
     (out / "result.json").write_text(json.dumps(result, indent=1))
     print(json.dumps(result, indent=1))
@@ -227,4 +236,4 @@ async def _run(variant: str, **kw) -> int:
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     sys.exit(asyncio.run(_run(args[0] if args else "bust", speak="--speak" in sys.argv,
-                              scripted="--scripted" in sys.argv, reader="spark" if "--spark" in sys.argv else "apple")))
+                              scripted="--scripted" in sys.argv, reader="glimmer" if ONBOARD else "spark" if "--spark" in sys.argv else "apple")))

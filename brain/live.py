@@ -33,14 +33,23 @@ FRAME_BOX = (1240, 1230, 3180, 2200)
 SCREEN_SIZE = (3600, 2338)
 READING_FIELDS = [f.name for f in fields(PanelReading) if f.name not in ("raw", "roll_labels")]
 WIDE_W = 1024  # the whole-cockpit frame kept with each reading, for the debrief and the film
-SPARK_PERIOD_S = 1.0  # capture rate with the Muse Spark reader; reads overlap (~3 s each)
-SPARK_READERS = ("spark", "spark-flaps")  # PFD values; flap gauge (flaps view)
+SPARK_PERIOD_S = 1.0  # capture rate with a model reader; reads overlap (~3 s each)
+SPARK_READERS = ("spark", "spark-flaps", "glimmer", "glimmer-flaps")  # PFD values / flap gauge, on Muse Spark or the local Muse Glimmer
+IN_FLIGHT = {"glimmer": 1, "glimmer-flaps": 1}  # one busy local GPU: a second call in flight doubles the delay, not the rate
+READER_LABEL = {"apple": "apple-vision", "spark": "muse-spark", "spark-flaps": "muse-spark-flaps",
+                "glimmer": "muse-glimmer", "glimmer-flaps": "muse-glimmer-flaps"}
 
 
 def _spark_reader(reader: str):
     if reader == "spark-flaps":
         from senses.flaps_spark import read_flaps_spark
         return read_flaps_spark
+    if reader == "glimmer-flaps":
+        from senses.flaps_glimmer import read_flaps_glimmer
+        return read_flaps_glimmer
+    if reader == "glimmer":
+        from senses.panel_glimmer import read_frame_glimmer
+        return read_frame_glimmer
     from senses.panel_spark import read_frame_spark
     return read_frame_spark
 
@@ -206,16 +215,23 @@ class Crosscheck:
         not hold back newer ones) with its facts at capture time, and older readings that
         arrive after a newer one are dropped."""
         read = _spark_reader(self.reader)
+        fast, n_final = None, 0
+        if self.reader == "glimmer":  # on final, two reads in three are the fast lane (senses/panel_glimmer.py)
+            from senses.panel_glimmer import read_frame_glimmer_fast as fast
         pending: collections.deque = collections.deque()
         next_capture = time.time()
         last_captured = 0.0
         with ThreadPoolExecutor(max_workers=6) as pool:
             while time.time() - t0 < seconds or pending:
-                if time.time() - t0 < seconds and time.time() >= next_capture:
+                if time.time() - t0 < seconds and time.time() >= next_capture and len(pending) < IN_FLIGHT.get(self.reader, 99):
                     frame = capture_screen()
                     captured = time.time()
                     name = self._save(frame)
-                    pending.append((captured, name, pool.submit(lambda f=frame: asyncio.run(read(f))[0])))
+                    fn = read
+                    if fast is not None and self.ledger.value_at("doing", "phase", captured) == "final":
+                        n_final += 1
+                        fn = read if n_final % 3 == 0 else fast
+                    pending.append((captured, name, pool.submit(lambda f=frame, fn=fn: asyncio.run(fn(f))[0])))
                     next_capture = captured + SPARK_PERIOD_S
                 by_arrival = self.fact_time == "captured"
                 while pending and (pending[0][2].done() or by_arrival and any(p[2].done() for p in pending)):
@@ -233,7 +249,7 @@ class Crosscheck:
                         continue
                     last_captured = captured
                     self.observe(r, t, name, fact_t=captured if by_arrival else None,
-                                 captured=round(captured, 3), reader="muse-spark")
+                                 captured=round(captured, 3), reader=READER_LABEL[self.reader].removesuffix("-flaps"))
                     self.decide(t)
                 time.sleep(0.05)
 
@@ -263,8 +279,10 @@ def replay(rec_dir: pathlib.Path, out_dir: pathlib.Path, recompute: bool = False
     events = [json.loads(l) for l in (rec_dir / "events.jsonl").read_text().splitlines()]
     meta_p = rec_dir / "meta.json"
     meta = json.loads(meta_p.read_text()) if meta_p.exists() else {}
-    if meta.get("panel_reader") == "muse-spark-flaps":
+    if meta.get("panel_reader") in ("muse-spark-flaps", "muse-glimmer-flaps") and reader in ("spark", "spark-flaps"):
         reader = "spark-flaps"  # the flaps view has no PFD calibration; only the gauge reader applies
+    if meta.get("panel_reader") in ("muse-spark-flaps", "muse-glimmer-flaps") and reader in ("glimmer", "glimmer-flaps"):
+        reader = "glimmer-flaps"
     spark = None
     if recompute and reader in SPARK_READERS:
         frames = [e["frame"] for e in events if e["kind"] == "reading" and e.get("frame")]

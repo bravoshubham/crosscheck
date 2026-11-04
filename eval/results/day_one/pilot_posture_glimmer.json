@@ -1,0 +1,157 @@
+{
+ "right": 19,
+ "of": 24,
+ "wrong": [
+  "b/slumped",
+  "c/slumped",
+  "d/slumped",
+  "e/slumped",
+  "f/slumped"
+ ],
+ "rows": [
+  {
+   "image": "a/upright",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "a/looking_down",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "a/slumped",
+   "truth": "incapacitated",
+   "glimmer": "incapacitated",
+   "right": true
+  },
+  {
+   "image": "a/slumped_side",
+   "truth": "incapacitated",
+   "glimmer": "incapacitated",
+   "right": true
+  },
+  {
+   "image": "b/upright",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "b/looking_down",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "b/slumped",
+   "truth": "incapacitated",
+   "glimmer": "alert",
+   "right": false
+  },
+  {
+   "image": "b/slumped_side",
+   "truth": "incapacitated",
+   "glimmer": "incapacitated",
+   "right": true
+  },
+  {
+   "image": "c/upright",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "c/looking_down",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "c/slumped",
+   "truth": "incapacitated",
+   "glimmer": "alert",
+   "right": false
+  },
+  {
+   "image": "c/slumped_side",
+   "truth": "incapacitated",
+   "glimmer": "incapacitated",
+   "right": true
+  },
+  {
+   "image": "d/upright",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "d/looking_down",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "d/slumped",
+   "truth": "incapacitated",
+   "glimmer": "alert",
+   "right": false
+  },
+  {
+   "image": "d/slumped_side",
+   "truth": "incapacitated",
+   "glimmer": "incapacitated",
+   "right": true
+  },
+  {
+   "image": "e/upright",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "e/looking_down",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "e/slumped",
+   "truth": "incapacitated",
+   "glimmer": "alert",
+   "right": false
+  },
+  {
+   "image": "e/slumped_side",
+   "truth": "incapacitated",
+   "glimmer": "incapacitated",
+   "right": true
+  },
+  {
+   "image": "f/upright",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "f/looking_down",
+   "truth": "alert",
+   "glimmer": "alert",
+   "right": true
+  },
+  {
+   "image": "f/slumped",
+   "truth": "incapacitated",
+   "glimmer": "alert",
+   "right": false
+  },
+  {
+   "image": "f/slumped_side",
+   "truth": "incapacitated",
+   "glimmer": "incapacitated",
+   "right": true
+  }
+ ]
+}

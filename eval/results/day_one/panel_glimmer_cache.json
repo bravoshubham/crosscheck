@@ -1,0 +1,1597 @@
+{
+ "pfd:altitude_bust/frames/00000.jpg": {
+  "ias": 183,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 2.07,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 2044499792
+  }
+ },
+ "pfd:altitude_bust/frames/00006.jpg": {
+  "ias": 190,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 2.06,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 2041763167
+  }
+ },
+ "pfd:altitude_bust/frames/00012.jpg": {
+  "ias": 192,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.17,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4155435875
+  }
+ },
+ "pfd:altitude_bust/frames/00018.jpg": {
+  "ias": 192,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.88,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3861223042
+  }
+ },
+ "pfd:altitude_bust/frames/00024.jpg": {
+  "ias": 202,
+  "selected_altitude": 12000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   ""
+  ],
+  "flaps": null,
+  "seconds": 3.78,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3768258875
+  }
+ },
+ "pfd:altitude_bust/frames/00030.jpg": {
+  "ias": 215,
+  "selected_altitude": null,
+  "altitude": 9420,
+  "fma": [
+   "",
+   "HDG SEL",
+   ""
+  ],
+  "flaps": null,
+  "seconds": 3.68,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 28,
+   "total_duration": 3670266791
+  }
+ },
+ "pfd:altitude_bust/frames/00036.jpg": {
+  "ias": 200,
+  "selected_altitude": 12000,
+  "altitude": 10520,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.85,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3831974375
+  }
+ },
+ "pfd:altitude_bust/frames/00042.jpg": {
+  "ias": 192,
+  "selected_altitude": 12000,
+  "altitude": 11640,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.73,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 3716497209
+  }
+ },
+ "pfd:altitude_bust_spark/frames/00000.jpg": {
+  "ias": 191,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.9,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3890106333
+  }
+ },
+ "pfd:altitude_bust_spark/frames/00007.jpg": {
+  "ias": 194,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.88,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3863122125
+  }
+ },
+ "pfd:altitude_bust_spark/frames/00014.jpg": {
+  "ias": 192,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.94,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3923812625
+  }
+ },
+ "pfd:altitude_bust_spark/frames/00020.jpg": {
+  "ias": 207,
+  "selected_altitude": 12000,
+  "altitude": 9040,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.73,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3715220667
+  }
+ },
+ "pfd:altitude_bust_spark/frames/00029.jpg": {
+  "ias": 192,
+  "selected_altitude": 12000,
+  "altitude": 10760,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.92,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3907731750
+  }
+ },
+ "pfd:altitude_correct/frames/00000.jpg": {
+  "ias": 191,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.9,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3887042250
+  }
+ },
+ "pfd:altitude_correct/frames/00006.jpg": {
+  "ias": 194,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.85,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3841022584
+  }
+ },
+ "pfd:altitude_correct/frames/00012.jpg": {
+  "ias": 193,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.95,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3939962959
+  }
+ },
+ "pfd:altitude_correct/frames/00018.jpg": {
+  "ias": 192,
+  "selected_altitude": 11000,
+  "altitude": 8980,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.83,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3820416250
+  }
+ },
+ "pfd:altitude_correct/frames/00024.jpg": {
+  "ias": 208,
+  "selected_altitude": 11000,
+  "altitude": 9040,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.74,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3725701208
+  }
+ },
+ "pfd:altitude_correct/frames/00030.jpg": {
+  "ias": 214,
+  "selected_altitude": 11000,
+  "altitude": 9640,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.71,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3689096333
+  }
+ },
+ "pfd:altitude_correct/frames/00036.jpg": {
+  "ias": 192,
+  "selected_altitude": 11000,
+  "altitude": 11000,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.6,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 28,
+   "total_duration": 3581892750
+  }
+ },
+ "pfd:altitude_correct/frames/00042.jpg": {
+  "ias": 189,
+  "selected_altitude": 11000,
+  "altitude": 11240,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.85,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3836221375
+  }
+ },
+ "pfd:altitude_correct_spark/frames/00001.jpg": {
+  "ias": 190,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.84,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3826070917
+  }
+ },
+ "pfd:altitude_correct_spark/frames/00008.jpg": {
+  "ias": 194,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.88,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3869167584
+  }
+ },
+ "pfd:altitude_correct_spark/frames/00015.jpg": {
+  "ias": 193,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.96,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3945986583
+  }
+ },
+ "pfd:altitude_correct_spark/frames/00021.jpg": {
+  "ias": 211,
+  "selected_altitude": 9000,
+  "altitude": 9000,
+  "fma": [
+   "",
+   "HDG SEL",
+   ""
+  ],
+  "flaps": null,
+  "seconds": 3.6,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 28,
+   "total_duration": 3580445166
+  }
+ },
+ "pfd:altitude_correct_spark/frames/00028.jpg": {
+  "ias": 192,
+  "selected_altitude": 11000,
+  "altitude": 10360,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.93,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3912346334
+  }
+ },
+ "pfd:altitude_correct_spark/frames/00035.jpg": {
+  "ias": 192,
+  "selected_altitude": 11000,
+  "altitude": 11240,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.91,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3900892583
+  }
+ },
+ "pfd:altitude_readback/frames/00000.jpg": {
+  "ias": 199,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.85,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3830927709
+  }
+ },
+ "pfd:altitude_readback/frames/00006.jpg": {
+  "ias": 209,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.54,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4520241708
+  }
+ },
+ "pfd:altitude_readback/frames/00012.jpg": {
+  "ias": 196,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.81,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3791451750
+  }
+ },
+ "pfd:altitude_readback/frames/00018.jpg": {
+  "ias": 193,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.95,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3932147834
+  }
+ },
+ "pfd:altitude_readback/frames/00024.jpg": {
+  "ias": 205,
+  "selected_altitude": 11000,
+  "altitude": 9020,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.83,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3814113791
+  }
+ },
+ "pfd:altitude_readback/frames/00030.jpg": {
+  "ias": 216,
+  "selected_altitude": null,
+  "altitude": 9400,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.72,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3710331792
+  }
+ },
+ "pfd:altitude_readback/frames/00036.jpg": {
+  "ias": 192,
+  "selected_altitude": 11000,
+  "altitude": 10640,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.83,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4814080667
+  }
+ },
+ "pfd:altitude_readback/frames/00042.jpg": {
+  "ias": 192,
+  "selected_altitude": 11000,
+  "altitude": 11240,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.81,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3790292084
+  }
+ },
+ "pfd:altitude_readback_spark/frames/00000.jpg": {
+  "ias": 197,
+  "selected_altitude": 9000,
+  "altitude": 9020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.9,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3883223625
+  }
+ },
+ "pfd:altitude_readback_spark/frames/00007.jpg": {
+  "ias": 197,
+  "selected_altitude": 9000,
+  "altitude": 8900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.88,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3865290583
+  }
+ },
+ "pfd:altitude_readback_spark/frames/00013.jpg": {
+  "ias": 193,
+  "selected_altitude": 9000,
+  "altitude": 8980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.86,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3841684917
+  }
+ },
+ "pfd:altitude_readback_spark/frames/00020.jpg": {
+  "ias": 193,
+  "selected_altitude": 11000,
+  "altitude": 8980,
+  "fma": [
+   "N1",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.92,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3904991375
+  }
+ },
+ "pfd:altitude_readback_spark/frames/00028.jpg": {
+  "ias": 213,
+  "selected_altitude": 11000,
+  "altitude": 9680,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   ""
+  ],
+  "flaps": null,
+  "seconds": 3.72,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3708947584
+  }
+ },
+ "pfd:altitude_readback_spark/frames/00035.jpg": {
+  "ias": 192,
+  "selected_altitude": 11000,
+  "altitude": 1120,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.96,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3950257500
+  }
+ },
+ "pfd:autothrottle_hold/frames/00000.jpg": {
+  "ias": 130,
+  "selected_altitude": 2500,
+  "altitude": 2180,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.98,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3968702333
+  }
+ },
+ "pfd:autothrottle_hold/frames/00006.jpg": {
+  "ias": 136,
+  "selected_altitude": 2500,
+  "altitude": 2360,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.85,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3837771667
+  }
+ },
+ "pfd:autothrottle_hold/frames/00012.jpg": {
+  "ias": 145,
+  "selected_altitude": 2500,
+  "altitude": 2420,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.61,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4591615166
+  }
+ },
+ "pfd:autothrottle_hold/frames/00018.jpg": {
+  "ias": 142,
+  "selected_altitude": 2500,
+  "altitude": 2360,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.66,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 3645583333
+  }
+ },
+ "pfd:autothrottle_hold/frames/00024.jpg": {
+  "ias": 132,
+  "selected_altitude": 2500,
+  "altitude": 2340,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.72,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 3702055917
+  }
+ },
+ "pfd:autothrottle_hold/frames/00030.jpg": {
+  "ias": 118,
+  "selected_altitude": 2500,
+  "altitude": 2320,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.82,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 3805459708
+  }
+ },
+ "pfd:autothrottle_hold/frames/00036.jpg": {
+  "ias": 110,
+  "selected_altitude": 2500,
+  "altitude": 2280,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.65,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 3635488208
+  }
+ },
+ "pfd:autothrottle_hold/frames/00042.jpg": {
+  "ias": 127,
+  "selected_altitude": 2500,
+  "altitude": 1940,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.74,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 4724302625
+  }
+ },
+ "pfd:autothrottle_hold_spark/frames/00001.jpg": {
+  "ias": 127,
+  "selected_altitude": 2500,
+  "altitude": 2220,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.89,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3872588792
+  }
+ },
+ "pfd:autothrottle_hold_spark/frames/00008.jpg": {
+  "ias": 137,
+  "selected_altitude": 2500,
+  "altitude": 2380,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.96,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3946297333
+  }
+ },
+ "pfd:autothrottle_hold_spark/frames/00014.jpg": {
+  "ias": 150,
+  "selected_altitude": 2500,
+  "altitude": 2420,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.06,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4051129708
+  }
+ },
+ "pfd:autothrottle_hold_spark/frames/00020.jpg": {
+  "ias": 140,
+  "selected_altitude": 2500,
+  "altitude": 2340,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.68,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 3660679333
+  }
+ },
+ "pfd:autothrottle_hold_spark/frames/00027.jpg": {
+  "ias": 120,
+  "selected_altitude": 2500,
+  "altitude": 2300,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.63,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 4611965167
+  }
+ },
+ "pfd:autothrottle_hold_spark/frames/00034.jpg": {
+  "ias": 112,
+  "selected_altitude": 2500,
+  "altitude": 2220,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.64,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 29,
+   "total_duration": 3628279958
+  }
+ },
+ "pfd:nominal/frames/00000.jpg": {
+  "ias": 188,
+  "selected_altitude": 7000,
+  "altitude": 6900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.96,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3948872334
+  }
+ },
+ "pfd:nominal/frames/00030.jpg": {
+  "ias": 191,
+  "selected_altitude": 6000,
+  "altitude": 6980,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.89,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3872355542
+  }
+ },
+ "pfd:nominal/frames/00060.jpg": {
+  "ias": 192,
+  "selected_altitude": 6000,
+  "altitude": 6320,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.75,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 30,
+   "total_duration": 3740311792
+  }
+ },
+ "pfd:nominal/frames/00090.jpg": {
+  "ias": 193,
+  "selected_altitude": 6000,
+  "altitude": 5900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.84,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4829810250
+  }
+ },
+ "pfd:nominal/frames/00120.jpg": {
+  "ias": 193,
+  "selected_altitude": 6000,
+  "altitude": 6020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.84,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3828204959
+  }
+ },
+ "pfd:nominal/frames/00150.jpg": {
+  "ias": 195,
+  "selected_altitude": 5000,
+  "altitude": null,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 4.04,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4021505125
+  }
+ },
+ "pfd:nominal/frames/00180.jpg": {
+  "ias": 209,
+  "selected_altitude": 5000,
+  "altitude": 5040,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.99,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3971493292
+  }
+ },
+ "pfd:nominal/frames/00210.jpg": {
+  "ias": 210,
+  "selected_altitude": 5000,
+  "altitude": 4900,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.88,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3870854750
+  }
+ },
+ "pfd:nominal/frames/00240.jpg": {
+  "ias": 209,
+  "selected_altitude": 5000,
+  "altitude": 5000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.42,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4405306667
+  }
+ },
+ "pfd:nominal/frames/00270.jpg": {
+  "ias": 208,
+  "selected_altitude": 4000,
+  "altitude": 4780,
+  "fma": [
+   "RETARD",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.89,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3875982500
+  }
+ },
+ "pfd:nominal/frames/00300.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": 4040,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.17,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 33,
+   "total_duration": 4153614667
+  }
+ },
+ "pfd:nominal/frames/00330.jpg": {
+  "ias": 210,
+  "selected_altitude": 4000,
+  "altitude": 4000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.0,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3982497959
+  }
+ },
+ "pfd:nominal/frames/00360.jpg": {
+  "ias": 208,
+  "selected_altitude": 3000,
+  "altitude": 3720,
+  "fma": [
+   "RETARD",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.89,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3873704167
+  }
+ },
+ "pfd:nominal/frames/00390.jpg": {
+  "ias": 201,
+  "selected_altitude": 3000,
+  "altitude": 3000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.12,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4101916875
+  }
+ },
+ "pfd:nominal/frames/00420.jpg": {
+  "ias": 191,
+  "selected_altitude": 3000,
+  "altitude": 3020,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.87,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3853618084
+  }
+ },
+ "pfd:nominal/frames/00450.jpg": {
+  "ias": 190,
+  "selected_altitude": 3000,
+  "altitude": 3000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.33,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4311474750
+  }
+ },
+ "pfd:nominal/frames/00480.jpg": {
+  "ias": 190,
+  "selected_altitude": 3000,
+  "altitude": 3000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.23,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4219344167
+  }
+ },
+ "pfd:nominal/frames/00510.jpg": {
+  "ias": 191,
+  "selected_altitude": 2000,
+  "altitude": 2140,
+  "fma": [
+   "RETARD",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "flaps": null,
+  "seconds": 3.91,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3898854042
+  }
+ },
+ "pfd:nominal/frames/00540.jpg": {
+  "ias": 176,
+  "selected_altitude": 2000,
+  "altitude": 1980,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.09,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4078968416
+  }
+ },
+ "pfd:nominal/frames/00570.jpg": {
+  "ias": 170,
+  "selected_altitude": 2000,
+  "altitude": 2000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.87,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3852075542
+  }
+ },
+ "pfd:nominal/frames/00600.jpg": {
+  "ias": 170,
+  "selected_altitude": 2000,
+  "altitude": 2000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 4.81,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 4794198875
+  }
+ },
+ "pfd:nominal/frames/00630.jpg": {
+  "ias": 170,
+  "selected_altitude": 2000,
+  "altitude": 2000,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "flaps": null,
+  "seconds": 3.94,
+  "usage": {
+   "prompt_eval_count": 417,
+   "eval_count": 32,
+   "total_duration": 3928042583
+  }
+ },
+ "flaps:flaps_correct/frames/00000.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 2,
+  "seconds": 0.66,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 648757958
+  }
+ },
+ "flaps:flaps_correct/frames/00004.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.64,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 629790875
+  }
+ },
+ "flaps:flaps_correct/frames/00007.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.6,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 594653167
+  }
+ },
+ "flaps:flaps_correct/frames/00013.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 15,
+  "seconds": 0.6,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 589973542
+  }
+ },
+ "flaps:flaps_correct/frames/00016.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 15,
+  "seconds": 0.61,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 599732375
+  }
+ },
+ "flaps:flaps_correct/frames/00019.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 15,
+  "seconds": 0.61,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 601715292
+  }
+ },
+ "flaps:flaps_correct/frames/00022.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 15,
+  "seconds": 0.62,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 615497041
+  }
+ },
+ "flaps:flaps_forgot/frames/00000.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.63,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 617054167
+  }
+ },
+ "flaps:flaps_forgot/frames/00003.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.62,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 608613000
+  }
+ },
+ "flaps:flaps_forgot/frames/00006.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.62,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 610401833
+  }
+ },
+ "flaps:flaps_forgot/frames/00009.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.62,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 613448041
+  }
+ },
+ "flaps:flaps_forgot/frames/00013.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.59,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 579135875
+  }
+ },
+ "flaps:flaps_forgot/frames/00018.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.57,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 559933125
+  }
+ },
+ "flaps:flaps_forgot/frames/00021.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.59,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 580088625
+  }
+ },
+ "flaps:flaps_wrong/frames/00000.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.58,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 568762500
+  }
+ },
+ "flaps:flaps_wrong/frames/00003.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.58,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 567674250
+  }
+ },
+ "flaps:flaps_wrong/frames/00006.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 5,
+  "seconds": 0.58,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 570187750
+  }
+ },
+ "flaps:flaps_wrong/frames/00009.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 10,
+  "seconds": 0.59,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 576681625
+  }
+ },
+ "flaps:flaps_wrong/frames/00012.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 10,
+  "seconds": 0.58,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 570207625
+  }
+ },
+ "flaps:flaps_wrong/frames/00015.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 10,
+  "seconds": 0.58,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 571928250
+  }
+ },
+ "flaps:flaps_wrong/frames/00018.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 10,
+  "seconds": 0.58,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 573503333
+  }
+ },
+ "flaps:flaps_wrong/frames/00021.jpg": {
+  "ias": null,
+  "selected_altitude": null,
+  "altitude": null,
+  "fma": [],
+  "flaps": 10,
+  "seconds": 0.81,
+  "usage": {
+   "prompt_eval_count": 488,
+   "eval_count": 7,
+   "total_duration": 797170042
+  }
+ }
+}

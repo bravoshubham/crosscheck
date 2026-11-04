@@ -1,0 +1,6 @@
+(version 1)
+; On-board mode: the process may do anything except reach another computer.
+(allow default)
+(deny network-outbound)
+(allow network-outbound (remote ip "localhost:*"))
+(allow network-outbound (remote unix-socket))

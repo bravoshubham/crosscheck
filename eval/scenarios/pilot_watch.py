@@ -166,10 +166,21 @@ class Webcam:
         return self.cv2.imencode(".jpg", bgr, [self.cv2.IMWRITE_JPEG_QUALITY, 85])[1].tobytes()
 
 
+async def pose_onboard(data: bytes, box: list[float]) -> dict:
+    """SAM 3D Body on this computer (onboard/pose_service.py), the same call as Modal's Pose.one."""
+    import base64
+    from senses.onboard import local_client
+    async with local_client(60) as c:
+        r = await c.post(os.environ.get("POSE_URL", "http://127.0.0.1:8772") + "/pose",
+                         json={"jpeg": base64.b64encode(data).decode(), "box": [float(v) for v in box]})
+        r.raise_for_status()
+        return r.json()
+
+
 async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None = None, video: bool = False) -> int:
-    import modal
+    from senses.onboard import ONBOARD
     image_set, state, answer = VARIANTS[variant]
-    name = f"pilot_{variant}" + ("_webcam" if webcam else "")
+    name = f"pilot_{variant}" + ("_webcam" if webcam else "") + ("_onboard" if ONBOARD else "")
     out = pathlib.Path(os.environ.get("CROSSCHECK_OUT", ROOT / "replay")) / name  # eval/repeat.py sets it
     (out / "frames").mkdir(parents=True, exist_ok=True)
     cam = Webcam() if webcam else None
@@ -178,8 +189,10 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
     if feed:
         size = feed.at(0)[0].shape[1]
         frames = {"upright": feed.jpeg(0)}
-        from senses.sam31 import pilot_box  # SAM 3.1 finds the captain; SAM 3D Body poses inside that box
-        found = pilot_box(frames["upright"])
+        found = None
+        if not ONBOARD:  # on board the seat box is the camera's installed calibration (no SAM 3.1 weights)
+            from senses.sam31 import pilot_box  # SAM 3.1 finds the captain; SAM 3D Body poses inside that box
+            found = pilot_box(frames["upright"])
         box = list(found) if found else [v * size / 1600 for v in BOXES[image_set]]
         box_from = "SAM 3.1, on the first frame" if found else box_from
     elif cam:
@@ -190,8 +203,12 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
     else:
         frames = {s: frame_bytes(image_set, s) for s in ("upright", state)}
         box = [v * SCALE for v in BOXES[image_set]]
-    pose = modal.Cls.from_name("crosscheck-sam3d-body", "Pose")()
-    await pose.one.remote.aio(frames["upright"], box)  # wake the GPU container before the clock starts
+    if ONBOARD:
+        pose_one = pose_onboard
+    else:
+        import modal
+        pose_one = modal.Cls.from_name("crosscheck-sam3d-body", "Pose")().one.remote.aio
+    await pose_one(frames["upright"], box)  # wake the model (on Modal, the GPU container) before the clock starts
     live_answer = mic is not None and variant == "answers"  # the person at the microphone answers for the captain
 
     say_cc = mic.speak if mic else None
@@ -260,7 +277,7 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
         fname = f"frames/{n:05d}.jpg"
         (out / fname).write_bytes(data)
         n += 1
-        res = await pose.one.remote.aio(data, box)
+        res = await pose_one(data, box)
         t = time.time()
         truth.append({"t": captured, "state": now_state})
         if "pred_keypoints_3d" not in res:
@@ -284,7 +301,8 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
         "scenario": name, "scorer": "pilot_watch", "variant": variant, "image_set": image_set, "state": state,
         "answer": answer, "expect_ask": EXPECT[variant][0], "expect_alert": EXPECT[variant][1],
         "t_start": t0, "t_change": t0 + T_CHANGE, "frame_box": [0, 0, size, size] if feed else [0, 0, 800, 800], "pilot_camera": True,
-        "pose": "SAM 3D Body (facebook/sam-3d-body-vith) on Modal T4, one call per frame",
+        "pose": "SAM 3D Body (facebook/sam-3d-body-vith) on this computer (onboard/pose_service.py), one call per frame" if ONBOARD
+                else "SAM 3D Body (facebook/sam-3d-body-vith) on Modal T4, one call per frame",
         "pilot_box": [round(v) for v in box], "pilot_box_from": box_from,
         "camera": "the Mac's webcam, a person following spoken instructions" if cam else
                   f"generated video: LTX-2.5 clips anchored on Muse Image set {image_set}" if feed else f"Muse Image set {image_set}",
@@ -292,7 +310,7 @@ async def main(variant: str, speak: bool, webcam: bool = False, mic: Mic | None 
         "speech": ("Muse Voice Transcribe, live: the person on the Mac's microphone" if live_answer else
                    "Muse Voice Transcribe, live (macOS voice for the pilot's answer)") if answer else "none",
         "heard": heard, "recorded": time.strftime("%Y-%m-%d %H:%M:%S %Z")}, indent=1))
-    if feed:  # Muse Wonder watches the recording, independently of SAM 3D Body
+    if feed and not ONBOARD:  # Muse Wonder watches the recording, independently of SAM 3D Body (on board: after landing)
         from brain.review import review_recording
         try:
             rv = review_recording(out)
