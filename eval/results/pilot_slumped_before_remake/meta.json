@@ -1,0 +1,32 @@
+{
+ "scenario": "pilot_slumped",
+ "scorer": "pilot_watch",
+ "variant": "slumped",
+ "image_set": "e",
+ "state": "slumped",
+ "answer": null,
+ "expect_ask": true,
+ "expect_alert": true,
+ "t_start": 1793656888.490377,
+ "t_change": 1793656898.490377,
+ "frame_box": [
+  0,
+  0,
+  704,
+  704
+ ],
+ "pilot_camera": true,
+ "pose": "SAM 3D Body (facebook/sam-3d-body-vith) on Modal T4, one call per frame",
+ "pilot_box": [
+  63,
+  131,
+  504,
+  543
+ ],
+ "pilot_box_from": "SAM 3.1, on the first frame",
+ "camera": "generated video: LTX-2.5 clips anchored on Muse Image set e",
+ "video": "camera.mp4",
+ "speech": "none",
+ "heard": [],
+ "recorded": "2026-11-03 03:32:17 IST"
+}

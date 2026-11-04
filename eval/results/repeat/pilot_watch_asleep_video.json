@@ -9,17 +9,17 @@
    "pass": true,
    "callouts": [
     {
-     "s_after_change": 14.2,
+     "s_after_change": 12.9,
      "text": "Captain, are you OK?"
     },
     {
-     "s_after_change": 23.3,
+     "s_after_change": 23.2,
      "text": "Captain not responding. First officer, take control."
     }
    ],
-   "seconds": 69,
-   "asked_s_after_change": 14.2,
-   "alert_s_after_change": 23.3,
+   "seconds": 70,
+   "asked_s_after_change": 12.9,
+   "alert_s_after_change": 23.2,
    "false_callouts_before_change": [],
    "wonder": {
     "state": "incapacitated",
@@ -32,17 +32,17 @@
    "pass": true,
    "callouts": [
     {
-     "s_after_change": 12.1,
+     "s_after_change": 13.0,
      "text": "Captain, are you OK?"
     },
     {
-     "s_after_change": 20.9,
+     "s_after_change": 23.6,
      "text": "Captain not responding. First officer, take control."
     }
    ],
-   "seconds": 71,
-   "asked_s_after_change": 12.1,
-   "alert_s_after_change": 20.9,
+   "seconds": 74,
+   "asked_s_after_change": 13.0,
+   "alert_s_after_change": 23.6,
    "false_callouts_before_change": [],
    "wonder": {
     "state": "incapacitated",

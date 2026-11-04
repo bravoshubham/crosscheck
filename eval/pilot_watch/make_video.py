@@ -52,28 +52,41 @@ STYLE = "Static camera, realistic, natural light, documentary footage."
 # Prompts say only what happens: "does not gesture" put gestures into the clip.
 IDLE = ("sits calmly in the seat flying the aircraft, eyes on the instruments and the windscreen ahead, both hands "
         "resting on the control column, breathing slowly, blinking now and then.")
-MID = {  # the halfway photo for each state, as a Muse Image edit of the upright photo
-    "slumped": "Same photo, same pilot and cockpit, but the pilot is losing consciousness: eyes half closed, head starting "
-               "to drop forward, shoulders beginning to sag, hands loosening on the control column.",
-    "slumped_side": "Same photo, same pilot and cockpit, but the pilot is falling asleep: eyes closing, head starting to "
-                    "tilt towards the side window, upper body beginning to lean sideways, hands loosening on the controls.",
-    "looking_down": "Same photo, same pilot and cockpit, but the pilot is lifting a paper checklist with the left hand and "
-                    "starting to look down at it, sitting upright, right hand on the control column.",
+MID = {  # the halfway photo for each state, as a Muse Image edit of the upright photo (remade 5 Nov 2026 with
+    # the states); prompts tried in order, the next only when the content filter refuses one three times
+    "slumped": ["Same photo, same pilot and cockpit, but the pilot is becoming unresponsive: eyes half closed, head "
+                "starting to tilt sideways, shoulders beginning to sag, hands loosening on the control column.",
+                "Same photo, same pilot and cockpit, but the pilot is losing consciousness: eyes half closed, head "
+                "starting to tilt sideways, shoulders beginning to sag, hands loosening on the control column.",
+                "Same photo, same pilot and cockpit, but the pilot is nodding off: eyes half closed, head starting to tilt "
+                "sideways, shoulders beginning to sag, hands loosening on the control column."],
+    "slumped_side": ["Same photo, same pilot and cockpit, but the pilot is falling asleep: eyelids drooping, head starting "
+                     "to roll sideways towards the side of the seat, body beginning to slouch, hands loosening on the "
+                     "control column."],
+    "looking_down": ["Same photo, same pilot and cockpit, but the pilot is lifting a white paper checklist with the left "
+                     "hand and starting to look down at it, sitting upright, right hand on the control column."],
 }
 VARIANTS = {  # image set, state, what happens in "change", what happens in "hold"
     "slumped": ("e", "slumped",
-                "is flying, eyes forward, then slowly loses consciousness: his eyes close, his head nods forward and sinks until his chin rests on his chest, his body goes limp, his shoulders sag and both hands slip from the control column into his lap.",
-                "sits unconscious, head down on his chest, eyes closed, hands in his lap, completely still except for slow breathing."),
+                "is flying, eyes forward, then slowly loses consciousness: his eyes close, his chin sinks, his head rolls slowly over to rest on his shoulder against the headrest, his body sinks down in the seat and both hands slide off the control column.",
+                "sits slumped sideways in the seat, unconscious, head on his shoulder, eyes closed, arms hanging down beside the seat, completely still except for slow breathing."),
     "asleep": ("f", "slumped_side",
-               "is flying, eyes forward, then grows drowsy: her eyelids droop and close, her head and upper body slowly sag sideways until they rest against the side window, her arms go loose and her hands slip from the controls.",
-               "is fast asleep against the side window, eyes closed, arms loose, completely still except for slow breathing."),
+               "is flying, eyes forward, then grows drowsy: her eyelids droop and close, her head rolls sideways against the side of the seat, her body slouches down and her hands slip from the controls into her lap.",
+               "is fast asleep, slouched in the seat with her head resting sideways against the seat, eyes closed, hands loose in her lap, completely still except for slow breathing."),
     "checklist": ("b", "looking_down",
                   "is flying, eyes forward, then calmly lifts a paper checklist with her left hand and lowers her eyes to read it, still sitting upright and alert, her right hand on the control column.",
                   "reads the paper checklist in her left hand, eyes moving down the page, sitting upright, alert."),
     "answers": ("d", "slumped",
-                "is flying, eyes forward, then slowly slumps: his head drops forward onto his chest, his shoulders sag and his hands slide off the control column into his lap.",
-                "sits slumped with his head down on his chest and his hands in his lap, still except for slow breathing."),
+                "is flying, eyes forward, then slowly slumps: his eyes close, his chin sinks, his head rolls slowly over to rest on his shoulder against the headrest, his body sags down in the seat and his hands slide off the control column.",
+                "sits slumped in the seat, head on his shoulder, eyes closed, arms hanging at his sides, still except for slow breathing."),
 }
+# Seeds other than 421 + clip number, where that seed's clip was rejected on inspection (kept in video_rejected/):
+# the captain turned his head away from the camera before slumping, and a cross-fade ghosted a second head.
+SEEDS: dict[str, int] = {"slumped/change": 1001}
+# Remade 5 Nov 2026 for slumped, asleep and checklist (the first clips are in video_before_remake/; idle is the
+# old clip, its photo and prompt unchanged). Not for "answers": set d's new slumped photo is framed slightly
+# differently from its upright one, and both seeds tried cross-faded a ghost of the captain between the two
+# (video_rejected/answers/), so video/answers/ keeps the first clips, made from images_before_remake/d.
 RECOVER = ("lifts his head, opens his eyes, sits back up in the seat, looks ahead out of the windscreen and says a few words, "
            "then puts both hands back on the control column.")
 
@@ -91,10 +104,10 @@ def midpoint(image_set: str, state: str) -> pathlib.Path:
     buf = io.BytesIO()
     Image.open(IMAGES / image_set / "upright.jpg").save(buf, "PNG")
     with httpx.Client(trust_env=False, timeout=240) as c:
-        for attempt in range(3):  # the content filter refuses some edits at random; a retry usually works
+        for attempt in range(3 * len(MID[state])):  # the content filter refuses some edits at random; a retry usually works
             r = c.post(os.environ.get("META_API_BASE", "https://api.meta.ai/v1") + "/images/edits",
                        headers={"Authorization": "Bearer " + os.environ["MODEL_API_KEY"]},
-                       data={"model": "muse-image-1.0", "prompt": MID[state], "n": "1"},
+                       data={"model": "muse-image-1.0", "prompt": MID[state][attempt // 3], "n": "1"},
                        files={"image": ("upright.png", buf.getvalue(), "image/png")})
             if r.status_code == 200:
                 break
@@ -144,7 +157,8 @@ def make(variant: str) -> None:
     for i, (name, (motion, a, b)) in enumerate(clips.items()):
         if not (d / f"{name}.mp4").exists():
             mid = midpoint(image_set, state) if name in ("change", "recover") else None
-            render(name, f"{lead} {motion} {STYLE}", img(a), img(b), FRAMES[name], d / f"{name}.mp4", seed=421 + i, mid=mid)
+            render(name, f"{lead} {motion} {STYLE}", img(a), img(b), FRAMES[name], d / f"{name}.mp4",
+                   seed=SEEDS.get(f"{variant}/{name}", 421 + i), mid=mid)
 
 
 if __name__ == "__main__":

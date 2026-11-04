@@ -51,3 +51,19 @@ def test_callsign_joined_by_a_misheard_for_still_counts():
     # "for" before the callsign is read as a 4: "LAS for 421" -> 4421 after normalising
     assert [(f.key, f.value) for f in said_facts("descend and maintain 4,000 LAS for 421.", "pm", 0, "421")] == [
         ("readback.altitude", 4000)]
+
+
+def test_altimeter_setting_is_parsed():
+    from senses.speech import parse_altimeter, said_facts
+    assert parse_altimeter("Alaska 421, Portland altimeter three zero one two.") == 3012
+    assert parse_altimeter("altimeter 30.12") == 3012
+    assert parse_altimeter("descend and maintain six thousand, altimeter two niner niner two") == 2992
+    assert parse_altimeter("altimeter 4000") is None
+    assert parse_altimeter("climb and maintain one one thousand") is None
+    facts = said_facts("Alaska 421 descend and maintain 6000 Portland altimeter 3012", "atc", 0.0, "421")
+    assert [(f.key, f.value) for f in facts] == [("clearance.altitude", 6000), ("clearance.altimeter", 3012)]
+    assert said_facts("Portland altimeter 3012", "atc", 0.0, "421") == []  # not our callsign
+    # as Voice Transcribe heard the scenario's lines (eval/scenarios/altimeter.py, 5 Nov)
+    assert parse_altimeter("Alaska 421 descend and maintain 7000 Portland altitude 3012") == 3012
+    assert parse_altimeter("descend and maintained seven thousand autometer three zero one two Alaska four two one") == 3012
+    assert parse_altimeter("climb to altitude 3000") is None  # a whole hundred is an altitude

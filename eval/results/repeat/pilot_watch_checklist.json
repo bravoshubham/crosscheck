@@ -17,7 +17,7 @@
    "run": 1,
    "pass": true,
    "callouts": null,
-   "seconds": 54,
+   "seconds": 56,
    "asked_s_after_change": null,
    "alert_s_after_change": null,
    "false_callouts_before_change": []

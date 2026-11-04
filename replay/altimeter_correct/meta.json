@@ -1,0 +1,69 @@
+{
+ "scenario": "altimeter_correct",
+ "scorer": "altimeter",
+ "panel_reader": "apple-vision",
+ "aircraft": "B738",
+ "area": "Portland",
+ "variant": "correct",
+ "fact_time": "arrival",
+ "given": 3012,
+ "baro_set": 3012,
+ "cleared": 7000,
+ "expect_rule": null,
+ "expect_callout": null,
+ "t_start": 1793822093.862705,
+ "t_clear": 1793822105.862705,
+ "t_set": 1793822121.615982,
+ "speech": "Muse Voice Transcribe, live (MMS-TTS lines; ATC radio-filtered), parsed by senses/speech.py",
+ "heard": [
+  {
+   "speaker": "atc",
+   "spoken": "alaska four two one descend and maintain seven thousand portland altimeter three zero one two",
+   "transcript": "Alaska 421 descend and maintain 7000 Portland altimeter 3012",
+   "audio_s": 6.32,
+   "s_from_start": 7.69,
+   "facts": [
+    [
+     "clearance.altitude",
+     7000
+    ],
+    [
+     "clearance.altimeter",
+     3012
+    ]
+   ],
+   "spark": null
+  },
+  {
+   "speaker": "pm",
+   "spoken": "descend and maintain seven thousand altimeter three zero one two alaska four two one",
+   "transcript": "descend and maintained 7,000 autometer 3012 Alaska 421",
+   "audio_s": 5.76,
+   "s_from_start": 7.06,
+   "facts": [
+    [
+     "readback.altitude",
+     7000
+    ],
+    [
+     "readback.altimeter",
+     3012
+    ]
+   ],
+   "spark": null
+  }
+ ],
+ "camera_check": {
+  "model": "sam-3.1",
+  "pfd": {
+   "box": [
+    1348,
+    1339,
+    2133,
+    2117
+   ],
+   "iou": 0.95
+  }
+ },
+ "recorded": "2026-11-05 01:26:00 IST"
+}

@@ -7,7 +7,8 @@ known box, and the default field of view is used.
 
   uv run modal run cloud/sam3d_body_app.py
 writes <image>.pose.json next to each eval/pilot_watch/images/<set>/<state>.jpg (70 keypoints,
-2D and 3D), using that set's box from eval/pilot_watch/boxes.json.
+2D and 3D), using that set's box from eval/pilot_watch/boxes.json, then scores them
+(eval/results/day_one/pilot_posture.json).
   uv run modal deploy cloud/sam3d_body_app.py
 deploys Pose for the live scenario (eval/scenarios/pilot_watch.py), which calls it per frame.
 """
@@ -62,16 +63,41 @@ class Pose:
         return {name: self.one.local(data, box) for name, (data, box) in images.items()}
 
 
+LABELS = {"upright": False, "looking_down": False, "slumped": True, "slumped_side": True}  # slumped or not
+GROUPS = {"a (thresholds chosen)": "a", "b-d (seen before revision)": "bcd", "e-f (clean test)": "ef"}
+
+
 @app.local_entrypoint()
 def main(images: str = "eval/pilot_watch/images"):
-    """Every <set>/<state>.jpg without a .pose.json yet, with the set's box from boxes.json."""
+    """Every labelled <set>/<state>.jpg without a .pose.json yet, with the set's box from boxes.json;
+    then scores every labelled image with senses/pilot_pose.py into eval/results/day_one/pilot_posture.json
+    (and the per-image values into pilot_posture_rows.json)."""
     d = pathlib.Path(images)
     boxes = json.loads((d.parent / "boxes.json").read_text())
     todo = {f"{p.parent.name}/{p.name}": (p.read_bytes(), boxes[p.parent.name])
-            for p in sorted(d.glob("*/*.jpg")) if not p.with_suffix(".pose.json").exists()}
-    if not todo:
-        print("nothing to do")
-        return
-    for name, r in Pose().many.remote(todo).items():
-        (d / name).with_suffix(".pose.json").write_text(json.dumps(r))
-        print(name, r.get("error") or f"{len(r['pred_keypoints_3d'])} keypoints")
+            for p in sorted(d.glob("*/*.jpg")) if p.stem in LABELS and not p.with_suffix(".pose.json").exists()}
+    if todo:
+        for name, r in Pose().many.remote(todo).items():
+            (d / name).with_suffix(".pose.json").write_text(json.dumps(r))
+            print(name, r.get("error") or f"{len(r['pred_keypoints_3d'])} keypoints")
+    import sys
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+    from senses.pilot_pose import posture
+    rows = []
+    for p in sorted(d.glob("*/*.pose.json")):
+        state = p.name.removesuffix(".pose.json")
+        if state not in LABELS:
+            continue
+        r = json.loads(p.read_text())
+        got = posture(r["pred_keypoints_3d"]) if "pred_keypoints_3d" in r else None
+        rows.append({"image": f"{p.parent.name}/{state}", "expected_slumped": LABELS[state], "posture": got,
+                     "right": got is not None and got["slumped"] == LABELS[state]})
+        print(f"{rows[-1]['image']:16s} {got and (got['neck_flex'], got['wrists'], got['slumped'])}  {'ok' if rows[-1]['right'] else 'WRONG'}")
+    out = {}
+    for label, sets in GROUPS.items():
+        g = [r for r in rows if r["image"][0] in sets]
+        out[label] = f"{sum(r['right'] for r in g)}/{len(g)}"
+    res = pathlib.Path(__file__).resolve().parents[1] / "eval" / "results" / "day_one"
+    (res / "pilot_posture.json").write_text(json.dumps(out, indent=1))
+    (res / "pilot_posture_rows.json").write_text(json.dumps({"right": sum(r["right"] for r in rows), "of": len(rows), "rows": rows}, indent=1))
+    print(out, f"{sum(r['right'] for r in rows)}/{len(rows)}")

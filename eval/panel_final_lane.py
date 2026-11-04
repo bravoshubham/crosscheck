@@ -1,10 +1,11 @@
-"""Score Glimmer's final lane (senses/panel_glimmer.py: selected speed, speed, thrust and pitch mode,
-for the autothrottle alert on final) against X-Plane truth on recorded 737 frames, next to the fast
-lane it replaced: airspeed within 2 kt, selected speed exact, thrust in a speed mode or not (truth:
-the autothrottle state). Answers are cached in eval/results/day_one/panel_final_lane_cache.json.
-Timing is per read on this computer's GPU, with whatever else is on it.
+"""Score the final lane (selected speed, speed, thrust and pitch mode, for the autothrottle alert on
+final) against X-Plane truth on recorded 737 frames: Glimmer's (senses/panel_glimmer.py) next to the
+fast lane it replaced, and Muse Spark's (senses/panel_spark.py): airspeed within 2 kt, selected speed
+exact, thrust in a speed mode or not (truth: the autothrottle state). Answers are cached in
+eval/results/day_one/panel_final_lane_cache.json. Timing is per read: Glimmer on this computer's GPU,
+with whatever else is on it; Spark one call at a time over the network.
 
-Run (Ollama with muse-glimmer:30b up):  uv run python eval/panel_final_lane.py
+Run (Ollama with muse-glimmer:30b up, MODEL_API_KEY for Spark):  uv run python eval/panel_final_lane.py
 """
 import asyncio
 import bisect
@@ -21,11 +22,12 @@ sys.path.insert(0, str(ROOT))
 from brain.live import frame_from_crop  # noqa: E402
 from brain.rules import SPEED_MODES  # noqa: E402
 from senses import panel_glimmer as pg  # noqa: E402
+from senses import panel_spark as ps  # noqa: E402
 
 OUT = ROOT / "eval" / "results" / "day_one"
 CACHE = OUT / "panel_final_lane_cache.json"
 RECS = {"autothrottle_hold": 3, "autothrottle_hold_spark": 2, "nominal": 25}  # recording: every nth reading's frame
-LANES = {"final": pg.read_frame_glimmer_final, "fast": pg.read_frame_glimmer_fast}
+LANES = {"final": pg.read_frame_glimmer_final, "fast": pg.read_frame_glimmer_fast, "spark": ps.read_frame_spark_final}
 
 
 def truth_at(truth: list[dict], t: float, key: str):

@@ -4,8 +4,8 @@
  "panel_reader": "muse-spark",
  "aircraft": "B738",
  "airport": "KPDX 10R",
- "t_start": 1793688634.5892181,
- "t_fault": 1793688659.5918279,
+ "t_start": 1793819033.724575,
+ "t_fault": 1793819058.7258182,
  "fact_time": "captured",
  "target_kt": 145.0,
  "quiet_s": 25,
@@ -15,13 +15,13 @@
   "model": "sam-3.1",
   "pfd": {
    "box": [
-    1348,
-    1310,
-    2132,
-    2075
+    1349,
+    1297,
+    2133,
+    2062
    ],
-   "iou": 0.89
+   "iou": 0.86
   }
  },
- "recorded": "2026-11-03 12:21:52 IST"
+ "recorded": "2026-11-05 00:35:10 IST"
 }

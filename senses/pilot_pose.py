@@ -11,7 +11,8 @@ import numpy as np
 
 # MHR70 keypoint indices (sam_3d_body/metadata/mhr70.py)
 NOSE, L_EAR, R_EAR, L_SH, R_SH, L_HIP, R_HIP, R_WRIST, L_WRIST, NECK = 0, 3, 4, 5, 6, 9, 10, 41, 62, 69
-# Each threshold is the midpoint between set a's normal and slumped values. A first, eyeballed
+# Each threshold is the midpoint between set a's normal and slumped values (the first set a images,
+# now eval/pilot_watch/images_before_remake/a; the remade images were not used to tune them). A first, eyeballed
 # WRISTS_MIN of 0.40 flagged 3 of 6 normal held-out images (sets b-d); after that change sets
 # b-d are no longer a clean test, so sets e-f were made afterwards to test these values.
 NECK_FLEX_MAX = 40.0   # degrees; set a: upright 19.6, reading a checklist 29.2, slumped forward 52.1

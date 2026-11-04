@@ -21,11 +21,12 @@ GAP_S, COMMA_S, STOP_S = 0.04, 0.18, 0.32  # between words, at a comma, at a ful
 # Whole phrases (the shipped scenarios' callouts and the fixed ones), recorded as sentences
 PHRASES = ["Cleared one-one thousand, set one-two thousand.", "Readback one-two thousand, cleared one-one thousand.",
            "Flaps fifteen called, ten set.", "Flaps fifteen called, five set.", "Speed. Autothrottle not in speed.",
-           "Captain, are you OK?", "Captain not responding. First officer, take control.", "Confirm cleared altitude."]
+           "Captain, are you OK?", "Captain not responding. First officer, take control.", "Confirm cleared altitude.",
+           "Altimeter three-zero-one-two given, three-zero-two-one set.", "Altimeter three-zero-one-two given, two-niner-niner-two set."]
 # Words for every other altitude and flap callout (brain/phraseology.py's vocabulary)
 WORDS = ["Cleared", "cleared", "set", "Readback", "Flaps", "called", "thousand", "hundred",
          "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "niner",
-         "up", "ten", "fifteen", "twenty-five", "thirty", "forty"]
+         "up", "ten", "fifteen", "twenty-five", "thirty", "forty", "Altimeter", "given"]
 _cache: dict | None = None
 
 

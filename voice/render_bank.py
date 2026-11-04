@@ -2,9 +2,10 @@
 
   uv run python voice/render_bank.py design     # candidate voices from descriptions, each heard
                                                 # back by Muse Voice Transcribe: voice/bank/candidates/
-  uv run python voice/render_bank.py render <candidate.wav>
+  uv run python voice/render_bank.py render <candidate.wav> [--missing]
                                                 # every phrase and word in that voice, two takes each,
                                                 # the take Voice Transcribe hears best kept: voice/bank/
+                                                # (--missing: only what the bank does not have yet)
 
 Drama 3 needs about 75 GB while it runs: stop other large models first. Built with Fish Audio
 (Fish Audio Community License: non-commercial use; see README).
@@ -86,12 +87,19 @@ def design() -> None:
     (out / "scores.json").write_text(json.dumps(scores, indent=1))
 
 
-def render(ref: pathlib.Path) -> None:
+def render(ref: pathlib.Path, only_missing: bool = False) -> None:
+    """only_missing: record just the phrases and words not in the bank yet, and keep the rest as
+    they are (a new callout must not change how the old ones sound)."""
     raw = BANK / "raw"
-    items = {key(t): t for t in PHRASES + WORDS}
+    old_index = json.loads((BANK / "bank.json").read_text()) if only_missing and (BANK / "bank.json").exists() else {}
+    old_report = json.loads((BANK / "report.json").read_text())["phrases"] if old_index else {}
+    items = {key(t): t for t in PHRASES + WORDS if t not in old_index}
+    if not items:
+        print("nothing missing")
+        return
     lines = {k: (t if t[-1] in ".?" else t.capitalize() + ".") for k, t in items.items()}  # a word alone, said as a word
     drama3(lines, raw, takes=2, ref=ref, ref_text=TEST)
-    index, report = {}, {}
+    index, report = dict(old_index), dict(old_report)
     for k, text in items.items():
         best = None
         for take in range(2):
@@ -115,5 +123,5 @@ def render(ref: pathlib.Path) -> None:
 if __name__ == "__main__":
     if sys.argv[1] == "design":
         design()
-    else:
-        render(pathlib.Path(sys.argv[2]).resolve())  # Drama 3 runs in its own folder
+    else:  # render <candidate.wav> [--missing]
+        render(pathlib.Path(sys.argv[2]).resolve(), only_missing="--missing" in sys.argv)  # Drama 3 runs in its own folder

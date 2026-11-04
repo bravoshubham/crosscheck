@@ -1,0 +1,25 @@
+{
+ "variant": "correct",
+ "given": 3012,
+ "baro_set": 3012,
+ "baro_truth_at_end": 3012,
+ "false_callouts_before_clearance": [],
+ "callouts": [],
+ "baro_read_from_screen": [
+  2992,
+  2994,
+  2999,
+  3003,
+  3005,
+  3007,
+  3008,
+  3010,
+  3011,
+  3012
+ ],
+ "paused_during_run": false,
+ "unexpected_callouts": [],
+ "pass": true,
+ "panel_readable": 0.96,
+ "non_cockpit_frames": 0
+}

@@ -1,0 +1,40 @@
+{
+ "variant": "wrong",
+ "given": 3012,
+ "baro_set": 3021,
+ "baro_truth_at_end": 3021,
+ "false_callouts_before_clearance": [],
+ "callouts": [
+  {
+   "s_after_set": 23.1,
+   "text": "Altimeter three-zero-one-two given, three-zero-two-one set."
+  }
+ ],
+ "baro_read_from_screen": [
+  2992,
+  2993,
+  2994,
+  2996,
+  2997,
+  2998,
+  3000,
+  3001,
+  3002,
+  3003,
+  3005,
+  3007,
+  3008,
+  3009,
+  3011,
+  3012,
+  3013,
+  3015,
+  3017,
+  3021
+ ],
+ "paused_during_run": false,
+ "unexpected_callouts": [],
+ "pass": true,
+ "panel_readable": 0.99,
+ "non_cockpit_frames": 0
+}

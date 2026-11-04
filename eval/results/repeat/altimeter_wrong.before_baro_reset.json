@@ -1,0 +1,47 @@
+{
+ "scenario": "altimeter_wrong",
+ "scored": 3,
+ "passed": 3,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 6.8,
+     "text": "Altimeter three-zero-one-two given, three-zero-two-one set."
+    }
+   ],
+   "seconds": 107,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 0.96
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 7.2,
+     "text": "Altimeter three-zero-one-two given, three-zero-two-one set."
+    }
+   ],
+   "seconds": 109,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 0.96
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": [
+    {
+     "s_after_set": 8.6,
+     "text": "Altimeter three-zero-one-two given, three-zero-two-one set."
+    }
+   ],
+   "seconds": 104,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 1.0
+  }
+ ]
+}

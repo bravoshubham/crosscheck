@@ -131,12 +131,18 @@ def onboard_facts(text: str, alt: str, speaker: str, t: float, own_digits: str, 
     if led is not None:
         a = [f for f in a if not implausible(f, led, text)]
         b = [f for f in b if not implausible(f, led, alt)]
-    same = sorted((f.key, f.value) for f in a) == sorted((f.key, f.value) for f in b)
-    if a and b and same:
-        return [Fact(f.stream, f.key, f.value, f.t, f.speaker, source="seamless+omnilingual") for f in a]
-    if a and b:
-        return []
-    return a or b
+    # value by value: a line can carry two ("descend and maintain seven thousand, altimeter three zero
+    # one two"), and one recognizer missing one of them must not cost the other
+    ka, kb = {f.key: f for f in a}, {f.key: f for f in b}
+    out = []
+    for k in list(dict.fromkeys(list(ka) + list(kb))):
+        fa, fb = ka.get(k), kb.get(k)
+        if fa and fb:
+            if fa.value == fb.value:
+                out.append(Fact(fa.stream, fa.key, fa.value, fa.t, fa.speaker, source="seamless+omnilingual"))
+        else:
+            out.append(fa or fb)
+    return out
 
 
 async def read_line(text: str, speaker: str, own_digits: str, client: httpx.AsyncClient | None = None,

@@ -2,14 +2,14 @@
  "model": "muse-wonder-1.0",
  "state": "normal",
  "from_s": null,
- "evidence": "The captain remains upright and alert throughout, initially holding the controls and then picking up and reading a checklist paper while keeping a hand on the controls.",
- "s": 8.4,
+ "evidence": "The captain remains upright and alert throughout, holding the controls and then reading a checklist paper while keeping a hand on the controls.",
+ "s": 8.1,
  "usage": {
-  "completion_tokens": 337,
+  "completion_tokens": 248,
   "prompt_tokens": 6833,
-  "total_tokens": 7170,
+  "total_tokens": 7081,
   "completion_tokens_details": {
-   "reasoning_tokens": 282
+   "reasoning_tokens": 197
   },
   "prompt_tokens_details": {
    "cached_tokens": 0

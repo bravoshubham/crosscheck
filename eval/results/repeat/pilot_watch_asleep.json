@@ -9,17 +9,17 @@
    "pass": true,
    "callouts": [
     {
-     "s_after_change": 9.6,
+     "s_after_change": 9.2,
      "text": "Captain, are you OK?"
     },
     {
-     "s_after_change": 19.4,
+     "s_after_change": 19.7,
      "text": "Captain not responding. First officer, take control."
     }
    ],
    "seconds": 55,
-   "asked_s_after_change": 9.6,
-   "alert_s_after_change": 19.4,
+   "asked_s_after_change": 9.2,
+   "alert_s_after_change": 19.7,
    "false_callouts_before_change": []
   },
   {
@@ -27,17 +27,17 @@
    "pass": true,
    "callouts": [
     {
-     "s_after_change": 8.4,
+     "s_after_change": 19.0,
      "text": "Captain, are you OK?"
     },
     {
-     "s_after_change": 18.0,
+     "s_after_change": 29.0,
      "text": "Captain not responding. First officer, take control."
     }
    ],
-   "seconds": 54,
-   "asked_s_after_change": 8.4,
-   "alert_s_after_change": 18.0,
+   "seconds": 53,
+   "asked_s_after_change": 19.0,
+   "alert_s_after_change": 29.0,
    "false_callouts_before_change": []
   }
  ]

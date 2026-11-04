@@ -2,14 +2,14 @@
  "model": "muse-wonder-1.0",
  "state": "incapacitated",
  "from_s": 11,
- "evidence": "Around 11s her eyes close, head slumps back, hands fall off the yoke into her lap, and she remains unresponsive through the end.",
- "s": 8.0,
+ "evidence": "At about 11s her eyes close, head slumps back against the seat, and hands leave the yoke to rest in her lap, remaining unresponsive through the end.",
+ "s": 9.8,
  "usage": {
-  "completion_tokens": 324,
+  "completion_tokens": 517,
   "prompt_tokens": 7137,
-  "total_tokens": 7461,
+  "total_tokens": 7654,
   "completion_tokens_details": {
-   "reasoning_tokens": 263
+   "reasoning_tokens": 452
   },
   "prompt_tokens_details": {
    "cached_tokens": 0

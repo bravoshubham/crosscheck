@@ -1,0 +1,112 @@
+{
+ "scenario": "autothrottle_hold_spark",
+ "scored": 11,
+ "passed": 6,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": true,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 96,
+   "callout_s_after_fault": 12.0,
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 12.7,
+   "panel_readable": 1.0
+  },
+  {
+   "run": 1,
+   "pass": true,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 96,
+   "callout_s_after_fault": 11.9,
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 13.1,
+   "panel_readable": 1.0
+  },
+  {
+   "run": 2,
+   "pass": true,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 97,
+   "callout_s_after_fault": 11.9,
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 13.4,
+   "panel_readable": 1.0
+  },
+  {
+   "run": 3,
+   "pass": true,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 97,
+   "callout_s_after_fault": 10.3,
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 12.6,
+   "panel_readable": 1.0
+  },
+  {
+   "run": 4,
+   "pass": true,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 96,
+   "callout_s_after_fault": 11.1,
+   "false_callouts_before_fault": [],
+   "truth_below_target_minus_10_s": 12.6,
+   "panel_readable": 1.0
+  },
+  {
+   "run": 5,
+   "pass": false,
+   "recorded": "2026-11-03 10:19:31 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 11.9,
+   "truth_below_target_minus_10_s": 11.5,
+   "note": "recording attempt, 3 Nov 10:17: called 11.9 s after the fault, 0.4 s after speed was 10 kt low"
+  },
+  {
+   "run": 6,
+   "pass": false,
+   "recorded": "2026-11-03 10:47:58 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 11.1,
+   "truth_below_target_minus_10_s": 11.1,
+   "note": "recording attempt, 3 Nov 10:46: called 11.1 s after the fault, the moment speed was 10 kt low (not before)"
+  },
+  {
+   "run": 7,
+   "pass": false,
+   "recorded": "2026-11-03 10:53:11 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 12.8,
+   "truth_below_target_minus_10_s": 10.7,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse highlight in the wide frames"
+  },
+  {
+   "run": 8,
+   "pass": false,
+   "recorded": "2026-11-03 11:22:55 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 18.7,
+   "truth_below_target_minus_10_s": 10.7,
+   "note": "recording attempt, 3 Nov 11:21: called 18.7 s after the fault, after speed was 10 kt low"
+  },
+  {
+   "run": 9,
+   "pass": false,
+   "recorded": "2026-11-03 11:54:42 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 12.2,
+   "truth_below_target_minus_10_s": 10.3,
+   "note": "an earlier shipped recording, replaced by one without X-Plane's mouse-flying box in the frames"
+  },
+  {
+   "run": 10,
+   "pass": true,
+   "recorded": "2026-11-03 12:21:52 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 14.0,
+   "truth_below_target_minus_10_s": 15.4,
+   "note": "the shipped recording before the final lane (eval/results/autothrottle_hold_spark_before_final_lane/), replaced"
+  }
+ ]
+}

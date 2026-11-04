@@ -1,5 +1,5 @@
 {
- "right": 23,
+ "right": 24,
  "of": 24,
  "rows": [
   {
@@ -7,13 +7,13 @@
    "sam31_box": [
     138,
     302,
-    967,
-    1153
+    924,
+    1152
    ],
    "expected_slumped": false,
    "posture": {
-    "neck_flex": 28.4,
-    "wrists": 0.42,
+    "neck_flex": 26.9,
+    "wrists": 0.45,
     "slumped": false,
     "reasons": []
    },
@@ -22,15 +22,15 @@
   {
    "image": "a/slumped.jpg",
    "sam31_box": [
-    138,
-    403,
-    809,
-    1153
+    157,
+    437,
+    972,
+    1556
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 52.7,
-    "wrists": 0.24,
+    "neck_flex": 60.2,
+    "wrists": -0.01,
     "slumped": true,
     "reasons": [
      "head dropped",
@@ -42,15 +42,15 @@
   {
    "image": "a/slumped_side.jpg",
    "sam31_box": [
-    63,
-    354,
-    843,
-    1152
+    52,
+    381,
+    816,
+    1154
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 7.6,
-    "wrists": 0.19,
+    "neck_flex": 11.4,
+    "wrists": 0.21,
     "slumped": true,
     "reasons": [
      "hands off the controls"
@@ -78,15 +78,15 @@
   {
    "image": "b/looking_down.jpg",
    "sam31_box": [
-    364,
-    266,
-    1193,
-    1159
+    348,
+    256,
+    1191,
+    1156
    ],
    "expected_slumped": false,
    "posture": {
-    "neck_flex": 24.7,
-    "wrists": 0.54,
+    "neck_flex": 19.5,
+    "wrists": 0.59,
     "slumped": false,
     "reasons": []
    },
@@ -95,15 +95,15 @@
   {
    "image": "b/slumped.jpg",
    "sam31_box": [
-    336,
-    357,
-    995,
-    1158
+    339,
+    412,
+    1071,
+    1554
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 44.5,
-    "wrists": 0.28,
+    "neck_flex": 63.4,
+    "wrists": -0.02,
     "slumped": true,
     "reasons": [
      "head dropped",
@@ -115,15 +115,15 @@
   {
    "image": "b/slumped_side.jpg",
    "sam31_box": [
-    179,
-    356,
-    1154,
-    1157
+    235,
+    390,
+    1156,
+    1158
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 11.5,
-    "wrists": 0.14,
+    "neck_flex": 10.3,
+    "wrists": 0.15,
     "slumped": true,
     "reasons": [
      "hands off the controls"
@@ -151,34 +151,32 @@
   {
    "image": "c/looking_down.jpg",
    "sam31_box": [
-    34,
-    457,
-    686,
-    1290
+    0,
+    452,
+    668,
+    1293
    ],
    "expected_slumped": false,
    "posture": {
-    "neck_flex": 34.3,
-    "wrists": 0.25,
-    "slumped": true,
-    "reasons": [
-     "hands off the controls"
-    ]
+    "neck_flex": 34.0,
+    "wrists": 0.43,
+    "slumped": false,
+    "reasons": []
    },
-   "right": false
+   "right": true
   },
   {
    "image": "c/slumped.jpg",
    "sam31_box": [
     45,
-    557,
-    614,
-    1302
+    626,
+    610,
+    1482
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 57.2,
-    "wrists": 0.3,
+    "neck_flex": 61.3,
+    "wrists": -0.02,
     "slumped": true,
     "reasons": [
      "head dropped",
@@ -190,18 +188,17 @@
   {
    "image": "c/slumped_side.jpg",
    "sam31_box": [
-    44,
-    601,
-    626,
-    1297
+    78,
+    599,
+    627,
+    1304
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 46.6,
-    "wrists": 0.28,
+    "neck_flex": 20.8,
+    "wrists": 0.22,
     "slumped": true,
     "reasons": [
-     "head dropped",
      "hands off the controls"
     ]
    },
@@ -227,15 +224,15 @@
   {
    "image": "d/looking_down.jpg",
    "sam31_box": [
-    73,
-    384,
+    57,
+    374,
     1116,
     1599
    ],
    "expected_slumped": false,
    "posture": {
-    "neck_flex": 36.8,
-    "wrists": 0.38,
+    "neck_flex": 31.9,
+    "wrists": 0.52,
     "slumped": false,
     "reasons": []
    },
@@ -244,18 +241,17 @@
   {
    "image": "d/slumped.jpg",
    "sam31_box": [
-    79,
-    480,
-    1113,
+    15,
+    532,
+    823,
     1599
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 51.2,
-    "wrists": 0.25,
+    "neck_flex": 18.0,
+    "wrists": 0.04,
     "slumped": true,
     "reasons": [
-     "head dropped",
      "hands off the controls"
     ]
    },
@@ -264,15 +260,15 @@
   {
    "image": "d/slumped_side.jpg",
    "sam31_box": [
-    5,
-    522,
-    1116,
+    0,
+    513,
+    1120,
     1599
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 22.6,
-    "wrists": 0.21,
+    "neck_flex": 14.0,
+    "wrists": 0.22,
     "slumped": true,
     "reasons": [
      "hands off the controls"
@@ -300,15 +296,15 @@
   {
    "image": "e/looking_down.jpg",
    "sam31_box": [
-    142,
-    327,
-    1076,
-    1219
+    145,
+    322,
+    1148,
+    1236
    ],
    "expected_slumped": false,
    "posture": {
-    "neck_flex": 31.2,
-    "wrists": 0.42,
+    "neck_flex": 30.1,
+    "wrists": 0.47,
     "slumped": false,
     "reasons": []
    },
@@ -317,18 +313,17 @@
   {
    "image": "e/slumped.jpg",
    "sam31_box": [
-    149,
-    401,
-    992,
-    1238
+    152,
+    483,
+    1204,
+    1297
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 45.9,
-    "wrists": 0.22,
+    "neck_flex": 21.4,
+    "wrists": 0.17,
     "slumped": true,
     "reasons": [
-     "head dropped",
      "hands off the controls"
     ]
    },
@@ -337,15 +332,15 @@
   {
    "image": "e/slumped_side.jpg",
    "sam31_box": [
-    144,
-    354,
-    971,
-    1228
+    136,
+    468,
+    1183,
+    1292
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 10.7,
-    "wrists": 0.23,
+    "neck_flex": 6.9,
+    "wrists": 0.25,
     "slumped": true,
     "reasons": [
      "hands off the controls"
@@ -373,15 +368,15 @@
   {
    "image": "f/looking_down.jpg",
    "sam31_box": [
-    416,
-    343,
-    1431,
-    1436
+    419,
+    347,
+    1430,
+    1434
    ],
    "expected_slumped": false,
    "posture": {
-    "neck_flex": 28.5,
-    "wrists": 0.46,
+    "neck_flex": 28.6,
+    "wrists": 0.44,
     "slumped": false,
     "reasons": []
    },
@@ -390,18 +385,17 @@
   {
    "image": "f/slumped.jpg",
    "sam31_box": [
-    419,
-    426,
-    1432,
-    1433
+    436,
+    458,
+    1438,
+    1595
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 47.3,
-    "wrists": 0.24,
+    "neck_flex": 26.2,
+    "wrists": 0.15,
     "slumped": true,
     "reasons": [
-     "head dropped",
      "hands off the controls"
     ]
    },
@@ -410,15 +404,15 @@
   {
    "image": "f/slumped_side.jpg",
    "sam31_box": [
-    416,
-    424,
-    1537,
+    417,
+    513,
+    1512,
     1436
    ],
    "expected_slumped": true,
    "posture": {
-    "neck_flex": 13.3,
-    "wrists": 0.21,
+    "neck_flex": 14.1,
+    "wrists": 0.22,
     "slumped": true,
     "reasons": [
      "hands off the controls"

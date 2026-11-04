@@ -4,8 +4,8 @@ The camera's view is a sequence of images of one pilot (generated with Muse Imag
 the state they show, eval/pilot_watch/): upright until T_CHANGE, then the variant's state.
 Every frame goes to SAM 3D Body on Modal as it is taken; senses/pilot_pose.py turns the body
 keypoints into "slumped or not". A slumped posture alone never alerts: Crosscheck asks first.
-  slumped    - set e, slumped forward, no answer   -> "Captain, are you OK?", then "...take control."
-  asleep     - set f, asleep against the window     -> the same
+  slumped    - set e, slumped sideways, no answer  -> "Captain, are you OK?", then "...take control."
+  asleep     - set f, asleep, head rolled sideways  -> the same
   checklist  - set b, reading a checklist           -> silence
   answers    - set d, slumped, answers when asked   -> the question only, no alert
 The answer is spoken (macOS voice) and heard through Muse Voice Transcribe, like all crew speech.

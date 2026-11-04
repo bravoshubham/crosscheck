@@ -1,0 +1,32 @@
+{
+ "scenario": "pilot_asleep",
+ "scorer": "pilot_watch",
+ "variant": "asleep",
+ "image_set": "f",
+ "state": "slumped_side",
+ "answer": null,
+ "expect_ask": true,
+ "expect_alert": true,
+ "t_start": 1793656957.449919,
+ "t_change": 1793656967.449919,
+ "frame_box": [
+  0,
+  0,
+  704,
+  704
+ ],
+ "pilot_camera": true,
+ "pose": "SAM 3D Body (facebook/sam-3d-body-vith) on Modal T4, one call per frame",
+ "pilot_box": [
+  187,
+  145,
+  629,
+  630
+ ],
+ "pilot_box_from": "SAM 3.1, on the first frame",
+ "camera": "generated video: LTX-2.5 clips anchored on Muse Image set f",
+ "video": "camera.mp4",
+ "speech": "none",
+ "heard": [],
+ "recorded": "2026-11-03 03:33:28 IST"
+}

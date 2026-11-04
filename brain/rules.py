@@ -38,7 +38,7 @@ def readback_vs_clearance(led: Ledger, now: float, window: float = READBACK_WIND
                  f"Readback {say.altitude(rb.value)}, cleared {say.altitude(clr.value)}.")]
 
 
-def _stable_set(led: Ledger, key: str, now: float, votes: int = 3) -> tuple[object, float] | None:
+def _stable_set(led: Ledger, key: str, now: float, votes: int = 3, tol: float = 50) -> tuple[object, float] | None:
     """The selected value as the majority of the last few camera readings (one misread such as
     "1200" for "12000" must not count), and when that value was first seen in the current run."""
     hist = [f for f in led.since("set", key, float("-inf")) if f.t <= now]
@@ -52,7 +52,7 @@ def _stable_set(led: Ledger, key: str, now: float, votes: int = 3) -> tuple[obje
     for f in reversed(hist):
         if f.value == value:
             start = f.t
-        elif start is not None and abs(f.value - value) >= 50:
+        elif start is not None and abs(f.value - value) >= tol:
             # a different value read twice in a row ends the run; a lone misread does not
             prev = hist[hist.index(f) - 1] if hist.index(f) > 0 else None
             if prev is not None and prev.value == f.value:
@@ -105,6 +105,33 @@ def clearance_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
         return []
     return [Flag("clearance_vs_set", "altitude", clr.value, value, since,
                  f"Cleared {say.altitude(clr.value)}, set {say.altitude(value)}.")]
+
+
+def altimeter_vs_set(led: Ledger, now: float, grace: float = 8.0) -> list[Flag]:
+    """The altimeter setting on the PFD (the box under the altitude tape) differs from the one ATC
+    gave. Timed like clearance_vs_set: the crew sets it after the readback, the grace is counted to
+    the newest reading, a reading that already shows another value means the knob is being turned,
+    and two readings must show the wrong setting. Values are inches of mercury x 100."""
+    given = led.latest("said", "clearance.altimeter", before=now, speaker="atc")
+    stable = _stable_set(led, "baro", now, tol=1)
+    if given is None or stable is None:
+        return []
+    value, first_seen = stable
+    if value == given.value:
+        return []
+    newest = led.latest("set", "baro", before=now)
+    if newest is not None and newest.value != value:
+        return []
+    rb = led.latest("said", "readback.altimeter", before=now)
+    heard_rb = rb is not None and rb.t >= given.t
+    since = max(given.t, first_seen, rb.t if heard_rb else given.t)
+    seen_until = newest.t if newest is not None else now
+    if seen_until - since < (grace if heard_rb else NO_READBACK_GRACE_S):
+        return []
+    if sum(1 for f in led.since("set", "baro", since) if f.t <= now and f.value == value) < 2:
+        return []
+    return [Flag("altimeter_vs_set", "altimeter", given.value, value, since,
+                 f"Altimeter {say.altimeter(given.value)} given, {say.altimeter(value)} set.")]
 
 
 def _settled_flaps(led: Ledger, after: float, now: float, n: int = 5, span: float = 5.0, spread: float = 1.3,
@@ -262,7 +289,7 @@ def clearance_unclear(led: Ledger, now: float) -> list[Flag]:
     return [Flag("clearance_unclear", "altitude", "a clearance", bad.value, bad.t, "Confirm cleared altitude.")]
 
 
-RULES = (readback_vs_clearance, clearance_vs_set, clearance_unclear, callout_vs_set, mode_vs_phase, pilot_watch)
+RULES = (readback_vs_clearance, clearance_vs_set, clearance_unclear, altimeter_vs_set, callout_vs_set, mode_vs_phase, pilot_watch)
 
 
 def evaluate(led: Ledger, now: float) -> list[Flag]:

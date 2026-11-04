@@ -12,5 +12,12 @@
   "thrust": "24/24",
   "false_not_in_speed": 0,
   "median_s": 4.14
+ },
+ "spark": {
+  "ias": "58/61",
+  "selected_speed": "29/29",
+  "thrust": "24/24",
+  "false_not_in_speed": 0,
+  "median_s": 3.06
  }
 }

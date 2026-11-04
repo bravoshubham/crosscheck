@@ -1,0 +1,25 @@
+{"t": 1793656891.067232, "kind": "pilot", "frame": "frames/00000.jpg", "neck_flex": 19.7, "wrists": 0.48, "slumped": false, "reasons": [], "captured": 1793656888.49}
+{"t": 1793656893.503548, "kind": "pilot", "frame": "frames/00001.jpg", "neck_flex": 17.8, "wrists": 0.51, "slumped": false, "reasons": [], "captured": 1793656891.067}
+{"t": 1793656895.602048, "kind": "pilot", "frame": "frames/00002.jpg", "neck_flex": 20.5, "wrists": 0.47, "slumped": false, "reasons": [], "captured": 1793656893.504}
+{"t": 1793656897.833251, "kind": "pilot", "frame": "frames/00003.jpg", "neck_flex": 19.7, "wrists": 0.48, "slumped": false, "reasons": [], "captured": 1793656895.602}
+{"t": 1793656900.01705, "kind": "pilot", "frame": "frames/00004.jpg", "neck_flex": 18.7, "wrists": 0.5, "slumped": false, "reasons": [], "captured": 1793656897.833}
+{"t": 1793656902.201349, "kind": "pilot", "frame": "frames/00005.jpg", "neck_flex": 37.0, "wrists": 0.5, "slumped": false, "reasons": [], "captured": 1793656900.017}
+{"t": 1793656904.369256, "kind": "pilot", "frame": "frames/00006.jpg", "neck_flex": 46.3, "wrists": 0.21, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656902.202}
+{"t": 1793656906.577528, "kind": "pilot", "frame": "frames/00007.jpg", "neck_flex": 45.1, "wrists": 0.21, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656904.369}
+{"t": 1793656908.6972978, "kind": "pilot", "frame": "frames/00008.jpg", "neck_flex": 46.5, "wrists": 0.19, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656906.578}
+{"t": 1793656910.862378, "kind": "pilot", "frame": "frames/00009.jpg", "neck_flex": 45.4, "wrists": 0.21, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656908.697}
+{"t": 1793656910.862378, "kind": "callout", "rule": "pilot_watch", "key": "challenge", "expected": "upright", "actual": "slumped", "since": 1793656904.369256, "callout": "Captain, are you OK?"}
+{"t": 1793656912.8096719, "kind": "explain", "rule": "pilot_watch", "key": "challenge", "text": "Pilot was not slumped 20 seconds ago, slumped 6 seconds ago.", "unsupported_numbers": [], "s": 1.95, "model": "muse-spark-1.3"}
+{"t": 1793656912.98696, "kind": "pilot", "frame": "frames/00010.jpg", "neck_flex": 46.5, "wrists": 0.19, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656910.864}
+{"t": 1793656915.2756622, "kind": "pilot", "frame": "frames/00011.jpg", "neck_flex": 45.2, "wrists": 0.21, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656912.987}
+{"t": 1793656917.4343832, "kind": "pilot", "frame": "frames/00012.jpg", "neck_flex": 46.8, "wrists": 0.22, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656915.276}
+{"t": 1793656919.617836, "kind": "pilot", "frame": "frames/00013.jpg", "neck_flex": 44.5, "wrists": 0.24, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656917.435}
+{"t": 1793656919.617836, "kind": "callout", "rule": "pilot_watch", "key": "incapacitated", "expected": "answer", "actual": "none", "since": 1793656909.369256, "callout": "Captain not responding. First officer, take control."}
+{"t": 1793656921.8099918, "kind": "pilot", "frame": "frames/00014.jpg", "neck_flex": 45.1, "wrists": 0.21, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656919.618}
+{"t": 1793656922.1531, "kind": "explain", "rule": "pilot_watch", "key": "incapacitated", "text": "The pilot was not slumped 29 seconds ago and has been slumped for the last 15 seconds.", "unsupported_numbers": [], "s": 2.53, "model": "muse-spark-1.3"}
+{"t": 1793656923.952919, "kind": "pilot", "frame": "frames/00015.jpg", "neck_flex": 45.6, "wrists": 0.23, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656921.81}
+{"t": 1793656926.097069, "kind": "pilot", "frame": "frames/00016.jpg", "neck_flex": 45.4, "wrists": 0.22, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656923.953}
+{"t": 1793656928.21731, "kind": "pilot", "frame": "frames/00017.jpg", "neck_flex": 46.5, "wrists": 0.21, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656926.097}
+{"t": 1793656930.377543, "kind": "pilot", "frame": "frames/00018.jpg", "neck_flex": 45.6, "wrists": 0.22, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656928.218}
+{"t": 1793656932.569519, "kind": "pilot", "frame": "frames/00019.jpg", "neck_flex": 45.2, "wrists": 0.23, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656930.378}
+{"t": 1793656934.841362, "kind": "pilot", "frame": "frames/00020.jpg", "neck_flex": 45.2, "wrists": 0.22, "slumped": true, "reasons": ["head dropped", "hands off the controls"], "captured": 1793656932.57}

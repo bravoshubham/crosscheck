@@ -1,19 +1,19 @@
 {
- "text": "At 2.4 s the pilot camera showed the captain upright. The camera view was part of a reading task with a change due at 10.0 s. Crosscheck stayed silent, and that was right for a pass.",
+ "text": "At 2.3 s the captain was upright in the pilot camera view. The view then showed the captain looking down at a checklist. Crosscheck stayed silent, which was right because the captain was doing expected reading work.",
  "verified": true,
  "unsupported_numbers": [],
  "model": "muse-spark-1.3",
  "usage": {
-  "completion_tokens": 1006,
+  "completion_tokens": 853,
   "prompt_tokens": 331,
-  "total_tokens": 1337,
+  "total_tokens": 1184,
   "completion_tokens_details": {
-   "reasoning_tokens": 950
+   "reasoning_tokens": 799
   },
   "prompt_tokens_details": {
    "cached_tokens": 0
   }
  },
  "attempts": 1,
- "timeline": "Scenario: Pilot reading. The captain looks down at a checklist. Crosscheck should stay silent. (pilot camera only)\n  2.4 s  pilot camera: captain upright\n(set-up: pilot camera scene changes at 10.0 s)\nScored against the recorded ground truth: pass"
+ "timeline": "Scenario: Pilot reading. The captain looks down at a checklist. Crosscheck should stay silent. (pilot camera only)\n  2.3 s  pilot camera: captain upright\n(set-up: pilot camera scene changes at 10.0 s)\nScored against the recorded ground truth: pass"
 }

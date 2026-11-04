@@ -71,6 +71,33 @@ def score_altitude(events: list[dict], truth: list[dict], meta: dict) -> dict:
     return result
 
 
+def score_altimeter(events: list[dict], truth: list[dict], meta: dict) -> dict:
+    """The altimeter setting ATC gave against the one on the captain's PFD. Strict, like the
+    altitude scorer: the expected callout and no other, or silence when the crew set it right."""
+    rows = carry_forward(truth)
+    t_clear, t_set, want = meta["t_clear"], meta["t_set"], meta["expect_rule"]
+    callouts = [e for e in events if e["kind"] == "callout"]
+    hit = next((c for c in callouts if c["rule"] == want), None) if want else None
+    result = {
+        "variant": meta["variant"], "given": meta["given"], "baro_set": meta["baro_set"],
+        "baro_truth_at_end": round(rows[-1]["baro"] * 100) if rows and rows[-1].get("baro") else None,
+        "false_callouts_before_clearance": [c["callout"] for c in callouts if c["t"] < t_clear],
+        "callouts": [{"s_after_set": round(c["t"] - t_set, 1), "text": c["callout"]} for c in callouts],
+        "baro_read_from_screen": sorted({e["baro"] for e in events if e["kind"] == "reading" and e.get("baro")}),
+        "paused_during_run": any(r.get("paused") for r in rows),
+        "unexpected_callouts": [c["callout"] for c in callouts if c["rule"] != want],
+    }
+    if want is None:
+        result["pass"] = not callouts and not result["paused_during_run"]
+    else:
+        # and in the words for this variant: "...given, two-niner-niner-two set." when it was never set
+        # (5 Nov: the rig once left 30.21 from the run before, and the rule fired with the wrong number)
+        words = meta.get("expect_callout")
+        result["pass"] = (hit is not None and (words is None or hit["callout"] == words) and not result["unexpected_callouts"]
+                          and not result["paused_during_run"])
+    return result
+
+
 DETENT_OF_RATIO = {0.0: 0, 0.125: 1, 0.25: 2, 0.375: 5, 0.5: 10, 0.625: 15, 0.75: 25, 0.875: 30, 1.0: 40}
 
 
@@ -143,7 +170,7 @@ def score_nominal(events: list[dict], truth: list[dict], meta: dict) -> dict:
     return result
 
 
-SCORERS = {"autothrottle_hold": score_autothrottle, "nominal": score_nominal, "altitude": score_altitude, "flaps": score_flaps,
+SCORERS = {"autothrottle_hold": score_autothrottle, "nominal": score_nominal, "altitude": score_altitude, "altimeter": score_altimeter, "flaps": score_flaps,
            "pilot_watch": score_pilot_watch}
 
 
@@ -157,7 +184,8 @@ def score(rec_dir: pathlib.Path, events_file: str = "events.jsonl") -> dict:
     readings = [e for e in events if e["kind"] == "reading"]
     if not readings:  # the pilot-watch scenario has no panel camera
         return result
-    readable = sum(e.get("ias") is not None or e.get("flaps") is not None for e in readings) / max(1, len(readings))
+    whole = [e for e in readings if not e.get("late")]  # a late whole read brings only the altitudes, by design
+    readable = sum(e.get("ias") is not None or e.get("flaps") is not None for e in whole) / max(1, len(whole))
     result["panel_readable"] = round(readable, 2)
     # a frame much brighter than the dark cockpit means another window was captured (and would
     # be published with the recording); Spark can return numbers for any image, so check pixels

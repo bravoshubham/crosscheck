@@ -163,14 +163,40 @@ def parse_flaps(text: str) -> int | None:
     return v if v in FLAP_DETENTS else None
 
 
+ALTIMETER_RANGE = (2750, 3150)  # inches of mercury x 100: every sea-level pressure an airport reports
+# how Voice Transcribe heard "altimeter" in the scenario's lines: "Portland altitude 3012" (the
+# radio-filtered ATC line) and "autometer three zero one two" (the readback). "Altitude" counts only
+# with a number that cannot be an altitude: altitudes are whole hundreds, 3012 is not
+ALTIMETER_WORDS = {"altimeter", "altimeters", "altimetre", "autometer", "altometer", "altimeter's"}
+
+
+def parse_altimeter(text: str) -> int | None:
+    """The altimeter setting in a line, in hundredths of an inch: "Portland altimeter three zero
+    one two" / "altimeter 30.12" / "altimeter 3012" -> 3012. None if the line gives none."""
+    w = normalise(text).split()
+    for i, tok in enumerate(w):
+        if tok not in ALTIMETER_WORDS and tok != "altitude":
+            continue
+        rest = [x for x in w[i + 1:i + 5] if x != "setting"]
+        if len(rest) >= 3 and rest[0].isdigit() and rest[1] == "point" and rest[2].isdigit():
+            v = int(rest[0]) * 100 + int(rest[2][:2].ljust(2, "0"))
+        elif rest and rest[0].isdigit() and len(rest[0]) == 4:
+            v = int(rest[0])
+        else:
+            continue
+        if ALTIMETER_RANGE[0] <= v <= ALTIMETER_RANGE[1] and (tok != "altitude" or v % 100):
+            return v
+    return None
+
+
 def said_facts(text: str, speaker: str, t: float, own_digits: str, source: str = "muse-voice-transcribe") -> list[Fact]:
     """Facts for the ledger from one final transcript on one channel."""
     if speaker != "atc":
         flaps = parse_flaps(text)
         if flaps is not None:  # an intercom callout: our own crew, no callsign
             return [Fact("said", "callout.flaps", flaps, t, speaker, source=source)]
-    alt = parse_altitude(text)
-    if alt is None:
+    alt, baro = parse_altitude(text), parse_altimeter(text)
+    if alt is None and baro is None:
         return []
     if own_digits not in numbers(text) and not re.search(rf"\b{own_digits}\b", text):
         # (the raw transcript too: in "descend and maintain 4,000 LAS for 421" the "for" joins the
@@ -178,5 +204,6 @@ def said_facts(text: str, speaker: str, t: float, own_digits: str, source: str =
         # a clearance names us and a readback ends with our callsign; the digits survive even
         # when the word does not. This also keeps callouts ("one thousand stabilized") out.
         return []
-    key = "clearance.altitude" if speaker == "atc" else "readback.altitude"
-    return [Fact("said", key, alt, t, speaker, source=source)]
+    side = "clearance" if speaker == "atc" else "readback"
+    return ([Fact("said", f"{side}.altitude", alt, t, speaker, source=source)] if alt is not None else []) + \
+           ([Fact("said", f"{side}.altimeter", baro, t, speaker, source=source)] if baro is not None else [])

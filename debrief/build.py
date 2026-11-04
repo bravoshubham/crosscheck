@@ -26,17 +26,23 @@ TITLES = {
     "flaps_wrong": ("Flaps: wrong setting", "\u201cFlaps fifteen\u201d called; the lever goes to 10."),
     "flaps_forgot": ("Flaps: not moved", "\u201cFlaps fifteen\u201d called; nobody moves the lever."),
     "pilot_slumped": ("Pilot slumped", "The captain slumps forward and does not answer."),
-    "pilot_asleep": ("Pilot asleep", "The captain falls asleep against the side window."),
+    "pilot_asleep": ("Pilot asleep", "The captain falls asleep in the seat, head rolled back."),
     "pilot_checklist": ("Pilot reading", "The captain looks down at a checklist. Crosscheck should stay silent."),
     "pilot_answers": ("Pilot answers", "The captain slumps but answers when asked: no alert."),
     "nominal": ("15-minute normal flight", "Six descents, four turns, three speed changes and four flap calls, all done right. Any callout here is a false alarm."),
     "flaps_correct": ("Flaps: correct", "\u201cFlaps fifteen\u201d called and selected. The needle takes ~13 s; Crosscheck should stay silent."),
+    "altimeter_wrong": ("Altimeter: wrong setting", "Descending to 7,000; ATC gives altimeter 30.12 and the crew sets 30.21."),
+    "altimeter_forgot": ("Altimeter: not set", "Descending to 7,000; ATC gives altimeter 30.12 and it stays at 29.92."),
+    "altimeter_correct": ("Altimeter: correct", "Descending to 7,000; ATC gives altimeter 30.12 and the crew sets it. Crosscheck should stay silent."),
 }
 ORDER = ["nominal", "altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold",
          "flaps_wrong", "flaps_forgot", "flaps_correct",
          "pilot_slumped", "pilot_asleep", "pilot_checklist", "pilot_answers",
+         "altimeter_wrong", "altimeter_forgot", "altimeter_correct",
          "altitude_bust_spark", "altitude_readback_spark", "altitude_correct_spark", "autothrottle_hold_spark",
+         "altimeter_wrong_spark", "altimeter_forgot_spark", "altimeter_correct_spark",
          "altitude_bust_onboard", "altitude_readback_onboard", "altitude_correct_onboard", "autothrottle_hold_onboard",
+         "altimeter_wrong_onboard", "altimeter_forgot_onboard", "altimeter_correct_onboard",
          "flaps_wrong_onboard", "flaps_forgot_onboard", "flaps_correct_onboard", "nominal_onboard",
          "pilot_slumped_onboard", "pilot_asleep_onboard", "pilot_checklist_onboard", "pilot_answers_onboard"]
 ONBOARD_NOTE = "On board: every model on this computer, and the network refused for the whole run. "
@@ -142,7 +148,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
     tr = []
     for r in truth:
         row = {"t": rel(r["t"])}
-        for k in ("alt", "sel_alt", "ias", "sel", "at", "handle", "deploy", "state"):
+        for k in ("alt", "sel_alt", "ias", "sel", "at", "handle", "deploy", "state", "baro"):
             if r.get(k) is not None:
                 digits = 4 if k in ("handle", "deploy") else 1  # ratios: 0.625 is flaps 15, 0.6 is not
                 row[k] = round(r[k], digits) if isinstance(r[k], float) else r[k]
@@ -185,7 +191,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
             "aspect": "4 / 3" if meta.get("pilot_camera") else f"{box[2] - box[0]} / {box[3] - box[1]}", "meta": {
         k: meta[k] for k in ("aircraft", "area", "airport", "recorded", "speech", "cleared", "readback",
                              "mcp_set", "target_kt", "variant", "panel_reader", "known_result",
-                             "called", "selected", "state", "answer", "pose", "network") if k in meta},
+                             "called", "selected", "state", "answer", "pose", "network", "given", "baro_set") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
         "truth": tr, "audio": audio, "result": result, "summary": summary, "video": video, "actions": actions, "review": review, "wide": wide}
@@ -202,6 +208,12 @@ MATRIX = [
      "aircraft_passed_cleared_s_after_set", "the 737 passed 11,000"),
     ("altitude_readback_spark", ["altitude_readback_spark"], "The readback error, with Muse Spark reading the panel.", "after the MCP was set", None, None),
     ("altitude_correct_spark", ["altitude_correct_spark"], "The correct setting, with Muse Spark reading the panel.", None, None, None),
+    ("altimeter_wrong", ["altimeter_wrong"], "ATC gives altimeter 30.12; the crew sets 30.21.", "after the MCP was set", None, None),
+    ("altimeter_forgot", ["altimeter_forgot"], "ATC gives altimeter 30.12; it stays at 29.92.", "after the MCP was set", None, None),
+    ("altimeter_correct", ["altimeter_correct"], "ATC gives altimeter 30.12; the crew sets it.", None, None, None),
+    ("altimeter_wrong_spark", ["altimeter_wrong_spark"], "The wrong setting, with Muse Spark reading the panel.", "after the MCP was set", None, None),
+    ("altimeter_forgot_spark", ["altimeter_forgot_spark"], "The setting not made, with Muse Spark reading the panel.", "after the MCP was set", None, None),
+    ("altimeter_correct_spark", ["altimeter_correct_spark"], "The correct setting, with Muse Spark reading the panel.", None, None, None),
     ("autothrottle_hold", ["autothrottle_hold"], "On final the autothrottle drops out and speed decays.", "after the fault",
      "truth_below_target_minus_10_s", "speed was 10 kt low"),
     ("autothrottle_hold_spark", ["autothrottle_hold_spark"], "The same, with Muse Spark reading the panel.", "after the fault",
@@ -210,7 +222,7 @@ MATRIX = [
     ("flaps_forgot", ["flaps_forgot"], "\u201cFlaps fifteen\u201d called; nobody moves the lever.", "after the call", None, None),
     ("flaps_correct", ["flaps_correct"], "\u201cFlaps fifteen\u201d called and selected.", None, None, None),
     ("pilot_slumped", ["pilot_watch_slumped_video"], "The captain slumps forward and does not answer.", "after the slump", None, None),
-    ("pilot_asleep", ["pilot_watch_asleep_video"], "The captain falls asleep against the side window.", "after the slump", None, None),
+    ("pilot_asleep", ["pilot_watch_asleep_video"], "The captain falls asleep in the seat, head rolled back.", "after the slump", None, None),
     ("pilot_checklist", ["pilot_watch_checklist_video"], "The captain looks down at a checklist.", None, None, None),
     ("pilot_answers", ["pilot_watch_answers_video"], "The captain slumps, then answers when asked.", "after the slump", None, None),
     ("nominal", [], "Fifteen minutes flown correctly: six descents, four turns, four flap calls.", None, None, None),
@@ -226,7 +238,11 @@ SAYS = {"altitude_bust": "Cleared one-one thousand, set one-two thousand.",
         "flaps_wrong": "Flaps fifteen called, ten set.", "flaps_forgot": "Flaps fifteen called, five set.",
         "pilot_slumped": "Captain, are you OK?\u201d then \u201cFirst officer, take control.",
         "pilot_asleep": "Captain, are you OK?\u201d then \u201cFirst officer, take control.",
-        "pilot_answers": "Captain, are you OK?"}
+        "pilot_answers": "Captain, are you OK?",
+        "altimeter_wrong": "Altimeter three-zero-one-two given, three-zero-two-one set.",
+        "altimeter_forgot": "Altimeter three-zero-one-two given, two-niner-niner-two set.",
+        "altimeter_wrong_spark": "Altimeter three-zero-one-two given, three-zero-two-one set.",
+        "altimeter_forgot_spark": "Altimeter three-zero-one-two given, two-niner-niner-two set."}
 
 
 def nominal_since_fixes() -> list[pathlib.Path]:
@@ -332,8 +348,14 @@ def overview(data: list[dict]) -> dict:
         tally = onboard if rid.endswith("_onboard") else totals  # on board is reported on its own line
         tally["runs"] += len(runs)
         tally["right"] += sum(r["pass"] for r in runs)
+        # the frame for the test card: what the camera saw when Crosscheck spoke, or late in a silent run
+        shots = [r for r in rec["readings"] if r.get("frame")]
+        at = rec["callouts"][0]["t"] if rec["callouts"] else 0.7 * rec["duration"]
+        shot = next((r for r in shots if r["t"] >= at), shots[-1] if shots else {})
         rows.append({"id": rid, "title": rec["title"], "what": what, "says": SAYS.get(rid.removesuffix("_onboard")), "measured": measured,
-                     "deadline_label": deadline_label, "runs": runs, "kind": rec["kind"]})
+                     "deadline_label": deadline_label, "runs": runs, "kind": rec["kind"], "reader": rec["meta"].get("panel_reader"),
+                     "frame": shot.get("frame"), "frame_t": shot.get("t"), "aspect": rec.get("aspect"),
+                     "pose": {k: shot[k] for k in ("neck_flex", "wrists", "slumped") if k in shot} or None})
     hero = by_id.get("altitude_bust_spark") or by_id.get("altitude_bust")  # the panel read by Muse Spark, if recorded
     if hero:
         c = hero["callouts"][0]

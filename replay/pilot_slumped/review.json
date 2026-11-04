@@ -1,15 +1,15 @@
 {
  "model": "muse-wonder-1.0",
  "state": "incapacitated",
- "from_s": 11,
- "evidence": "At about 11s the captain's eyes close, his head bows down, his hands come off the yoke, and he remains motionless and unresponsive through the end of the video.",
+ "from_s": 13,
+ "evidence": "At about 13 seconds the captain releases the controls, slumps back with eyes closed and head tilted to the side, remaining motionless and unresponsive for the rest of the video.",
  "s": 9.8,
  "usage": {
-  "completion_tokens": 397,
+  "completion_tokens": 516,
   "prompt_tokens": 7137,
-  "total_tokens": 7534,
+  "total_tokens": 7653,
   "completion_tokens_details": {
-   "reasoning_tokens": 328
+   "reasoning_tokens": 450
   },
   "prompt_tokens_details": {
    "cached_tokens": 0

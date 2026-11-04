@@ -386,3 +386,125 @@ def test_final_lane_reply_is_parsed_and_checked(monkeypatch):
     assert (r.ias, r.selected_speed, r.fma) == (141, None, ["MCP SPD", None, "G/S"])
     r = asyncio.run(reply('"142;14'))  # cut short: nothing read
     assert (r.ias, r.selected_speed, r.fma) == (None, None, ["", "", ""])
+
+
+def test_spark_final_lane_reply_is_parsed_and_checked(monkeypatch):
+    import asyncio
+    from PIL import Image
+    from senses import panel_spark as ps
+
+    async def reply(text):
+        async def fake(*a, **k):
+            return {"choices": [{"message": {"content": text}}], "usage": {}}
+        monkeypatch.setattr(ps, "_call", fake)
+        return (await ps.read_frame_spark_final(Image.new("RGB", (3600, 2338))))[0]
+    r = asyncio.run(reply('{"r": "142;141;;ALT HOLD"}'))
+    assert (r.ias, r.selected_speed, r.fma) == (141, 142, ["", None, "ALT HOLD"])
+    r = asyncio.run(reply('{"r": "?;141;MCP SPD;G/S"}'))
+    assert (r.ias, r.selected_speed, r.fma) == (141, None, ["MCP SPD", None, "G/S"])
+    for bad in ('{"r": "142;1232;;ALT HOLD"}', '{"r": "142;141;ALT HOLD;"}', '{"r": "142;14'):  # off the pattern, or cut short
+        r = asyncio.run(reply(bad))
+        assert (r.ias, r.selected_speed, r.fma) == (None, None, ["", "", ""])
+
+
+def test_a_whole_read_overtaken_on_final_still_gives_its_altitude(tmp_path, monkeypatch):
+    # Spark reads in parallel: on final the final lane (fast) overtakes a whole read (slow), which
+    # must still bring the altitude and selected altitude, the values only it reads
+    import asyncio
+    from PIL import Image
+    import brain.live as live
+    from senses import panel_spark as ps
+    from senses.panel import PanelReading
+
+    async def whole(frame, client=None):
+        await asyncio.sleep(0.4)
+        return PanelReading(ias=150, selected_speed=145, selected_altitude=2500, altitude=2000, fma=["MCP SPD", "HDG SEL", "ALT HOLD"]), {}
+
+    async def final(frame, client=None):
+        await asyncio.sleep(0.05)
+        return PanelReading(ias=149, selected_speed=145, fma=["MCP SPD", None, "ALT HOLD"]), {}
+    monkeypatch.setattr(live, "capture_screen", lambda: Image.new("RGB", (3600, 2338)))
+    monkeypatch.setattr(live, "_spark_reader", lambda reader: whole)
+    monkeypatch.setattr(ps, "read_frame_spark_final", final)
+    monkeypatch.setattr(live, "SPARK_PERIOD_S", 0.1)
+    monkeypatch.setattr(live, "FULL_EVERY_FINAL_S", 0.6)
+    cc = live.Crosscheck(tmp_path, reader="spark", fact_time="captured")
+    cc.run(2.0)
+    import json
+    events = [json.loads(l) for l in (tmp_path / "events.jsonl").read_text().splitlines()]
+    late = [e for e in events if e.get("late")]
+    assert late and all(e["altitude"] == 2000 and e["ias"] is None for e in late)
+    assert {e.get("lane") for e in events if e["kind"] == "reading"} == {"full", "final"}
+    assert len(cc.ledger.since("doing", "altitude", 0)) == sum(e.get("lane") == "full" and e["altitude"] == 2000 for e in events)
+
+
+def test_whole_reads_arriving_out_of_order_never_put_an_older_altitude_last(tmp_path, monkeypatch):
+    # Spark: several whole reads in flight; an older one that arrives after a newer one must not
+    # become the newest selected altitude in the ledger
+    import asyncio
+    import itertools
+    from PIL import Image
+    import brain.live as live
+    from senses import panel_spark as ps
+    from senses.panel import PanelReading
+    calls = itertools.count()
+
+    async def whole(frame, client=None):
+        i = next(calls)
+        await asyncio.sleep(0.5 if i % 2 else 0.1)
+        return PanelReading(ias=150, selected_speed=145, selected_altitude=3000 + 100 * i, altitude=2000,
+                            fma=["MCP SPD", "HDG SEL", "ALT HOLD"]), {}
+
+    async def final(frame, client=None):
+        await asyncio.sleep(0.05)
+        return PanelReading(ias=149, selected_speed=145, fma=["MCP SPD", None, "ALT HOLD"]), {}
+    monkeypatch.setattr(live, "capture_screen", lambda: Image.new("RGB", (3600, 2338)))
+    monkeypatch.setattr(live, "_spark_reader", lambda reader: whole)
+    monkeypatch.setattr(ps, "read_frame_spark_final", final)
+    monkeypatch.setattr(live, "SPARK_PERIOD_S", 0.1)
+    monkeypatch.setattr(live, "FULL_EVERY_FINAL_S", 0.3)
+    cc = live.Crosscheck(tmp_path, reader="spark", fact_time="captured")
+    cc.run(2.0)
+    ts = [f.t for f in cc.ledger.since("set", "mcp.altitude", 0)]
+    assert len(ts) > 3 and ts == sorted(ts)
+
+
+def _baro(led, value, t0, t1):
+    for i in range(int(t0), int(t1) + 1):
+        led.add(Fact("set", "baro", value, float(i)))
+
+
+def test_altimeter_left_at_standard_is_called():
+    led = ledger(("said", "clearance.altimeter", 3012, 12.0, "atc"), ("said", "readback.altimeter", 3012, 15.0, "pm"))
+    _baro(led, 2992, 0, 30)
+    assert evaluate(led, 22.0) == []  # the crew still has time to set it
+    assert [f.callout for f in evaluate(led, 24.0)] == ["Altimeter three-zero-one-two given, two-niner-niner-two set."]
+
+
+def test_altimeter_set_as_given_is_silent():
+    led = ledger(("said", "clearance.altimeter", 3012, 12.0, "atc"), ("said", "readback.altimeter", 3012, 15.0, "pm"))
+    _baro(led, 2992, 0, 19)
+    _baro(led, 3012, 20, 40)
+    assert evaluate(led, 40.0) == []
+
+
+def test_altimeter_set_wrong_is_called_after_the_grace():
+    led = ledger(("said", "clearance.altimeter", 3012, 12.0, "atc"), ("said", "readback.altimeter", 3012, 15.0, "pm"))
+    _baro(led, 2992, 0, 19)
+    _baro(led, 3021, 20, 40)
+    assert evaluate(led, 27.0) == []
+    assert [f.callout for f in evaluate(led, 29.0)] == ["Altimeter three-zero-one-two given, three-zero-two-one set."]
+
+
+def test_altimeter_being_turned_is_not_blamed():
+    # a slow reader: two old readings, then the newest already shows the new setting
+    led = ledger(("said", "clearance.altimeter", 3012, 12.0, "atc"), ("said", "readback.altimeter", 3012, 15.0, "pm"))
+    for t, v in ((10.0, 2992), (16.0, 2992), (22.0, 2992), (28.0, 3012)):
+        led.add(Fact("set", "baro", v, t))
+    assert evaluate(led, 28.0) == []
+
+
+def test_no_altimeter_given_is_silent():
+    led = Ledger()
+    _baro(led, 2992, 0, 60)
+    assert evaluate(led, 60.0) == []

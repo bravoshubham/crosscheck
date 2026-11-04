@@ -38,6 +38,13 @@
   "evidence": "eval/results/repeat/autothrottle_hold_spark.before_*.json"
  },
  {
+  "date": "5 Nov",
+  "area": "Autothrottle, Muse Spark, again",
+  "found": "Over all its runs Spark was in time in 6 of 11. Reading the whole display took 4.6–5.4 s, most of it Spark thinking (966 prompt and 280–450 completion tokens), and this alert needs a fresh reading every two or three seconds.",
+  "fix": "On final Spark reads the final lane, as Glimmer does on board: the selected speed, the speed box and the thrust and pitch mode boxes, the answer one line in a strict schema (median 2.2 s on recorded frames; airspeed 58 of 61, thrust 24 of 24). Saying that the white ARM is not a mode took the median from 3.9 s. Some reads still take 4–7 s, so a read starts every half second, up to 16 in flight. Two batches before the last found the rest: an older whole read arriving last could replace a newer selected altitude (now ignored, tested; the speeds were never affected, 6 of 6), and at one read a second one run waited 4.3 s for a reading and was late (5 of 6). In time in 7 of 7 fresh runs, 8.5–12.5 s after the fault and 1.9–3.9 s before speed was 10 kt low.",
+  "evidence": "eval/panel_final_lane.py; eval/results/repeat/autothrottle_hold_spark.before_final_lane.json, .before_late_read_guard.json, .before_faster_final_capture.json"
+ },
+ {
   "date": "3 Nov",
   "area": "15-minute flight, run 1",
   "found": "One misread altitude (918 ft while at 6,000) made Crosscheck think it was on final and raise the autothrottle alert.",
@@ -168,5 +175,30 @@
   "area": "Voice",
   "found": "Crosscheck’s own callouts in MMS-TTS, played to Muse Voice Transcribe, came back as “Fleered one 1000” and “flats 15 cult”.",
   "fix": "Callouts come from a recorded bank, as an aircraft’s aural alerts do (voice/bank.py): nine callouts, two passes each, 15 of 18 came back word for word, against 2 of 18 for MMS-TTS."
+ },
+ {
+  "date": "5 Nov",
+  "area": "Altimeter: hearing it",
+  "found": "Voice Transcribe heard the radio-filtered “Portland altimeter three zero one two” as “Portland altitude 3012”, and the readback’s “altimeter” as “autometer”, so the setting was never in the ledger and Crosscheck stayed silent on a wrong setting.",
+  "fix": "Those spellings count as “altimeter”; “altitude” only with a number that cannot be an altitude (altitudes are whole hundreds, 3012 is not). Tested on the two transcripts."
+ },
+ {
+  "date": "5 Nov",
+  "area": "Altimeter: the test rig",
+  "found": "This 737 keeps its altimeter setting from one flight to the next and ignores X-Plane’s reset to 29.92, so runs began at 30.21 from the run before; the scorer counted the rule firing, not its words, and passed three runs that said the wrong number.",
+  "fix": "Each run turns the knob back to 29.92 and stops if it is not there; the crew turns it a click at a time; the scorer requires the exact words for the variant. The six runs are kept as evidence, not counted.",
+  "evidence": "eval/results/repeat/altimeter_*.before_baro_reset.json"
+ },
+ {
+  "date": "5 Nov",
+  "area": "Altimeter: the misheard-clearance guard",
+  "found": "Replaying the altimeter recording added a “Confirm cleared altitude.” the live run never said: just before the clearance, on-device text recognition misread the altitude three frames in a row (18,999, 605, 6,106 ft at 9,000), and the guard took the median of the last three readings, 6,106 ft, so “descend and maintain 7000” looked like a climb.",
+  "fix": "The guard takes the median of the last five readings. Every recording replays exactly as it ran, this one included."
+ },
+ {
+  "date": "5 Nov",
+  "area": "Altimeter: a miss kept",
+  "found": "One run of the setting not made stayed silent: Voice Transcribe heard “Portland altimeter three zero one two” as “Portland diameter three zero one two”, so the setting ATC gave never reached the ledger.",
+  "fix": "Kept as a miss. The readback (“autometer 3012”) was heard; using it when ATC's line is not understood is the next change, not yet tested."
  }
 ]

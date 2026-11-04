@@ -31,3 +31,8 @@ def heading(deg: int) -> str:
 def flaps(setting: int) -> str:
     words = {0: "up", 1: "one", 2: "two", 5: "five", 10: "ten", 15: "fifteen", 25: "twenty-five", 30: "thirty", 40: "forty"}
     return words.get(int(setting), str(setting))
+
+
+def altimeter(hundredths: int) -> str:
+    """3012 (30.12 inches) -> 'three-zero-one-two', as ATC gives it."""
+    return digits(int(hundredths))

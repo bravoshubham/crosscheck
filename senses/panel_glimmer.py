@@ -28,29 +28,36 @@ SCHEMA = {"type": "object", "properties": {"r": {"type": "string"},
           "m": {"type": "array", "items": MODE, "minItems": 3, "maxItems": 3}}, "required": ["r", "m"]}
 MODES_HELP = ('"m" = the green text in each of the three mode boxes, left to right (thrust, roll, pitch), "" for a box with '
               "no green text: the left box is empty when the autothrottle is off. ? for a number you cannot read.")
-FIELDS = ("ias", "selected_speed", "selected_altitude", "altitude")
+FIELDS = ("ias", "selected_speed", "selected_altitude", "altitude", "baro")
 SCALE = 0.75  # of the stacked parts: fewer image tokens, same accuracy on the recorded frames
 
 # The three parts of the PFD the rules use, cut from the calibrated crop and stacked: the mode
 # boxes on top, the speed tape and the altitude tape below. Half the image tokens of the whole PFD
 # for the same accuracy (24 recorded frames: altitude 20/30, selected altitude 23/24, speed 10/13,
 # identical to the whole crop), because the attitude ball in the middle carries no number.
-PARTS = {"modes": (140, 0, 580, 110), "speed": (0, 50, 150, 450), "altitude": (570, 50, 760, 450)}
+PARTS = {"modes": (140, 0, 580, 110), "speed": (0, 50, 150, 450), "altitude": (570, 50, 760, 450),
+         "baro": (570, 615, 780, 715)}  # the altimeter setting under the altitude tape (green "29.92 IN."), with room for the view to move
 PARTS_PROMPT = (
-    "These are three parts of a Boeing 737 primary flight display (PFD): on top the three flight mode boxes, below on the "
-    'left the speed tape and on the right the altitude tape. Reply with JSON only: {"r": "speed/selected speed/selected '
-    'altitude/altitude", "m": [thrust mode, roll mode, pitch mode]}, for example {"r": "192/190/9000/8900", "m": ["MCP SPD", '
-    '"HDG SEL", "ALT HOLD"]}. speed = the number in the box on the speed tape; selected speed = the magenta number above the '
-    "speed tape; selected altitude = the magenta number above the altitude tape; altitude = the number in the box on the "
-    "altitude tape, including the rolling last two digits. " + MODES_HELP)
+    "These are four parts of a Boeing 737 primary flight display (PFD): on top the three flight mode boxes, below on the "
+    'left the speed tape, on the right the altitude tape, and along the bottom, enlarged, the altimeter setting. Reply with JSON only: {"r": '
+    '"speed/selected speed/selected altitude/altitude/altimeter", "m": [thrust mode, roll mode, pitch mode]}, for example '
+    '{"r": "192/190/9000/8900/29.92", "m": ["MCP SPD", "HDG SEL", "ALT HOLD"]}. speed = the number in the box on the speed '
+    "tape; selected speed = the magenta number above the speed tape; selected altitude = the magenta number above the "
+    "altitude tape; altitude = the number in the box on the altitude tape, including the rolling last two digits; "
+    "altimeter = the green setting along the bottom, in inches with two decimals, or STD. " + MODES_HELP)
 
 
 def parts(pfd: Image.Image) -> Image.Image:
-    top, sp, al = (pfd.crop(PARTS[k]) for k in ("modes", "speed", "altitude"))
-    out = Image.new("RGB", (max(top.width, sp.width + 10 + al.width), top.height + 10 + sp.height), "black")
+    top, sp, al, ba = (pfd.crop(PARTS[k]) for k in ("modes", "speed", "altitude", "baro"))
+    # the altimeter setting is small type: at 1.5 times its size, along the bottom (at its own size,
+    # scaled with the rest, Glimmer could read it on 32 of 49 recorded frames)
+    ba = ba.resize((ba.width * 3 // 2, ba.height * 3 // 2), Image.LANCZOS)
+    tapes = max(sp.height, al.height)
+    out = Image.new("RGB", (max(top.width, sp.width + 10 + al.width, ba.width), top.height + 10 + tapes + 10 + ba.height), "black")
     out.paste(top, (0, 0))
     out.paste(sp, (0, top.height + 10))
     out.paste(al, (sp.width + 10, top.height + 10))
+    out.paste(ba, (0, top.height + 10 + tapes + 10))
     return out.resize((int(out.width * SCALE), int(out.height * SCALE)), Image.LANCZOS)
 
 
@@ -144,8 +151,14 @@ def parse(text: str, numbers: tuple = FIELDS) -> dict:
     except json.JSONDecodeError:
         return {}
     out = {k: None for k in FIELDS}
+    if "baro" in numbers and len(v) == len(numbers) - 1:  # the altimeter left out: the other numbers still count
+        numbers = tuple(k for k in numbers if k != "baro")
     if len(v) == len(numbers):
-        out.update({k: (x if x.isdigit() else None) for k, x in zip(numbers, v)})
+        out.update({k: (x if x.isdigit() else None) for k, x in zip(numbers, v) if k != "baro"})
+        if "baro" in numbers:  # "30.12" -> 3012, "STD" -> 2992 (standard pressure)
+            x = v[numbers.index("baro")].upper()
+            b = 2992 if x == "STD" else round(float(x) * 100) if re.fullmatch(r"\d{2}\.\d{2}", x) else None
+            out["baro"] = b if b is not None and 2750 <= b <= 3150 else None
     out["fma"] = modes
     return out
 
@@ -160,9 +173,10 @@ async def read_frame_glimmer(frame: Image.Image, client: httpx.AsyncClient | Non
     """Read one full-screen frame. Returns the reading and the call's counters."""
     text, usage = await glimmer_json(PARTS_PROMPT, SCHEMA, jpeg_b64(parts(frame.crop(CALIBRATION["pfd"]))), num_predict=70,
                                      client=client)
-    v = _plausible(parse(text))
+    p = parse(text)
+    v = _plausible(p)
     reading = PanelReading(ias=v["ias"], selected_speed=v["selected_speed"], selected_altitude=v["selected_altitude"],
                            altitude=v["altitude"], altitude_method="glimmer" if v["altitude"] is not None else "",
-                           fma=v["fma"] or ["", "", ""])
+                           fma=v["fma"] or ["", "", ""], baro=p.get("baro"))
     reading.raw = {"glimmer": text}
     return reading, usage

@@ -49,3 +49,12 @@ def test_listen_again_when_the_first_hearing_is_impossible(monkeypatch, tmp_path
     r, facts, spark, first = asyncio.run(hear(None, "atc", "421", led))
     assert first == "Alaska 421 climb and maintain 1000."
     assert [(f.key, f.value) for f in facts] == [("clearance.altitude", 11000)]
+
+
+def test_onboard_a_value_one_recognizer_missed_does_not_cost_the_other():
+    from senses.speech_spark import onboard_facts
+    facts = onboard_facts("Alaska 421 descend and maintain 7000 Portland altimeter 3012",
+                          "Alaska 421 descend and maintain 7000 Portland", "atc", 0.0, "421")
+    assert [(f.key, f.value) for f in facts] == [("clearance.altitude", 7000), ("clearance.altimeter", 3012)]
+    # two different values for the same thing: neither is kept
+    assert onboard_facts("climb and maintain 11000 Alaska 421", "climb and maintain 12000 Alaska 421", "pm", 0.0, "421") == []

@@ -1,0 +1,21 @@
+{
+ "scenario": "altimeter_correct",
+ "scored": 1,
+ "passed": 0,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": false,
+   "callouts": [
+    {
+     "s_after_set": 8.6,
+     "text": "Altimeter three-zero-one-two given, three-zero-two-one set."
+    }
+   ],
+   "seconds": 113,
+   "false_callouts_before_clearance": [],
+   "panel_readable": 0.96
+  }
+ ]
+}

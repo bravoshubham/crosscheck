@@ -57,6 +57,7 @@ class PanelReading:
     alt_base: int | None = None
     flaps: int | None = None          # flap gauge detent (flaps view only)
     flaps_clock: float | None = None  # needle position in clock hours, 9 (UP) .. 18 (40)
+    baro: int | None = None           # altimeter setting under the altitude tape, inches x 100 (STD: 2992)
     roll_labels: list[tuple[int, float]] = field(default_factory=list)  # (label, y in native crop px)
 
 
@@ -68,12 +69,30 @@ def _shift(box: tuple, dx: int, dy: int) -> tuple:
     return (box[0] + dx, box[1] + dy, box[2] + dx, box[3] + dy)
 
 
-def _anchor_offset(pfd: Image.Image) -> tuple[int, int]:
-    """Offset of this frame's view from the calibration view, from the baro readout position."""
+def _anchor(pfd: Image.Image) -> tuple[int, int, str | None]:
+    """Offset of this frame's view from the calibration view, from the baro readout position, and
+    the readout itself."""
     for text, _, (x0, y0, x1, y1) in _ocr(pfd):
         if y0 > pfd.height * 0.7 and x0 > pfd.width * 0.6 and BARO.match(text.strip()):
-            return round(x0 - BARO_ANCHOR[0]), round(y0 - BARO_ANCHOR[1])
-    return 0, 0
+            return round(x0 - BARO_ANCHOR[0]), round(y0 - BARO_ANCHOR[1]), text.strip()
+    return 0, 0, None
+
+
+def _anchor_offset(pfd: Image.Image) -> tuple[int, int]:
+    return _anchor(pfd)[:2]
+
+
+def baro_value(text: str | None) -> int | None:
+    """"29.92 IN." -> 2992, "STD" -> 2992 (standard pressure); hectopascals and anything else -> None."""
+    m = BARO.match((text or "").strip().upper())
+    if not m:
+        return None
+    if m.group(0).startswith("STD"):
+        return 2992
+    if "." in m.group(0):
+        v = round(float(m.group(0)) * 100)
+        return v if 2750 <= v <= 3150 else None
+    return None
 
 
 def _crop(img: Image.Image, box: tuple, scale: int) -> Image.Image:
@@ -149,8 +168,10 @@ def _altitude(pfd: Image.Image, out: PanelReading, dx: int = 0, dy: int = 0) -> 
 def read_frame(frame: Image.Image) -> PanelReading:
     out = PanelReading()
     pfd = frame.crop(CALIBRATION["pfd"])
-    dx, dy = _anchor_offset(pfd)
+    dx, dy, baro = _anchor(pfd)
     out.raw["offset"] = [f"{dx},{dy}"]
+    out.raw["baro"] = [baro] if baro else []
+    out.baro = baro_value(baro)
     for name, (box, scale) in PFD_REGIONS.items():
         crop = _crop(pfd, _shift(box, dx, dy), scale)
         res = _ocr(crop)

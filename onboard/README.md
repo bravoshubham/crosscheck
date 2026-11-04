@@ -6,10 +6,11 @@ aircraft and needs nothing else. Everything here is Meta open weights:
 | Job | Model (open weights) | Runs as | Cloud mode uses |
 | --- | --- | --- | --- |
 | Hear the radio and the intercom | SeamlessM4T v2 large + Omnilingual ASR 7B, both on every line | `onboard/hearing_service.py`, 127.0.0.1:8771 | Muse Voice Transcribe |
-| Read the PFD (speed, selected speed and altitude, altitude, flight modes) | Muse Glimmer 30B, vision | Ollama (or llama.cpp), 127.0.0.1:11434 | Apple on-device text recognition, or Muse Spark |
+| Read the PFD (speed, selected speed and altitude, altitude, altimeter setting, flight modes) | Muse Glimmer 30B, vision | Ollama (or llama.cpp), 127.0.0.1:11434 | Apple on-device text recognition, or Muse Spark |
 | Read the analog flap gauge | Muse Glimmer 30B: "which marking does the needle point at" | the same | Muse Spark |
 | Second reader for radio lines code cannot parse | Muse Glimmer 30B | the same | Muse Spark |
 | The sentence under each callout | Muse Glimmer 30B | the same | Muse Spark |
+| Measure the captain's posture (pilot watch) | SAM 3D Body (ViT-H) | `onboard/pose_service.py`, 127.0.0.1:8772 | SAM 3D Body on a cloud GPU |
 | Crosscheck's voice | MMS-TTS, for anything not in the callout bank (`voice/bank/`, recorded once with Fish Audio Drama 3) | in process | (the same) |
 | Pre-flight camera check | Muse Glimmer 30B must read values from two of three places on the PFD (or the gauge) | the same | SAM 3.1 (its open weights are gated) |
 
@@ -135,12 +136,13 @@ Memory on the test computer (Apple M5 Max, 128 GB), measured during the runs: Gl
 X-Plane 9 GB, the two recognizers a few GB more; macOS reported 80% of memory free. The code uses PyTorch and llama.cpp-compatible servers, which
 also run on Linux with an NVIDIA GPU; that was not tested here.
 
-## Not on board yet
+## The pilot watch, and what waits for the ground
 
-- **The pilot watch** still measures posture with SAM 3D Body on a cloud GPU (Modal). Asking
-  Glimmer directly was right on 19 of 24 test images (it took five of six forward slumps for a pilot
-  looking down; `eval/pilot_watch/posture_glimmer.py`); SAM 3D Body's measurements were right on
-  24 of 24, so it should run here. `onboard/pose_service.py` and the scenario's on-board path are
-  written; running SAM 3D Body's own code on this computer has not been done yet.
+- **The pilot watch's posture model**, SAM 3D Body, runs on this computer too
+  (`onboard/pose_service.py`, 127.0.0.1:8772, started by `onboard/start.sh`): on the Apple GPU
+  (MPS), in float32, Meta's code unchanged, with three shims for its CUDA-only calls. On the 24
+  labelled images it gives the cloud's posture verdict on all 24 (neck angle within 0.2°), in
+  2.1 s an image (4-7 s with X-Plane on the same GPU). The pilot-watch scenarios use it on board
+  through `eval/scenarios/pilot_watch.py`'s on-board path.
 - **Muse Wonder's review** of the pilot-camera recording is a second opinion after the flight; it
   needs the network, which an aircraft has again on the ground.

@@ -1,0 +1,297 @@
+{
+ "right": 24,
+ "of": 24,
+ "rows": [
+  {
+   "image": "a/looking_down",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 28.4,
+    "wrists": 0.42,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "a/slumped",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 60.3,
+    "wrists": -0.02,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "a/slumped_side",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 8.7,
+    "wrists": 0.23,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "a/upright",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 19.6,
+    "wrists": 0.44,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "b/looking_down",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 24.3,
+    "wrists": 0.5,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "b/slumped",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 65.3,
+    "wrists": -0.01,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "b/slumped_side",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 9.5,
+    "wrists": 0.14,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "b/upright",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 18.6,
+    "wrists": 0.43,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "c/looking_down",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 32.9,
+    "wrists": 0.43,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "c/slumped",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 59.7,
+    "wrists": 0.0,
+    "slumped": true,
+    "reasons": [
+     "head dropped",
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "c/slumped_side",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 20.1,
+    "wrists": 0.22,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "c/upright",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 26.0,
+    "wrists": 0.34,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "d/looking_down",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 32.5,
+    "wrists": 0.51,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "d/slumped",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 19.7,
+    "wrists": 0.05,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "d/slumped_side",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 13.4,
+    "wrists": 0.23,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "d/upright",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 22.8,
+    "wrists": 0.46,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "e/looking_down",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 24.7,
+    "wrists": 0.55,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "e/slumped",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 23.1,
+    "wrists": 0.13,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "e/slumped_side",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 8.1,
+    "wrists": 0.23,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "e/upright",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 20.0,
+    "wrists": 0.47,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "f/looking_down",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 28.5,
+    "wrists": 0.45,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  },
+  {
+   "image": "f/slumped",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 25.8,
+    "wrists": 0.14,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "f/slumped_side",
+   "expected_slumped": true,
+   "posture": {
+    "neck_flex": 13.1,
+    "wrists": 0.21,
+    "slumped": true,
+    "reasons": [
+     "hands off the controls"
+    ]
+   },
+   "right": true
+  },
+  {
+   "image": "f/upright",
+   "expected_slumped": false,
+   "posture": {
+    "neck_flex": 21.0,
+    "wrists": 0.46,
+    "slumped": false,
+    "reasons": []
+   },
+   "right": true
+  }
+ ]
+}

@@ -4,46 +4,52 @@
  "answer": null,
  "postures": [
   {
-   "s_after_change": -7.6,
+   "s_after_change": -7.7,
    "slumped": false,
    "neck_flex": 14.8,
    "wrists": 0.49
   },
   {
-   "s_after_change": -1.1,
+   "s_after_change": -1.4,
    "slumped": false,
-   "neck_flex": 15.4,
-   "wrists": 0.48
+   "neck_flex": 16.1,
+   "wrists": 0.47
   },
   {
-   "s_after_change": 5.4,
+   "s_after_change": 4.8,
    "slumped": false,
-   "neck_flex": 23.4,
-   "wrists": 0.52
+   "neck_flex": 23.7,
+   "wrists": 0.5
   },
   {
-   "s_after_change": 12.1,
+   "s_after_change": 10.9,
    "slumped": false,
-   "neck_flex": 24.6,
-   "wrists": 0.52
+   "neck_flex": 20.3,
+   "wrists": 0.55
   },
   {
-   "s_after_change": 18.4,
+   "s_after_change": 17.1,
    "slumped": false,
-   "neck_flex": 23.2,
-   "wrists": 0.53
-  },
-  {
-   "s_after_change": 25.0,
-   "slumped": false,
-   "neck_flex": 22.9,
+   "neck_flex": 20.8,
    "wrists": 0.54
   },
   {
-   "s_after_change": 31.6,
+   "s_after_change": 23.2,
    "slumped": false,
-   "neck_flex": 24.1,
-   "wrists": 0.52
+   "neck_flex": 20.3,
+   "wrists": 0.55
+  },
+  {
+   "s_after_change": 29.4,
+   "slumped": false,
+   "neck_flex": 20.2,
+   "wrists": 0.55
+  },
+  {
+   "s_after_change": 35.6,
+   "slumped": false,
+   "neck_flex": 20.0,
+   "wrists": 0.55
   }
  ],
  "heard": [],

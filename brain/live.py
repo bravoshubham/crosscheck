@@ -34,6 +34,9 @@ SCREEN_SIZE = (3600, 2338)
 READING_FIELDS = [f.name for f in fields(PanelReading) if f.name not in ("raw", "roll_labels")]
 WIDE_W = 1024  # the whole-cockpit frame kept with each reading, for the debrief and the film
 SPARK_PERIOD_S = 1.0  # capture rate with a model reader; reads overlap (~3 s each)
+SPARK_FINAL_PERIOD_S = 0.5  # Muse Spark's final lane: its reads take 2-7 s, so the more are in flight, the sooner a fresh one
+                            # arrives (at one a second, one cloud run's alert waited 4.3 s for a reading, and was late)
+SPARK_WORKERS = 16  # calls in flight at once: at 6, slow reads queued the next ones behind them
 SPARK_READERS = ("spark", "spark-flaps", "glimmer", "glimmer-flaps")  # PFD values / flap gauge, on Muse Spark or the local Muse Glimmer
 IN_FLIGHT = {"glimmer": 1, "glimmer-flaps": 1}  # one busy local GPU: a second call in flight doubles the delay, not the rate
 FULL_EVERY_FINAL_S = 30.0  # on final with Glimmer, a read of the whole set of parts (altitude, selected altitude) at most
@@ -67,10 +70,13 @@ def implausible(fact: Fact, led: Ledger, transcript: str) -> str | None:
     came back from Voice Transcribe as "climb and maintain 1000", at 9,000 ft)."""
     if fact.key not in ("clearance.altitude", "readback.altitude"):
         return None
-    alts = sorted(f.value for f in [f for f in led.since("doing", "altitude", 0) if f.t <= fact.t][-3:])
+    alts = sorted(f.value for f in [f for f in led.since("doing", "altitude", 0) if f.t <= fact.t][-5:])
     if not alts:
         return None
-    alt = alts[len(alts) // 2]  # the median of the last three: one misread (68,193 ft at 9,000) must not reject a clearance
+    # the median of the last five: one misread (68,193 ft at 9,000) must not reject a clearance, and
+    # nor must three in a row (altimeter_forgot, 5 Nov: 18,999, 605 and 6,106 ft at 9,000 made the
+    # median of three 6,106, and "descend and maintain 7000" looked like a climb)
+    alt = alts[len(alts) // 2]
     words = transcript.lower()
     if "climb" in words and fact.value < alt - MISHEARD_MARGIN_FT:
         return f"a climb to {fact.value} ft from {alt} ft"
@@ -156,7 +162,7 @@ class Crosscheck:
         t_event, t = t, (fact_t if fact_t is not None else t)
         facts = [("doing", "ias", r.ias), ("doing", "altitude", r.altitude),
                  ("doing", "track", r.track_mag), ("set", "mcp.speed", r.selected_speed),
-                 ("set", "mcp.altitude", r.selected_altitude)]
+                 ("set", "mcp.altitude", r.selected_altitude), ("set", "baro", r.baro)]
         if r.flaps is not None:
             facts += [("doing", "flaps", r.flaps), ("doing", "flaps.clock", r.flaps_clock)]
         if r.fma and (any(r.fma) or None in r.fma):
@@ -234,10 +240,12 @@ class Crosscheck:
         fast, last_full = None, 0.0
         if self.reader == "glimmer":  # on final, the final lane (senses/panel_glimmer.py): see FULL_EVERY_FINAL_S
             from senses.panel_glimmer import read_frame_glimmer_final as fast
+        elif self.reader == "spark":  # the same on Muse Spark (senses/panel_spark.py)
+            from senses.panel_spark import read_frame_spark_final as fast
         pending: collections.deque = collections.deque()
         next_capture = time.time()
-        last_captured = 0.0
-        with ThreadPoolExecutor(max_workers=6) as pool:
+        last_captured = last_full_applied = 0.0  # newest capture applied; newest whole read whose altitudes are applied
+        with ThreadPoolExecutor(max_workers=SPARK_WORKERS) as pool:
             while time.time() - t0 < seconds or pending:
                 if time.time() - t0 < seconds and time.time() >= next_capture and len(pending) < IN_FLIGHT.get(self.reader, 99):
                     frame = capture_screen()
@@ -252,7 +260,7 @@ class Crosscheck:
                                 fn, lane = fast, "final"
                         last_full = captured if lane == "full" else last_full
                     pending.append((captured, name, lane, pool.submit(lambda f=frame, fn=fn: asyncio.run(fn(f))[0])))
-                    next_capture = captured + SPARK_PERIOD_S
+                    next_capture = captured + (SPARK_FINAL_PERIOD_S if lane == "final" and self.reader == "spark" else SPARK_PERIOD_S)
                 by_arrival = self.fact_time == "captured"
                 while pending and (pending[0][3].done() or by_arrival and any(p[3].done() for p in pending)):
                     i = 0 if pending[0][3].done() else next(i for i, p in enumerate(pending) if p[3].done())
@@ -265,9 +273,20 @@ class Crosscheck:
                         self.event("reader_error", t, frame=name, error=str(e)[:200])
                         continue
                     if by_arrival and captured < last_captured:  # a newer frame was read first: this one is stale
+                        if lane == "full" and captured > last_full_applied and (r.altitude is not None or r.selected_altitude is not None):
+                            # a whole read overtaken by quicker final-lane reads (Spark reads in parallel) still
+                            # brings what only it reads, unless a newer whole read already has; its speeds and
+                            # modes are older than the ones applied
+                            last_full_applied = captured
+                            self.observe(PanelReading(selected_altitude=r.selected_altitude, altitude=r.altitude,
+                                                      altitude_method=r.altitude_method), t, name, fact_t=captured,
+                                         captured=round(captured, 3), reader=READER_LABEL[self.reader], lane="full", late=True)
+                            self.decide(t)
+                            continue
                         self.event("late_reading", t, frame=name, captured=round(captured, 3))
                         continue
                     last_captured = captured
+                    last_full_applied = captured if lane != "final" else last_full_applied
                     self.observe(r, t, name, fact_t=captured if by_arrival else None, captured=round(captured, 3),
                                  reader=READER_LABEL[self.reader].removesuffix("-flaps"), **({"lane": lane} if lane else {}))
                     self.decide(t)

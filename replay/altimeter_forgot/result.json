@@ -1,0 +1,21 @@
+{
+ "variant": "forgot",
+ "given": 3012,
+ "baro_set": 2992,
+ "baro_truth_at_end": 2992,
+ "false_callouts_before_clearance": [],
+ "callouts": [
+  {
+   "s_after_set": 8.1,
+   "text": "Altimeter three-zero-one-two given, two-niner-niner-two set."
+  }
+ ],
+ "baro_read_from_screen": [
+  2992
+ ],
+ "paused_during_run": false,
+ "unexpected_callouts": [],
+ "pass": true,
+ "panel_readable": 0.98,
+ "non_cockpit_frames": 0
+}

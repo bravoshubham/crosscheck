@@ -38,13 +38,16 @@ operational use. The evaluation section says what each number was measured again
 | Altitude bust, panel read by Muse Spark | The bust, with Muse Spark reading the panel. | “Cleared one-one thousand, set one-two thousand.” | 5 of 7 | 14.7 s after the MCP was set; the 737 passed 11,000 at 26.5 s |
 | Readback error, Muse Spark | The readback error, with Muse Spark reading the panel. | “Readback one-two thousand, cleared one-one thousand.” | 5 of 6 | 1.5 s after the MCP was set |
 | Correct setting, Muse Spark | The correct setting, with Muse Spark reading the panel. | (silence) | 5 of 5 | Silent, as it should be |
+| altimeter_wrong | ATC gives altimeter 30.12; the crew sets 30.21. | “Altimeter three-zero-one-two given, three-zero-two-one set.” | 4 of 4 | 23.1 s after the MCP was set |
+| altimeter_forgot | ATC gives altimeter 30.12; it stays at 29.92. | “Altimeter three-zero-one-two given, two-niner-niner-two set.” | 3 of 4 | 8.1 s after the MCP was set |
+| altimeter_correct | ATC gives altimeter 30.12; the crew sets it. | (silence) | 4 of 4 | Silent, as it should be |
 | Autothrottle not in speed on final (the Asiana 214 pattern) | On final the autothrottle drops out and speed decays. | “Speed. Autothrottle not in speed.” | 6 of 6 | 5.1 s after the fault; speed was 10 kt low at 11.1 s |
-| The same, panel read by Muse Spark | The same, with Muse Spark reading the panel. | “Speed. Autothrottle not in speed.” | 6 of 11 | 14.0 s after the fault; speed was 10 kt low at 15.4 s |
+| The same, panel read by Muse Spark | The same, with Muse Spark reading the panel. | “Speed. Autothrottle not in speed.” | 7 of 7 | 12.5 s after the fault; speed was 10 kt low at 14.4 s |
 | Flaps: wrong setting | “Flaps fifteen” called; the lever goes to 10. | “Flaps fifteen called, ten set.” | 8 of 8 | 20.4 s after the call |
 | Flaps: not moved | “Flaps fifteen” called; nobody moves the lever. | “Flaps fifteen called, five set.” | 8 of 9 | 22.0 s after the call |
 | Flaps: correct | “Flaps fifteen” called and selected. | (silence) | 9 of 9 | Silent, as it should be |
-| Pilot slumped | The captain slumps forward and does not answer. | “Captain, are you OK?” then “First officer, take control.” | 3 of 3 | 12.4 s after the slump |
-| Pilot asleep | The captain falls asleep against the side window. | “Captain, are you OK?” then “First officer, take control.” | 3 of 3 | 13.6 s after the slump |
+| Pilot slumped | The captain slumps forward and does not answer. | “Captain, are you OK?” then “First officer, take control.” | 3 of 3 | 10.6 s after the slump |
+| Pilot asleep | The captain falls asleep in the seat, head rolled back. | “Captain, are you OK?” then “First officer, take control.” | 3 of 3 | 12.9 s after the slump |
 | Pilot reading a checklist | The captain looks down at a checklist. | (silence) | 3 of 3 | Silent, as it should be |
 | Pilot slumps, then answers | The captain slumps, then answers when asked. | “Captain, are you OK?” | 3 of 3 | 12.2 s after the slump |
 | 15 minutes of normal flying | Fifteen minutes flown correctly: six descents, four turns, four flap calls. | (silence) | 4 of 4 | 0 false alarms in 15.0 minutes; 14/14 spoken values right |
@@ -70,7 +73,7 @@ turns its 3D keypoints into neck flexion and hand height. A slumped posture alon
 Crosscheck asks first, and an answer heard on the intercom clears it. Afterwards **Muse Wonder
 watches the recording on its own**, without the poses or Crosscheck's alerts, and gives its own
 verdict; it agreed with the ground truth on every run. The posture thresholds were chosen on one
-image set and tested on images made afterwards (24/24; 23/24 with SAM 3.1's boxes).
+image set and tested on images made afterwards (24/24, with hand-drawn boxes or SAM 3.1's).
 
 **Flaps:** the camera looks at the centre panel and Muse Spark reads the analog flap gauge (text
 recognition cannot read a needle); code turns the needle's position into a detent from a table
@@ -78,12 +81,20 @@ measured in X-Plane, and the rule waits for the needle to stop (five readings ov
 capture times) and gives the crew 5 s to move the lever, so a correct selection is never flagged
 mid-travel. That makes it slower than the altitude checks (~20 s).
 
+**The altimeter check** compares the altimeter setting ATC gives on the radio ("Portland altimeter
+three zero one two") with the one in the green box under the captain's altitude tape. Set wrong,
+the altimeter reads wrong by about 100 ft for every 0.10 inch, and nothing on the flight deck says
+so. It is timed like the altitude check (the crew's grace starts at the readback), and the parser
+takes the recognizer's real mishearings ("Portland altitude 3012", "autometer") for what they are.
+
 **The autothrottle watch** fires on final when the thrust mode is not a speed mode on three
 readings in a row, the pitch is not holding speed either (in a level-change descent the elevator
 does), and speed is below target: 5 kt below, or heading there within 10 s on the trend of the
 last 8 s of readings, like the PFD's own speed trend arrow. The on-device reader is in time on
-every run; Muse Spark, whose readings arrive ~3.5 s after the frame, about half the time; Muse
-Glimmer on board, reading only the speeds and modes on final (a reading every 2.6 s), 4 of 4.
+every run. Muse Spark and Muse Glimmer read only the speeds and modes on final (four small
+parts of the display, a one-line answer): Spark, with a read started every half second, in time
+in 7 of 7 runs (6 of 11 reading the whole display, ~4 s a read); Glimmer on board, a reading
+every 2.6 s, 4 of 4.
 
 **Speech is real speech recognition, and the design assumes it will be wrong.** The clearance
 (radio-filtered) and the readback are spoken by a synthetic voice, each streamed on its own
@@ -145,7 +156,7 @@ Spark, SAM 3.1 and Muse Wonder cross-check the others: none of them is trusted o
 | Model | Job | State |
 | --- | --- | --- |
 | Muse Voice Transcribe | Crew and ATC speech, one channel each; a person on the Mac's microphone | Live in every scenario with speech; 14/14 values right over the 15-minute flight; radio set scored (below); the microphone streams while the person speaks |
-| Muse Spark | Reads the flight displays and the analog flap gauge from camera frames; a second reader for radio lines code cannot parse; one sentence under each callout; the debrief summary | Panel: altitude within 20 ft on 64/67 frames (on-device 56/67); in time for the autothrottle callout in 6/6 fresh runs. Speech: on the radio set's 168 Voice Transcribe transcripts, values right went from 30 to 35 of 48 with 0 wrong; it recovered every "white level two and four zero" the parser could not read (`eval/audio/speech_fallback.py`). Each answer is guarded: the value must be in the transcript, and an altitude must name our callsign. Callout sentences and summaries: every number is checked against the facts given |
+| Muse Spark | Reads the flight displays and the analog flap gauge from camera frames; a second reader for radio lines code cannot parse; one sentence under each callout; the debrief summary | Panel: altitude within 20 ft on 64/67 frames (on-device 56/67); on final the speeds and modes only (airspeed 58/61 recorded frames, thrust mode 24/24), in time for the autothrottle callout in 7 of 7 runs. Speech: on the radio set's 168 Voice Transcribe transcripts, values right went from 30 to 35 of 48 with 0 wrong; it recovered every "white level two and four zero" the parser could not read (`eval/audio/speech_fallback.py`). Each answer is guarded: the value must be in the transcript, and an altitude must name our callsign. Callout sentences and summaries: every number is checked against the facts given |
 | Muse Wonder | Watches the pilot-camera recording after each run and judges it on its own, without SAM 3D Body's poses or Crosscheck's alerts | Agreed with the ground truth on 12 of 12 pilot-camera runs (4 recordings, 8 repeats): slumped, asleep, reading a checklist (“normal”), and slumped then recovering, with the slump placed at about 11 s for a change scripted at 10 s. ~8–10 s and ~$0.02 a review |
 | SAM 3.1 | Pre-flight camera check: the flight displays must be where the readers expect; finds the captain for SAM 3D Body | Displays found within IoU 0.93–0.94 of the calibration on recorded frames; a run whose camera check fails does not start. Pilot found in all 24 labelled images; with its boxes the posture check is right on 23/24 (24/24 with hand-drawn boxes; the miss is a checklist held low in the lap) |
 | SAM 3D Body | Pilot watch: 3D body pose on every pilot-camera frame | Modal T4, ~2 s a frame warm; posture right on 24/24 labelled images; live on generated video in the pilot-watch scenario |
@@ -206,9 +217,10 @@ simulator, GPU or API key needed. `--recompute` re-reads the saved panel images 
 `--recompute --reader spark` re-reads them with Muse Spark on any OS (needs `MODEL_API_KEY`;
 ~$0.003 a frame).
 
-Twenty-four recordings ship: the altitude and autothrottle scenarios with the on-device panel reader
+Twenty-seven recordings ship: the altitude and autothrottle scenarios with the on-device panel reader
 and again with Muse Spark reading the panel (`*_spark`), the three flap variants (gauge read by
-Spark), the four pilot-camera variants on generated video, the 15-minute normal flight, and the
+Spark), the three altimeter-setting variants, the four pilot-camera variants on generated video,
+the 15-minute normal flight, and the
 same altitude, autothrottle, flap and 15-minute scenarios flown on board (`*_onboard`). Each
 keeps the camera's crop of the displays and the whole cockpit (`wide/`), and replays exactly as it
 ran live. A recording that missed is shipped as recorded and labelled (`known_result` in its
@@ -276,7 +288,7 @@ Tests: `uv run pytest`.
 | Altitude facts from those transcripts (`senses/speech.py`) | 0 wrong altitudes into the ledger from 98 transcripts; misses where "flight level" became "white level" or the callsign digits were lost | Known script |
 | Callsign recognition (same set) | "Alaska" missed in 2/7 clean, 5/21 noisy lines ("Oscar", "Alas, for"); the guard drops it rather than misattribute | Known script |
 | Muse Spark as a second reader for radio lines (same 168 transcripts) | Values right: code alone 30/48, code then Spark 35/48; 0 wrong either way | Known script (`eval/audio/speech_fallback.py`) |
-| Pilot watch with SAM 3.1 finding the pilot (24 labelled images) | 23/24 (24/24 with hand-drawn boxes) | The state each image was made to show (`eval/pilot_watch/sam_boxes.py`) |
+| Pilot watch with SAM 3.1 finding the pilot (24 labelled images) | 24/24 (24/24 with hand-drawn boxes too) | The state each image was made to show (`eval/pilot_watch/sam_boxes.py`) |
 | Muse Wonder's review of the pilot-camera recordings | Agreed with the ground truth on every run (state and, for the slumps, the time it began) | The scripted state of each run (`brain/review.py`) |
 
 ## Built during the hackathon

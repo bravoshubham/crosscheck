@@ -4,67 +4,67 @@
  "answer": null,
  "postures": [
   {
-   "s_after_change": -7.5,
+   "s_after_change": -7.7,
    "slumped": false,
    "neck_flex": 21.3,
    "wrists": 0.46
   },
   {
-   "s_after_change": -1.0,
+   "s_after_change": -1.7,
    "slumped": false,
-   "neck_flex": 21.4,
+   "neck_flex": 21.3,
    "wrists": 0.46
   },
   {
-   "s_after_change": 5.4,
+   "s_after_change": 4.7,
    "slumped": false,
-   "neck_flex": 12.0,
-   "wrists": 0.32
+   "neck_flex": 11.9,
+   "wrists": 0.4
   },
   {
-   "s_after_change": 11.6,
+   "s_after_change": 10.8,
    "slumped": true,
-   "neck_flex": 12.6,
-   "wrists": 0.18
-  },
-  {
-   "s_after_change": 17.8,
-   "slumped": true,
-   "neck_flex": 12.7,
+   "neck_flex": 13.7,
    "wrists": 0.22
   },
   {
-   "s_after_change": 24.3,
+   "s_after_change": 17.1,
    "slumped": true,
-   "neck_flex": 12.8,
-   "wrists": 0.2
+   "neck_flex": 13.6,
+   "wrists": 0.23
   },
   {
-   "s_after_change": 30.7,
+   "s_after_change": 23.2,
    "slumped": true,
-   "neck_flex": 12.7,
-   "wrists": 0.18
+   "neck_flex": 13.7,
+   "wrists": 0.22
   },
   {
-   "s_after_change": 37.5,
+   "s_after_change": 29.4,
    "slumped": true,
-   "neck_flex": 12.4,
-   "wrists": 0.18
+   "neck_flex": 13.8,
+   "wrists": 0.22
+  },
+  {
+   "s_after_change": 36.0,
+   "slumped": true,
+   "neck_flex": 13.7,
+   "wrists": 0.23
   }
  ],
  "heard": [],
  "false_callouts_before_change": [],
  "callouts": [
   {
-   "s_after_change": 13.6,
+   "s_after_change": 12.9,
    "text": "Captain, are you OK?"
   },
   {
-   "s_after_change": 24.3,
+   "s_after_change": 23.2,
    "text": "Captain not responding. First officer, take control."
   }
  ],
- "asked_s_after_change": 13.6,
- "alert_s_after_change": 24.3,
+ "asked_s_after_change": 12.9,
+ "alert_s_after_change": 23.2,
  "pass": true
 }
