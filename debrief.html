@@ -162,7 +162,7 @@ body.film .views { display: none !important; }
     </div>
 
     <div class="now">
-      <div class="card"><div class="lab k-said">Said <small>Muse Voice Transcribe</small></div><div id="nowSaid"></div></div>
+      <div class="card"><div class="lab k-said">Said <small id="saidSrc">Muse Voice Transcribe</small></div><div id="nowSaid"></div></div>
       <div class="card"><div class="lab k-set">Set <small id="setSrc">read from the panel</small></div><div id="nowSet"></div></div>
       <div class="card"><div class="lab k-doing">Doing <small id="doingSrc">read from the panel</small></div><div id="nowDoing"></div></div>
       <div class="card verdict" id="verdictCard"><div class="lab k-call">Crosscheck</div><div id="nowVerdict"></div></div>
@@ -177,7 +177,8 @@ body.film .views { display: none !important; }
   <section class="card result" id="result"></section>
 
   <p class="note">Crosscheck never reads the simulator's data. It sees the cockpit displays as camera frames
-    (read with Apple's on-device text recognition) and hears speech through Muse Voice Transcribe. The dashed grey
+    (read by Muse Spark, by Muse Glimmer on board, or by on-device text recognition: the recording says which) and hears
+    speech through Muse Voice Transcribe, or on board through two open recognizers. The dashed grey
     lines are X-Plane's own values, recorded only to score the run. Voices are synthetic (Meta MMS-TTS).
     Every value on this page comes from the recording in <code>replay/</code>; rebuild with
     <code>uv run python cli.py debrief</code>.</p>
@@ -253,8 +254,11 @@ function select(i) {
   $("frame").style.aspectRatio = view === "wide" ? rec.wide.aspect : (rec.aspect || "1940 / 970");
   drawBoxes();
   const fl = rec.kind === "flaps", pw = rec.kind === "pilot_watch";
-  $("setSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "not in the camera's view" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
-  $("doingSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "flap gauge, read by Muse Spark" : rec.meta.panel_reader === "muse-spark" ? "read from the panel by Muse Spark" : "read from the panel";
+  const gl = (rec.meta.panel_reader || "").startsWith("muse-glimmer");
+  $("saidSrc").textContent = (rec.meta.speech || "").startsWith("on board") ? "SeamlessM4T v2 + Omnilingual ASR, on board" : "Muse Voice Transcribe";
+  const by = gl ? "Muse Glimmer, on board" : "Muse Spark";
+  $("setSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? "not in the camera's view" : rec.meta.panel_reader === "muse-spark" || gl ? `read from the panel by ${by}` : "read from the panel";
+  $("doingSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? `flap gauge, read by ${by}` : rec.meta.panel_reader === "muse-spark" || gl ? `read from the panel by ${by}` : "read from the panel";
   const v = $("vid"); v.pause();
   if (rec.video) { if (v.getAttribute("src") !== rec.video) v.src = rec.video; v.currentTime = 0; }
   v.hidden = !rec.video; $("gen").hidden = !rec.video;
@@ -383,7 +387,7 @@ function renderResult() {
     if (r.flaps_settled_s_after_call != null) how.push(`The flaps finished moving ${r.flaps_settled_s_after_call} s after the call (X-Plane).`);
     how.push(`Heard: ${r.heard_callout.length ? "flaps " + r.heard_callout.map(fmtFlaps).join(", ") : "nothing"} · false callouts before the call: ${r.false_callouts_before_call.length}.`);
   } else if (rec.kind === "nominal") {
-    what.push(`${esc(rec.blurb)} Everything is spoken and heard through Muse Voice Transcribe.`);
+    what.push(`${esc(rec.blurb)} Everything is spoken and heard through ${(rec.meta.speech || "").startsWith("on board") ? "SeamlessM4T v2 and Omnilingual ASR, on this computer" : "Muse Voice Transcribe"}.`);
     how.push(r.false_callouts.length ? r.false_callouts.map(c => `False alarm at ${c.s} s: “${esc(c.text)}”`).join("; ") : `No callout in ${r.minutes} minutes — correct.`);
     how.push(`${r.lines_heard} lines heard; altitude and flap values parsed from ${r.altitude_and_flap_facts_parsed} of the lines that state one.`);
     how.push(`${r.minutes_below_2500ft} min below 2,500 ft, where the autothrottle watch is on.`);
@@ -399,7 +403,9 @@ function renderResult() {
     how.push(`False callouts before the fault: ${(r.false_callouts_before_fault || []).length}.`);
   }
   how.push(`Panel readable in ${Math.round((r.panel_readable ?? 1) * 100)}% of frames.`);
-  if (m.panel_reader) how.push(`Panel read by ${m.panel_reader === "muse-spark" ? "Muse Spark (Meta Model API), readings applied when they arrived" : "Apple Vision, on the Mac"}.`);
+  if (m.panel_reader) how.push(`Panel read by ${m.panel_reader.startsWith("muse-glimmer") ? "Muse Glimmer 30B on this computer (on board), readings applied when they arrived"
+    : m.panel_reader.startsWith("muse-spark") ? "Muse Spark (Meta Model API), readings applied when they arrived" : "Apple Vision, on the Mac"}.`);
+  if (m.network) how.push(`<b>On board.</b> The whole run was sandboxed with every network connection refused except to this computer; from inside it, api.meta.ai:443 was ${esc(m.network["api.meta.ai:443"])}.`);
   if (m.known_result) how.push(`<b>Expected result.</b> ${esc(m.known_result.replace(/^fail: /, ""))}`);
   const sm = rec.summary;
   $("result").innerHTML = (sm ? `<div class="summary"><h3>Debrief · written by Muse Spark from the event log</h3><p>${esc(sm.text)}</p>
