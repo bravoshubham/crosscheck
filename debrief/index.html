@@ -192,6 +192,10 @@ body.film .views { display: none !important; }
 <script>
 "use strict";
 const D = window.DEBRIEF || [];
+// ?film=1 (debrief/film.py): the pilot camera is shown as its saved frames, the ones SAM 3D Body
+// measured, because headless Chrome does not move a seeked video's picture (5 Nov: the captain
+// stayed upright on screen while the callouts played)
+const FILM = new URLSearchParams(location.search).has("film");
 const $ = id => document.getElementById(id);
 const fmtAlt = v => v == null ? "—" : Math.round(v).toLocaleString("en-US") + " ft";
 const s1 = v => (Math.round(v * 10) / 10).toFixed(1);
@@ -288,7 +292,7 @@ function select(i) {
   $("doingSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? `flap gauge, read by ${by}` : rec.meta.panel_reader === "muse-spark" || gl ? `read from the panel by ${by}` : "read from the panel";
   const v = $("vid"); v.pause();
   if (rec.video) { if (v.getAttribute("src") !== rec.video) v.src = rec.video; v.currentTime = 0; }
-  v.hidden = !rec.video; $("gen").hidden = !rec.video;
+  v.hidden = !rec.video || FILM; $("gen").hidden = !rec.video;
   renderTabs(); renderLegend(); renderResult(); drawTimeline(); update();
   rec.readings.forEach(r => [r.frame, r.wide].forEach(f => { if (f && !preload.has(f)) { const im = new Image(); im.src = f; preload.set(f, im); } }));
   try { localStorage.setItem("debrief.tab", rec.id); } catch (e) {}
@@ -322,7 +326,7 @@ document.querySelectorAll("#views .seg").forEach(b => b.onclick = () => {
 function update() {
   const r = last(rec.readings, t);
   const fr = r || rec.readings[0];  // before the first reading, show the first frame
-  if (rec.video) {  // moving footage: keep the video on the timeline's clock
+  if (rec.video && !FILM) {  // moving footage: keep the video on the timeline's clock
     const v = $("vid"); $("img").hidden = true; $("nofr").hidden = true;
     if (playing) { v.playbackRate = rate; if (v.paused) v.play().catch(() => {}); if (Math.abs(v.currentTime - t) > 0.3) v.currentTime = t; }
     else { if (!v.paused) v.pause(); if (Math.abs(v.currentTime - t) > 0.04) v.currentTime = t; }
@@ -683,8 +687,9 @@ window.film = {
   seek: t1 => new Promise(done => {
     t = Math.max(0, Math.min(rec.duration, t1)); playing = false; update(); drawPlayhead();
     const v = $("vid");
-    if (!rec.video || v.readyState < 1) return done(true);
     const ready = () => requestAnimationFrame(() => requestAnimationFrame(() => done(true)));
+    if (FILM || !rec.video) { const im = $("img"); return (im.hidden || im.complete ? Promise.resolve() : im.decode().catch(() => {})).then(ready); }
+    if (v.readyState < 1) return done(true);
     if (v.seeking) return v.addEventListener("seeked", ready, {once: true});  // update() already asked for t
     if (Math.abs(v.currentTime - t) < 0.001) return ready();
     v.addEventListener("seeked", ready, {once: true});
