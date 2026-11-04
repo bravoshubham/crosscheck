@@ -7,140 +7,220 @@
 <meta name="description" content="An AI monitoring pilot: it hears the radio and intercom, reads the panel through a camera, and speaks up when what was said, set and done disagree. Flown and scored in X-Plane 12.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=B612:wght@400;700&family=B612+Mono&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=B612:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* the flight deck: display black and the Boeing colour code */
+  /* the flight deck: display black and the 737's own colour code */
   --display: #000; --display-2: #0b0f14; --bezel: #1c2229; --legend: #c9d1d9; --dim: #8b949e;
   --said: #6cc4ff; --set: #f062e0; --doing: #ffffff; --call: #ff4d4d; --mode: #3ddc84;
-  /* the report: cool grey paper and ink, with the same colour code darkened for print */
-  --paper: #eceee9; --paper-2: #e2e5df; --rule: #b8bdb3; --ink: #15181b; --ink-2: #4a5057;
-  --p-said: #1d5f9c; --p-set: #9c1f8c; --p-call: #b3261e; --p-ok: #1e6b3f;
-  --cockpit: "B612", "Helvetica Neue", Arial, sans-serif;
-  --cockpit-mono: "B612 Mono", ui-monospace, Menlo, monospace;
-  --report: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  /* the report: engineering paper, ink, and the same colour code darkened to print */
+  --paper: #f4f6f5; --grid: #dbe2e4; --rule: #a7b1b7; --ink: #15191d; --ink-2: #4d565e; --band: #1f262d;
+  --p-said: #1d5f9c; --p-set: #9c1f8c; --p-call: #b3261e; --p-ok: #1e6b3f; --p-mode: #1e6b3f;
+  /* B612 was drawn for Airbus cockpit displays, Atkinson Hyperlegible for low-vision readers:
+     both are made to be read fast, under load */
+  --data: "B612", "Helvetica Neue", Arial, sans-serif;
+  --prose: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box; }
 html { background: var(--paper); }
-body { margin: 0; font: 16px/1.55 var(--report); color: var(--ink); background: var(--paper); }
+body { margin: 0; font: 17px/1.6 var(--prose); color: var(--ink); background: var(--paper); }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--said); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--p-said); outline-offset: 3px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+code { font: 14px var(--data); background: rgba(21,25,29,.06); padding: 1px 5px; border-radius: 2px; }
+
+/* a term with a one-line meaning: tap or hover */
+.term { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: help;
+  text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.deck .term { text-decoration-color: var(--dim); }
+#gloss { position: absolute; z-index: 20; max-width: 340px; background: var(--ink); color: #fff; font: 14px/1.5 var(--prose);
+  padding: 10px 12px; border-radius: 3px; box-shadow: 0 6px 24px rgba(0,0,0,.25); pointer-events: none; }
+#gloss b { display: block; font: 700 13px var(--data); color: var(--said); margin-bottom: 2px; }
 
 /* ---------- the flight deck ---------- */
-.deck { background: var(--display); color: var(--legend); font-family: var(--cockpit); }
+.deck { background: var(--display); color: var(--legend); }
 .deck-in { max-width: 1240px; margin: 0 auto; padding: 22px 24px 40px; }
-.bar { display: flex; align-items: center; gap: 28px; margin-bottom: 36px; }
-.mark { font: 700 19px var(--cockpit); color: var(--doing); letter-spacing: .01em; text-decoration: none; }
-.bar nav { display: flex; gap: 22px; margin-left: auto; font-size: 14px; }
+.bar { display: flex; align-items: center; gap: 28px; margin-bottom: 36px; font-family: var(--data); }
+.mark { font: 700 19px var(--data); color: var(--doing); text-decoration: none; }
+.bar nav { display: flex; gap: 22px; margin-left: auto; font-size: 14px; flex-wrap: wrap; }
 .bar nav a { color: var(--dim); text-decoration: none; }
 .bar nav a:hover { color: var(--doing); }
 
 .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; align-items: center; }
-.screen { position: relative; border: 1px solid var(--bezel); border-radius: 6px; overflow: hidden; background: #000; }
+.screen { position: relative; border: 1px solid var(--bezel); overflow: hidden; background: #000; }
 .screen img { display: block; width: 100%; height: auto; }
 .screen .hb { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .tx { position: absolute; left: 12px; top: 12px; max-width: 74%; background: rgba(0,0,0,.82); border: 1px solid rgba(108,196,255,.5);
-  border-radius: 4px; padding: 6px 10px; font-size: 13px; color: var(--doing); opacity: 0; transition: opacity .4s; }
-.tx b { display: block; color: var(--said); font: 400 11px var(--cockpit-mono); }
+  padding: 6px 10px; font: 13px var(--data); color: var(--doing); opacity: 0; transition: opacity .4s; }
+.tx b { display: block; color: var(--said); font-weight: 400; font-size: 12px; }
 .cc { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); width: max-content; max-width: 92%;
-  background: rgba(0,0,0,.88); border: 1px solid var(--call); border-radius: 4px; padding: 8px 14px; color: var(--doing);
-  font-weight: 700; font-size: 15px; opacity: 0; transition: opacity .3s; }
+  background: rgba(0,0,0,.88); border: 1px solid var(--call); padding: 8px 14px; color: var(--doing);
+  font: 700 15px var(--data); opacity: 0; transition: opacity .3s; }
 .on { opacity: 1; }
 
-h1 { font: 700 clamp(34px, 4.6vw, 60px)/1.02 var(--cockpit); margin: 0 0 22px; color: var(--doing); letter-spacing: -.01em; }
+h1 { font: 700 clamp(34px, 4.6vw, 60px)/1.02 var(--data); margin: 0 0 20px; color: var(--doing); letter-spacing: -.01em; }
 h1 .l { display: block; }
 h1 .said { color: var(--said); } h1 .set { color: var(--set); }
-.claim { font-size: 17px; line-height: 1.55; color: var(--legend); max-width: 46ch; margin: 0 0 14px; }
-.claim + .claim { color: var(--dim); font-size: 15px; }
+.claim { font-size: 18px; line-height: 1.55; color: var(--legend); max-width: 46ch; margin: 0 0 14px; }
+.claim.small { color: var(--dim); font-size: 16px; }
 .go { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
-.btn { font: 700 14px var(--cockpit); text-decoration: none; padding: 11px 16px; border-radius: 4px; border: 1px solid var(--legend); color: var(--doing); }
+.btn { font: 700 14px var(--data); text-decoration: none; padding: 11px 16px; border: 1px solid var(--legend); color: var(--doing); }
 .btn.primary { background: var(--doing); color: #000; border-color: var(--doing); }
 .btn:hover { border-color: var(--doing); }
 
 .traces { margin-top: 34px; border-top: 1px solid var(--bezel); padding-top: 18px; }
 .traces svg { display: block; width: 100%; height: auto; }
-.traces p { margin: 8px 0 0; font-size: 13px; color: var(--dim); }
+.traces p { margin: 8px 0 0; font-size: 14px; color: var(--dim); }
 
 /* ---------- the report ---------- */
 .report { max-width: 1240px; margin: 0 auto; padding: 56px 24px 80px; }
-.report h2 { font: 700 30px/1.15 var(--report); margin: 0 0 10px; letter-spacing: -.01em; }
-.report h3 { font: 700 19px/1.3 var(--report); margin: 56px 0 8px; }
-.lead { max-width: 68ch; color: var(--ink-2); margin: 0 0 28px; }
-.res { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); margin: 0 0 8px; }
+.report h2 { font: 700 34px/1.1 var(--data); margin: 0 0 12px; letter-spacing: -.01em; }
+.report h3 { font: 700 24px/1.2 var(--data); margin: 72px 0 10px; }
+.lead { max-width: 68ch; color: var(--ink-2); margin: 0 0 26px; }
+
+/* how to check it */
+.check { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 3px solid var(--ink); margin: 30px 0 0; padding: 0; list-style: none; counter-reset: step; }
+.check li { padding: 16px 22px 18px 0; counter-increment: step; }
+.check li + li { padding-left: 22px; border-left: 1px solid var(--rule); }
+.check li::before { content: counter(step); display: block; font: 700 30px/1 var(--data); color: var(--p-said); margin-bottom: 8px; }
+.check b { display: block; font: 700 17px/1.3 var(--data); margin-bottom: 4px; }
+.check p { margin: 0; color: var(--ink-2); font-size: 16px; }
+.check a { font-weight: 700; color: var(--p-said); }
+.clone { margin: 14px 0 0; font-size: 15px; color: var(--ink-2); }
+
+.res { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); margin: 40px 0 0; }
 .res div { padding: 14px 18px 16px 0; }
 .res div + div { padding-left: 18px; border-left: 1px solid var(--rule); }
-.res dt { font-size: 14px; color: var(--ink-2); }
-.res dd { margin: 2px 0 0; font: 700 26px/1.2 var(--report); font-variant-numeric: tabular-nums; }
+.res dt { font-size: 15px; color: var(--ink-2); line-height: 1.35; }
+.res dd { margin: 4px 0 0; font: 700 30px/1.15 var(--data); font-variant-numeric: tabular-nums; }
 
-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-caption { text-align: left; color: var(--ink-2); font-size: 14px; padding-bottom: 10px; }
-th { text-align: left; font-weight: 600; font-size: 13px; color: var(--ink-2); border-bottom: 2px solid var(--ink); padding: 8px 14px 8px 0; vertical-align: bottom; }
-td { border-bottom: 1px solid var(--rule); padding: 12px 14px 12px 0; vertical-align: top; }
-tbody tr.group td { border-bottom: none; padding: 26px 0 6px; font-weight: 700; font-size: 13px; color: var(--ink-2); }
-td.sc { font-weight: 600; min-width: 150px; }
-td.says { color: var(--p-call); }
-td.says.quiet { font-style: normal; color: var(--ink-2); }
-td.when { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: 14px; }
-.nw { white-space: nowrap; }
-#matrix { table-layout: fixed; }
-td.rec a { font-weight: 600; white-space: nowrap; }
-.marks { display: flex; flex-wrap: wrap; gap: 3px; max-width: 100%; margin-top: 5px; padding-right: 8px; }
-.m { width: 13px; height: 13px; border-radius: 2px; background: var(--p-ok); }
+/* what the camera sees */
+.sees { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.sees figure { margin: 0; position: relative; border: 1px solid var(--ink); background: #000; }
+.sees img { display: block; width: 100%; height: auto; }
+.sees svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sees figcaption { font-size: 14px; color: var(--ink-2); padding: 9px 12px 10px; background: #fff; border-top: 1px solid var(--ink); }
+.legend-list { margin: 0; padding: 0; list-style: none; }
+.legend-list li { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.legend-list li:first-child { border-top: 1px solid var(--ink); }
+.legend-list b { font: 700 15px var(--data); display: block; }
+.legend-list span { color: var(--ink-2); font-size: 16px; }
+.legend-list .k { display: inline-block; width: 12px; height: 12px; border: 2px solid; margin-right: 8px; vertical-align: -1px; }
+
+/* test cards */
+.group { margin-top: 48px; }
+.group > h4 { font: 700 19px var(--data); margin: 0 0 4px; }
+.group > p { margin: 0 0 18px; color: var(--ink-2); max-width: 75ch; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.tc { background: #fff; border: 1px solid var(--ink); display: flex; flex-direction: column; }
+.tc > header { background: var(--band); color: #fff; display: flex; align-items: baseline; gap: 12px; padding: 8px 14px; }
+.tc > header .n { font: 700 13px var(--data); color: #9fb3c2; white-space: nowrap; }
+.tc > header h5 { font: 700 18px/1.25 var(--data); margin: 0; }
+.tc .def { margin: 0; padding: 12px 14px; border-bottom: 1px solid var(--grid); font-size: 16px; }
+.tc .body { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); border-bottom: 1px solid var(--grid); }
+.tc .shot { margin: 0; border-right: 1px solid var(--grid); background: #000; position: relative; overflow: hidden; }
+.tc .shot .win { position: relative; overflow: hidden; }
+.tc .shot img { display: block; }
+.tc .shot figcaption { background: #11161c; color: #dfe6eb; font: 13px/1.4 var(--data); padding: 7px 9px 8px; }
+.tc dl { margin: 0; padding: 4px 14px 10px; font-size: 15px; }
+.tc dt { font: 700 13px var(--data); color: var(--ink-2); margin-top: 9px; }
+.tc dd { margin: 1px 0 0; line-height: 1.45; }
+.tc dd.say { color: var(--p-call); font-weight: 700; }
+.tc dd.quiet { color: var(--p-ok); font-weight: 700; }
+.tc table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tc th { text-align: left; font: 700 13px var(--data); color: var(--ink-2); padding: 8px 8px 6px 14px; border-bottom: 1px solid var(--grid); }
+.tc td { padding: 8px 8px 8px 14px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+.tc tr:last-child td { border-bottom: 0; }
+.tc td.who { font-weight: 700; width: 34%; }
+.tc td.when { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tc td.go a { font: 700 13px var(--data); color: var(--p-said); white-space: nowrap; }
+.tally { font: 700 13px var(--data); white-space: nowrap; }
+.marks { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+.m { width: 12px; height: 12px; background: var(--p-ok); }
 .m.bad { background: none; border: 2px solid var(--p-call); }
+.strip { padding: 6px 14px 10px; border-top: 1px solid var(--grid); background:
+  repeating-linear-gradient(90deg, transparent 0 23px, rgba(29,95,156,.06) 23px 24px); }
+.strip svg { display: block; width: 100%; height: auto; }
+.strip p { margin: 2px 0 0; font-size: 13px; color: var(--ink-2); }
+.nw { white-space: nowrap; }
 
-.mk { font-size: 13px; color: var(--ink-2); margin-top: 10px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.mk { font-size: 14px; color: var(--ink-2); margin-top: 10px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
 .mk span { display: inline-flex; gap: 6px; align-items: center; }
-
-.chart > svg, .flight > svg { display: block; width: 100%; height: auto; }
 .mk svg { flex: none; }
-.flight { margin-top: 8px; }
-.earlier { margin: 14px 0 0; padding: 0; list-style: none; font-size: 15px; }
-.earlier li { padding: 6px 0; border-bottom: 1px solid var(--rule); }
-.earlier b { display: inline-block; min-width: 64px; }
 
-.find td.d { white-space: nowrap; color: var(--ink-2); width: 70px; }
-.find td.a { font-weight: 600; width: 190px; }
+/* tables */
+table.t { width: 100%; border-collapse: collapse; font-size: 16px; }
+.t th { text-align: left; font: 700 13px var(--data); color: var(--ink-2); border-bottom: 2px solid var(--ink); padding: 8px 14px 8px 0; vertical-align: bottom; }
+.t td { border-bottom: 1px solid var(--rule); padding: 12px 14px 12px 0; vertical-align: top; }
+.find td.d { white-space: nowrap; color: var(--ink-2); width: 70px; font: 14px var(--data); padding-top: 14px; }
+.find td.a { font-weight: 700; width: 190px; }
 .find td.fix { color: var(--ink-2); }
+.models td:first-child { font-weight: 700; white-space: nowrap; }
+.models td.meas { color: var(--ink-2); font-size: 15px; font-variant-numeric: tabular-nums; }
+.models td.meas div + div { margin-top: 4px; }
+
+.flight > svg { display: block; width: 100%; height: auto; }
+.flight { margin-top: 8px; border: 1px solid var(--ink); background: #fff; padding: 12px 12px 8px; }
+.earlier { margin: 14px 0 0; padding: 0; list-style: none; font-size: 16px; }
+.earlier li { padding: 6px 0; border-bottom: 1px solid var(--rule); }
+.earlier b { display: inline-block; min-width: 64px; font-family: var(--data); }
+
+/* glossary */
+.gl { columns: 2; column-gap: 48px; margin: 0; }
+.gl div { break-inside: avoid; padding: 10px 0; border-top: 1px solid var(--rule); }
+.gl dt { font: 700 16px var(--data); }
+.gl dd { margin: 2px 0 0; color: var(--ink-2); }
+
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 .cols ul { margin: 0; padding-left: 20px; }
 .cols li { margin-bottom: 8px; max-width: 62ch; }
-.models td:first-child { font-weight: 600; white-space: nowrap; }
-.models td.meas { color: var(--ink-2); font-size: 14px; font-variant-numeric: tabular-nums; }
-.models td.meas div + div { margin-top: 4px; }
-footer { border-top: 1px solid var(--rule); margin-top: 64px; padding-top: 18px; color: var(--ink-2); font-size: 14px; }
+footer { border-top: 1px solid var(--rule); margin-top: 64px; padding-top: 18px; color: var(--ink-2); font-size: 15px; }
 footer p { max-width: 90ch; margin: 0 0 6px; }
 
+@media (max-width: 1020px) {
+  .cards { grid-template-columns: 1fr; }
+}
 @media (max-width: 920px) {
-  .hero, .cols { grid-template-columns: 1fr; gap: 28px; }
-  .res { grid-template-columns: 1fr; }
-  .res div + div { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); }
-  .bar nav { gap: 14px; }
+  .hero, .cols, .sees { grid-template-columns: 1fr; gap: 28px; }
+  .check, .res { grid-template-columns: 1fr 1fr; }
+  .check li:nth-child(3) { grid-column: 1 / -1; padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+  .res div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .res div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .gl { columns: 1; }
   .wide { overflow-x: auto; }
   .wide table { min-width: 760px; }
 }
-@media (max-width: 520px) {
+@media (max-width: 560px) {
+  body { font-size: 16px; }
   .deck-in, .report { padding-left: 16px; padding-right: 16px; }
+  .check { grid-template-columns: 1fr; }
+  .check li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+  .res { grid-template-columns: 1fr 1fr; }
+  .res dd { font-size: 24px; }
+  .tc .body { grid-template-columns: 1fr; }
+  .tc .shot { border-right: 0; border-bottom: 1px solid var(--grid); }
   .cc { font-size: 12px; padding: 5px 9px; bottom: 8px; }
   .tx { font-size: 11px; padding: 4px 7px; left: 8px; top: 8px; }
-  .traces { overflow-x: auto; }
-  .traces svg, .flight > svg, .chart > svg { min-width: 760px; }
-  .flight, .chart { overflow-x: auto; }
+  .traces, .flight { overflow-x: auto; }
+  .traces svg, .flight > svg { min-width: 720px; }
   .bar { flex-wrap: wrap; gap: 10px; }
-  .bar nav { margin-left: 0; }
+  .bar nav { margin-left: 0; gap: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .tx, .cc { transition: none; } }
 </style>
 </head>
 <body>
+<div id="gloss" role="tooltip" hidden></div>
 <header class="deck">
   <div class="deck-in">
     <div class="bar">
       <a class="mark" href="./">Crosscheck</a>
       <nav aria-label="Sections">
-        <a href="debrief.html">Recordings</a>
         <a href="crosscheck_film_short.mp4">Film</a>
-        <a href="#report">Test report</a>
+        <a href="debrief.html">Recordings</a>
+        <a href="#cards">Test cards</a>
         <a href="#caught">What testing caught</a>
+        <a href="#glossary">Glossary</a>
         <a id="src" href="https://github.com/bravoshubham/crosscheck">Source</a>
       </nav>
     </div>
@@ -148,20 +228,21 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
       <div class="screen" id="screen">
         <img id="heroImg" alt="The 737's flight deck in X-Plane 12, as Crosscheck's camera saw it">
         <svg id="heroBoxes" class="hb" hidden preserveAspectRatio="none"></svg>
-        <div class="tx" id="heroTx"><b>ATC, radio, as heard</b><span id="heroTxText"></span></div>
+        <div class="tx" id="heroTx"><b>ATC on the radio, as Crosscheck heard it</b><span id="heroTxText"></span></div>
         <div class="cc" id="heroCc" role="status"></div>
       </div>
       <div>
         <h1><span class="l said" id="h1Said">Said 11,000.</span><span class="l set" id="h1Set">Set 12,000.</span></h1>
         <p class="claim" id="heroClaim">Crosscheck heard the clearance on the radio, read the altitude selector through a camera,
           and spoke up before the aircraft got there.</p>
-        <p class="claim">It is a monitoring pilot that only sees and hears, like the person in the right seat: what was
-          said, what was set and what the aircraft is doing, checked against each other, with a callout in standard
-          words when they disagree.</p>
+        <p class="claim small">Air traffic control cleared the 737 to 11,000 ft; the pilot dialled 12,000. Flying past a cleared
+          altitude is an <button type="button" class="term" data-k="bust">altitude bust</button>, and it can put two aircraft at the same height.
+          Crosscheck does the job of the <button type="button" class="term" data-k="pm">pilot monitoring</button>: it compares what was said,
+          what was set and what the aircraft is doing, and calls out in standard words when they disagree.</p>
         <div class="go">
-          <a class="btn primary" href="debrief.html">Watch the recordings</a>
-          <a class="btn" href="crosscheck_film_short.mp4">Watch the film</a>
-          <a class="btn" href="#report">Read the test report</a>
+          <a class="btn primary" href="crosscheck_film_short.mp4">Watch the 3-minute film</a>
+          <a class="btn" id="heroReplay" href="debrief.html">Replay this flight</a>
+          <a class="btn" href="#cards">Read the test cards</a>
         </div>
       </div>
     </div>
@@ -174,54 +255,72 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
 
 <main class="report" id="report">
   <h2>Flight-test report</h2>
-  <p class="lead">Every scenario was flown live in X-Plane 12. Crosscheck saw only the screen and heard only the audio;
-    the simulator's own data was logged only to score it. Each run below was scored automatically against that data,
-    and every recording replays from this repository without the simulator.</p>
+  <p class="lead">Every test was flown live in X-Plane 12's Boeing 737. Crosscheck only saw the screen and heard the audio;
+    the simulator's own data was logged on the side, only to score each run. Every run is kept here, the misses included,
+    and every recording replays from the repository without the simulator.</p>
+
+  <ol class="check" aria-label="Check it yourself in three minutes">
+    <li><b>Watch the film</b><p>Three minutes. It is these pages and recordings, filmed frame by frame; nothing was staged for it.
+      <a href="crosscheck_film_short.mp4">Play it</a></p></li>
+    <li><b>Replay one flight</b><p>Open the altitude bust and press Play: the radio call, the panel as the camera saw it,
+      and the callout at the second Crosscheck made it. <a id="checkReplay" href="debrief.html">Open the recording</a></p></li>
+    <li><b>Read the test cards</b><p>One card per thing that goes wrong. Each square is one live run; a hollow square is a miss,
+      and every card links to its recording. <a href="#cards">Go to the cards</a></p></li>
+  </ol>
+  <p class="clone">Or run every recording yourself, on any computer, without the simulator or an API key:
+    <code>git clone https://github.com/bravoshubham/crosscheck &amp;&amp; cd crosscheck &amp;&amp; uv run python cli.py replay --all</code></p>
 
   <dl class="res" id="res"></dl>
 
-  <h3>Test matrix</h3>
-  <div class="wide">
-    <table id="matrix">
-      <caption>Each mark is one live run, scored against the simulator; the first is the recording you can watch.</caption>
-      <colgroup><col style="width:17%"><col style="width:23%"><col style="width:20%"><col style="width:11%"><col style="width:22%"><col style="width:7%"></colgroup>
-      <thead><tr><th scope="col">Scenario</th><th scope="col">What goes wrong</th><th scope="col">Crosscheck says</th><th scope="col">Runs</th><th scope="col">When</th><th scope="col"><span class="vh">Recording</span></th></tr></thead>
-      <tbody></tbody>
-    </table>
+  <h3 id="sees">What the camera sees</h3>
+  <p class="lead">One camera looks at the captain's instruments, as a person in the right seat would glance across. A second
+    looks at the flap gauge, and an optional third at the captain. Crosscheck never reads the simulator's data.</p>
+  <div class="sees">
+    <figure id="seesFig"><img id="seesImg" alt="The captain's side of the 737 flight deck, as the panel camera sees it"><svg id="seesSvg" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <figcaption>The panel camera's whole frame, from the altitude bust recording.</figcaption></figure>
+    <ul class="legend-list" id="seesList"></ul>
   </div>
-  <div class="mk"><span><i class="m"></i> right</span><span><i class="m bad"></i> wrong</span></div>
 
-  <h3>Did it speak in time?</h3>
-  <p class="lead">Where a fault has a point of no return, each run's callout against it. The gap between the two is the time the crew had left.</p>
-  <div class="chart" id="chart"></div>
+  <h3 id="cards">Test cards</h3>
+  <p class="lead">Each card is one thing that goes wrong on a real flight deck, the words Crosscheck must say, and its deadline.
+    The same test was flown with up to three ways of reading the panel: on-device text recognition on the Mac, Muse Spark in
+    the cloud, and Muse Glimmer on board with the network refused.</p>
+  <div id="groups"></div>
+  <div class="mk"><span><i class="m"></i> a run Crosscheck got right</span><span><i class="m bad"></i> a miss (kept, not hidden)</span>
+    <span><svg width="14" height="10"><circle cx="5" cy="5" r="4" fill="#b3261e"/></svg> when it spoke</span>
+    <span><svg width="14" height="12"><line x1="6" x2="6" y1="1" y2="11" stroke="#15191d" stroke-width="2"/></svg> the deadline</span>
+    <span><svg width="24" height="10"><line x1="0" x2="24" y1="5" y2="5" stroke="#1e6b3f" stroke-width="2"/></svg> time the crew had left</span></div>
 
-  <h3>Fifteen minutes of normal flying</h3>
-  <p class="lead" id="flightLead">A monitor that cries wolf gets switched off. This flight does everything right, so any callout is a false alarm.</p>
+  <h3 id="flightH">Fifteen minutes of normal flying</h3>
+  <p class="lead" id="flightLead">A monitor that cries wolf gets switched off. In this flight everything is done right, so any callout is a
+    <button type="button" class="term" data-k="false">false alarm</button>.</p>
   <div class="flight" id="flight"></div>
   <ul class="earlier" id="earlier"></ul>
 
   <h3>Meta models in the loop</h3>
-  <p class="lead">Each model has one job it is good at, and every number below is read from this repository's result files.
+  <p class="lead">Each model has one job it is good at. Every number below is read from this repository's result files.
     The pilot-camera footage is animated with LTX-2.5 (Lightricks, open weights) from Muse Image photos; it is test material, not part of Crosscheck.</p>
-  <div class="wide"><table class="models" id="models"><colgroup><col style="width:19%"><col style="width:40%"><col style="width:41%"></colgroup>
+  <div class="wide"><table class="t models" id="models"><colgroup><col style="width:21%"><col style="width:39%"><col style="width:40%"></colgroup>
     <thead><tr><th scope="col">Model</th><th scope="col">Its job here</th><th scope="col">Measured</th></tr></thead><tbody></tbody></table></div>
 
   <h3 id="caught">What testing caught</h3>
-  <p class="lead">Problems found by the scored runs, and what changed. Runs used to find a problem are kept as evidence but not counted: each fix was confirmed on fresh runs.</p>
-  <div class="wide"><table class="find" id="find"><thead><tr><th scope="col">Date</th><th scope="col">Where</th><th scope="col">Found</th><th scope="col">Changed</th></tr></thead><tbody></tbody></table></div>
+  <p class="lead">Problems found by the scored runs, and what changed. Runs that found a problem are kept as evidence but not
+    counted: every fix was confirmed on fresh runs.</p>
+  <div class="wide"><table class="t find" id="find"><thead><tr><th scope="col">Date</th><th scope="col">Where</th><th scope="col">Found</th><th scope="col">Changed</th></tr></thead><tbody></tbody></table></div>
 
-  <h3>How it was tested, and what it does not show</h3>
+  <h3 id="glossary">Words used here</h3>
+  <p class="lead">Flight-deck terms, in one line each. Underlined words anywhere on this page show the same line when tapped.</p>
+  <dl class="gl" id="gl"></dl>
+
+  <h3>How it was tested</h3>
   <div class="cols">
     <ul>
       <li>Speech is real speech recognition: every line is synthesised, played as audio and transcribed live by Muse Voice Transcribe. Only what comes back is parsed.</li>
-      <li>The panel is read from screen captures of X-Plane 12's 737 by on-device text recognition or by Muse Spark; never from the simulator's data.</li>
-      <li>On board, every model runs on the test computer (Muse Glimmer reads the panel; SeamlessM4T v2 and Omnilingual ASR both hear each line), and each run is sandboxed with every network connection refused; its record shows the refused connection to api.meta.ai.</li>
-      <li>The pilot camera is generated footage: Muse Image photos of synthetic pilots, animated with LTX-2.5 and anchored on the labelled photos. No real person is filmed.</li>
+      <li>The panel is read from screen captures of X-Plane 12's 737, by on-device text recognition, by Muse Spark, or on board by Muse Glimmer; never from the simulator's data.</li>
     </ul>
     <ul>
-      <li>A simulator, not an aircraft. One aircraft type, one region, daylight, the X-Plane demo's default weather.</li>
-      <li>Short runs of one fault each, repeated 2–6 times, and one 15-minute false-alarm flight: enough to show the method works, not a measured false-alarm rate.</li>
-      <li>Not certified, not for operational use.</li>
+      <li>On board, every model runs on the test computer, and each run is sandboxed with every network connection refused; its record shows the refused connection to api.meta.ai.</li>
+      <li>Each fault was flown 2 to 6 times, plus 15 minutes of normal flying. Flown in a simulator; not certified for operational use. The pilot-camera footage is generated: no real person is filmed.</li>
     </ul>
   </div>
 
@@ -245,10 +344,60 @@ const s1 = v => (Math.round(v * 10) / 10).toFixed(1);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("still");
 const filmMode = new URLSearchParams(location.search).has("film");
 
+// ---------- the words, one line each ----------
+const GLOSS = {
+  bust: ["Altitude bust", "Flying through or away from the altitude air traffic control cleared the aircraft to. It can put two aircraft at the same height; Europe calls it a level bust."],
+  clearance: ["Clearance", "An instruction from air traffic control, such as “climb and maintain one-one thousand”. The crew must fly exactly that."],
+  readback: ["Readback", "The crew repeats a clearance back to the controller, so both know it was heard right. A readback error is one that does not match."],
+  atc: ["ATC", "Air traffic control: the controller on the radio who keeps aircraft apart."],
+  altimeter: ["Altimeter setting", "The local air pressure, which ATC gives on the radio and the crew dials into the altimeter so it shows the true altitude. Each 0.10 inch wrong is about 100 ft wrong."],
+  mcp: ["Altitude selector (MCP)", "The knob on the autopilot's mode control panel where the pilot dials the cleared altitude; the autopilot levels off there. The PFD repeats it in magenta."],
+  pfd: ["PFD", "Primary flight display: the main screen in front of each pilot. Speed on the left tape, altitude on the right, and the autopilot's modes along the top."],
+  fma: ["Mode boxes (FMA)", "The flight mode annunciator: three boxes along the top of the PFD that show what the autothrottle, roll and pitch automation are doing, such as MCP SPD."],
+  autothrottle: ["Autothrottle", "Automation that moves the thrust levers to hold the selected speed. Out of speed mode, nothing holds the speed unless a pilot does."],
+  final: ["Final approach", "The last few miles to the runway, lined up and descending. Here, below 2,500 ft."],
+  asiana: ["Asiana 214", "A Boeing 777 that crashed short of the runway at San Francisco in July 2013. The crew believed the autothrottle was holding the speed; it was not."],
+  flaps: ["Flaps", "Panels on the wing, extended in steps (1, 5, 15…) to fly slower. The pilot flying calls a setting; the other pilot moves the lever."],
+  pf: ["Pilot flying", "The pilot handling the aircraft on this flight."],
+  pm: ["Pilot monitoring", "The other pilot, whose job is to watch, cross-check and speak up. Crosscheck does that checking job."],
+  callout: ["Callout", "A short standard phrase said out loud to flag something, like “Speed” or “Flaps fifteen”."],
+  deadline: ["Deadline", "The moment it would be too late: the aircraft passes the cleared altitude, or the speed is 10 kt below target. Crosscheck must speak before it."],
+  kt: ["kt", "Knots: nautical miles per hour, the unit of airspeed."],
+  incap: ["Incapacitation", "A pilot suddenly unable to fly or answer, from illness or fainting. Rare, but every airline crew trains for it."],
+  onboard: ["On board", "Every model running on one computer in the aircraft, with the network refused, because in the air there may be no connection."],
+  false: ["False alarm", "A callout when nothing was wrong. A monitor that gives them gets switched off."],
+  replay: ["Replay", "Feeding a recording back through the same rules, with no simulator and no model calls, to show the result is the same."],
+};
+const T = (k, text) => `<button type="button" class="term" data-k="${k}">${text || GLOSS[k][0]}</button>`;
+const rich = s => esc(s).replace(/\[\[(\w+)(?:\|([^\]]+))?\]\]/g, (_, k, text) => T(k, text));
+(function glossary() {
+  const tip = $("gloss");
+  let pinned = null;
+  const show = el => {
+    const g = GLOSS[el.dataset.k]; if (!g) return;
+    tip.innerHTML = `<b>${esc(g[0])}</b>${esc(g[1])}`; tip.hidden = false;
+    const r = el.getBoundingClientRect(), w = Math.min(340, innerWidth - 24);
+    tip.style.maxWidth = w + "px";
+    tip.style.left = Math.max(12, Math.min(innerWidth - w - 12, r.left + scrollX)) + "px";
+    tip.style.top = (r.bottom + scrollY + 8) + "px";
+    el.setAttribute("aria-describedby", "gloss");
+  };
+  const hide = () => { tip.hidden = true; pinned = null; };
+  document.addEventListener("mouseover", e => { const el = e.target.closest(".term"); if (el && !pinned) show(el); });
+  document.addEventListener("mouseout", e => { if (e.target.closest(".term") && !pinned) tip.hidden = true; });
+  document.addEventListener("focusin", e => { const el = e.target.closest(".term"); if (el) show(el); });
+  document.addEventListener("focusout", e => { if (e.target.closest(".term")) hide(); });
+  document.addEventListener("click", e => { const el = e.target.closest(".term");
+    if (el) { if (pinned === el) hide(); else { show(el); pinned = el; } } else hide(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") hide(); });
+  $("gl").innerHTML = Object.entries(GLOSS).map(([k, [w, d]]) => `<div id="g-${k}"><dt>${esc(w)}</dt><dd>${esc(d)}</dd></div>`).join("");
+})();
+
 // ---------- hero: the altitude bust, replayed once ----------
 (function hero() {
   const h = O.hero; if (!h) return;
   $("heroImg").src = h.frame;
+  $("heroReplay").href = $("checkReplay").href = `debrief.html?s=${encodeURIComponent(h.id)}`;
   if (h.wide) {  // the whole flight deck, with the displays SAM 3.1 found before the run
     const [w, hh] = h.wide.aspect.split(" / ").map(Number);
     $("heroBoxes").setAttribute("viewBox", `0 0 ${w} ${hh}`);
@@ -325,71 +474,176 @@ const filmMode = new URLSearchParams(location.search).has("film");
 // ---------- results ----------
 const n = O.nominal;
 $("res").innerHTML = [
-  ["Live runs called right", `${O.totals.right} of ${O.totals.runs}`],
-  ...(O.onboard && O.onboard.runs ? [["On board, with the network blocked", `${O.onboard.right} of ${O.onboard.runs}`]] : []),
+  ["Live runs called right, cloud and Mac", `${O.totals.right} of ${O.totals.runs}`],
+  ...(O.onboard && O.onboard.runs ? [["Live runs called right on board, network refused", `${O.onboard.right} of ${O.onboard.runs}`]] : []),
   ["False alarms in 15 minutes of normal flying", n ? String(n.result.false_callouts.length) : "—"],
-  ["Spoken values parsed right on that flight", n ? n.result.altitude_and_flap_facts_parsed.replace("/", " of ") : "—"],
+  ["Spoken values understood on that flight", n ? n.result.altitude_and_flap_facts_parsed.replace("/", " of ") : "—"],
 ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
 
-// ---------- test matrix ----------
-const GROUPS = {altitude: "Altitude: the clearance against the selector", autothrottle_hold: "Autothrottle on final (the Asiana 214 pattern)", altitude_spark: "Altitude, with Muse Spark reading the panel",
-  flaps: "Flaps: the callout against the gauge", pilot_watch: "Pilot watch: the optional camera on the captain", nominal: "False-alarm test",
-  onboard: "On board: every model on this computer, and the network refused for the whole run"};
-let lastGroup = null, rowsHtml = "";
-O.matrix.forEach(r => {
-  const group = r.id.endsWith("_onboard") ? "onboard" : r.kind === "altitude" && r.id.endsWith("_spark") ? "altitude_spark" : r.kind;
-  if (group !== lastGroup) { rowsHtml += `<tr class="group"><td colspan="6">${GROUPS[group] || group}</td></tr>`; lastGroup = group; }
-  // timing from the runs that were right; the misses are the hollow marks
-  const ok = r.runs.filter(x => x.pass), ts = ok.map(x => x.t).filter(v => v != null), dl = ok.map(x => x.deadline).filter(v => v != null);
-  let when;
-  if (r.id === "nominal") when = `${n.result.minutes} minutes, ${n.result.minutes_below_2500ft} of them below 2,500 ft`;
-  else if (!r.measured) when = "Silent in every run";
-  else if (ts.length) {
-    const a = Math.min(...ts), b = Math.max(...ts), what = r.measured.replace(/^after /, "");
-    const range = (lo, hi, n) => `<span class="nw">${s1(lo)}${n > 1 && hi !== lo ? "\u2013" + s1(hi) : ""} s</span>`;
-    when = a < 0 ? `<span class="nw">${s1(-a)} s</span> before to <span class="nw">${s1(b)} s</span> after ${what}` : `${range(a, b, ts.length)} ${r.measured}`;
-    if (dl.length) when += `; ${r.deadline_label} at ${range(Math.min(...dl), Math.max(...dl), dl.length)}`;
-  } else if (r.runs.some(x => x.t != null)) {  // every run a miss: say how late
-    const lt = r.runs.map(x => x.t).filter(v => v != null), ld = r.runs.map(x => x.deadline).filter(v => v != null);
-    const range = (lo, hi) => `<span class="nw">${s1(lo)}${hi !== lo ? "\u2013" + s1(hi) : ""} s</span>`;
-    when = `Too late: ${range(Math.min(...lt), Math.max(...lt))} ${r.measured}` + (ld.length ? `; ${r.deadline_label} at ${range(Math.min(...ld), Math.max(...ld))}` : "");
-  } else when = "—";
-  const says = r.says ? `“${esc(r.says)}”` : "Nothing";
-  const marks = r.runs.map(x => `<i class="m${x.pass ? "" : " bad"}" title="${x.recording ? "Shipped recording: " : "Repeat run: "}${x.pass ? "right" : "wrong"}${x.t != null ? ", " + s1(x.t) + " s" : ""}"></i>`).join("");
-  rowsHtml += `<tr><td class="sc">${esc(r.title.replace(" · Spark reader", ", read by Muse Spark").replace(" · on board", ""))}</td><td>${esc(r.what)}</td>
-    <td class="says${r.says ? "" : " quiet"}">${says}</td><td><div class="marks" aria-label="${r.runs.filter(x => x.pass).length} of ${r.runs.length} runs right">${marks}</div></td>
-    <td class="when">${when}</td><td class="rec"><a href="debrief.html?s=${encodeURIComponent(r.id)}">Watch</a></td></tr>`;
-});
-$("matrix").querySelector("tbody").innerHTML = rowsHtml;
+// ---------- what the camera sees: the panel camera's whole frame, labelled ----------
+(function sees() {
+  const h = O.hero; if (!h || !h.frame || !h.wide) { $("sees").remove(); return; }
+  $("seesImg").src = h.frame;
+  const [w, hh] = h.wide.aspect.split(" / ").map(Number);
+  $("seesSvg").setAttribute("viewBox", `0 0 ${w} ${hh}`);
+  // screen pixels of the 3600 x 2338 capture (senses/panel.py's calibration, and the panel's own layout)
+  const AREAS = [
+    ["read", [1340, 1330, 2150, 2120], "#3ddc84", "The captain's PFD, read on every frame",
+     "Speed, altitude, the selected speed and altitude in magenta, and the three mode boxes along the top: everything the altitude and autothrottle checks need."],
+  ];
+  $("seesSvg").innerHTML = AREAS.map(([kind, b, col], i) => `<rect x="${b[0]}" y="${b[1]}" width="${b[2] - b[0]}" height="${b[3] - b[1]}" fill="none"
+      stroke="${col}" stroke-width="${kind === "read" ? 9 : 6}" ${kind === "read" ? "" : 'stroke-dasharray="26 18"'}/>
+    <text x="${b[0] + 16}" y="${b[1] + 60}" fill="${col}" font-family="B612" font-size="52" font-weight="700">${i + 1}</text>`).join("");
+  $("seesList").innerHTML = AREAS.map(([kind, b, col, title, more], i) =>
+    `<li><b><i class="k" style="border-color:${col === "#c9d1d9" ? "#6b757d" : col === "#3ddc84" ? "#1e6b3f" : "#9a5b00"}${kind === "read" ? "" : ";border-style:dashed"}"></i>${i + 1}. ${title}</b><span>${more}</span></li>`).join("")
+    + `<li><b>2. The flap gauge</b><span>A camera of its own on the analog needle, read by Muse Spark, or on board by Muse Glimmer.</span></li>
+       <li><b>3. The captain (optional)</b><span>A camera on the left seat; SAM 3.1 finds the person and SAM 3D Body measures the posture.</span></li>
+       <li><b>Before every flight</b><span>SAM 3.1 finds the screens in the frame, and the flight starts only if one sits where the PFD was calibrated.</span></li>`;
+})();
 
-// ---------- timing chart: callout against the point of no return ----------
-(function chart() {
-  const rows = O.matrix.filter(r => r.runs.some(x => x.deadline != null));
-  if (!rows.length) return;
-  const W = 1200, L = 340, R = 30, rowH = 30, gap = 26;
-  const all = rows.flatMap(r => r.runs.flatMap(x => [x.pass ? x.t : null, x.deadline])).filter(v => v != null);
-  const hi = Math.ceil(Math.max(...all) / 5) * 5 + 2;
-  const x = v => L + v / hi * (W - L - R);
-  let y = 30, s = "";
-  for (let v = 0; v <= hi; v += 5) s += `<line x1="${x(v)}" x2="${x(v)}" y1="18" y2="9999" stroke="#cfd3cb"/><text x="${x(v)}" y="12" text-anchor="middle" font-size="12" fill="#4a5057" font-family="Public Sans">${v} s</text>`;
+// ---------- test cards ----------
+const GROUPS = [
+  ["altitude", "Altitude", "Air traffic control clears the aircraft to an altitude; the crew reads it back and dials it into the [[mcp|altitude selector]]. Crosscheck hears the [[clearance|clearance]] and the [[readback|readback]], reads the selector where the [[pfd|PFD]] repeats it, and compares the three."],
+  ["altimeter", "Altimeter setting", "With a descent clearance, ATC gives the local air pressure; the crew reads it back and dials it into the altimeter. Crosscheck hears the [[altimeter|setting]] and reads it from the green box under the altitude tape on the [[pfd|PFD]]."],
+  ["autothrottle_hold", "Autothrottle", "On [[final|final approach]] the speed has to be held to a few [[kt|knots]]. Crosscheck reads the [[autothrottle|autothrottle]]'s mode in the [[fma|mode boxes]] and the speed from the PFD."],
+  ["flaps", "Flaps", "The [[pf|pilot flying]] calls a [[flaps|flap]] setting and the other pilot moves the lever. Crosscheck hears the call and reads the flap gauge, an analog needle, through its own camera."],
+  ["pilot_watch", "Pilot watch", "An optional camera on the captain. SAM 3.1 finds the person, SAM 3D Body measures the posture on every frame, and Crosscheck asks before it alerts anyone. The footage is generated: no real person is filmed."],
+  ["nominal", "Normal flying", "The control test for everything above: a whole stretch of normal flying in which Crosscheck must say nothing."],
+];
+const CARDS = {
+  altitude_bust: {name: "Altitude bust", def: "The aircraft is about to fly past the altitude it was cleared to: an [[bust|altitude bust]].",
+    setup: "A 737 climbing out of 9,000 ft near Portland. [[atc|ATC]]: “Alaska 421, climb and maintain one-one thousand.” The crew reads it back correctly.",
+    fault: "The pilot flying dials 12,000 into the altitude selector.", pass: "Before the 737 passes 11,000 ft.",
+    shot: "The PFD when Crosscheck spoke: magenta 12000, top right, is what was set."},
+  altitude_readback: {name: "Readback error", def: "The crew repeats the clearance back wrongly, so the controller and the crew now expect different altitudes.",
+    setup: "The same climb. ATC clears the 737 to 11,000 ft.", fault: "The crew reads back “one-two thousand”.",
+    pass: "As soon as the readback is heard.", shot: "The PFD as the camera saw it when Crosscheck spoke."},
+  altitude_correct: {name: "Correct setting", control: true, def: "Cleared, read back and set to 11,000 ft, all correctly. The test that Crosscheck stays quiet.",
+    setup: "The same climb.", fault: "None: the crew does everything right.", pass: "Silent for the whole run.",
+    shot: "The PFD late in the run: 11000 set, as cleared."},
+  altimeter_wrong: {name: "Altimeter: wrong setting", def: "The [[altimeter|altimeter setting]] goes in with two digits swapped. The altimeter now reads about 90 ft wrong, and nothing on the panel says so.",
+    setup: "Level at 9,000 ft near Portland. ATC: “Alaska 421, descend and maintain seven thousand, Portland altimeter three zero one two.” The crew reads it back correctly.",
+    fault: "The crew sets 30.21.", pass: "Once the crew has had time to set it.",
+    shot: "The PFD when Crosscheck spoke: the green setting under the altitude tape is what was set."},
+  altimeter_forgot: {name: "Altimeter: not set", def: "The setting ATC gave never goes in: the altimeter still assumes standard pressure, and reads about 200 ft wrong here.",
+    setup: "The same descent clearance, with altimeter three zero one two.", fault: "The crew leaves it at 29.92.", pass: "Once the crew has had time to set it.",
+    shot: "The PFD when Crosscheck spoke: 29.92 still under the altitude tape."},
+  altimeter_correct: {name: "Altimeter: correct", control: true, def: "Set exactly as given. The test that Crosscheck stays quiet.",
+    setup: "The same descent clearance, with altimeter three zero one two.", fault: "None: the crew sets 30.12.", pass: "Silent for the whole run.",
+    shot: "The PFD late in the run: 30.12 set, as given."},
+  autothrottle_hold: {name: "Autothrottle drops out on final", def: "The [[autothrottle|autothrottle]] stops holding the speed and the aircraft slows with nobody noticing: the pattern behind [[asiana|Asiana 214]].",
+    setup: "A 737 on final approach to Portland runway 10R, the autothrottle holding 145 kt.",
+    fault: "25 s in, the autothrottle drops out of speed mode; the speed starts to bleed away.", pass: "Before the speed is 10 kt below target.",
+    shot: "The PFD when Crosscheck spoke: the top-left mode box no longer says MCP SPD."},
+  flaps_wrong: {name: "Flaps: wrong setting", def: "A flap setting is called, and a different one is selected.",
+    setup: "On approach, the pilot flying calls “Flaps fifteen”.", fault: "The lever goes to 10.", pass: "Once the needle has stopped moving.",
+    shot: "The flap gauge as its camera saw it when Crosscheck spoke."},
+  flaps_forgot: {name: "Flaps: not moved", def: "A flap call that nobody acts on.",
+    setup: "On approach, the pilot flying calls “Flaps fifteen”.", fault: "Nobody moves the lever; the flaps stay at 5.", pass: "Once the crew has had time to move the lever.",
+    shot: "The flap gauge, still at 5, when Crosscheck spoke."},
+  flaps_correct: {name: "Flaps: correct", control: true, def: "Called and selected correctly. The needle is still travelling for a few seconds, and that is not an error.",
+    setup: "On approach, the pilot flying calls “Flaps fifteen”.", fault: "None: the lever goes to 15.", pass: "Silent, including while the needle moves.",
+    shot: "The flap gauge at 15."},
+  pilot_slumped: {name: "Pilot incapacitated", def: "The captain collapses and cannot fly or answer: [[incap|incapacitation]].",
+    setup: "The pilot camera watches the captain in cruise.", fault: "The captain slumps and does not respond.",
+    pass: "Ask first, then alert the first officer.", shot: "The pilot camera when Crosscheck asked."},
+  pilot_asleep: {name: "Pilot asleep", def: "The captain falls asleep at the controls.",
+    setup: "The pilot camera watches the captain in cruise.", fault: "The captain falls asleep and does not respond.",
+    pass: "Ask first, then alert the first officer.", shot: "The pilot camera when Crosscheck asked."},
+  pilot_checklist: {name: "Pilot reading a checklist", control: true, def: "Looking down at a checklist is normal work, not a problem.",
+    setup: "The pilot camera watches the captain in cruise.", fault: "None: the captain looks down to read.", pass: "Silent.",
+    shot: "The pilot camera, the captain reading."},
+  pilot_answers: {name: "Pilot answers", def: "The captain slumps but answers when asked, so there is no alarm.",
+    setup: "The pilot camera watches the captain in cruise.", fault: "The captain slumps, then answers when asked.",
+    pass: "Ask once, then stay quiet.", shot: "The pilot camera when Crosscheck asked."},
+  nominal: {name: "Fifteen minutes of normal flying", control: true, def: "Every radio call spoken and transcribed live; any callout is a [[false|false alarm]].",
+    setup: "Six descents, four turns and four flap calls near Portland.", fault: "None.", pass: "No callout in 15 minutes.",
+    shot: "The PFD during the flight."},
+};
+const READER = {"apple-vision": "On-device text recognition", "muse-spark": "Muse Spark (cloud)", "muse-spark-flaps": "Muse Spark (cloud)",
+  "muse-glimmer": "On board: Muse Glimmer", "muse-glimmer-flaps": "On board: Muse Glimmer"};
+const baseOf = id => id.replace(/_(spark|onboard)$/, "");
+const order = r => r.id.endsWith("_onboard") ? 2 : r.id.endsWith("_spark") ? 1 : 0;
+
+function when(r) {  // timing from the runs that were right; the misses are the hollow marks
+  const ok = r.runs.filter(x => x.pass), ts = ok.map(x => x.t).filter(v => v != null), dl = ok.map(x => x.deadline).filter(v => v != null);
+  const range = (lo, hi, k) => `<span class="nw">${s1(lo)}${k > 1 && hi !== lo ? "–" + s1(hi) : ""} s</span>`;
+  if (r.id.startsWith("nominal")) return n ? `${n.result.minutes} min, ${n.result.minutes_below_2500ft} of them below 2,500 ft` : "";
+  if (!r.measured) return "Silent in every run";
+  if (ts.length) {
+    const a = Math.min(...ts), b = Math.max(...ts), what = r.measured.replace(/^after /, "");
+    let s = a < 0 ? `<span class="nw">${s1(-a)} s</span> before to <span class="nw">${s1(b)} s</span> after ${what}` : `${range(a, b, ts.length)} ${r.measured}`;
+    if (dl.length) s += `; ${r.deadline_label} at ${range(Math.min(...dl), Math.max(...dl), dl.length)}`;
+    return s;
+  }
+  const lt = r.runs.map(x => x.t).filter(v => v != null);
+  return lt.length ? `Too late: ${range(Math.min(...lt), Math.max(...lt), 2)} ${r.measured}` : "—";
+}
+
+function strip(rows) {  // each run with a deadline: when it spoke, the deadline, and the gap between
+  const runs = rows.flatMap(r => r.runs.filter(x => x.deadline != null).map(x => ({...x, who: r})));
+  if (!runs.length) return "";
+  const hi = Math.ceil(Math.max(...runs.flatMap(x => [x.deadline, x.pass ? x.t : 0])) / 5) * 5 + 1;
+  const W = 520, L = 4, R = 8, gap = 8, rowH = 7;
+  const x = v => L + Math.max(0, v) / hi * (W - L - R);
+  let y = 18, s = "";
+  for (let v = 0; v <= hi; v += 5) s += `<text x="${x(v)}" y="9" text-anchor="middle" font-size="12" fill="#4d565e" font-family="B612">${v} s</text>`;
   rows.forEach(r => {
-    s += `<text x="0" y="${y + 4}" font-size="14" font-weight="600" fill="#15181b" font-family="Public Sans">${esc(r.title.replace(" · Spark reader", ", Muse Spark"))}</text>`;
-    s += `<text x="0" y="${y + 21}" font-size="12" fill="#4a5057" font-family="Public Sans">${esc(r.measured)}; ${esc(r.deadline_label)}</text>`;
-    r.runs.filter(x => x.deadline != null).forEach((run, i) => {
-      const yy = y + i * 9;
-      if (run.pass && run.t != null) {
-        s += `<line x1="${x(Math.max(0, run.t))}" x2="${x(run.deadline)}" y1="${yy}" y2="${yy}" stroke="#1e6b3f" stroke-width="2"/>`;
-        s += `<circle cx="${x(Math.max(0, run.t))}" cy="${yy}" r="4" fill="#b3261e"/>`;
-      } else {  // a miss: nothing in time, so only a ring at the point of no return
-        s += `<circle cx="${x(run.deadline)}" cy="${yy}" r="4.5" fill="none" stroke="#b3261e" stroke-width="2"/>`;
-      }
-      s += `<line x1="${x(run.deadline)}" x2="${x(run.deadline)}" y1="${yy - 4}" y2="${yy + 4}" stroke="#15181b" stroke-width="2"/>`;
+    const rr = r.runs.filter(q => q.deadline != null); if (!rr.length) return;
+    rr.forEach((run, i) => {
+      const yy = y + i * rowH;
+      if (run.pass && run.t != null) s += `<line x1="${x(run.t)}" x2="${x(run.deadline)}" y1="${yy}" y2="${yy}" stroke="#1e6b3f" stroke-width="2"/>
+        <circle cx="${x(run.t)}" cy="${yy}" r="3" fill="#b3261e"/>`;
+      else s += `<circle cx="${x(run.deadline)}" cy="${yy}" r="3.4" fill="none" stroke="#b3261e" stroke-width="1.6"/>`;
+      s += `<line x1="${x(run.deadline)}" x2="${x(run.deadline)}" y1="${yy - 3}" y2="${yy + 3}" stroke="#15191d" stroke-width="1.6"/>`;
     });
-    y += Math.max(rowH, r.runs.length * 9) + gap;
+    y += rr.length * rowH + gap;
   });
-  s = s.replace(/y2="9999"/g, `y2="${y - gap}"`);
-  $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${y}" role="img" aria-label="Callout time against the deadline for each run">${s}</svg>
-    <div class="mk"><span><svg width="14" height="10"><circle cx="5" cy="5" r="4" fill="#b3261e"/></svg> Crosscheck speaks</span><span><svg width="14" height="12"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#b3261e" stroke-width="2"/></svg> a miss</span><span><svg width="14" height="10"><line x1="6" x2="6" y1="1" y2="9" stroke="#15181b" stroke-width="2"/></svg> point of no return</span><span><svg width="24" height="10"><line x1="0" x2="24" y1="5" y2="5" stroke="#1e6b3f" stroke-width="2"/></svg> time the crew had left</span></div>`;
+  return `<div class="strip"><svg viewBox="0 0 ${W} ${y - gap + 4}" role="img" aria-label="Each run: when Crosscheck spoke against the deadline">${s}</svg>
+    <p>Each line is one run, top to bottom in the order of the table: seconds ${esc(rows[0].measured)}.</p></div>`;
+}
+
+function shot(r, card) {
+  if (!r || !r.frame) return "";
+  const [aw, ah] = (r.aspect || "4 / 3").split(" / ").map(Number);
+  let img;
+  if (aw === 1940) {  // the panel crop: show the PFD, the part the rules read (senses/panel.py)
+    img = `<div class="win" style="aspect-ratio:810/790"><img src="${r.frame}" alt="" style="width:${(1940 / 810 * 100).toFixed(1)}%;margin:-${(100 / 810 * 100).toFixed(2)}% 0 0 -${(100 / 810 * 100).toFixed(2)}%"></div>`;
+  } else img = `<div class="win" style="aspect-ratio:${aw}/${ah}"><img src="${r.frame}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`;
+  const pose = r.pose && r.pose.neck_flex != null ? ` SAM 3D Body: neck bent ${Math.round(r.pose.neck_flex)}°${r.pose.slumped ? ", slumped" : ""}.` : "";
+  return `<figure class="shot">${img}<figcaption>${esc(card.shot)}${esc(pose)}</figcaption></figure>`;
+}
+
+(function cards() {
+  const rows = O.matrix, byBase = {};
+  rows.forEach(r => (byBase[baseOf(r.id)] = byBase[baseOf(r.id)] || []).push(r));
+  let num = 0, html = "";
+  GROUPS.forEach(([kind, title, intro]) => {
+    const bases = Object.keys(CARDS).filter(b => byBase[b] && byBase[b][0].kind === kind);
+    if (!bases.length) return;
+    html += `<section class="group"><h4>${esc(title)}</h4><p>${rich(intro)}</p><div class="cards">`;
+    bases.forEach(b => {
+      const card = CARDS[b], rs = byBase[b].slice().sort((p, q) => order(p) - order(q));
+      num += 1;
+      const lead = rs.find(r => r.id.endsWith("_spark")) || rs[0];
+      const says = rs[0].says ? `“${esc(rs[0].says)}”` : "Nothing.";
+      const trs = rs.map(r => {
+        const right = r.runs.filter(x => x.pass).length;
+        const who = r.kind === "pilot_watch" ? "SAM 3D Body (cloud GPU)" : r.kind === "nominal" && !r.id.endsWith("_onboard") ? "Cloud speech, on-device panel reading" : (READER[r.reader] || r.reader || "");
+        const marks = r.runs.map(x => `<i class="m${x.pass ? "" : " bad"}" title="${x.recording ? "The shipped recording" : "A repeat run"}: ${x.pass ? "right" : "a miss"}${x.t != null ? ", " + s1(x.t) + " s" : ""}"></i>`).join("");
+        return `<tr><td class="who">${esc(who)}</td><td><span class="tally">${right} of ${r.runs.length}</span><div class="marks" aria-hidden="true">${marks}</div></td>
+          <td class="when">${when(r)}</td><td class="go"><a href="debrief.html?s=${encodeURIComponent(r.id)}">Replay</a></td></tr>`;
+      }).join("");
+      html += `<article class="tc" id="tc-${b}"><header><span class="n">Test ${num}${card.control ? ", control" : ""}</span><h5>${esc(card.name)}</h5></header>
+        <p class="def">${rich(card.def)}</p>
+        <div class="body">${shot(lead, card)}<dl><dt>Set-up</dt><dd>${rich(card.setup)}</dd><dt>What goes wrong</dt><dd>${rich(card.fault)}</dd>
+          <dt>Crosscheck must say</dt><dd class="${rs[0].says ? "say" : "quiet"}">${says}</dd><dt>${T("deadline", "Deadline")}</dt><dd>${rich(card.pass)}</dd></dl></div>
+        <table><thead><tr><th scope="col">Panel read by</th><th scope="col">Runs right</th><th scope="col">When it spoke</th><th scope="col"><span class="vh">Recording</span></th></tr></thead><tbody>${trs}</tbody></table>
+        ${strip(rs)}</article>`;
+    });
+    html += `</div></section>`;
+  });
+  $("groups").innerHTML = html;
 })();
 
 // ---------- the 15-minute flight ----------
@@ -401,44 +655,49 @@ $("matrix").querySelector("tbody").innerHTML = rowsHtml;
   const lo = 1500, hi = Math.ceil(Math.max(...alts) / 1000) * 1000;
   const y = v => bot - (v - lo) / (hi - lo) * (bot - top);
   let s = "";
-  for (let v = 2000; v <= hi; v += 1000) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#cfd3cb"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="12" fill="#4a5057">${v / 1000}k</text>`;
-  s += `<rect x="${L}" y="${y(2500)}" width="${W - L - R}" height="${bot - y(2500)}" fill="rgba(29,95,156,.07)"/><text x="${W - R - 4}" y="${y(2500) - 6}" text-anchor="end" font-size="12" fill="#1d5f9c">below 2,500 ft the autothrottle watch is on</text>`;
+  for (let v = 2000; v <= hi; v += 1000) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#dbe2e4"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="12" fill="#4d565e" font-family="B612">${ft(v)}</text>`;
+  s += `<rect x="${L}" y="${y(2500)}" width="${W - L - R}" height="${bot - y(2500)}" fill="rgba(29,95,156,.07)"/><text x="${W - R - 4}" y="${y(2500) - 6}" text-anchor="end" font-size="12" fill="#1d5f9c" font-family="B612">below 2,500 ft the autothrottle watch is on</text>`;
   // the median of five readings: a misread frame or two is not a dive
   const raw = n.alt.filter(p => p[1] > 500 && p[1] < 8000);
   const med = i => raw.slice(Math.max(0, i - 2), i + 3).map(q => q[1]).sort((a, b) => a - b);
   const pts = raw.map((p, i) => { const m = med(i); return [p[0], m[Math.floor(m.length / 2)]]; });
-  s += `<path d="${pts.map((p, i) => `${i ? "L" : "M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("")}" fill="none" stroke="#15181b" stroke-width="2"/>`;
-  for (let m = 0; m <= Math.floor(n.duration / 60); m += 3) s += `<line x1="${x(m * 60)}" x2="${x(m * 60)}" y1="${bot}" y2="${bot + 5}" stroke="#4a5057"/>
-    <text x="${x(m * 60)}" y="${bot + 19}" text-anchor="${m === 0 ? "start" : "middle"}" font-size="12" fill="#4a5057">${m} min</text>`;
-  const lane = (yy, label, col) => `<text x="${L - 8}" y="${yy + 4}" text-anchor="end" font-size="12" fill="${col}" font-weight="600">${label}</text>`;
+  s += `<path d="${pts.map((p, i) => `${i ? "L" : "M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("")}" fill="none" stroke="#15191d" stroke-width="2"/>`;
+  for (let m = 0; m <= Math.floor(n.duration / 60); m += 3) s += `<line x1="${x(m * 60)}" x2="${x(m * 60)}" y1="${bot}" y2="${bot + 5}" stroke="#4d565e"/>
+    <text x="${x(m * 60)}" y="${bot + 19}" text-anchor="${m === 0 ? "start" : "middle"}" font-size="12" fill="#4d565e" font-family="B612">${m} min</text>`;
+  const lane = (yy, label, col) => `<text x="${L - 8}" y="${yy + 4}" text-anchor="end" font-size="12" fill="${col}" font-weight="700" font-family="B612">${label}</text>`;
   s += lane(bot + 46, "Said", "#1d5f9c");
-  n.heard.forEach(([a, b, who]) => s += `<rect x="${x(a)}" y="${bot + 40}" width="${Math.max(2, x(b) - x(a))}" height="12" rx="1" fill="${who === "atc" ? "#1d5f9c" : "#6d8fb3"}"/>`);
+  n.heard.forEach(([a, b, who]) => s += `<rect x="${x(a)}" y="${bot + 40}" width="${Math.max(2, x(b) - x(a))}" height="12" fill="${who === "atc" ? "#1d5f9c" : "#6d8fb3"}"/>`);
   s += lane(bot + 78, "Crosscheck", "#1e6b3f");
   s += `<line x1="${L}" x2="${W - R}" y1="${bot + 74}" y2="${bot + 74}" stroke="#1e6b3f" stroke-width="2"/>
-    <text x="${L + 6}" y="${bot + 92}" font-size="12" fill="#1e6b3f">${n.result.false_callouts.length ? n.result.false_callouts.length + " callouts" : "no callout in " + n.result.minutes + " minutes"}</text>`;
+    <text x="${L + 6}" y="${bot + 92}" font-size="12" fill="#1e6b3f" font-family="B612">${n.result.false_callouts.length ? n.result.false_callouts.length + " callouts" : "no callout in " + n.result.minutes + " minutes"}</text>`;
   $("flight").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Altitude over the 15-minute flight with every transmission, and no callout">${s}</svg>
-    <div class="mk">Altitude as Crosscheck read it from the panel (median of five readings); each bar below it is one radio or intercom transmission, transcribed live.</div>`;
-  $("flightLead").textContent += ` The shipped run: ${n.result.false_callouts.length ? n.result.false_callouts.length + " false alarms" : "no callout in " + n.result.minutes + " minutes"}, with ${n.result.lines_heard} lines spoken and transcribed live. The first three such flights found the problems listed below; every flight since the fixes has been silent. All are kept.`;
+    <div class="mk">Altitude in feet as Crosscheck read it from the panel (median of five readings). Each bar below it is one radio or intercom transmission, transcribed live.</div>`;
+  $("flightLead").insertAdjacentHTML("beforeend", ` The shipped run: ${n.result.false_callouts.length ? n.result.false_callouts.length + " false alarms" : "no callout in " + n.result.minutes + " minutes"}, with ${n.result.lines_heard} lines spoken and transcribed live. The first three such flights found the problems listed under What testing caught; every flight since the fixes has been silent. All are kept.`);
   const grouped = fc => Object.entries(fc.reduce((g, c) => ((g[c.text] = g[c.text] || []).push(Math.round(c.s / 60)), g), {}))
-    .map(([text, mins]) => `\u201c${esc(text)}\u201d at ${mins.join(", ")} min`).join("; ");
+    .map(([text, mins]) => `“${esc(text)}” at ${mins.join(", ")} min`).join("; ");
   $("earlier").innerHTML = n.earlier.map(e => `<li><b>${e.label}</b> ${e.false_callouts.length ? e.false_callouts.length + " false alarm" + (e.false_callouts.length === 1 ? "" : "s") + ": " + grouped(e.false_callouts) : "none, after the fixes"}</li>`).join("")
-    + `<li><b>Run ${n.earlier.length + 1}</b> none: the recording you can watch.</li>`;
+    + `<li><b>Run ${n.earlier.length + 1}</b> none: the recording you can replay.</li>`;
 })();
 
 // ---------- models ----------
 $("models").querySelector("tbody").innerHTML = O.models.map(m => `<tr><td>${esc(m.model)}</td><td>${esc(m.job)}</td>
   <td class="meas">${m.measured.length ? m.measured.map(x => `<div>${esc(x)}</div>`).join("") : "—"}</td></tr>`).join("");
 
+// ---------- findings ----------
+$("find").querySelector("tbody").innerHTML = O.findings.map(f => `<tr><td class="d">${esc(f.date)}</td><td class="a">${esc(f.area)}</td><td>${esc(f.found)}</td><td class="fix">${esc(f.fix)}</td></tr>`).join("");
+
 // ---------- film mode: debrief/film.py steps the page ----------
 // select("hero"): the hero replays over 8 s of film time; select("report"): the page scrolls from
-// the report's top to What testing caught, so the evidence passes at reading speed.
+// the report's top through the test cards (the short cut) or on to What testing caught (the full
+// film, whose narration says what testing found), so the evidence passes at reading speed.
 window.film = {
   scene: "hero",
   select: id => { window.film.scene = id; return true; },
   seek: t => new Promise(done => {
     if (window.film.scene === "hero") { window.scrollTo(0, 0); window.heroShow && window.heroShow(t / 8); }
     else {
-      const a = $("report").offsetTop - 30, b = $("caught").offsetTop - 120, span = window.film.span || 30;
+      const span = window.film.span || 30, end = span > 12 ? $("caught") : $("flightH");
+      const a = $("report").offsetTop - 30, b = end.offsetTop - 120;
       const k = Math.max(0, Math.min(1, (t - 1.5) / span)), e = k * k * (3 - 2 * k);  // ease in and out
       window.scrollTo(0, a + (b - a) * e);
     }
@@ -446,9 +705,6 @@ window.film = {
     requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => done(true), window.film.scene === "hero" ? 0 : 120)));
   }),
 };
-
-// ---------- findings ----------
-$("find").querySelector("tbody").innerHTML = O.findings.map(f => `<tr><td class="d">${esc(f.date)}</td><td class="a">${esc(f.area)}</td><td>${esc(f.found)}</td><td class="fix">${esc(f.fix)}</td></tr>`).join("");
 </script>
 </body>
 </html>

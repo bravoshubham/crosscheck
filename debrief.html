@@ -32,7 +32,7 @@ header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margi
 .tabs { display: flex; flex-wrap: wrap; gap: 14px 30px; margin: 4px 0 26px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .grp { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .grp > span { color: var(--muted); font-size: 13px; margin-right: 4px; }
-.tab { background: none; border: 1px solid transparent; border-radius: 6px; padding: 5px 10px; color: var(--text);
+.tab { background: none; border: 1px solid transparent; border-radius: 2px; padding: 5px 10px; color: var(--text);
   font: 14px var(--sans); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
 .tab:hover { border-color: var(--line); }
 .tab[aria-selected="true"] { border-color: var(--text); background: var(--panel-2); }
@@ -40,19 +40,21 @@ header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margi
 .tab .ok.no { background: none; border: 1.5px solid var(--callout); }
 .rechead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
 .rechead h1 { font-size: 24px; margin: 0; font-weight: 700; }
-.recblurb { color: var(--muted); margin: 0 0 16px; max-width: 80ch; }
+.recblurb { color: var(--muted); margin: 0 0 6px; max-width: 80ch; }
+.recdef { margin: 0 0 6px; max-width: 80ch; font-size: 16px; }
+.howto { color: var(--muted); font-size: 13px; margin: 0 0 16px; max-width: 110ch; }
 .readers { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
 .readers .lbl { color: var(--muted); font-size: 13px; margin-right: 4px; }
-.seg { background: var(--panel); border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 5px 12px;
+.seg { background: var(--panel); border: 1px solid var(--line); color: var(--muted); border-radius: 2px; padding: 5px 12px;
   font: 500 13px var(--sans); cursor: pointer; }
 .seg[aria-checked="true"] { color: var(--text); border-color: var(--text); background: var(--panel-2); }
 .seg:focus-visible { outline: 2px solid var(--said); outline-offset: 2px; }
-.badge { font: 500 11px/1 var(--mono); padding: 4px 6px; border-radius: 4px; letter-spacing: .04em; white-space: nowrap; }
+.badge { font: 700 12px/1 var(--mono); padding: 4px 6px; border-radius: 2px; white-space: nowrap; }
 .badge.pass { color: var(--ok); background: rgba(79,209,139,.12); }
 .badge.fail { color: var(--callout); background: rgba(255,92,92,.12); }
 
 .stage { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); gap: 14px; }
-.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 2px; }
 .viewer { overflow: hidden; }
 .frame { position: relative; aspect-ratio: 1940 / 970; background: #000; }
 .frame img, .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -63,17 +65,17 @@ header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margi
   background: rgba(10,13,17,.6); padding: 2px 7px; border-radius: 4px; }
 .frame .nofr { position: absolute; inset: 0; display: grid; place-items: center; color: var(--faint); }
 .caption { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); max-width: 92%;
-  background: rgba(10,13,17,.88); border: 1px solid var(--callout); color: var(--text); border-radius: 8px;
+  background: rgba(10,13,17,.88); border: 1px solid var(--callout); color: var(--text); border-radius: 2px;
   padding: 8px 14px; font-weight: 500; display: none; align-items: center; gap: 10px; }
 .caption.on { display: flex; }
 .caption .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--callout); flex: none; }
 .radio { position: absolute; left: 12px; top: 12px; max-width: 70%; background: rgba(10,13,17,.85);
-  border: 1px solid rgba(121,184,255,.45); padding: 6px 10px; border-radius: 6px; font-size: 13px; display: none; }
+  border: 1px solid rgba(121,184,255,.45); padding: 6px 10px; border-radius: 2px; font-size: 13px; display: none; }
 .radio.on { display: block; }
-.radio .who { color: var(--said); font: 500 11px var(--mono); letter-spacing: .06em; }
+.radio .who { color: var(--said); font: 500 12px var(--mono); }
 .radio .who::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--said); margin-right: 6px; vertical-align: 1px; }
 .transport { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--line); }
-.btn { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); border-radius: 8px;
+.btn { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); border-radius: 2px;
   padding: 7px 12px; font: 500 13px var(--sans); cursor: pointer; min-width: 44px; }
 .btn:hover { border-color: #3a4757; }
 .btn:focus-visible, .tab:focus-visible { outline: 2px solid var(--said); outline-offset: 2px; }
@@ -83,8 +85,8 @@ label.mute { color: var(--muted); font-size: 13px; display: flex; gap: 6px; alig
 
 .now { display: grid; gap: 10px; align-content: start; }
 .now .card { padding: 12px 14px; }
-.lab { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; }
-.lab small { color: var(--faint); letter-spacing: .02em; text-transform: none; font-family: var(--sans); }
+.lab { font: 700 14px/1.2 var(--sans); margin-bottom: 8px; display: flex; justify-content: space-between; gap: 10px; }
+.lab small { color: var(--faint); font: 400 12px var(--sans); text-align: right; }
 .big { font: 500 22px/1.2 var(--mono); }
 .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
 .sim { color: var(--truth); font-size: 12px; margin-top: 6px; font-family: var(--mono); }
@@ -110,7 +112,7 @@ label.mute { color: var(--muted); font-size: 13px; display: flex; gap: 6px; alig
 .note { color: var(--muted); font-size: 13px; margin-top: 18px; max-width: 900px; }
 code { font-family: var(--mono); font-size: .92em; color: var(--text); }
 
-body.film .transport, body.film .readers, body.film .note, body.film header .back, body.film .tabs { display: none !important; }
+body.film .transport, body.film .readers, body.film .note, body.film header .back, body.film .tabs, body.film .howto { display: none !important; }
 body.film .wrap { padding-top: 22px; }
 body.film header { margin-bottom: 14px; }
 body.film .stage { align-items: start; }
@@ -127,15 +129,16 @@ body.film .views { display: none !important; }
 <body>
 <div class="wrap">
   <header><a class="brand" href="./">Crosscheck</a><span class="brand-sub">Recordings</span><a class="back" href="./#report">Test report</a></header>
-  <p class="lede" hidden>Crosscheck watches the pilots the way a monitoring pilot does: it hears what was
-    <b class="k-said">said</b>, reads what was <b class="k-set">set</b> on the panel through a camera, and watches
-    what the aircraft is <b class="k-doing">doing</b> — and speaks up when they disagree. Each run below was flown in
-    X-Plane 12 and recorded; this page replays it.</p>
 
   <div class="readers" id="readers" role="radiogroup" aria-label="Panel reader"></div>
   <nav class="tabs" role="tablist" id="tabs" aria-label="Recordings"></nav>
   <div class="rechead"><h1 id="recTitle"></h1><span class="badge" id="recBadge"></span></div>
+  <p class="recdef" id="recDef"></p>
   <p class="recblurb" id="recBlurb"></p>
+  <p class="howto">Press Play. On the left, what the camera saw; on the right, what Crosscheck heard and read at that moment, and what
+    it decided. In the timeline, <b class="k-said">blue</b> is what was said on the radio, <b class="k-set">magenta</b> what was set
+    on the panel, <b class="k-doing">white</b> what the aircraft did, and <b class="k-call">red</b> Crosscheck speaking. Dashed grey
+    lines are the simulator's own values, logged only to score the run.</p>
 
   <section class="stage">
     <div class="card viewer">
@@ -189,16 +192,23 @@ body.film .views { display: none !important; }
 <script>
 "use strict";
 const D = window.DEBRIEF || [];
+// ?film=1 (debrief/film.py): the pilot camera is shown as its saved frames, the ones SAM 3D Body
+// measured, because headless Chrome does not move a seeked video's picture (5 Nov: the captain
+// stayed upright on screen while the callouts played)
+const FILM = new URLSearchParams(location.search).has("film");
 const $ = id => document.getElementById(id);
 const fmtAlt = v => v == null ? "—" : Math.round(v).toLocaleString("en-US") + " ft";
 const s1 = v => (Math.round(v * 10) / 10).toFixed(1);
 const fmtKt = v => v == null ? "—" : Math.round(v) + " kt";
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout", "pilot.voice": "captain"};
+const KEYS = {"clearance.altitude": "clearance", "readback.altitude": "readback", "callout.flaps": "callout", "pilot.voice": "captain",
+  "clearance.altimeter": "altimeter", "readback.altimeter": "altimeter read back"};
+const fmtBaro = v => v == null ? "—" : (v / 100).toFixed(2) + " in";
 const DETENTS = [0, 1, 2, 5, 10, 15, 25, 30, 40];
 const flapsOfRatio = r => { if (r == null) return null; const x = r * 8, i = Math.min(7, Math.floor(x)); return DETENTS[i] + (DETENTS[i + 1] - DETENTS[i]) * (x - i); };
 const fmtFlaps = v => v == null ? "—" : v === 0 ? "UP" : String(Math.round(v * 10) / 10);
-const fmtFact = f => f.key === "callout.flaps" ? "flaps " + fmtFlaps(f.value) : f.key === "pilot.voice" ? "(answered)" : fmtAlt(f.value);
+const fmtFact = f => f.key === "callout.flaps" ? "flaps " + fmtFlaps(f.value) : f.key === "pilot.voice" ? "(answered)"
+  : f.key.endsWith(".altimeter") ? fmtBaro(f.value) : fmtAlt(f.value);
 const WHO = {atc: "ATC · radio", pm: "Crew · intercom", pf: "Crew · intercom", capt: "Captain · intercom"};
 
 let view = "inst";  // "inst": the crop the readers use; "wide": the whole cockpit
@@ -215,6 +225,25 @@ function nearestTruth(tt) {
   }
   return out;
 }
+
+// what each test means, in one line (the same words as the test cards on the overview)
+const DEFS = {
+  altitude_bust: "Altitude bust: the aircraft is about to fly past the altitude air traffic control cleared it to.",
+  altitude_readback: "Readback error: the crew repeats the clearance back wrongly, so the controller and the crew expect different altitudes.",
+  altitude_correct: "A control test: cleared, read back and set correctly. Crosscheck must stay quiet.",
+  autothrottle_hold: "The autothrottle stops holding the speed on final approach and the aircraft slows with nobody noticing: the pattern behind Asiana 214.",
+  flaps_wrong: "A flap setting is called, and a different one is selected.",
+  flaps_forgot: "A flap call that nobody acts on.",
+  flaps_correct: "A control test: called and selected correctly, while the needle is still travelling.",
+  pilot_slumped: "Incapacitation: the captain collapses and cannot fly or answer.",
+  pilot_asleep: "The captain falls asleep at the controls.",
+  pilot_checklist: "A control test: looking down at a checklist is normal work.",
+  pilot_answers: "The captain slumps but answers when asked, so there is no alarm.",
+  nominal: "A control test: fifteen minutes of normal flying, every radio call transcribed live. Any callout is a false alarm.",
+  altimeter_wrong: "Altimeter setting: ATC gives the local air pressure; set wrong, the altimeter reads wrong by about 100 ft for every 0.10 inch.",
+  altimeter_forgot: "Altimeter setting not changed: the altimeter still assumes standard pressure, 29.92 inches.",
+  altimeter_correct: "A control test: the altimeter set exactly as ATC gave it. Crosscheck must stay quiet.",
+};
 
 // ---------- tabs ----------
 // recordings come in pairs: the same scenario with the on-device reader and with Muse Spark
@@ -233,7 +262,7 @@ function renderTabs() {
     if (j >= 0) select(j);
   });
   const shown = D.map((r, i) => [r, i]).filter(([r]) => isSpark(r) === spark);
-  const GROUPS = [["altitude", "Altitude"], ["autothrottle_hold", "Autothrottle"], ["flaps", "Flaps"], ["pilot_watch", "Pilot watch"], ["nominal", "False-alarm test"]];
+  const GROUPS = [["altitude", "Altitude"], ["altimeter", "Altimeter"], ["autothrottle_hold", "Autothrottle"], ["flaps", "Flaps"], ["pilot_watch", "Pilot watch"], ["nominal", "False-alarm test"]];
   const SHORT = t => t.replace(" · Spark reader", "").replace(/^(Flaps|Pilot)[:]? /, "").replace(/^\w/, c => c.toUpperCase());
   $("tabs").innerHTML = GROUPS.map(([k, label]) => {
     const items = shown.filter(([r]) => r.kind === k);
@@ -244,6 +273,7 @@ function renderTabs() {
   $("recTitle").textContent = rec.title.replace(" · Spark reader", "");
   $("recBadge").className = "badge " + (rec.result.pass ? "pass" : "fail"); $("recBadge").textContent = rec.result.pass ? "PASS" : "FAIL";
   $("recBlurb").textContent = rec.blurb;
+  $("recDef").textContent = DEFS[base(rec).replace(/_onboard$/, "")] || "";
   $("tabs").querySelectorAll(".tab").forEach(b => b.onclick = () => select(+b.dataset.i));
 }
 
@@ -262,7 +292,7 @@ function select(i) {
   $("doingSrc").textContent = pw ? "pilot camera, SAM 3D Body" : fl ? `flap gauge, read by ${by}` : rec.meta.panel_reader === "muse-spark" || gl ? `read from the panel by ${by}` : "read from the panel";
   const v = $("vid"); v.pause();
   if (rec.video) { if (v.getAttribute("src") !== rec.video) v.src = rec.video; v.currentTime = 0; }
-  v.hidden = !rec.video; $("gen").hidden = !rec.video;
+  v.hidden = !rec.video || FILM; $("gen").hidden = !rec.video;
   renderTabs(); renderLegend(); renderResult(); drawTimeline(); update();
   rec.readings.forEach(r => [r.frame, r.wide].forEach(f => { if (f && !preload.has(f)) { const im = new Image(); im.src = f; preload.set(f, im); } }));
   try { localStorage.setItem("debrief.tab", rec.id); } catch (e) {}
@@ -296,7 +326,7 @@ document.querySelectorAll("#views .seg").forEach(b => b.onclick = () => {
 function update() {
   const r = last(rec.readings, t);
   const fr = r || rec.readings[0];  // before the first reading, show the first frame
-  if (rec.video) {  // moving footage: keep the video on the timeline's clock
+  if (rec.video && !FILM) {  // moving footage: keep the video on the timeline's clock
     const v = $("vid"); $("img").hidden = true; $("nofr").hidden = true;
     if (playing) { v.playbackRate = rate; if (v.paused) v.play().catch(() => {}); if (Math.abs(v.currentTime - t) > 0.3) v.currentTime = t; }
     else { if (!v.paused) v.pause(); if (Math.abs(v.currentTime - t) > 0.04) v.currentTime = t; }
@@ -336,6 +366,12 @@ function update() {
       <div class="sim">X-Plane lever: ${tr.handle != null ? fmtFlaps(flapsOfRatio(tr.handle)) : "—"} (scoring only)</div>`;
     $("nowDoing").innerHTML = `<div class="big">${g ? "Flaps " + fmtFlaps(g.flaps) : "—"}</div><div class="sub">${g ? `Needle at ${(((g.flaps_clock - 1) % 12) + 1).toFixed(1)} o'clock` : "No reading yet"}</div>
       <div class="sim">X-Plane: ${tr.deploy != null ? fmtFlaps(flapsOfRatio(tr.deploy)) : "—"} (scoring only)</div>`;
+  } else if (rec.kind === "altimeter") {
+    $("nowSet").innerHTML = `<div class="big k-set">${r ? fmtBaro(r.baro) : "—"}</div><div class="sub">Altimeter setting, the green box under the altitude tape
+      (ATC gave ${fmtBaro(rec.meta.given)}) · MCP ${r ? fmtAlt(r.selected_altitude) : "—"}</div>
+      <div class="sim">X-Plane: ${tr.baro != null ? fmtBaro(Math.round(tr.baro * 100)) : "—"} (scoring only)</div>`;
+    $("nowDoing").innerHTML = `<div class="big">${r ? fmtAlt(r.altitude) : "—"}</div><div class="sub">Altitude</div>
+      <div class="sim">X-Plane: ${tr.alt != null ? fmtAlt(tr.alt) : "—"} (scoring only)</div>`;
   } else if (alt) {
     $("nowSet").innerHTML = `<div class="big k-set">${r ? fmtAlt(r.selected_altitude) : "—"}</div><div class="sub">MCP altitude</div>
       <div class="sim">X-Plane: ${tr.sel_alt != null ? fmtAlt(tr.sel_alt) : "—"} (scoring only)</div>`;
@@ -368,6 +404,7 @@ function ruleText(c) {
     callout_vs_set: `Flaps ${fmtFlaps(c.expected)} were called; the flap gauge settled at ${fmtFlaps(c.actual)}.`,
     readback_vs_clearance: `Readback ${fmtAlt(c.actual)} does not match the clearance, ${fmtAlt(c.expected)}.`,
     mode_vs_phase: `On final, thrust mode is ${c.actual === "BLANK" ? "blank" : c.actual}: nothing is holding speed.`,
+    altimeter_vs_set: `The PFD shows ${fmtBaro(c.actual)}; ATC gave ${fmtBaro(c.expected)}. Mismatch held from ${c.since.toFixed(1)} s; called at ${c.t.toFixed(1)} s.`,
   };
   return map[c.rule] || c.rule;
 }
@@ -392,6 +429,11 @@ function renderResult() {
     how.push(r.false_callouts.length ? r.false_callouts.map(c => `False alarm at ${c.s} s: “${esc(c.text)}”`).join("; ") : `No callout in ${r.minutes} minutes — correct.`);
     how.push(`${r.lines_heard} lines heard; altitude and flap values parsed from ${r.altitude_and_flap_facts_parsed} of the lines that state one.`);
     how.push(`${r.minutes_below_2500ft} min below 2,500 ft, where the autothrottle watch is on.`);
+  } else if (rec.kind === "altimeter") {
+    what.push(`ATC gave the altimeter setting ${fmtBaro(r.given)} with a descent to 7,000 ft; the crew ${r.variant === "forgot" ? "left it at 29.92" : "set " + fmtBaro(r.baro_set)}.`);
+    const calls = r.callouts.map(c => `“${c.text}” ${c.s_after_set} s after the crew set the MCP`);
+    how.push(calls.length ? calls.join("; ") : "No callout — correct, the setting matched.");
+    how.push(`Altimeter read from the screen: ${r.baro_read_from_screen.length ? r.baro_read_from_screen.map(fmtBaro).join(", ") : "nothing"} · false callouts before the clearance: ${r.false_callouts_before_clearance.length}.`);
   } else if (rec.kind === "altitude") {
     what.push(`Cleared ${fmtAlt(r.cleared)}, read back ${fmtAlt(r.readback)}, MCP set ${fmtAlt(r.mcp_set)}.`);
     const calls = r.callouts.map(c => `“${c.text}” ${c.s_after_set >= 0 ? c.s_after_set + " s after the MCP was set" : Math.abs(c.s_after_set) + " s before the MCP was set"}`);
@@ -416,7 +458,7 @@ function renderResult() {
 }
 
 function renderLegend() {
-  const alt = rec.kind === "altitude" || rec.kind === "nominal";
+  const alt = rec.kind === "altitude" || rec.kind === "nominal" || rec.kind === "altimeter";
   if (rec.kind === "pilot_watch") { $("legend").innerHTML = `
     <span><i style="border-color:var(--said)"></i>Said: the captain's answer</span>
     <span><i style="border-color:var(--set)"></i>Neck flexion (SAM 3D Body)</span>
@@ -430,7 +472,7 @@ function renderLegend() {
     <span><i style="border-color:var(--callout)"></i>Crosscheck callout</span>`; return; }
   $("legend").innerHTML = `
     <span><i style="border-color:var(--said)"></i>Said (transmission → transcribed)</span>
-    <span><i style="border-color:var(--set)"></i>Set: ${alt ? "MCP altitude" : "thrust mode"} read from the panel</span>
+    <span><i style="border-color:var(--set)"></i>Set: ${rec.kind === "altimeter" ? "altimeter setting" : alt ? "MCP altitude" : "thrust mode"} read from the panel</span>
     <span><i style="border-color:var(--doing)"></i>Doing: ${alt ? "altitude" : "airspeed"} read from the panel</span>
     <span><i style="border-color:var(--truth);border-top-style:dashed"></i>X-Plane (scoring only)</span>
     <span><i style="border-color:var(--callout)"></i>Crosscheck callout</span>`;
@@ -443,7 +485,7 @@ const xOf = tt => PADL + (tt / rec.duration) * (W - PADL - PADR);
 const tOf = x => Math.max(0, Math.min(rec.duration, (x - PADL) / (W - PADL - PADR) * rec.duration));
 
 function drawTimeline() {
-  const svg = $("tl"), alt = rec.kind === "altitude" || rec.kind === "nominal";
+  const svg = $("tl"), alt = rec.kind === "altitude" || rec.kind === "nominal" || rec.kind === "altimeter";
   const pwl = rec.kind === "pilot_watch";
   LANES = [{id: "said", h: 54, label: "SAID"}, {id: "set", h: alt || pwl ? 96 : rec.kind === "flaps" ? 64 : 54, label: pwl ? "HEAD" : "SET"},
            {id: "doing", h: pwl ? 96 : 120, label: pwl ? "HANDS" : "DOING"}, {id: "call", h: 40, label: "CROSSCHECK"}];
@@ -525,14 +567,21 @@ function drawTimeline() {
     s += series(R.filter(r => r.flaps != null).map(r => ({t: r.t, v: r.flaps})), ld, lo, hi, "var(--doing)", false, true);
   } else if (alt) {
     const lset = lane("set"), ld = lane("doing");
-    const vals = T.flatMap(r => [r.alt, r.sel_alt]).filter(v => v != null);
+    const vals = T.flatMap(r => rec.kind === "altimeter" ? [r.alt] : [r.alt, r.sel_alt]).filter(v => v != null);
     const lo = Math.floor((Math.min(...vals) - 300) / 500) * 500, hi = Math.ceil((Math.max(...vals) + 500) / 500) * 500;
     const sLo = Math.min(8500, lo), sHi = Math.max(12500, hi);
     const thousands = (a, b) => { const out = []; for (let v = Math.ceil(a / 1000) * 1000; v < b; v += 1000) out.push(v); return out; };
+    if (rec.kind === "altimeter") {  // the set lane is the altimeter setting, in hundredths of an inch
+      const bLo = 2970, bHi = 3040, g = rec.meta.given;
+      s += ticks(lset, bLo, bHi, [2992, g, 3021].filter((v, i, a) => a.indexOf(v) === i), v => (v / 100).toFixed(2) + (v === g ? " given" : ""));
+      s += series(T.filter(r => r.baro != null).map(r => ({t: r.t, v: Math.round(r.baro * 100)})), lset, bLo, bHi, "var(--truth)", true, true);
+      s += series(R.map(r => ({t: r.t, v: r.baro})), lset, bLo, bHi, "var(--set)", false, true);
+    } else {
     s += ticks(lset, sLo, sHi, rec.kind === "nominal" ? thousands(sLo, sHi).filter((v, i) => i % 2 === 0) : [9000, 11000, 12000].filter(v => v > sLo && v < sHi), v => v / 1000 + "k");
     s += series(T.map(r => ({t: r.t, v: r.sel_alt})), lset, sLo, sHi, "var(--truth)", true, true);
     s += series(R.map(r => ({t: r.t, v: r.selected_altitude})), lset, sLo, sHi, "var(--set)", false, true);
-    s += ticks(ld, lo, hi, rec.kind === "nominal" ? thousands(lo, hi).filter((v, i) => i % 2 === 0) : [9000, 10000, 11000, 12000].filter(v => v > lo && v < hi), v => v / 1000 + "k");
+    }
+    s += ticks(ld, lo, hi, rec.kind === "nominal" ? thousands(lo, hi).filter((v, i) => i % 2 === 0) : [7000, 8000, 9000, 10000, 11000, 12000].filter(v => v > lo && v < hi), v => v / 1000 + "k");
     if (rec.meta.cleared) { const yy = ld.y + ld.h - 6 - (rec.meta.cleared - lo) / (hi - lo) * (ld.h - 12);
       s += `<line x1="${PADL}" x2="${W - PADR}" y1="${yy}" y2="${yy}" stroke="var(--said)" stroke-opacity=".5" stroke-dasharray="6 5"/>`;
       s += `<text x="${PADL + 6}" y="${yy - 4}" fill="var(--said)" font-size="11">cleared ${fmtAlt(rec.meta.cleared)}</text>`; }
@@ -638,8 +687,9 @@ window.film = {
   seek: t1 => new Promise(done => {
     t = Math.max(0, Math.min(rec.duration, t1)); playing = false; update(); drawPlayhead();
     const v = $("vid");
-    if (!rec.video || v.readyState < 1) return done(true);
     const ready = () => requestAnimationFrame(() => requestAnimationFrame(() => done(true)));
+    if (FILM || !rec.video) { const im = $("img"); return (im.hidden || im.complete ? Promise.resolve() : im.decode().catch(() => {})).then(ready); }
+    if (v.readyState < 1) return done(true);
     if (v.seeking) return v.addEventListener("seeked", ready, {once: true});  // update() already asked for t
     if (Math.abs(v.currentTime - t) < 0.001) return ready();
     v.addEventListener("seeked", ready, {once: true});
