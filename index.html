@@ -78,6 +78,15 @@ h1 .said { color: var(--said); } h1 .set { color: var(--set); }
 .report h3 { font: 700 24px/1.2 var(--data); margin: 72px 0 10px; }
 .lead { max-width: 68ch; color: var(--ink-2); margin: 0 0 26px; }
 
+/* who it is for */
+.who { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; border-top: 3px solid var(--ink); margin: 18px 0 18px; }
+.who > div { padding: 16px 0 0; }
+.who b { display: block; font: 700 19px/1.25 var(--data); }
+.who .st { display: block; color: var(--ink-2); font-size: 14px; margin: 3px 0 8px; }
+.who p { margin: 0; color: var(--ink-2); max-width: 46ch; }
+.who-end { margin-bottom: 72px; }
+@media (max-width: 920px) { .who { grid-template-columns: 1fr; } .who > div { padding-bottom: 6px; } }
+
 /* how to check it */
 .check { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 3px solid var(--ink); margin: 30px 0 0; padding: 0; list-style: none; counter-reset: step; }
 .check li { padding: 16px 22px 18px 0; counter-increment: step; }
@@ -255,6 +264,19 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
 </header>
 
 <main class="report" id="report">
+  <h2 id="who">Who it is for</h2>
+  <div class="who">
+    <div><b>Airline crews</b><span class="st">Tested: every run on this page</span>
+      <p>Two pilots, and Crosscheck checks what both of them say and set against the radio and the panel, as the pilot monitoring would.</p></div>
+    <div><b>Pilots who fly alone</b><span class="st">Not tested yet</span>
+      <p>Private pilots, hobbyists and solo flyers have no second pilot at all. Crosscheck could be theirs: a camera and a microphone, nothing wired
+        into the aircraft, reading even analog gauges by sight, with the same kinds of checks: the altitude ATC cleared, the altimeter setting it gave, the speed on final.</p></div>
+    <div><b>Flight schools</b><span class="st">Runs against a simulator today</span>
+      <p>It could check a student's callouts and settings as they fly, and debrief every lesson with what was said, set and flown on one timeline,
+        as the recordings here do.</p></div>
+  </div>
+  <p class="lead who-end">It assists and never acts: it speaks up, and the pilot decides. A light aircraft's instruments are what it would be taught next.</p>
+
   <h2>Flight-test report</h2>
   <p class="lead">Every test was flown live in X-Plane 12's Boeing 737, the only type tested so far. The checks are not the 737's own:
     they are the cross-checks every airline crew makes, so another type means teaching the panel readers its displays, not wiring
