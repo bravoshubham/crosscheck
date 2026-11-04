@@ -542,7 +542,7 @@ function drawTimeline() {
     const lset = lane("set"), ld = lane("doing");
     // thrust mode as labelled bands
     let segs = [];
-    R.forEach(r => { const m = r.fma && r.fma.some(Boolean) ? (r.fma[0] || "blank") : null;
+    R.forEach(r => { const m = r.fma && (r.fma.some(Boolean) || r.fma.includes(null)) ? (r.fma[0] || "blank") : null;
       if (m == null) return; const sg = segs[segs.length - 1];
       if (sg && sg.m === m) sg.t2 = r.t; else segs.push({m, t1: r.t, t2: r.t}); });
     segs.forEach((sg, i) => { const nx = segs[i + 1]; const x1 = xOf(sg.t1), x2 = xOf(nx ? nx.t1 : sg.t2);
