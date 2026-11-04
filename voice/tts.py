@@ -1,5 +1,6 @@
-"""Crosscheck's voice: Meta MMS-TTS (facebook/mms-tts-eng, CC-BY-NC 4.0; swap before any
-commercial launch). One calm voice, played through the Mac's speakers or a chosen device."""
+"""Crosscheck's voice. Callouts come from the recorded bank (voice/bank.py) when it can say them,
+like an aircraft's aural alerts; anything else, and the synthetic radio voices of the test sets,
+from Meta MMS-TTS (facebook/mms-tts-eng, CC-BY-NC 4.0; swap before any commercial launch)."""
 import pathlib
 import subprocess
 import tempfile
@@ -33,11 +34,18 @@ def synth(text: str) -> tuple[np.ndarray, int]:
     return wav, vits.config.sampling_rate
 
 
+def callout(text: str) -> tuple[np.ndarray, int]:
+    """A callout as Crosscheck says it: from the bank if it can, else synthesised."""
+    from voice.bank import SR, audio
+    wav = audio(text)
+    return (wav, SR) if wav is not None else synth(text)
+
+
 def speak(text: str, block: bool = False, save_to: pathlib.Path | None = None) -> threading.Thread | None:
-    """Synthesize and play. Non-blocking by default so the monitoring loop never waits on audio."""
+    """Play a callout. Non-blocking by default so the monitoring loop never waits on audio."""
     def run():
         with _lock:
-            wav, sr = synth(text)
+            wav, sr = callout(text)
             path = save_to or pathlib.Path(tempfile.mkstemp(suffix=".wav")[1])
             sf.write(path, wav, sr)
             subprocess.run(["afplay", str(path)], check=False)

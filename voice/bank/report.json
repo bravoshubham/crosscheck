@@ -1,0 +1,135 @@
+{
+ "reference": "alert_f_2.wav",
+ "phrases": {
+  "Cleared one-one thousand, set one-two thousand.": {
+   "heard": 1.0,
+   "s": 2.44
+  },
+  "Readback one-two thousand, cleared one-one thousand.": {
+   "heard": 0.67,
+   "s": 2.69
+  },
+  "Flaps fifteen called, ten set.": {
+   "heard": 1.0,
+   "s": 1.93,
+   "takes": 4,
+   "passes": 2
+  },
+  "Flaps fifteen called, five set.": {
+   "heard": 1.0,
+   "s": 1.82,
+   "takes": 4,
+   "passes": 2
+  },
+  "Speed. Autothrottle not in speed.": {
+   "heard": 0.73,
+   "s": 2.88
+  },
+  "Captain, are you OK?": {
+   "heard": 0.75,
+   "s": 1.47,
+   "takes": 4,
+   "passes": 2
+  },
+  "Captain not responding. First officer, take control.": {
+   "heard": 1.0,
+   "s": 3.14
+  },
+  "Confirm cleared altitude.": {
+   "heard": 1.0,
+   "s": 1.34
+  },
+  "cleared": {
+   "heard": 1.0,
+   "s": 0.39
+  },
+  "set": {
+   "heard": 1.0,
+   "s": 0.43
+  },
+  "Readback": {
+   "heard": 1.0,
+   "s": 0.6
+  },
+  "Flaps": {
+   "heard": 1.0,
+   "s": 0.47
+  },
+  "called": {
+   "heard": 1.0,
+   "s": 0.42
+  },
+  "thousand": {
+   "heard": 1.0,
+   "s": 0.5
+  },
+  "hundred": {
+   "heard": 1.0,
+   "s": 0.48
+  },
+  "zero": {
+   "heard": 1.0,
+   "s": 0.57
+  },
+  "one": {
+   "heard": 1.0,
+   "s": 0.39
+  },
+  "two": {
+   "heard": 1.0,
+   "s": 0.37
+  },
+  "three": {
+   "heard": 1.0,
+   "s": 0.37
+  },
+  "four": {
+   "heard": 1.0,
+   "s": 0.41
+  },
+  "five": {
+   "heard": 1.0,
+   "s": 0.33
+  },
+  "six": {
+   "heard": 1.0,
+   "s": 0.51
+  },
+  "seven": {
+   "heard": 1.0,
+   "s": 0.5
+  },
+  "eight": {
+   "heard": 1.0,
+   "s": 0.4
+  },
+  "niner": {
+   "heard": 1.0,
+   "s": 0.48
+  },
+  "up": {
+   "heard": 1.0,
+   "s": 0.31
+  },
+  "ten": {
+   "heard": 1.0,
+   "s": 0.4
+  },
+  "fifteen": {
+   "heard": 1.0,
+   "s": 0.59
+  },
+  "twenty-five": {
+   "heard": 1.0,
+   "s": 0.69
+  },
+  "thirty": {
+   "heard": 1.0,
+   "s": 0.4
+  },
+  "forty": {
+   "heard": 1.0,
+   "s": 0.46
+  }
+ }
+}

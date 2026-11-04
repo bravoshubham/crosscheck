@@ -20,3 +20,6 @@ demo_runs/
 .cache/
 !docs/voice/*.wav
 SUBMISSION_KIT.md
+!voice/bank/*.wav
+voice/bank/raw/
+voice/bank/candidates/
