@@ -51,15 +51,19 @@ SCENES = [
     ("01", "film.html", "title", None),
     ("02", "film.html", "why", None),
     ("03", "film.html", "how", None),
-    ("04", "debrief.html?film=1", "altitude_bust", "clearance"),
+    ("04", "debrief.html?film=1", "altitude_bust_spark", "clearance"),  # the panel read by Muse Spark, as the narration says
     ("05", "debrief.html?film=1", "autothrottle_hold_spark", "fault"),
     ("06", "debrief.html?film=1", "flaps_wrong", "call"),
     ("07", "debrief.html?film=1", "pilot_slumped", "change"),
+    ("11", "debrief.html?film=1", "altitude_bust_onboard", "clearance"),  # full cut only: no network
     ("08", "index.html?film=1", "report", None),
     ("09", "film.html", "models", None),
     ("10", "film.html", "close", None),
 ]
-AFTER_S = {"clearance": 4.0, "fault": 4.0, "call": 4.0, "change": 3.0}  # after the last callout in the window
+# after the last callout in the window: long enough for the callout itself (the bank's longest,
+# "Captain not responding. First officer, take control.", is 3.1 s) and a beat after it
+AFTER_S = {"clearance": 2.9, "fault": 3.2, "call": 3.4, "change": 2.0}
+VIDEO_AFTER_S = 1.5  # the pilot camera: a moment more of the first officer's view
 
 
 def sections(script: pathlib.Path = SCRIPT) -> dict[str, str]:
@@ -258,7 +262,7 @@ def window(rec: dict, anchor: str, lead: float) -> tuple[float, float]:
     first = min(events) if events else 2.0
     t0 = max(0.0, first - lead - 1.0)
     calls = [c["t"] for c in rec["callouts"]] or [first + 10]
-    t1 = min(rec["duration"], max(calls) + AFTER_S[anchor] + (4.0 if rec.get("video") else 0.0))
+    t1 = min(rec["duration"], max(calls) + AFTER_S[anchor] + (VIDEO_AFTER_S if rec.get("video") else 0.0))
     return t0, t1
 
 
@@ -324,8 +328,8 @@ def build(repo: str | None = None, cut: str = "full") -> pathlib.Path:
                             track.append((a["t"] - t0 + hold, load(SITE / a["file"]), 0.9 if a["kind"] == "callout" else 0.8))
                     narr_at = 0.6
                 elif what == "report":
-                    dur = speak_s + 3.0
-                    await page.js(f"window.film.span = {dur - 3.5:.2f}")
+                    dur = speak_s + 2.0
+                    await page.js(f"window.film.span = {dur - 2.5:.2f}")
                     seek = lambda i: i / FPS
                     narr_at = 0.8
                 else:

@@ -1,4 +1,4 @@
-# Crosscheck: the film (about 4 minutes; the short cut is docs/film_script_short.md)
+# Crosscheck: the film (about 5 minutes; the short cut is docs/film_script_short.md)
 
 Narration for `uv run python cli.py film`. Each section is one scene; the pictures are real
 recordings from `replay/` (the pilot camera is generated footage, and says so on screen).
@@ -21,7 +21,7 @@ three things against each other: what was said, what was set, and what the aircr
 ## 04 · Altitude bust
 Here, air traffic control clears Alaska four two one to eleven thousand feet. The crew reads it
 back correctly, then sets twelve thousand. Crosscheck hears the clearance, reads the selector, and
-speaks up nine seconds later, seventeen seconds before the aircraft would have passed its altitude.
+speaks up fifteen seconds later, twelve seconds before the aircraft would have passed its altitude.
 
 ## 05 · Autothrottle
 On final approach, the autothrottle drops out and the speed starts to decay: the pattern behind
@@ -37,13 +37,19 @@ posture on every frame. When he slumps, Crosscheck asks first. No answer, and it
 officer to take control. Afterwards, Muse Wonder watches the same footage on its own, and reaches
 the same verdict.
 
+## 11 · On board
+In the air there may be no connection. So the same flight also runs on board: Muse Glimmer reads
+the displays, two open speech models hear the radio, and every connection off this computer is
+refused. Crosscheck still speaks up before the aircraft passes eleven thousand.
+
 ## 08 · Evidence
 Every run is scored automatically against the simulator. Fifteen minutes of normal flying, with
 every line spoken and transcribed live: no false alarm. And where testing found a problem, the
 report says what it was, and what changed.
 
 ## 09 · Models
-Seven Meta models, each doing one job: hearing, reading, watching, checking, and a second opinion.
+Meta's models, each doing one job: hearing, reading, watching, checking, and a second opinion.
+And with no network in the air, the open ones do it all on board.
 
 ## 10 · Close
 One more pair of eyes and ears on the flight deck. Crosscheck.

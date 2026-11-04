@@ -32,7 +32,7 @@ def rows() -> list[str]:
         if rid == "nominal":
             runs += [json.loads(p.read_text())["pass"] for p in nominal_since_fixes()]
         t = _first_time(res)
-        if rid == "nominal":
+        if rid.removesuffix("_onboard") == "nominal":
             shipped = f"{len(res['false_callouts'])} false alarms in {res['minutes']} minutes; {res['altitude_and_flap_facts_parsed']} spoken values right"
         elif not measured:
             shipped = "Silent, as it should be" if res["pass"] else "A false callout"
@@ -50,8 +50,10 @@ def rows() -> list[str]:
                  "autothrottle_hold_spark": "The same, panel read by Muse Spark", "flaps_wrong": "Flaps: wrong setting",
                  "flaps_forgot": "Flaps: not moved", "flaps_correct": "Flaps: correct", "pilot_slumped": "Pilot slumped",
                  "pilot_asleep": "Pilot asleep", "pilot_checklist": "Pilot reading a checklist", "pilot_answers": "Pilot slumps, then answers",
-                 "nominal": "15 minutes of normal flying"}.get(rid, rid)
-        says = f"“{SAYS[rid]}”" if rid in SAYS else "(silence)"
+                 "nominal": "15 minutes of normal flying"}
+        base = rid.removesuffix("_onboard")
+        title = title.get(rid) or (title.get(base, base) + ", on board" if rid.endswith("_onboard") else rid)
+        says = f"“{SAYS[base]}”" if base in SAYS else "(silence)"
         out.append(f"| {title} | {what} | {says} | {sum(runs)} of {len(runs)} | {shipped} |")
     return out
 

@@ -13,7 +13,7 @@ flown and scored in X-Plane 12 against the simulator's own data, which Crosschec
 **[Open the live site](https://bravoshubham.github.io/crosscheck/)**: the overview and flight-test
 report, every recording with its cockpit frames, transcripts, callouts and the simulator's truth
 on one timeline, and **[the film](https://bravoshubham.github.io/crosscheck/crosscheck_film_short.mp4)**
-(under 3 minutes; [full length](https://bravoshubham.github.io/crosscheck/crosscheck_film.mp4), 4 minutes).
+(under 3 minutes; [full length](https://bravoshubham.github.io/crosscheck/crosscheck_film.mp4), 5 minutes, with a flight on board).
 The same static site builds from this repository (`uv run python cli.py debrief`).
 
 **Try it in three commands** — no simulator, GPU or API key:
@@ -48,6 +48,14 @@ operational use. The evaluation section says what each number was measured again
 | Pilot reading a checklist | The captain looks down at a checklist. | (silence) | 3 of 3 | Silent, as it should be |
 | Pilot slumps, then answers | The captain slumps, then answers when asked. | “Captain, are you OK?” | 3 of 3 | 12.2 s after the slump |
 | 15 minutes of normal flying | Fifteen minutes flown correctly: six descents, four turns, four flap calls. | (silence) | 4 of 4 | 0 false alarms in 15.0 minutes; 14/14 spoken values right |
+| Altitude bust, on board | Cleared to 11,000; the pilot flying sets 12,000. | “Cleared one-one thousand, set one-two thousand.” | 4 of 4 | 22.6 s after the MCP was set; the 737 passed 11,000 at 26.4 s |
+| Readback error, on board | Cleared to 11,000; the crew reads back 12,000. | “Readback one-two thousand, cleared one-one thousand.” | 4 of 4 | 5.7 s after the MCP was set |
+| Correct setting, on board | Cleared, read back and set to 11,000. | (silence) | 4 of 4 | Silent, as it should be |
+| Autothrottle not in speed on final (the Asiana 214 pattern), on board | On final the autothrottle drops out and speed decays. | “Speed. Autothrottle not in speed.” | 0 of 4 | 22.8 s after the fault; speed was 10 kt low at 11.6 s (a miss) |
+| Flaps: wrong setting, on board | “Flaps fifteen” called; the lever goes to 10. | “Flaps fifteen called, ten set.” | 4 of 4 | 32.4 s after the call |
+| Flaps: not moved, on board | “Flaps fifteen” called; nobody moves the lever. | “Flaps fifteen called, five set.” | 4 of 4 | 32.3 s after the call |
+| Flaps: correct, on board | “Flaps fifteen” called and selected. | (silence) | 4 of 4 | Silent, as it should be |
+| 15 minutes of normal flying, on board | Fifteen minutes flown correctly: six descents, four turns, four flap calls. | (silence) | 1 of 1 | 0 false alarms in 15.0 minutes; 12/14 spoken values right |
 <!-- what-it-catches:end -->
 
 Every count above includes every live run of that scenario, misses too; the test report on the
@@ -98,9 +106,37 @@ fixes has been silent (`eval/results/nominal_*`).
   (`brain/speech_guard.py`): in testing, the model once copied an example instruction onto a
   garbled radio line; the guard drops anything the transcript does not support.
 
+## On board, with no network
+
+An aircraft is not always connected, so Crosscheck also runs with every model on one computer
+and nothing else: Meta open weights only, served on the loopback interface. The rules are the
+same plain code in both modes.
+
+| Job | On board (open weights, on this computer) | Connected |
+| --- | --- | --- |
+| Hear the radio and the intercom | SeamlessM4T v2 and Omnilingual ASR 7B, both on every line | Muse Voice Transcribe |
+| Read the PFD and the flap gauge | Muse Glimmer 30B (vision) | Muse Spark, or on-device text recognition |
+| Second reader for garbled radio lines; the sentence under a callout | Muse Glimmer 30B | Muse Spark |
+
+Neither open recognizer matches Voice Transcribe alone, and they fail differently, so both hear
+every line and a value counts only when they do not disagree. On the scenarios' own lines that
+gets 48 of 51 values right and none wrong (Voice Transcribe: 49 right, 2 wrong). Each on-board run
+is made under a macOS sandbox that refuses every connection that is not to this computer, and its
+`meta.json` records the proof: a connection to api.meta.ai attempted from inside the run, refused.
+
+```bash
+uv run python cli.py onboard altitude_bust bust --speak    # starts the local models, then flies it on board
+```
+
+On board it catches the altitude bust, the readback error and all three flap cases, and flew
+fifteen minutes of normal flying with no false alarm (25 of 29 live runs on board right); it is too slow for the autothrottle alert,
+which needs a reading every second or two (Glimmer reads every 4–6 s here). Setup, every
+measurement and what is not on board yet (the pilot watch's SAM 3D Body still runs on a cloud
+GPU): [`onboard/README.md`](onboard/README.md).
+
 ## Meta models
 
-Ten Meta models are used; each has one job, and the state column says what was measured. Muse
+Twelve Meta models are used; each has one job, and the state column says what was measured. Muse
 Spark, SAM 3.1 and Muse Wonder cross-check the others: none of them is trusted on its own word.
 
 | Model | Job | State |
@@ -111,9 +147,10 @@ Spark, SAM 3.1 and Muse Wonder cross-check the others: none of them is trusted o
 | SAM 3.1 | Pre-flight camera check: the flight displays must be where the readers expect; finds the captain for SAM 3D Body | Displays found within IoU 0.93–0.94 of the calibration on recorded frames; a run whose camera check fails does not start. Pilot found in all 24 labelled images; with its boxes the posture check is right on 23/24 (24/24 with hand-drawn boxes; the miss is a checklist held low in the lap) |
 | SAM 3D Body | Pilot watch: 3D body pose on every pilot-camera frame | Modal T4, ~2 s a frame warm; posture right on 24/24 labelled images; live on generated video in the pilot-watch scenario |
 | Muse Image | The synthetic pilots the pilot camera is tested on, and the halfway poses the video is anchored on | ~$0.01 an image; the content filter refused a "passed out" prompt, and some edits at random (a retry worked) |
-| Muse Glimmer 30B (open weights, on the Mac) | Decisions on board with no network; clearance extraction | Decisions in 2.5 s; extraction 7/7 on clean text (an earlier stage, not in the live loop) |
+| Muse Glimmer 30B (open weights, on board) | On board with no network: reads the PFD and the flap gauge from camera frames, second reader for radio lines code cannot parse, the sentence under each callout | Recorded frames: selected altitude 57/63, airspeed 30/36, altitude 53/77, flap gauge 19/20 (Muse Spark 18/20), 3.9 s a read; flies every scenario on board except the autothrottle, where a read every 4–6 s is too slow ([`onboard/README.md`](onboard/README.md)) |
+| SeamlessM4T v2 + Omnilingual ASR 7B (open weights, on board) | On board with no network: both hear every radio and intercom line; a value counts when they do not disagree | The scenarios' own lines: 48 of 51 values right, 0 wrong (Voice Transcribe 49 right, 2 wrong); behind Voice Transcribe in engine noise |
 | SAM Audio | Separating overlapping speakers | Cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
-| MMS-TTS, MMS ASR | Crosscheck's voice; the first speech baseline | Working |
+| MMS-TTS, MMS ASR | The scenarios' synthetic radio voices and the fallback callout voice; the first speech baseline | Callouts come from a recorded bank instead: played to Voice Transcribe, MMS-TTS's came back as "Fleered one 1000" ([`voice/bank/`](voice/bank/README.md)) |
 
 The pilot-camera footage is animated with LTX-2.5 (Lightricks, open weights, run locally) from
 the Muse Image photos, anchored on them at the start, halfway and end of each movement
@@ -166,9 +203,10 @@ simulator, GPU or API key needed. `--recompute` re-reads the saved panel images 
 `--recompute --reader spark` re-reads them with Muse Spark on any OS (needs `MODEL_API_KEY`;
 ~$0.003 a frame).
 
-Sixteen recordings ship: the altitude and autothrottle scenarios with the on-device panel reader
+Twenty-four recordings ship: the altitude and autothrottle scenarios with the on-device panel reader
 and again with Muse Spark reading the panel (`*_spark`), the three flap variants (gauge read by
-Spark), the four pilot-camera variants on generated video, and the 15-minute normal flight. Each
+Spark), the four pilot-camera variants on generated video, the 15-minute normal flight, and the
+same altitude, autothrottle, flap and 15-minute scenarios flown on board (`*_onboard`). Each
 keeps the camera's crop of the displays and the whole cockpit (`wide/`), and replays exactly as it
 ran live. A recording that missed is shipped as recorded and labelled (`known_result` in its
 `meta.json`); every run, shipped or repeated, is counted in `eval/results/repeat/`.
@@ -186,6 +224,16 @@ uv run modal deploy cloud/sam3d_body_app.py             # once, for the pilot wa
 uv run --group eval python eval/scenarios/pilot_watch.py slumped --video   # or asleep, checklist, answers; no simulator
 uv run python eval/pilot_watch/make_video.py            # the pilot-camera clips (local LTX-2.5; ~3 min each)
 uv run --group eval python eval/scenarios/nominal.py    # 15 minutes of normal flying: any callout is a false alarm
+```
+
+**On board** (every model on this computer, the network refused; setup in
+[`onboard/README.md`](onboard/README.md)): the same scenarios through `onboard/run.sh`, recorded
+as `*_onboard`.
+
+```bash
+onboard/start.sh                                         # the two recognizers and Muse Glimmer, checked
+onboard/run.sh eval/scenarios/altitude_bust.py bust --speak
+onboard/run.sh eval/repeat.py --n 3 altitude_bust:bust flaps:wrong    # repeat runs, as *_onboard
 ```
 
 **Try it with your own voice.** `--mic` makes you a crew member: the Mac's microphone is
@@ -241,6 +289,7 @@ use). SAM Audio and SAM 3D Body weights are gated on Hugging Face and are not re
 X-Plane's engine sounds are used locally to build test audio and are not included;
 `eval/audio/radio_set_open/` uses synthetic engine noise (`eval/audio/synth_noise.py`) and MMS-TTS
 voices (CC-BY-NC 4.0), so it can be published. The pilot-watch images are generated with Muse
-Image; no real person appears in them. The film's narration is generated with Fish Audio Drama 3
-under the Fish Audio Community License (non-commercial use). **Built with Fish Audio.** All procedures
+Image; no real person appears in them. The film's narration and Crosscheck's recorded callouts
+(`voice/bank/`) are generated with Fish Audio Drama 3 under the Fish Audio Community License
+(non-commercial use). **Built with Fish Audio.** All procedures
 are written from public FAA handbooks; no airline data is used.

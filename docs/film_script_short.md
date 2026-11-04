@@ -16,7 +16,7 @@ camera with Muse Spark, and checks what was said, what was set, and what the air
 
 ## 04 · Altitude bust
 Air traffic control clears Alaska four two one to eleven thousand feet. The crew reads it back,
-then sets twelve thousand. Crosscheck speaks up with seventeen seconds to spare.
+then sets twelve thousand. Crosscheck speaks up with twelve seconds to spare.
 
 ## 05 · Autothrottle
 On final, the autothrottle drops out and the speed decays: the Asiana two one four pattern.
@@ -31,7 +31,7 @@ watching on its own, agrees.
 Every run is scored against the simulator. Fifteen minutes of normal flying: no false alarm.
 
 ## 09 · Models
-Seven Meta models, each doing one job: hearing, reading, watching, checking, and a second opinion.
+Each Meta model does one job. And with no network in the air, the open ones do it all on board.
 
 ## 10 · Close
 One more pair of eyes and ears on the flight deck. Crosscheck.

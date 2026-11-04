@@ -215,6 +215,7 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
     <ul>
       <li>Speech is real speech recognition: every line is synthesised, played as audio and transcribed live by Muse Voice Transcribe. Only what comes back is parsed.</li>
       <li>The panel is read from screen captures of X-Plane 12's 737 by on-device text recognition or by Muse Spark; never from the simulator's data.</li>
+      <li>On board, every model runs on the test computer (Muse Glimmer reads the panel; SeamlessM4T v2 and Omnilingual ASR both hear each line), and each run is sandboxed with every network connection refused; its record shows the refused connection to api.meta.ai.</li>
       <li>The pilot camera is generated footage: Muse Image photos of synthetic pilots, animated with LTX-2.5 and anchored on the labelled photos. No real person is filmed.</li>
     </ul>
     <ul>
@@ -227,8 +228,8 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
   <footer>
     <p>Built during the Meta AI Developer Hackathon, 27 October to 4 November 2026. Code MIT; MMS-TTS is CC-BY-NC 4.0.
       The pilot-camera footage is machine-generated (LTX-2.5 under the LTX-2 Community License, from Muse Image photos).
-      The film's narration is a synthetic voice designed with Fish Audio Drama 3 (Fish Audio Community License). Built with Fish Audio.
-      The film is also there <a href="crosscheck_film.mp4">at full length</a>, with the flaps scene.</p>
+      The film's narration and Crosscheck's callout voice are synthetic voices designed with Fish Audio Drama 3 (Fish Audio Community License). Built with Fish Audio.
+      The film is also there <a href="crosscheck_film.mp4">at full length</a>, with the flaps scene and a flight on board.</p>
     <p>X-Plane is a trademark of Laminar Research; this project is not affiliated with or endorsed by Laminar Research, Boeing or Meta.</p>
   </footer>
 </main>
@@ -325,16 +326,18 @@ const filmMode = new URLSearchParams(location.search).has("film");
 const n = O.nominal;
 $("res").innerHTML = [
   ["Live runs called right", `${O.totals.right} of ${O.totals.runs}`],
+  ...(O.onboard && O.onboard.runs ? [["On board, with the network blocked", `${O.onboard.right} of ${O.onboard.runs}`]] : []),
   ["False alarms in 15 minutes of normal flying", n ? String(n.result.false_callouts.length) : "—"],
   ["Spoken values parsed right on that flight", n ? n.result.altitude_and_flap_facts_parsed.replace("/", " of ") : "—"],
 ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
 
 // ---------- test matrix ----------
 const GROUPS = {altitude: "Altitude: the clearance against the selector", autothrottle_hold: "Autothrottle on final (the Asiana 214 pattern)", altitude_spark: "Altitude, with Muse Spark reading the panel",
-  flaps: "Flaps: the callout against the gauge", pilot_watch: "Pilot watch: the optional camera on the captain", nominal: "False-alarm test"};
+  flaps: "Flaps: the callout against the gauge", pilot_watch: "Pilot watch: the optional camera on the captain", nominal: "False-alarm test",
+  onboard: "On board: every model on this computer, and the network refused for the whole run"};
 let lastGroup = null, rowsHtml = "";
 O.matrix.forEach(r => {
-  const group = r.kind === "altitude" && r.id.endsWith("_spark") ? "altitude_spark" : r.kind;
+  const group = r.id.endsWith("_onboard") ? "onboard" : r.kind === "altitude" && r.id.endsWith("_spark") ? "altitude_spark" : r.kind;
   if (group !== lastGroup) { rowsHtml += `<tr class="group"><td colspan="6">${GROUPS[group] || group}</td></tr>`; lastGroup = group; }
   // timing from the runs that were right; the misses are the hollow marks
   const ok = r.runs.filter(x => x.pass), ts = ok.map(x => x.t).filter(v => v != null), dl = ok.map(x => x.deadline).filter(v => v != null);
@@ -346,10 +349,14 @@ O.matrix.forEach(r => {
     const range = (lo, hi, n) => `<span class="nw">${s1(lo)}${n > 1 && hi !== lo ? "\u2013" + s1(hi) : ""} s</span>`;
     when = a < 0 ? `<span class="nw">${s1(-a)} s</span> before to <span class="nw">${s1(b)} s</span> after ${what}` : `${range(a, b, ts.length)} ${r.measured}`;
     if (dl.length) when += `; ${r.deadline_label} at ${range(Math.min(...dl), Math.max(...dl), dl.length)}`;
+  } else if (r.runs.some(x => x.t != null)) {  // every run a miss: say how late
+    const lt = r.runs.map(x => x.t).filter(v => v != null), ld = r.runs.map(x => x.deadline).filter(v => v != null);
+    const range = (lo, hi) => `<span class="nw">${s1(lo)}${hi !== lo ? "\u2013" + s1(hi) : ""} s</span>`;
+    when = `Too late: ${range(Math.min(...lt), Math.max(...lt))} ${r.measured}` + (ld.length ? `; ${r.deadline_label} at ${range(Math.min(...ld), Math.max(...ld))}` : "");
   } else when = "—";
   const says = r.says ? `“${esc(r.says)}”` : "Nothing";
   const marks = r.runs.map(x => `<i class="m${x.pass ? "" : " bad"}" title="${x.recording ? "Shipped recording: " : "Repeat run: "}${x.pass ? "right" : "wrong"}${x.t != null ? ", " + s1(x.t) + " s" : ""}"></i>`).join("");
-  rowsHtml += `<tr><td class="sc">${esc(r.title.replace(" · Spark reader", ", read by Muse Spark"))}</td><td>${esc(r.what)}</td>
+  rowsHtml += `<tr><td class="sc">${esc(r.title.replace(" · Spark reader", ", read by Muse Spark").replace(" · on board", ""))}</td><td>${esc(r.what)}</td>
     <td class="says${r.says ? "" : " quiet"}">${says}</td><td><div class="marks" aria-label="${r.runs.filter(x => x.pass).length} of ${r.runs.length} runs right">${marks}</div></td>
     <td class="when">${when}</td><td class="rec"><a href="debrief.html?s=${encodeURIComponent(r.id)}">Watch</a></td></tr>`;
 });

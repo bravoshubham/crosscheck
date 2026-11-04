@@ -24,8 +24,9 @@ h1 { font: 700 150px/1 "B612"; color: #fff; margin: 230px 0 34px; letter-spacing
 .how { background: var(--paper); padding: 90px 120px; }
 .how h2 { font: 700 54px "Public Sans"; color: var(--ink); margin: 0 0 40px; }
 .how img { width: 1680px; display: block; }
-.models h2 { font: 700 60px "B612"; color: #fff; margin: 0 0 56px; }
-.row { display: grid; grid-template-columns: 560px 1fr; gap: 40px; padding: 22px 0; border-top: 1px solid #1c2229; font-size: 34px; }
+.models h2 { font: 700 56px "B612"; color: #fff; margin: 0 0 30px; }
+.row { display: grid; grid-template-columns: 560px 1fr; gap: 40px; padding: 10px 0; border-top: 1px solid #1c2229; font-size: 29px; }
+.row.head { display: block; border-top: 0; padding: 22px 0 2px; color: var(--said); font-size: 24px; font-weight: 700; }
 .row .m { color: #fff; font-weight: 700; }
 .row .j { color: var(--legend); line-height: 1.35; }
 .close h1 { margin-top: 300px; }
@@ -48,14 +49,14 @@ h1 { font: 700 150px/1 "B612"; color: #fff; margin: 230px 0 34px; letter-spacing
   <img data-at="0.8" src="how-it-works.svg" alt="">
 </section>
 <section class="scene models" id="models">
-  <h2 data-at="0.2">Seven Meta models, each with one job</h2>
+  <h2 data-at="0.2">Meta models, each with one job</h2>
   <div id="modelRows"></div>
 </section>
 <section class="scene close" id="close">
   <h1 data-at="0.3">Crosscheck</h1>
   <div class="sub" data-at="1.2">One more pair of eyes and ears on the flight deck.</div>
   <div class="fine" data-at="2.2">Every number in this film comes from a scored run. Recordings, report and code: <span id="repo">the repository</span>.<br>
-    Narration: a synthetic voice, designed and read by Fish Audio Drama 3, run locally. Built with Fish Audio.</div>
+    Narration and Crosscheck's callouts: synthetic voices designed with Fish Audio Drama 3, run locally. Built with Fish Audio.</div>
 </section>
 <script src="overview.js"></script>
 <script>
@@ -67,10 +68,16 @@ const JOBS = {  // shorter than the report's, for the screen
   "SAM 3.1": "checks the camera sees the displays; finds the pilot",
   "SAM 3D Body": "measures the pilot's posture on every frame",
   "Muse Image": "made the synthetic pilots: no real person is filmed",
-  "MMS-TTS": "Crosscheck's voice",
+  "MMS-TTS": "the radio voices in the tests; Crosscheck's fallback voice",
+  "Muse Glimmer 30B (open weights, on board)": "reads the displays and the flap gauge, reads garbled radio lines, explains",
+  "SeamlessM4T v2 + Omnilingual ASR 7B (open weights, on board)": "both hear every radio line; a value counts when they agree",
 };
+const SHORT = {"Muse Glimmer 30B (open weights, on board)": "Muse Glimmer 30B",
+               "SeamlessM4T v2 + Omnilingual ASR 7B (open weights, on board)": "SeamlessM4T v2, Omnilingual ASR"};
+const firstOnboard = O.models.findIndex(m => m.model in SHORT);
 document.getElementById("modelRows").innerHTML = O.models.map((m, i) =>
-  `<div class="row" data-at="${(0.9 + i * 0.55).toFixed(2)}"><div class="m">${m.model}</div><div class="j">${JOBS[m.model] || m.job}</div></div>`).join("");
+  (i === firstOnboard ? `<div class="row head" data-at="${(0.9 + i * 0.55).toFixed(2)}">On board, with no network: open weights on one computer</div>` : "") +
+  `<div class="row" data-at="${(0.9 + i * 0.55).toFixed(2)}"><div class="m">${SHORT[m.model] || m.model}</div><div class="j">${JOBS[m.model] || m.job}</div></div>`).join("");
 const repo = new URLSearchParams(location.search).get("repo"); if (repo) document.getElementById("repo").textContent = repo;
 window.film = {
   select: id => { document.querySelectorAll(".scene").forEach(s => s.classList.toggle("on", s.id === id)); return !!document.getElementById(id); },

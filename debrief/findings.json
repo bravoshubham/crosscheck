@@ -109,5 +109,57 @@
   "area": "Pilot watch",
   "found": "A laptop webcam sees only head and chest: neither measure told a slump from reading a checklist.",
   "fix": "The pilot watch needs a camera that sees the upper body and hands, as on a glareshield mount; it is tested on footage from that angle."
+ },
+ {
+  "date": "4 Nov",
+  "area": "On board: hearing",
+  "found": "Neither open recognizer is good enough alone on the scenarios' lines: SeamlessM4T v2 dropped 15 of 51 values (it rewrote “flaps one” as “One of the flaps.”), Omnilingual ASR heard “maintain won one thousand” for one one thousand.",
+  "fix": "Both hear every line; a value that contradicts the aircraft is dropped, then a value counts only when the two do not disagree. “Won” before a number is read as one, as “for” already was. 48 of 51 right, none wrong."
+ },
+ {
+  "date": "4 Nov",
+  "area": "On board: flap gauge",
+  "found": "Asked for the needle’s clock position, Muse Glimmer was right on 8 of 20 frames; asked which marking, 20 of 20 on the shipped frames, but in live runs it read a needle parked at 5 as 2 on 4 of 22 frames, so the settle check never settled (2 of 3 “not moved” runs missed).",
+  "fix": "Each marking’s place on the dial is in the question (19 of 20 shipped frames at 2x zoom; 3x read better but too slowly for the settle check to see five readings).",
+  "evidence": "eval/results/repeat/flaps_forgot_onboard.before_gauge_positions.json"
+ },
+ {
+  "date": "4 Nov",
+  "area": "On board: panel",
+  "found": "On the test computer X-Plane uses about 85% of the GPU, and a Glimmer read took 7 s; most of it was writing the answer.",
+  "fix": "The answer is one short line instead of a JSON object per value (24 tokens, not 49) and the image is the three parts of the PFD the rules use: 4.4 s, same accuracy."
+ },
+ {
+  "date": "4 Nov",
+  "area": "On board: explanations",
+  "found": "Without a JSON schema, Muse Glimmer spent its whole token budget and returned no text.",
+  "fix": "The sentence under a callout is asked for as {“sentence”: …}, like every other Glimmer call."
+ },
+ {
+  "date": "4 Nov",
+  "area": "On board: autothrottle",
+  "found": "On board the callout came 23–39 s after the fault, after speed was 10 kt low (6 runs). Two reads in flight on a busy GPU doubled each read’s delay to 9 s; the rule waited for three readings in a row (10 s at one every 5 s); an empty thrust box was sometimes left out of the answer, which lost the whole reading; and a few frames had the speed misread.",
+  "fix": "One read in flight; on final two reads in three are only the speed tape and the mode boxes; two readings at least 3 s apart count like three in a row (both tested); the modes are asked for as a list of exactly three 737 mode names. Each read is now right on the frames it missed, but at one every 4–6 s it is still too late for this alert on this computer: a known limit, like Muse Spark’s in the cloud.",
+  "evidence": "eval/results/repeat/autothrottle_hold_onboard.before_*.json"
+ },
+ {
+  "date": "4 Nov",
+  "area": "On board: flaps",
+  "found": "The flap scenario passed only one recognizer’s transcript, which had “fifteen flaps” backwards; the fallback then tried Muse Spark, and the sandbox refused the connection. 2 runs missed.",
+  "fix": "It passes both transcripts like the other scenarios, and on board the second reader is always the local Glimmer.",
+  "evidence": "eval/results/repeat/flaps_wrong_onboard.before_onboard_fixes.json"
+ },
+ {
+  "date": "4 Nov",
+  "area": "15-minute flight, on board",
+  "found": "Four false callouts in the first on-board flight. Three were one reading of the selector: with one read every ~5 s, the newest reading showed the crew’s new setting (or a stale read of the old one) while the vote still held the old value. One followed a clearance both recognizers missed: its readback was heard and compared with the clearance before.",
+  "fix": "No callout while the newest reading disagrees with the vote; at least two readings after the readback must show the wrong setting; and a readback that answers a clearance Crosscheck did not hear means the cleared altitude is unknown, not the old one (three rules, each tested). All recordings replay unchanged.",
+  "evidence": "eval/results/nominal_onboard_before_rule_fixes/"
+ },
+ {
+  "date": "4 Nov",
+  "area": "Voice",
+  "found": "Crosscheck’s own callouts in MMS-TTS, played to Muse Voice Transcribe, came back as “Fleered one 1000” and “flats 15 cult”.",
+  "fix": "Callouts come from a recorded bank, as an aircraft’s aural alerts do (voice/bank.py): nine callouts, two passes each, 15 of 18 came back word for word, against 2 of 18 for MMS-TTS."
  }
 ]

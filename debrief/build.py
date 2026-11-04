@@ -35,7 +35,11 @@ TITLES = {
 ORDER = ["nominal", "altitude_bust", "altitude_readback", "altitude_correct", "autothrottle_hold",
          "flaps_wrong", "flaps_forgot", "flaps_correct",
          "pilot_slumped", "pilot_asleep", "pilot_checklist", "pilot_answers",
-         "altitude_bust_spark", "altitude_readback_spark", "altitude_correct_spark", "autothrottle_hold_spark"]
+         "altitude_bust_spark", "altitude_readback_spark", "altitude_correct_spark", "autothrottle_hold_spark",
+         "altitude_bust_onboard", "altitude_readback_onboard", "altitude_correct_onboard", "autothrottle_hold_onboard",
+         "flaps_wrong_onboard", "flaps_forgot_onboard", "flaps_correct_onboard", "nominal_onboard",
+         "pilot_slumped_onboard", "pilot_asleep_onboard", "pilot_checklist_onboard", "pilot_answers_onboard"]
+ONBOARD_NOTE = "On board: every model on this computer, and the network refused for the whole run. "
 
 
 def load_jsonl(p: pathlib.Path) -> list[dict]:
@@ -117,8 +121,9 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         start = h["t"] - (hh["s_from_start"] if hh else dur)
         audio.append({"t": round(start, 2), "dur": round(dur, 2), "file": f, "kind": h["speaker"]})
         h["start"] = round(start, 2)
+    from voice.tts import callout
     for i, c in enumerate(callouts):
-        wav, sr = synth(c["text"])
+        wav, sr = callout(c["text"])  # Crosscheck's own voice, from the bank
         f = f"rec/{name}/callout{i}.wav"
         sf.write(SITE / f, wav, sr)
         audio.append({"t": c["t"], "dur": round(len(wav) / sr, 2), "file": f, "kind": "callout"})
@@ -144,8 +149,12 @@ def build_one(rec: pathlib.Path, synth) -> dict:
         if len(row) > 1:
             tr.append(row)
 
-    base = name.removesuffix("_spark").removesuffix("_mic").removesuffix("_webcam")
+    base = name.removesuffix("_onboard").removesuffix("_spark").removesuffix("_mic").removesuffix("_webcam")
     title, blurb = TITLES.get(base, (name, ""))
+    if name.endswith("_onboard"):
+        title += " · on board"
+        blurb = ONBOARD_NOTE + ("Too slow on this computer: Glimmer's reads every 4–6 s, with the simulator holding the GPU, "
+                                "put the callout after speed was 10 kt low." if meta.get("known_result") else blurb)
     if name.endswith("_mic"):
         title += " · live voice"
         blurb = "A person speaking into the Mac's microphone. " + blurb
@@ -177,7 +186,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
             "aspect": "4 / 3" if meta.get("pilot_camera") else f"{box[2] - box[0]} / {box[3] - box[1]}", "meta": {
         k: meta[k] for k in ("aircraft", "area", "airport", "recorded", "speech", "cleared", "readback",
                              "mcp_set", "target_kt", "variant", "panel_reader", "known_result",
-                             "called", "selected", "state", "answer", "pose") if k in meta},
+                             "called", "selected", "state", "answer", "pose", "network") if k in meta},
         "duration": round(max([r["t"] for r in readings] + [r["t"] for r in tr]), 1),
         "readings": readings, "said": said, "heard": heard, "callouts": callouts, "marks": marks,
         "truth": tr, "audio": audio, "result": result, "summary": summary, "video": video, "actions": actions, "review": review, "wide": wide}
@@ -207,6 +216,9 @@ MATRIX = [
     ("pilot_answers", ["pilot_watch_answers_video"], "The captain slumps, then answers when asked.", "after the slump", None, None),
     ("nominal", [], "Fifteen minutes flown correctly: six descents, four turns, four flap calls.", None, None, None),
 ]
+# The same scenarios on board (onboard/README.md): local models, network refused for the whole run
+MATRIX += [(rid + "_onboard", [rp + "_onboard" for rp in reps], what, measured, dk, dl)
+           for rid, reps, what, measured, dk, dl in MATRIX if not rid.endswith("_spark")]
 SAYS = {"altitude_bust": "Cleared one-one thousand, set one-two thousand.",
         "altitude_readback": "Readback one-two thousand, cleared one-one thousand.",
         "altitude_bust_spark": "Cleared one-one thousand, set one-two thousand.",
@@ -273,14 +285,31 @@ def models(data: list[dict]) -> list[dict]:
                 "measured": [f"Labelled images right: {k} {v}" for k, v in pp.items()] if pp else []})
     imgs = len([p for p in (ROOT / "eval" / "pilot_watch" / "images").glob("*/*.jpg")])
     out.append({"model": "Muse Image", "job": "Makes the synthetic pilots the pilot camera is tested on, and the halfway poses the video is anchored on.", "measured": [f"{imgs} images of 6 synthetic pilots"]})
-    out.append({"model": "MMS-TTS", "job": "Crosscheck's voice, and the synthetic voices of the radio test set.", "measured": []})
+    out.append({"model": "MMS-TTS", "job": "The synthetic radio and intercom voices of the scenarios and test sets; Crosscheck's voice for any callout not in its recorded bank (voice/bank/).", "measured": []})
+    pg, hs = load(R / "day_one" / "panel_glimmer.json"), load(R / "day_one" / "t2_local_scenario.json")
+    m = []
+    if pg:
+        alt = pg["right"].get("altitude", {})
+        m.append(f"Reading the flight displays: altitude within 20 ft {alt.get('glimmer')} frames "
+                 f"(the reader that recorded them: {alt.get('apple') or alt.get('muse-spark')})")
+        m.append(f"The flap gauge: {pg['flap_gauge_right']['glimmer']} frames right (Muse Spark {pg['flap_gauge_right']['muse-spark']})")
+    out.append({"model": "Muse Glimmer 30B (open weights, on board)",
+                "job": "On board, with no network: reads the flight displays and the flap gauge, reads radio lines the parser cannot, writes the sentence under each callout.",
+                "measured": m})
+    if hs:
+        pair, vt = hs["on-board pair"], hs["voice transcribe (cloud)"]
+        n = pair["right"] + pair["missed"] + pair["wrong"]
+        out.append({"model": "SeamlessM4T v2 + Omnilingual ASR 7B (open weights, on board)",
+                    "job": "On board, with no network: both hear every radio and intercom line; a value counts when they do not disagree.",
+                    "measured": [f"The scenarios' own lines: {pair['right']} of {n} values right, {pair['wrong']} wrong "
+                                 f"(Muse Voice Transcribe: {vt['right']} right, {vt['wrong']} wrong)"]})
     return out
 
 
 def overview(data: list[dict]) -> dict:
     """Everything the overview and test report show, from the recordings and the repeat summaries."""
     by_id = {r["id"]: r for r in data}
-    rows, totals = [], {"runs": 0, "right": 0}
+    rows, totals, onboard = [], {"runs": 0, "right": 0}, {"runs": 0, "right": 0}
     for rid, repeats, what, measured, deadline_key, deadline_label in MATRIX:
         if rid not in by_id:
             continue
@@ -296,9 +325,10 @@ def overview(data: list[dict]) -> dict:
         res = rec["result"]
         live = {"pass": res["pass"], "t": _first_time(res), "deadline": res.get(deadline_key) if deadline_key else None, "recording": True}
         runs = [live] + runs
-        totals["runs"] += len(runs)
-        totals["right"] += sum(r["pass"] for r in runs)
-        rows.append({"id": rid, "title": rec["title"], "what": what, "says": SAYS.get(rid), "measured": measured,
+        tally = onboard if rid.endswith("_onboard") else totals  # on board is reported on its own line
+        tally["runs"] += len(runs)
+        tally["right"] += sum(r["pass"] for r in runs)
+        rows.append({"id": rid, "title": rec["title"], "what": what, "says": SAYS.get(rid.removesuffix("_onboard")), "measured": measured,
                      "deadline_label": deadline_label, "runs": runs, "kind": rec["kind"]})
     hero = by_id.get("altitude_bust_spark") or by_id.get("altitude_bust")  # the panel read by Muse Spark, if recorded
     if hero:
@@ -323,7 +353,7 @@ def overview(data: list[dict]) -> dict:
                    "alt": [[r["t"], r["altitude"]] for r in n["readings"] if r.get("altitude")],
                    "heard": [[h["start"], h["t"], h["speaker"]] for h in n["heard"]],
                    "actions": [[a["t"], a["line"]] for a in n.get("actions", [])]}
-    return {"hero": hero, "matrix": rows, "totals": totals, "nominal": nominal, "models": models(data),
+    return {"hero": hero, "matrix": rows, "totals": totals, "onboard": onboard, "nominal": nominal, "models": models(data),
             "findings": json.loads((TEMPLATE.parent / "findings.json").read_text())}
 
 
