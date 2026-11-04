@@ -232,13 +232,14 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
         <div class="cc" id="heroCc" role="status"></div>
       </div>
       <div>
-        <h1><span class="l said" id="h1Said">Said 11,000.</span><span class="l set" id="h1Set">Set 12,000.</span></h1>
-        <p class="claim" id="heroClaim">Crosscheck heard the clearance on the radio, read the altitude selector through a camera,
-          and spoke up before the aircraft got there.</p>
-        <p class="claim small">Air traffic control cleared the 737 to 11,000 ft; the pilot dialled 12,000. Flying past a cleared
-          altitude is an <button type="button" class="term" data-k="bust">altitude bust</button>, and it can put two aircraft at the same height.
-          Crosscheck does the job of the <button type="button" class="term" data-k="pm">pilot monitoring</button>: it compares what was said,
-          what was set and what the aircraft is doing, and calls out in standard words when they disagree.</p>
+        <h1><span class="l said" id="h1Said">Cleared 11,000.</span><span class="l set" id="h1Set">Dialled 12,000.</span></h1>
+        <p class="claim" id="heroClaim">Air traffic control cleared the 737 to 11,000 feet. The pilot dialled 12,000 by mistake,
+          and nothing on the radio sounded wrong. Crosscheck caught it, and said so before the aircraft got there.</p>
+        <p class="claim small">Flying past a cleared altitude is an <button type="button" class="term" data-k="bust">altitude bust</button>,
+          and it can put two aircraft at the same height. Crosscheck does the job of the <button type="button" class="term" data-k="pm">pilot monitoring</button>:
+          it hears the radio with Muse Voice Transcribe, reads the displays through a camera with Muse Spark, and speaks up in standard
+          words when what was said, what was set and what the aircraft is doing disagree. It never overrules anyone: it says what a
+          second pilot would say, and the crew decides.</p>
         <div class="go">
           <a class="btn primary" href="crosscheck_film_short.mp4">Watch the 3-minute film</a>
           <a class="btn" id="heroReplay" href="debrief.html">Replay this flight</a>
@@ -255,7 +256,9 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
 
 <main class="report" id="report">
   <h2>Flight-test report</h2>
-  <p class="lead">Every test was flown live in X-Plane 12's Boeing 737. Crosscheck only saw the screen and heard the audio;
+  <p class="lead">Every test was flown live in X-Plane 12's Boeing 737, the only type tested so far. The checks are not the 737's own:
+    they are the cross-checks every airline crew makes, so another type means teaching the panel readers its displays, not wiring
+    anything into the aircraft. Crosscheck only saw the screen and heard the audio;
     the simulator's own data was logged on the side, only to score each run. Every run is kept here, the misses included,
     and every recording replays from the repository without the simulator.</p>
 
@@ -327,7 +330,7 @@ footer p { max-width: 90ch; margin: 0 0 6px; }
   <footer>
     <p>Built during the Meta AI Developer Hackathon, 27 October to 4 November 2026. Code MIT; MMS-TTS is CC-BY-NC 4.0.
       The pilot-camera footage is machine-generated (LTX-2.5 under the LTX-2 Community License, from Muse Image photos).
-      The film's narration and Crosscheck's callout voice are synthetic voices designed with Fish Audio Drama 3 (Fish Audio Community License). Built with Fish Audio.
+      The film's narration and Crosscheck's callout voice are synthetic voices, made on this Mac.
       The film is also there <a href="crosscheck_film.mp4">at full length</a>, with the flaps scene and a flight on board.</p>
     <p>X-Plane is a trademark of Laminar Research; this project is not affiliated with or endorsed by Laminar Research, Boeing or Meta.</p>
   </footer>
@@ -409,12 +412,10 @@ const rich = s => esc(s).replace(/\[\[(\w+)(?:\|([^\]]+))?\]\]/g, (_, k, text) =
   const clr = h.said.find(f => f.key === "clearance.altitude"), c = h.callout;
   $("heroTxText").textContent = clr && clr.transcript ? clr.transcript : "";
   $("heroCc").textContent = "“" + c.text + "”";
-  $("h1Said").textContent = `Said ${ft(c.expected)}.`; $("h1Set").textContent = `Set ${ft(c.actual)}.`;
+  $("h1Said").textContent = `Cleared ${ft(c.expected)}.`; $("h1Set").textContent = `Dialled ${ft(c.actual)}.`;
   const bust = O.matrix.find(r => r.id === h.id), live = bust && bust.runs.find(r => r.recording);
   if (live && live.t != null && live.deadline != null)
-    $("heroClaim").textContent = (h.reader === "muse-spark"
-      ? `Muse Voice Transcribe heard the clearance on the radio. Muse Spark read the altitude selector through a camera. Crosscheck spoke ${s1(live.t)} s after the selector was set: ${s1(live.deadline - live.t)} s before the 737 passed ${ft(c.expected)} ft.`
-      : `Crosscheck heard the clearance on the radio, read the altitude selector through a camera, and spoke ${s1(live.t)} s after the selector was set: ${s1(live.deadline - live.t)} s before the 737 passed ${ft(c.expected)} ft.`);
+    $("heroClaim").textContent = `Air traffic control cleared the 737 to ${ft(c.expected)} feet. The pilot dialled ${ft(c.actual)} by mistake, and nothing on the radio sounded wrong. Crosscheck caught it, and said so ${s1(live.deadline - live.t)} seconds before the aircraft would have flown past ${ft(c.expected)}.`;
   const t0 = Math.max(0, (clr ? clr.t : 0) - 8), t1 = Math.min(h.duration, c.t + 10);
   const W = 1200, L = 70, R = 120, H = 200;
   const x = t => L + (t - t0) / (t1 - t0) * (W - L - R);

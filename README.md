@@ -1,11 +1,19 @@
 # Crosscheck
 
-**A monitoring pilot that only sees and hears.** Crosscheck listens to the radio and the intercom,
-reads the flight displays through a camera, and speaks up, in standard words, when what was
-**said**, what was **set** and what the aircraft is **doing** disagree. Built on Meta's models;
-flown and scored in X-Plane 12 against the simulator's own data, which Crosscheck never sees.
+**A monitoring pilot that only sees and hears.** Air traffic control clears a 737 to 11,000 feet.
+The pilot dials 12,000 by mistake, and nothing on the radio sounds wrong. Crosscheck, watching the
+displays through a camera, says "Cleared one-one thousand, set one-two thousand" 12 seconds before
+the aircraft would have flown past 11,000.
 
-![Crosscheck catching an altitude bust: the clearance was 11,000, the selector was set to 12,000](docs/overview.png)
+Crosscheck listens to the radio and the intercom, reads the flight displays through a camera, and
+speaks up, in standard words, when what was **said**, what was **set** and what the aircraft is
+**doing** disagree. It never overrules anyone: it says what a second pilot would say, and the crew
+decides. Built on Meta's models; flown and scored in X-Plane 12 against the simulator's own data,
+which Crosscheck never sees. Every test flew the Boeing 737-800, the only type tested so far. The
+checks are not the 737's own: they are the cross-checks every airline crew makes, so another type
+means teaching the panel readers (`senses/`) its displays, not wiring anything into the aircraft.
+
+![Crosscheck catching an altitude bust: cleared to 11,000, the pilot dialled 12,000 by mistake](docs/overview.png)
 
 > In the NTSB's review of 37 crew-involved US airline accidents (1978–1990), failures to monitor
 > and challenge were found in 31. ([NTSB SS-94/01](https://www.ntsb.gov/safety/safety-studies/Documents/SS9401.pdf))
@@ -28,6 +36,9 @@ uv run python cli.py debrief           # then open site/index.html
 operational use. The evaluation section says what each number was measured against.
 
 ## What it catches
+
+Crosscheck speaks in pilots' standard words, which say altitudes digit by digit: "one-one thousand"
+is 11,000.
 
 <!-- what-it-catches:start -->
 | Scenario | What goes wrong | Crosscheck says | Live runs right | The shipped recording |
@@ -197,8 +208,8 @@ cannot slow down or change the monitoring loop.
 
 **The film** (`cli.py film`) is made from the same pages: headless Chrome steps each page's clock
 frame by frame at 30 fps, so nothing in it is mocked up. Narration is `docs/film_script.md`
-(`docs/film_script_short.md` for the short cut), read by Fish Audio Drama 3 on the Mac in a voice
-it designed from a written description (`docs/voice/`; no real person's voice is copied). Put your
+(`docs/film_script_short.md` for the short cut), read on the Mac by a local speech model in a voice
+designed from a written description (`docs/voice/`; no real person's voice is copied). Put your
 own recordings in `docs/narration/NN.wav` to use your voice.
 
 **Presenting live** (`docs/DEMO.md`): `uv run python cli.py demo altitude` (read the clearance

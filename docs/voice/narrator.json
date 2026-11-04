@@ -1,15 +1,12 @@
 {
- "what": "The film's narrator: a voice Fish Audio Drama 3 designed from the description below, with no reference audio, so it copies no real person. Every section of the film is read by Drama 3 in this voice (ref_audio = narrator.wav, ref_text = text).",
+ "what": "The film's narrator: a voice Fish Audio Drama 3 designed from the description below, with no reference audio, so it copies no real person. Every section of the film is read by Drama 3 in this voice (ref_audio = narrator.wav, ref_text = text), with a direction for each section (DIRECTION in debrief/film.py).",
  "model": "mlx-community/fish-audio-drama-3-bf16",
- "description": "[an airline pilot in his forties, relaxed and friendly, explaining something to a passenger, plain everyday speech]",
- "text": "When the NTSB reviewed thirty-seven airline accidents where the crew played a part, it found the same thing in thirty-one of them. Someone didn't monitor, or didn't challenge. Crosscheck is the colleague who always does.",
- "seed": 48,
+ "description": "[a warm, natural American man in his forties, a documentary narrator with real human warmth and a slight smile in his voice, conversational and unhurried]",
+ "designed_line": "In thirty-one of thirty-seven airline accidents involving the crew, the NTSB found that someone didn't monitor, or didn't challenge. [a short pause, then quietly confident] Crosscheck always does.",
+ "text": "In thirty-one of thirty-seven airline accidents involving the crew, the NTSB found that someone didn't monitor, or didn't challenge. Crosscheck always does.",
+ "seed": 351,
  "temperature": 0.8,
- "chosen_from": "12 takes, 4 descriptions x 3 seeds; every take was heard word for word by Muse Voice Transcribe. This one: pitch near 100 Hz with moderate movement, 2.5 words a second, pauses between sentences.",
- "measured": {
-  "heard": 0.88,
-  "pace": 2.5,
-  "longest_pause_s": 1.17,
-  "s": 14.9
- }
+ "cleaned": "ffmpeg -af highpass=f=70,afftdn=nr=24:nf=-62:tn=1,agate=threshold=0.008:ratio=3:attack=5:release=120. The designed take had a faint hiss under it (noise floor -54 dB, the 10th percentile of 20 ms RMS) that every line read in its voice copied; cleaned, -78 dB.",
+ "pace": 2.4,
+ "chosen_from": "Picked by ear on 5 Nov from 3 designed voices x 2 seeds, then read in 4 directions; the first narrator (4 Nov, an airline pilot description) sounded flat. pace is the words a second the film's takes are chosen near: the directed lines it was picked on ran 2.3-2.4."
 }

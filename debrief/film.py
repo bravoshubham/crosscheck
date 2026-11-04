@@ -73,6 +73,26 @@ def sections(script: pathlib.Path = SCRIPT) -> dict[str, str]:
 
 # ---------------------------------------------------------------- narration
 CACHE = ROOT / ".cache" / "film_voice"  # synthetic narration, keyed on the text: re-renders reuse it
+# How each section is performed: Drama 3 takes a bracketed direction before the words and does not
+# read it out (read without one, every line came out evenly paced and flat). "Speaking naturally ...
+# confident but relaxed" is the direction the narrator's voice was chosen on, by ear (docs/voice/narrator.json)
+DIRECTION = {
+    "01": "[speaking naturally and warmly, confident but relaxed, a quiet opening]",
+    "02": "[speaking naturally, serious and sincere, like telling a friend something that matters, natural pauses]",
+    "03": "[speaking naturally and warmly, clear and friendly, explaining how something works]",
+    "04": "[speaking naturally, like telling a friend a story, a little tension, then quiet relief]",
+    "05": "[speaking naturally, steady, with quiet urgency, like a pilot describing a close call]",
+    "06": "[speaking naturally, clear and matter-of-fact, explaining]",
+    "07": "[speaking naturally, gentle and serious, caring]",
+    "11": "[speaking naturally, calm and confident, explaining something impressive without boasting]",
+    "08": "[speaking naturally, confident and plain, stating facts]",
+    "09": "[speaking naturally and warmly, understated, a little proud]",
+    "10": "[speaking naturally and warmly, quietly confident, a closing line]",
+}
+CLEAR_ENOUGH = 0.9  # a take this close to the script counts as clear; among those, the most natural pace wins
+# the chosen take, lightly denoised: what is left of the reference's hiss, under the words and in the pauses
+CLEAN = "highpass=f=70,afftdn=nr=12:nf=-60:tn=1"
+NARRATION_LUFS = -16.0  # every line's loudness: the first narrator's, and about the callouts' (voice/bank/)
 
 
 def tts(texts: dict[str, str], out: pathlib.Path) -> dict[str, np.ndarray]:
@@ -82,24 +102,28 @@ def tts(texts: dict[str, str], out: pathlib.Path) -> dict[str, np.ndarray]:
     engine = narrator()
     voices = {}
     todo = {}
-    key = lambda text: hashlib.sha1((engine["id"] + "|" + text).encode()).hexdigest()[:16]
+    said = lambda k, text: (DIRECTION[k] + " " + text) if k in DIRECTION and engine["id"].startswith("drama3") else text
+    key = lambda k, text: hashlib.sha1((engine["id"] + "|" + said(k, text)).encode()).hexdigest()[:16]
     for k, text in texts.items():
         own = OWN_VOICE / f"{k}.wav"
         if own.exists():
             voices[k] = load(own)
-        elif (CACHE / f"{key(text)}.wav").exists():
-            voices[k] = load(CACHE / f"{key(text)}.wav")
+        elif (CACHE / f"{key(k, text)}.wav").exists():
+            voices[k] = load(CACHE / f"{key(k, text)}.wav")
         else:
             todo[k] = text
     if todo and engine["run"]:
-        # several takes of each line; the take Muse Voice Transcribe hears closest to the script is kept
-        # (ties: the one nearest the narrator's own pace), so the narration is measured, not hoped for
-        engine["run"](todo, out)
+        # several takes of each line; of those Muse Voice Transcribe hears clearly enough, the one nearest
+        # the narrator's own pace is kept, so the narration is measured, not hoped for, and not the flattest
+        engine["run"]({k: said(k, text) for k, text in todo.items()}, out)
         for k, text in todo.items():
             takes = [out / f"{k}_{i}.wav" for i in range(engine["takes"]) if (out / f"{k}_{i}.wav").exists()]
             if takes:
-                best = max(takes, key=lambda f: (round(heard_as(f, text), 2), -abs(pace(f, text) - engine["pace"])))
-                shutil.copy(best, out / f"{k}.wav")
+                best = max(takes, key=lambda f: (min(round(heard_as(f, text), 2), CLEAR_ENOUGH), -abs(pace(f, text) - engine["pace"])))
+                if engine["id"].startswith("drama3"):
+                    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(best), "-af", CLEAN, str(out / f"{k}.wav")], check=True)
+                else:
+                    shutil.copy(best, out / f"{k}.wav")
     for k, text in todo.items():
         f = out / f"{k}.wav"
         if not f.exists():  # the Mac's own voice, as a last resort (not cached: the engine should be tried again)
@@ -107,9 +131,9 @@ def tts(texts: dict[str, str], out: pathlib.Path) -> dict[str, np.ndarray]:
             subprocess.run(["say", "-v", "Samantha", "-r", "175", "-o", str(aiff), text], check=True)
             voices[k] = load(aiff)
         else:
-            shutil.copy(f, CACHE / f"{key(text)}.wav")
+            shutil.copy(f, CACHE / f"{key(k, text)}.wav")
             voices[k] = load(f)
-    return voices
+    return {k: level(v) for k, v in voices.items()}
 
 
 def narrator() -> dict:
@@ -118,8 +142,10 @@ def narrator() -> dict:
     import hashlib
     ref = VOICE / "narrator.wav"
     if (DRAMA3 / ".venv" / "bin" / "python").exists() and ref.exists():
-        ref_text = json.loads((VOICE / "narrator.json").read_text())["text"]
-        return {"id": "drama3:" + hashlib.sha1(ref.read_bytes()).hexdigest()[:12], "takes": 3, "pace": pace(ref, ref_text),
+        about = json.loads((VOICE / "narrator.json").read_text())
+        ref_text = about["text"]
+        return {"id": "drama3:" + hashlib.sha1(ref.read_bytes()).hexdigest()[:12], "takes": 3,
+                "pace": about.get("pace") or pace(ref, ref_text),
                 "run": lambda todo, out: drama3(todo, out, ref, ref_text, 3)}
     if (OMNIVOICE / ".venv" / "bin" / "python").exists():
         return {"id": NARRATOR, "takes": 2, "pace": 2.6, "run": lambda todo, out: omnivoice(todo, out, 2)}
@@ -138,7 +164,7 @@ def drama3(todo: dict[str, str], out: pathlib.Path, ref: pathlib.Path, ref_text:
         "for k, text in j['lines'].items():\n"
         "    for take in range(j['takes']):\n"
         "        mx.random.seed(7 + 100 * take)\n"
-        "        outs = list(m.generate(text=text, ref_audio=j['ref'], ref_text=j['ref_text'], temperature=0.8))\n"
+        "        outs = list(m.generate(text=text, ref_audio=j['ref'], ref_text=j['ref_text'], temperature=0.85))\n"
         "        a = np.concatenate([np.array(o.audio, dtype=np.float32).reshape(-1) for o in outs])\n"
         "        sf.write(f\"{j['out']}/{k}_{take}.wav\", a, outs[0].sample_rate)\n"
         "        print(k, take, f'{len(a) / outs[0].sample_rate:.1f} s', flush=True)\n")
@@ -182,6 +208,16 @@ def heard_as(path: pathlib.Path, text: str) -> float:
     score = difflib.SequenceMatcher(None, normalise(text).split(), normalise(heard).split()).ratio()
     print(f"    {path.name}: {score:.2f}  \"{heard[:70]}\"", flush=True)
     return score
+
+
+def level(x: np.ndarray) -> np.ndarray:
+    """A narration line at NARRATION_LUFS, whatever voice or take it came from (5 Nov: Drama 3 reads
+    the second narrator 7.5 dB quieter than the first, under the callouts). loudnorm also holds the
+    peaks under -1.5 dB, which plain gain cannot: these takes peak high for their loudness."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
+                        "-af", f"loudnorm=I={NARRATION_LUFS}:TP=-1.5:LRA=11", "-ar", str(SR), "-f", "f32le", "-"],
+                       input=x.astype("<f4").tobytes(), capture_output=True, check=True)
+    return np.frombuffer(r.stdout, dtype="<f4").copy()
 
 
 def load(path: pathlib.Path) -> np.ndarray:
