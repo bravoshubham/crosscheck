@@ -1,0 +1,2198 @@
+{
+ "final:autothrottle_hold/frames/00000.jpg": {
+  "ias": 130,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.4,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2370950209
+  },
+  "raw": {
+   "glimmer_final": "\"142;130;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00000.jpg": {
+  "ias": 130,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.14,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4135670000
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"130/142\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00003.jpg": {
+  "ias": 127,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.53,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2530287708
+  },
+  "raw": {
+   "glimmer_final": "\"142;127;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00003.jpg": {
+  "ias": 127,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.09,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4076067000
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"127/142\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00006.jpg": {
+  "ias": 136,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2497486333
+  },
+  "raw": {
+   "glimmer_final": "\"142;136;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00006.jpg": {
+  "ias": 136,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4146473209
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"136/142\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00009.jpg": {
+  "ias": 142,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.52,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2520224125
+  },
+  "raw": {
+   "glimmer_final": "\"142;142;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00009.jpg": {
+  "ias": 142,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.52,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4517227125
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"142/142\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00012.jpg": {
+  "ias": 145,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.53,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2527531375
+  },
+  "raw": {
+   "glimmer_final": "\"142;145;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00012.jpg": {
+  "ias": 145,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.13,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4125959625
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"145/142\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00015.jpg": {
+  "ias": 146,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.49,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2486035708
+  },
+  "raw": {
+   "glimmer_final": "\"142;146;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00015.jpg": {
+  "ias": 146,
+  "sel": 142,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4142375292
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"146/142\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00018.jpg": {
+  "ias": 145,
+  "sel": 142,
+  "fma": [
+   "",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.41,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 9,
+   "total_duration": 2408609167
+  },
+  "raw": {
+   "glimmer_final": "\"142;145;;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00018.jpg": {
+  "ias": 142,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.9,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3887459208
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"142/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00021.jpg": {
+  "ias": 139,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.33,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2326131125
+  },
+  "raw": {
+   "glimmer_final": "\"142;139;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00021.jpg": {
+  "ias": 139,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.23,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 4218486208
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"139/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00024.jpg": {
+  "ias": 132,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.52,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2522836458
+  },
+  "raw": {
+   "glimmer_final": "\"142;132;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00024.jpg": {
+  "ias": 132,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.97,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 3964619125
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"132/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"] }"
+  }
+ },
+ "final:autothrottle_hold/frames/00027.jpg": {
+  "ias": 126,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.35,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2343485542
+  },
+  "raw": {
+   "glimmer_final": "\"142;126;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00027.jpg": {
+  "ias": 125,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.95,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3945702250
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"125/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00030.jpg": {
+  "ias": 118,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.31,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2308568375
+  },
+  "raw": {
+   "glimmer_final": "\"142;118;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00030.jpg": {
+  "ias": 118,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.89,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3882640292
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"118/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00033.jpg": {
+  "ias": 110,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.39,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2387585875
+  },
+  "raw": {
+   "glimmer_final": "\"142;110;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00033.jpg": {
+  "ias": 110,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.12,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 4116806834
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"110/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00036.jpg": {
+  "ias": 110,
+  "sel": 142,
+  "fma": [
+   "",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.19,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 9,
+   "total_duration": 2192491458
+  },
+  "raw": {
+   "glimmer_final": "\"142;110;;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00036.jpg": {
+  "ias": 110,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.19,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 4184988083
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"110/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00039.jpg": {
+  "ias": 117,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2496862958
+  },
+  "raw": {
+   "glimmer_final": "\"142;117;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00039.jpg": {
+  "ias": 117,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.96,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3955974125
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"117/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00042.jpg": {
+  "ias": 127,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.41,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2407970459
+  },
+  "raw": {
+   "glimmer_final": "\"142;127;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00042.jpg": {
+  "ias": 127,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.05,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 4041488167
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"127/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold/frames/00045.jpg": {
+  "ias": 133,
+  "sel": 142,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.4,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2395811167
+  },
+  "raw": {
+   "glimmer_final": "\"142;133;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold/frames/00045.jpg": {
+  "ias": 133,
+  "sel": 142,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.92,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3910271250
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"133/142\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00001.jpg": {
+  "ias": 127,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.51,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2508664750
+  },
+  "raw": {
+   "glimmer_final": "\"141;127;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00001.jpg": {
+  "ias": 127,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4139375167
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"127/141\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00003.jpg": {
+  "ias": 124,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.52,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2518867958
+  },
+  "raw": {
+   "glimmer_final": "\"141;124;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00003.jpg": {
+  "ias": 124,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.17,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4167225958
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"124/141\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00006.jpg": {
+  "ias": 125,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.51,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2503376166
+  },
+  "raw": {
+   "glimmer_final": "\"141;125;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00006.jpg": {
+  "ias": 125,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.14,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4132009167
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"125/141\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00008.jpg": {
+  "ias": 137,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.49,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2484383958
+  },
+  "raw": {
+   "glimmer_final": "\"141;137;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00008.jpg": {
+  "ias": 137,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.19,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4184036875
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"137/141\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00010.jpg": {
+  "ias": 145,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.51,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2507006167
+  },
+  "raw": {
+   "glimmer_final": "\"141;145;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00010.jpg": {
+  "ias": 145,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4146944333
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"145/141\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00012.jpg": {
+  "ias": 148,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.56,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2555477417
+  },
+  "raw": {
+   "glimmer_final": "\"141;148;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00012.jpg": {
+  "ias": 148,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.21,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4201866375
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"148/141\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00014.jpg": {
+  "ias": 150,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.48,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2481650583
+  },
+  "raw": {
+   "glimmer_final": "\"141;150;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00014.jpg": {
+  "ias": 150,
+  "sel": 141,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.2,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4191382875
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"150/141\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00016.jpg": {
+  "ias": 149,
+  "sel": 141,
+  "fma": [
+   "",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.2,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 9,
+   "total_duration": 2197750042
+  },
+  "raw": {
+   "glimmer_final": "\"141;149;;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00016.jpg": {
+  "ias": 149,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.02,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 4019927167
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"149/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"] }"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00018.jpg": {
+  "ias": 145,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.66,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2660878292
+  },
+  "raw": {
+   "glimmer_final": "\"141;145;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00018.jpg": {
+  "ias": 145,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.98,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 3972670083
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"145/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"] }"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00020.jpg": {
+  "ias": 140,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.35,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2346107417
+  },
+  "raw": {
+   "glimmer_final": "\"141;140;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00020.jpg": {
+  "ias": 140,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.96,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3952515417
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"140/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00022.jpg": {
+  "ias": 135,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.41,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2410479750
+  },
+  "raw": {
+   "glimmer_final": "\"141;135;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00022.jpg": {
+  "ias": 135,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.97,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3961541875
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"135/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00025.jpg": {
+  "ias": 126,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.36,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2353011583
+  },
+  "raw": {
+   "glimmer_final": "\"141;126;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00025.jpg": {
+  "ias": 126,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.94,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3928339458
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"126/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00027.jpg": {
+  "ias": 120,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.36,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2355646709
+  },
+  "raw": {
+   "glimmer_final": "\"141;120;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00027.jpg": {
+  "ias": 120,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.93,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3923982292
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"120/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00029.jpg": {
+  "ias": 114,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.32,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2314169542
+  },
+  "raw": {
+   "glimmer_final": "\"141;114;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00029.jpg": {
+  "ias": 114,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.95,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3947853084
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"114/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00032.jpg": {
+  "ias": 110,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.31,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2311364959
+  },
+  "raw": {
+   "glimmer_final": "\"141;110;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00032.jpg": {
+  "ias": 110,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.93,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3929655416
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"110/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00034.jpg": {
+  "ias": 112,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.36,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2358136959
+  },
+  "raw": {
+   "glimmer_final": "\"141;112;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00034.jpg": {
+  "ias": 112,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.92,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3914785375
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"112/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00037.jpg": {
+  "ias": 123,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.34,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2341016334
+  },
+  "raw": {
+   "glimmer_final": "\"141;123;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00037.jpg": {
+  "ias": 123,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.94,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 23,
+   "total_duration": 3929392458
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"123/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:autothrottle_hold_spark/frames/00040.jpg": {
+  "ias": 132,
+  "sel": 141,
+  "fma": [
+   "ARM",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.33,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 11,
+   "total_duration": 2329063375
+  },
+  "raw": {
+   "glimmer_final": "\"141;132;ARM;ALT HOLD\""
+  }
+ },
+ "fast:autothrottle_hold_spark/frames/00040.jpg": {
+  "ias": 132,
+  "sel": 141,
+  "fma": [
+   "",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 3.99,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 3985076917
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"132/141\", \"m\": [\"\", \"HDG SEL\", \"ALT HOLD\"] }"
+  }
+ },
+ "final:nominal/frames/00000.jpg": {
+  "ias": 188,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2495113167
+  },
+  "raw": {
+   "glimmer_final": "\"193;188;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00000.jpg": {
+  "ias": 188,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.16,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4153310166
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"188/193\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00025.jpg": {
+  "ias": 193,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.51,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2508111666
+  },
+  "raw": {
+   "glimmer_final": "\"193;193;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00025.jpg": {
+  "ias": 193,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.16,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4148618083
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"193/193\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00050.jpg": {
+  "ias": 196,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   null,
+   "MCP SPD"
+  ],
+  "s": 2.61,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 14,
+   "total_duration": 2606775000
+  },
+  "raw": {
+   "glimmer_final": "\"193;196;MCP SPD;MCP SPD\""
+  }
+ },
+ "fast:nominal/frames/00050.jpg": {
+  "ias": 196,
+  "sel": 193,
+  "fma": [
+   "RETARD",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4144071500
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"196/193\", \"m\": [\"RETARD\", \"HDG SEL\", \"MCP SPD\"]}"
+  }
+ },
+ "final:nominal/frames/00075.jpg": {
+  "ias": 192,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2497786916
+  },
+  "raw": {
+   "glimmer_final": "\"193;192;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00075.jpg": {
+  "ias": 193,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4147153542
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"193/193\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00100.jpg": {
+  "ias": 194,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.52,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2518935042
+  },
+  "raw": {
+   "glimmer_final": "\"193;194;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00100.jpg": {
+  "ias": 194,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.18,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4168470833
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"194/193\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00125.jpg": {
+  "ias": 192,
+  "sel": 193,
+  "fma": [
+   "RETARD",
+   null,
+   "MCP SPD"
+  ],
+  "s": 2.52,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2521804417
+  },
+  "raw": {
+   "glimmer_final": "\"193;192;RETARD;MCP SPD\""
+  }
+ },
+ "fast:nominal/frames/00125.jpg": {
+  "ias": 192,
+  "sel": 193,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "s": 4.01,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 4007023167
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"192/193\", \"m\": [\"\", \"HDG SEL\", \"MCP SPD\"]}"
+  }
+ },
+ "final:nominal/frames/00150.jpg": {
+  "ias": 195,
+  "sel": 193,
+  "fma": [
+   "MCP SPD",
+   null,
+   ""
+  ],
+  "s": 2.29,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 10,
+   "total_duration": 2289828542
+  },
+  "raw": {
+   "glimmer_final": "\"193;195;MCP SPD;\""
+  }
+ },
+ "fast:nominal/frames/00150.jpg": {
+  "ias": 195,
+  "sel": 193,
+  "fma": [
+   "RETARD",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "s": 4.12,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4115807542
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"195/193\", \"m\": [\"RETARD\", \"HDG SEL\", \"MCP SPD\"]}"
+  }
+ },
+ "final:nominal/frames/00175.jpg": {
+  "ias": 194,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.48,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2478970667
+  },
+  "raw": {
+   "glimmer_final": "\"210;194;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00175.jpg": {
+  "ias": 194,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.16,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4148736708
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"194/210\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00200.jpg": {
+  "ias": 211,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.51,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2511852209
+  },
+  "raw": {
+   "glimmer_final": "\"210;211;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00200.jpg": {
+  "ias": 211,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.13,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4122407042
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"211/210\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00225.jpg": {
+  "ias": 210,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.51,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2506496584
+  },
+  "raw": {
+   "glimmer_final": "\"210;210;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00225.jpg": {
+  "ias": 210,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.16,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4152184292
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"210/210\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00250.jpg": {
+  "ias": 210,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2496957208
+  },
+  "raw": {
+   "glimmer_final": "\"210;210;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00250.jpg": {
+  "ias": 210,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.13,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4124211750
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"210/210\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00275.jpg": {
+  "ias": 212,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "MCP SPD"
+  ],
+  "s": 2.61,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 14,
+   "total_duration": 2607410875
+  },
+  "raw": {
+   "glimmer_final": "\"210;212;MCP SPD;MCP SPD\""
+  }
+ },
+ "fast:nominal/frames/00275.jpg": {
+  "ias": 212,
+  "sel": 210,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "s": 3.99,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 3985500500
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"212/210\", \"m\": [\"\", \"HDG SEL\", \"MCP SPD\"]}"
+  }
+ },
+ "final:nominal/frames/00300.jpg": {
+  "ias": 219,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.46,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2457280583
+  },
+  "raw": {
+   "glimmer_final": "\"210;219;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00300.jpg": {
+  "ias": 219,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.14,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4128958583
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"219/210\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00325.jpg": {
+  "ias": 210,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2500562708
+  },
+  "raw": {
+   "glimmer_final": "\"210;210;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00325.jpg": {
+  "ias": 210,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.16,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4151901709
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"210/210\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00350.jpg": {
+  "ias": 207,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   ""
+  ],
+  "s": 2.28,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 10,
+   "total_duration": 2274599875
+  },
+  "raw": {
+   "glimmer_final": "\"210;207;MCP SPD;\""
+  }
+ },
+ "fast:nominal/frames/00350.jpg": {
+  "ias": 207,
+  "sel": 210,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "s": 3.98,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 3975035042
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"207/210\", \"m\": [\"\", \"HDG SEL\", \"MCP SPD\"]}"
+  }
+ },
+ "final:nominal/frames/00375.jpg": {
+  "ias": 211,
+  "sel": 210,
+  "fma": [
+   "MCP SPD",
+   null,
+   "MCP SPD"
+  ],
+  "s": 2.59,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 14,
+   "total_duration": 2587802416
+  },
+  "raw": {
+   "glimmer_final": "\"210;211;MCP SPD;MCP SPD\""
+  }
+ },
+ "fast:nominal/frames/00375.jpg": {
+  "ias": 211,
+  "sel": 210,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "s": 4.0,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 3995689500
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"211/210\", \"m\": [\"\", \"HDG SEL\", \"MCP SPD\"]}"
+  }
+ },
+ "final:nominal/frames/00400.jpg": {
+  "ias": 187,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.49,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2485017542
+  },
+  "raw": {
+   "glimmer_final": "\"190;187;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00400.jpg": {
+  "ias": 187,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.14,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4135717500
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"187/190\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00425.jpg": {
+  "ias": 191,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.49,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2490555375
+  },
+  "raw": {
+   "glimmer_final": "\"190;191;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00425.jpg": {
+  "ias": 191,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.17,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4162855083
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"191/190\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00450.jpg": {
+  "ias": 190,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2498748667
+  },
+  "raw": {
+   "glimmer_final": "\"190;190;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00450.jpg": {
+  "ias": 190,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.16,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4158462833
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"190/190\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00475.jpg": {
+  "ias": 190,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.49,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2489423042
+  },
+  "raw": {
+   "glimmer_final": "\"190;190;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00475.jpg": {
+  "ias": 190,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.17,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4165625791
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"190/190\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00500.jpg": {
+  "ias": 193,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   null,
+   ""
+  ],
+  "s": 2.27,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 10,
+   "total_duration": 2271916500
+  },
+  "raw": {
+   "glimmer_final": "\"190;193;MCP SPD;\""
+  }
+ },
+ "fast:nominal/frames/00500.jpg": {
+  "ias": 193,
+  "sel": 190,
+  "fma": [
+   "",
+   "HDG SEL",
+   "MCP SPD"
+  ],
+  "s": 3.98,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 24,
+   "total_duration": 3972801833
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"193/190\", \"m\": [\"\", \"HDG SEL\", \"MCP SPD\"]}"
+  }
+ },
+ "final:nominal/frames/00525.jpg": {
+  "ias": 191,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.49,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2486640459
+  },
+  "raw": {
+   "glimmer_final": "\"190;191;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00525.jpg": {
+  "ias": 190,
+  "sel": 190,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.17,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4165814292
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"190/190\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00550.jpg": {
+  "ias": 166,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.48,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2480818166
+  },
+  "raw": {
+   "glimmer_final": "\"170;166;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00550.jpg": {
+  "ias": 165,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.14,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4134944583
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"165/170\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00575.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2499204584
+  },
+  "raw": {
+   "glimmer_final": "\"170;170;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00575.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4138993250
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"170/170\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00600.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.48,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2477844125
+  },
+  "raw": {
+   "glimmer_final": "\"170;170;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00600.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.17,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4164766084
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"170/170\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00625.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.5,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2502175000
+  },
+  "raw": {
+   "glimmer_final": "\"170;170;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00625.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.14,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4129128417
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"170/170\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ },
+ "final:nominal/frames/00650.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   null,
+   "ALT HOLD"
+  ],
+  "s": 2.46,
+  "usage": {
+   "prompt_eval_count": 277,
+   "eval_count": 13,
+   "total_duration": 2459885250
+  },
+  "raw": {
+   "glimmer_final": "\"170;170;MCP SPD;ALT HOLD\""
+  }
+ },
+ "fast:nominal/frames/00650.jpg": {
+  "ias": 170,
+  "sel": 170,
+  "fma": [
+   "MCP SPD",
+   "HDG SEL",
+   "ALT HOLD"
+  ],
+  "s": 4.15,
+  "usage": {
+   "prompt_eval_count": 365,
+   "eval_count": 26,
+   "total_duration": 4144485167
+  },
+  "raw": {
+   "glimmer_fast": "{\"r\": \"170/170\", \"m\": [\"MCP SPD\", \"HDG SEL\", \"ALT HOLD\"]}"
+  }
+ }
+}

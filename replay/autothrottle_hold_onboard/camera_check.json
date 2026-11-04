@@ -4,7 +4,7 @@
  "matches": {
   "pfd": {
    "read": {
-    "ias": 150,
+    "ias": 148,
     "selected_altitude": 2500,
     "thrust_mode": "MCP SPD"
    },

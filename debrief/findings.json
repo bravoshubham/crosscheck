@@ -139,8 +139,15 @@
   "date": "4 Nov",
   "area": "On board: autothrottle",
   "found": "On board the callout came 23–39 s after the fault, after speed was 10 kt low (6 runs). Two reads in flight on a busy GPU doubled each read’s delay to 9 s; the rule waited for three readings in a row (10 s at one every 5 s); an empty thrust box was sometimes left out of the answer, which lost the whole reading; and a few frames had the speed misread.",
-  "fix": "One read in flight; on final two reads in three are only the speed tape and the mode boxes; two readings at least 3 s apart count like three in a row (both tested); the modes are asked for as a list of exactly three 737 mode names. Each read is now right on the frames it missed, but at one every 4–6 s it is still too late for this alert on this computer: a known limit, like Muse Spark’s in the cloud.",
+  "fix": "One read in flight; on final two reads in three are only the speed tape and the mode boxes; two readings at least 3 s apart count like three in a row (both tested); the modes are asked for as a list of exactly three 737 mode names. Each read was then right on the frames it missed, but at one every 4–6 s still too late: 0 of 4.",
   "evidence": "eval/results/repeat/autothrottle_hold_onboard.before_*.json"
+ },
+ {
+  "date": "4 Nov",
+  "area": "On board: autothrottle, again",
+  "found": "Where the time went, read by read: a reading every 5.5 s, of which 0.6 s was the screenshot (a full-screen PNG written and read back) and the rest the read; one read in three or five was the whole set of parts (3.4–5.7 s), which could start just before the fault; and a whole read once took the selected speed for the speed.",
+  "fix": "On final a final lane: the selected speed, the speed box and the thrust and pitch mode boxes, the answer one short string held to a pattern (each mode box only its own column’s modes): 2.15 s a read with X-Plane flying, as accurate as the fast lane on 61 recorded frames (airspeed 59 against 58, selected speed and thrust mode all right). The screen straight from the display, 0.08 s, the same pixels. A whole read at most every 30 s on final, none while the thrust box shows the autothrottle out of speed. A reading every 2.6 s; in time in 4 of 4 fresh runs, 9.5–14.5 s after the fault.",
+  "evidence": "eval/panel_final_lane.py; eval/results/repeat/autothrottle_hold_onboard.before_final_lane.json, .before_capture_and_schedule.json"
  },
  {
   "date": "4 Nov",

@@ -345,3 +345,44 @@ def test_one_stale_read_after_the_change_is_not_a_bust():
                  ("set", "mcp.altitude", 5000, -6.0), ("set", "mcp.altitude", 5000, 7.0), ("set", "mcp.altitude", 4000, 13.0),
                  ("set", "mcp.altitude", 5000, 19.5))
     assert evaluate(led, 19.5) == []
+
+
+def test_final_lane_blank_thrust_box_is_a_reading(tmp_path):
+    # Glimmer's final lane reads the thrust and pitch boxes only: the roll box is None, not blank
+    from brain.live import Crosscheck
+    from senses.panel import PanelReading
+    cc = Crosscheck(tmp_path)
+    cc.observe(PanelReading(ias=141, fma=["", None, ""]), 1.0)
+    cc.observe(PanelReading(ias=140, fma=["ARM", None, "ALT HOLD"]), 2.0)
+    assert [f.value for f in cc.ledger.since("doing", "fma.thrust", 0)] == ["BLANK", "ARM"]
+    assert [f.value for f in cc.ledger.since("doing", "fma.pitch", 0)] == ["BLANK", "ALT HOLD"]
+
+
+def test_an_unread_mode_line_is_still_unknown(tmp_path):
+    from brain.live import Crosscheck
+    from senses.panel import PanelReading
+    cc = Crosscheck(tmp_path)
+    cc.observe(PanelReading(ias=141, fma=["", "", ""]), 1.0)
+    assert cc.ledger.since("doing", "fma.thrust", 0) == []
+
+
+def test_final_lane_reply_is_parsed_and_checked(monkeypatch):
+    import asyncio
+    import re
+    from PIL import Image
+    from senses import panel_glimmer as pg
+
+    async def reply(text):
+        async def fake(*a, **k):
+            return text, {}
+        monkeypatch.setattr(pg, "glimmer_json", fake)
+        return (await pg.read_frame_glimmer_final(Image.new("RGB", (3600, 2338))))[0]
+    pattern = re.compile(pg.FINAL_SCHEMA["pattern"])
+    assert pattern.match("142;141;;ALT HOLD") and pattern.match("?;?;MCP SPD;V/S")
+    assert not pattern.match("142;1232;;ALT HOLD") and not pattern.match("142;141;ALT HOLD;")
+    r = asyncio.run(reply('"142;141;;ALT HOLD"'))
+    assert (r.ias, r.selected_speed, r.fma) == (141, 142, ["", None, "ALT HOLD"])
+    r = asyncio.run(reply('"?;141;MCP SPD;G/S"'))
+    assert (r.ias, r.selected_speed, r.fma) == (141, None, ["MCP SPD", None, "G/S"])
+    r = asyncio.run(reply('"142;14'))  # cut short: nothing read
+    assert (r.ias, r.selected_speed, r.fma) == (None, None, ["", "", ""])

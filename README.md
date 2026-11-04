@@ -51,7 +51,7 @@ operational use. The evaluation section says what each number was measured again
 | Altitude bust, on board | Cleared to 11,000; the pilot flying sets 12,000. | “Cleared one-one thousand, set one-two thousand.” | 4 of 4 | 22.6 s after the MCP was set; the 737 passed 11,000 at 26.4 s |
 | Readback error, on board | Cleared to 11,000; the crew reads back 12,000. | “Readback one-two thousand, cleared one-one thousand.” | 4 of 4 | 5.7 s after the MCP was set |
 | Correct setting, on board | Cleared, read back and set to 11,000. | (silence) | 4 of 4 | Silent, as it should be |
-| Autothrottle not in speed on final (the Asiana 214 pattern), on board | On final the autothrottle drops out and speed decays. | “Speed. Autothrottle not in speed.” | 0 of 4 | 22.8 s after the fault; speed was 10 kt low at 11.6 s (a miss) |
+| Autothrottle not in speed on final (the Asiana 214 pattern), on board | On final the autothrottle drops out and speed decays. | “Speed. Autothrottle not in speed.” | 4 of 4 | 9.5 s after the fault; speed was 10 kt low at 12.1 s |
 | Flaps: wrong setting, on board | “Flaps fifteen” called; the lever goes to 10. | “Flaps fifteen called, ten set.” | 4 of 4 | 32.4 s after the call |
 | Flaps: not moved, on board | “Flaps fifteen” called; nobody moves the lever. | “Flaps fifteen called, five set.” | 4 of 4 | 32.3 s after the call |
 | Flaps: correct, on board | “Flaps fifteen” called and selected. | (silence) | 4 of 4 | Silent, as it should be |
@@ -82,7 +82,8 @@ mid-travel. That makes it slower than the altitude checks (~20 s).
 readings in a row, the pitch is not holding speed either (in a level-change descent the elevator
 does), and speed is below target: 5 kt below, or heading there within 10 s on the trend of the
 last 8 s of readings, like the PFD's own speed trend arrow. The on-device reader is in time on
-every run; Muse Spark, whose readings arrive ~3.5 s after the frame, about half the time.
+every run; Muse Spark, whose readings arrive ~3.5 s after the frame, about half the time; Muse
+Glimmer on board, reading only the speeds and modes on final (a reading every 2.6 s), 4 of 4.
 
 **Speech is real speech recognition, and the design assumes it will be wrong.** The clearance
 (radio-filtered) and the readback are spoken by a synthetic voice, each streamed on its own
@@ -128,9 +129,11 @@ is made under a macOS sandbox that refuses every connection that is not to this 
 uv run python cli.py onboard altitude_bust bust --speak    # starts the local models, then flies it on board
 ```
 
-On board it catches the altitude bust, the readback error and all three flap cases, and flew
-fifteen minutes of normal flying with no false alarm (25 of 29 live runs on board right); it is too slow for the autothrottle alert,
-which needs a reading every second or two (Glimmer reads every 4–6 s here). Setup, every
+On board it catches the altitude bust, the readback error, all three flap cases and the
+autothrottle dropping out on final, and flew fifteen minutes of normal flying with no false alarm:
+29 of 29 live runs on board right. For the autothrottle, which needs a fresh reading every two or
+three seconds, Glimmer reads only the speeds and the thrust and pitch modes on final, 2.15 s a read
+with X-Plane on the same GPU (it was 0 of 4 at one reading every 5.5 s). Setup, every
 measurement and what is not on board yet (the pilot watch's SAM 3D Body still runs on a cloud
 GPU): [`onboard/README.md`](onboard/README.md).
 
@@ -147,7 +150,7 @@ Spark, SAM 3.1 and Muse Wonder cross-check the others: none of them is trusted o
 | SAM 3.1 | Pre-flight camera check: the flight displays must be where the readers expect; finds the captain for SAM 3D Body | Displays found within IoU 0.93–0.94 of the calibration on recorded frames; a run whose camera check fails does not start. Pilot found in all 24 labelled images; with its boxes the posture check is right on 23/24 (24/24 with hand-drawn boxes; the miss is a checklist held low in the lap) |
 | SAM 3D Body | Pilot watch: 3D body pose on every pilot-camera frame | Modal T4, ~2 s a frame warm; posture right on 24/24 labelled images; live on generated video in the pilot-watch scenario |
 | Muse Image | The synthetic pilots the pilot camera is tested on, and the halfway poses the video is anchored on | ~$0.01 an image; the content filter refused a "passed out" prompt, and some edits at random (a retry worked) |
-| Muse Glimmer 30B (open weights, on board) | On board with no network: reads the PFD and the flap gauge from camera frames, second reader for radio lines code cannot parse, the sentence under each callout | Recorded frames: selected altitude 57/63, airspeed 30/36, altitude 53/77, flap gauge 19/20 (Muse Spark 18/20), 3.9 s a read; flies every scenario on board except the autothrottle, where a read every 4–6 s is too slow ([`onboard/README.md`](onboard/README.md)) |
+| Muse Glimmer 30B (open weights, on board) | On board with no network: reads the PFD and the flap gauge from camera frames, second reader for radio lines code cannot parse, the sentence under each callout | Recorded frames: selected altitude 57/63, airspeed 30/36, altitude 53/77, flap gauge 19/20 (Muse Spark 18/20), 3.9 s a read; on final the speeds and modes only, 2.15 s a read with X-Plane flying; every scenario on board, 29 of 29 runs ([`onboard/README.md`](onboard/README.md)) |
 | SeamlessM4T v2 + Omnilingual ASR 7B (open weights, on board) | On board with no network: both hear every radio and intercom line; a value counts when they do not disagree | The scenarios' own lines: 48 of 51 values right, 0 wrong (Voice Transcribe 49 right, 2 wrong); behind Voice Transcribe in engine noise |
 | SAM Audio | Separating overlapping speakers | Cleans the noise (+5.8 to +10.7 dB SI-SDR) but makes transcription worse, so it is kept out of the speech path |
 | MMS-TTS, MMS ASR | The scenarios' synthetic radio voices and the fallback callout voice; the first speech baseline | Callouts come from a recorded bank instead: played to Voice Transcribe, MMS-TTS's came back as "Fleered one 1000" ([`voice/bank/`](voice/bank/README.md)) |

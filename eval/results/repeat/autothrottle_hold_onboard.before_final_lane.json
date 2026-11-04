@@ -1,0 +1,47 @@
+{
+ "scenario": "autothrottle_hold_onboard",
+ "scored": 4,
+ "passed": 0,
+ "errors": 0,
+ "runs": [
+  {
+   "run": 0,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 103,
+   "callout_s_after_fault": 17.3,
+   "truth_below_target_minus_10_s": 11.5,
+   "false_callouts_before_fault": [],
+   "panel_readable": 0.92
+  },
+  {
+   "run": 1,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 99,
+   "callout_s_after_fault": 22.8,
+   "truth_below_target_minus_10_s": 12.3,
+   "false_callouts_before_fault": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 2,
+   "pass": false,
+   "callouts": "Speed. Autothrottle not in speed.",
+   "seconds": 102,
+   "callout_s_after_fault": 17.4,
+   "truth_below_target_minus_10_s": 11.2,
+   "false_callouts_before_fault": [],
+   "panel_readable": 1.0
+  },
+  {
+   "run": 3,
+   "pass": false,
+   "recorded": "2026-11-04 15:01:29 IST",
+   "callout": "Speed. Autothrottle not in speed.",
+   "callout_s_after_fault": 22.8,
+   "truth_below_target_minus_10_s": 11.6,
+   "note": "the shipped recording before the final lane (eval/results/autothrottle_hold_onboard_before_final_lane/), replaced"
+  }
+ ]
+}

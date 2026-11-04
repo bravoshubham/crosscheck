@@ -153,8 +153,7 @@ def build_one(rec: pathlib.Path, synth) -> dict:
     title, blurb = TITLES.get(base, (name, ""))
     if name.endswith("_onboard"):
         title += " · on board"
-        blurb = ONBOARD_NOTE + ("Too slow on this computer: Glimmer's reads every 4–6 s, with the simulator holding the GPU, "
-                                "put the callout after speed was 10 kt low." if meta.get("known_result") else blurb)
+        blurb = ONBOARD_NOTE + blurb
     if name.endswith("_mic"):
         title += " · live voice"
         blurb = "A person speaking into the Mac's microphone. " + blurb
@@ -293,6 +292,11 @@ def models(data: list[dict]) -> list[dict]:
         m.append(f"Reading the flight displays: altitude within 20 ft {alt.get('glimmer')} frames "
                  f"(the reader that recorded them: {alt.get('apple') or alt.get('muse-spark')})")
         m.append(f"The flap gauge: {pg['flap_gauge_right']['glimmer']} frames right (Muse Spark {pg['flap_gauge_right']['muse-spark']})")
+    fl = load(R / "day_one" / "panel_final_lane.json")
+    if fl:
+        f = fl["final"]
+        m.append(f"On final, speeds and modes only: airspeed within 2 kt {f['ias']} frames, thrust in speed or not {f['thrust']}; "
+                 "2.15 s a read with X-Plane flying")
     out.append({"model": "Muse Glimmer 30B (open weights, on board)",
                 "job": "On board, with no network: reads the flight displays and the flap gauge, reads radio lines the parser cannot, writes the sentence under each callout.",
                 "measured": m})

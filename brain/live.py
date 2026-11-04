@@ -21,7 +21,7 @@ from dataclasses import asdict, fields
 from PIL import Image
 
 from brain.ledger import Fact, Ledger
-from brain.rules import Flag, evaluate
+from brain.rules import SPEED_MODES, Flag, evaluate
 from senses.panel import PanelReading, read_frame
 
 FINAL_BELOW_FT = 2500  # crude phase detection until checklists and the FMS phase are read
@@ -36,6 +36,10 @@ WIDE_W = 1024  # the whole-cockpit frame kept with each reading, for the debrief
 SPARK_PERIOD_S = 1.0  # capture rate with a model reader; reads overlap (~3 s each)
 SPARK_READERS = ("spark", "spark-flaps", "glimmer", "glimmer-flaps")  # PFD values / flap gauge, on Muse Spark or the local Muse Glimmer
 IN_FLIGHT = {"glimmer": 1, "glimmer-flaps": 1}  # one busy local GPU: a second call in flight doubles the delay, not the rate
+FULL_EVERY_FINAL_S = 30.0  # on final with Glimmer, a read of the whole set of parts (altitude, selected altitude) at most
+                           # this often, and none while the thrust box is not in a speed mode: the autothrottle alert
+                           # needs every read, and a fault in the seconds before a whole read (3.4-5.7 s) is seen one
+                           # whole read late
 READER_LABEL = {"apple": "apple-vision", "spark": "muse-spark", "spark-flaps": "muse-spark-flaps",
                 "glimmer": "muse-glimmer", "glimmer-flaps": "muse-glimmer-flaps"}
 
@@ -81,9 +85,19 @@ def implausible(fact: Fact, led: Ledger, transcript: str) -> str | None:
 
 
 def capture_screen() -> Image.Image:
-    with tempfile.NamedTemporaryFile(suffix=".png") as f:
-        subprocess.run(["screencapture", "-x", f.name], check=True)
-        return Image.open(f.name).copy()
+    """The whole screen, in the display's own colour values. Straight from the display (0.08 s a
+    Retina screen) when Quartz is there (it comes with ocrmac), else through screencapture's PNG
+    (0.56 s, the same values; its BMP is colour-converted, so not that)."""
+    try:
+        import Quartz
+    except ImportError:
+        with tempfile.NamedTemporaryFile(suffix=".png") as f:
+            subprocess.run(["screencapture", "-x", f.name], check=True)
+            return Image.open(f.name).copy()
+    img = Quartz.CGDisplayCreateImage(Quartz.CGMainDisplayID())
+    w, h = Quartz.CGImageGetWidth(img), Quartz.CGImageGetHeight(img)
+    data = Quartz.CGDataProviderCopyData(Quartz.CGImageGetDataProvider(img))
+    return Image.frombuffer("RGBA", (w, h), data, "raw", "BGRA", Quartz.CGImageGetBytesPerRow(img), 1).copy()
 
 
 def frame_from_crop(crop: Image.Image, origin: tuple[int, int] = FRAME_ORIGIN) -> Image.Image:
@@ -145,10 +159,12 @@ class Crosscheck:
                  ("set", "mcp.altitude", r.selected_altitude)]
         if r.flaps is not None:
             facts += [("doing", "flaps", r.flaps), ("doing", "flaps.clock", r.flaps_clock)]
-        if r.fma and any(r.fma):
-            # the line was read: a blank thrust cell means no engaged thrust mode, not "unknown"
+        if r.fma and (any(r.fma) or None in r.fma):
+            # the line was read: a blank thrust cell means no engaged thrust mode, not "unknown"; a box
+            # the reader did not look at is None (Glimmer's final lane reads thrust and pitch only)
             facts.append(("doing", "fma.thrust", r.fma[0] or "BLANK"))
-            facts.append(("doing", "fma.pitch", r.fma[2] or "BLANK"))
+            if r.fma[2] is not None:
+                facts.append(("doing", "fma.pitch", r.fma[2] or "BLANK"))
         for stream, key, value in facts:
             if value is not None:
                 self.ledger.add(Fact(stream, key, value, t, source="panel"))
@@ -215,9 +231,9 @@ class Crosscheck:
         not hold back newer ones) with its facts at capture time, and older readings that
         arrive after a newer one are dropped."""
         read = _spark_reader(self.reader)
-        fast, n_final = None, 0
-        if self.reader == "glimmer":  # on final, two reads in three are the fast lane (senses/panel_glimmer.py)
-            from senses.panel_glimmer import read_frame_glimmer_fast as fast
+        fast, last_full = None, 0.0
+        if self.reader == "glimmer":  # on final, the final lane (senses/panel_glimmer.py): see FULL_EVERY_FINAL_S
+            from senses.panel_glimmer import read_frame_glimmer_final as fast
         pending: collections.deque = collections.deque()
         next_capture = time.time()
         last_captured = 0.0
@@ -227,16 +243,20 @@ class Crosscheck:
                     frame = capture_screen()
                     captured = time.time()
                     name = self._save(frame)
-                    fn = read
-                    if fast is not None and self.ledger.value_at("doing", "phase", captured) == "final":
-                        n_final += 1
-                        fn = read if n_final % 3 == 0 else fast
-                    pending.append((captured, name, pool.submit(lambda f=frame, fn=fn: asyncio.run(fn(f))[0])))
+                    fn, lane = read, None
+                    if fast is not None:
+                        lane = "full"
+                        if self.ledger.value_at("doing", "phase", captured) == "final":
+                            watching = self.ledger.value_at("doing", "fma.thrust", captured) not in SPEED_MODES
+                            if watching or captured - last_full < FULL_EVERY_FINAL_S:
+                                fn, lane = fast, "final"
+                        last_full = captured if lane == "full" else last_full
+                    pending.append((captured, name, lane, pool.submit(lambda f=frame, fn=fn: asyncio.run(fn(f))[0])))
                     next_capture = captured + SPARK_PERIOD_S
                 by_arrival = self.fact_time == "captured"
-                while pending and (pending[0][2].done() or by_arrival and any(p[2].done() for p in pending)):
-                    i = 0 if pending[0][2].done() else next(i for i, p in enumerate(pending) if p[2].done())
-                    captured, name, fut = pending[i]
+                while pending and (pending[0][3].done() or by_arrival and any(p[3].done() for p in pending)):
+                    i = 0 if pending[0][3].done() else next(i for i, p in enumerate(pending) if p[3].done())
+                    captured, name, lane, fut = pending[i]
                     del pending[i]
                     t = time.time()
                     try:
@@ -248,8 +268,8 @@ class Crosscheck:
                         self.event("late_reading", t, frame=name, captured=round(captured, 3))
                         continue
                     last_captured = captured
-                    self.observe(r, t, name, fact_t=captured if by_arrival else None,
-                                 captured=round(captured, 3), reader=READER_LABEL[self.reader].removesuffix("-flaps"))
+                    self.observe(r, t, name, fact_t=captured if by_arrival else None, captured=round(captured, 3),
+                                 reader=READER_LABEL[self.reader].removesuffix("-flaps"), **({"lane": lane} if lane else {}))
                     self.decide(t)
                 time.sleep(0.05)
 

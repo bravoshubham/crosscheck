@@ -5,7 +5,7 @@
  "fact_time": "captured",
  "aircraft": "B738",
  "area": "Portland",
- "t_start": 1793788821.812742,
+ "t_start": 1793812688.967902,
  "run_s": 900.0,
  "plan": [
   [
@@ -97,7 +97,7 @@
    "transcript": "alaska four two and descend and mate in six thousand",
    "audio_s": 3.57,
    "alt_transcript": "alaska four two and descend and mate and six thousand",
-   "s_from_start": 8.04,
+   "s_from_start": 13.3,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -111,7 +111,7 @@
    "transcript": "they send and maintain six thousand alaska for two one",
    "audio_s": 3.62,
    "alt_transcript": "they send and mate and six thousand dalaska for two one",
-   "s_from_start": 4.5,
+   "s_from_start": 6.57,
    "facts": [
     [
      "readback.altitude",
@@ -126,7 +126,7 @@
    "transcript": "alaska for two one turn left hitting one two zero",
    "audio_s": 4.06,
    "alt_transcript": "alaska for two one turn left hitting one two zero",
-   "s_from_start": 8.6,
+   "s_from_start": 11.46,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -140,7 +140,7 @@
    "transcript": "one to two there will ask a four two one",
    "audio_s": 3.44,
    "alt_transcript": "left heading one to there will ask afore to one",
-   "s_from_start": 10.02,
+   "s_from_start": 10.71,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -154,7 +154,7 @@
    "transcript": "alaska four two one descend and maintain five thousand",
    "audio_s": 4.67,
    "alt_transcript": "alaska for two one descend and a maintain five thousand",
-   "s_from_start": 6.85,
+   "s_from_start": 7.47,
    "facts": [
     [
      "clearance.altitude",
@@ -169,7 +169,7 @@
    "transcript": "descend and maintain five thousand alaska four two one",
    "audio_s": 4.29,
    "alt_transcript": "is send and maintained five thousand alaska four to one",
-   "s_from_start": 7.07,
+   "s_from_start": 7.02,
    "facts": [
     [
      "readback.altitude",
@@ -184,7 +184,7 @@
    "transcript": "alaska four two one turn right heading three zero zero",
    "audio_s": 4.03,
    "alt_transcript": "alaska four two one turn right heading free zero zero",
-   "s_from_start": 11.4,
+   "s_from_start": 10.15,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -198,7 +198,7 @@
    "transcript": "three zero zero i'll ask four two one",
    "audio_s": 3.66,
    "alt_transcript": "right heading three zero zero will ask four to one",
-   "s_from_start": 10.49,
+   "s_from_start": 12.46,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -212,7 +212,7 @@
    "transcript": "alaska four two one descend and maintain four thousand",
    "audio_s": 3.94,
    "alt_transcript": "alaska four to one descend and maintain four thousand",
-   "s_from_start": 7.32,
+   "s_from_start": 7.09,
    "facts": [
     [
      "clearance.altitude",
@@ -227,7 +227,7 @@
    "transcript": "descend and maintain four thousand alaska four to one",
    "audio_s": 4.02,
    "alt_transcript": "descend and maintain four thousand alaska four to one",
-   "s_from_start": 7.09,
+   "s_from_start": 6.93,
    "facts": [
     [
      "readback.altitude",
@@ -242,7 +242,7 @@
    "transcript": "One of the flaps.",
    "audio_s": 1.51,
    "alt_transcript": "flaps one",
-   "s_from_start": 2.51,
+   "s_from_start": 2.52,
    "facts": [
     [
      "callout.flaps",
@@ -257,7 +257,7 @@
    "transcript": "alaska four two one descend and maintain three thousand",
    "audio_s": 3.87,
    "alt_transcript": "alaska four two one descend and maintain three thousand",
-   "s_from_start": 6.95,
+   "s_from_start": 7.16,
    "facts": [
     [
      "clearance.altitude",
@@ -272,7 +272,7 @@
    "transcript": "descend and maintain three thousand alaska four to one",
    "audio_s": 4.03,
    "alt_transcript": "descend and maintain three thousand alaska four to one",
-   "s_from_start": 6.54,
+   "s_from_start": 6.89,
    "facts": [
     [
      "readback.altitude",
@@ -287,7 +287,7 @@
    "transcript": "five flaps",
    "audio_s": 1.51,
    "alt_transcript": "flaps five",
-   "s_from_start": 2.49,
+   "s_from_start": 1.82,
    "facts": [
     [
      "callout.flaps",
@@ -302,7 +302,7 @@
    "transcript": "alaska for two one turn left hitting one two zero",
    "audio_s": 4.06,
    "alt_transcript": "alaska for two one turn left hitting one two zero",
-   "s_from_start": 13.14,
+   "s_from_start": 11.7,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -316,7 +316,7 @@
    "transcript": "one to two there will ask a four two one",
    "audio_s": 3.44,
    "alt_transcript": "left heading one to there will ask afore to one",
-   "s_from_start": 8.81,
+   "s_from_start": 11.56,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -330,7 +330,7 @@
    "transcript": "i'll ask for two and descend and maintain two thousand",
    "audio_s": 3.87,
    "alt_transcript": "i'll bask fort to one descendant maintain two thousand",
-   "s_from_start": 11.23,
+   "s_from_start": 11.51,
    "facts": [],
    "spark": {
     "kind": "clearance",
@@ -344,7 +344,7 @@
    "transcript": "they send and maintain two thousand i'll ask for two one",
    "audio_s": 3.87,
    "alt_transcript": "descend and maintain two thousand alaska for two one",
-   "s_from_start": 6.52,
+   "s_from_start": 6.95,
    "facts": [
     [
      "readback.altitude",
@@ -359,7 +359,7 @@
    "transcript": "Ten of the flaps.",
    "audio_s": 1.51,
    "alt_transcript": "flaps ten",
-   "s_from_start": 2.01,
+   "s_from_start": 1.99,
    "facts": [
     [
      "callout.flaps",
@@ -374,7 +374,7 @@
    "transcript": "alaska four two one turn right heading three zero zero",
    "audio_s": 4.03,
    "alt_transcript": "alaska four two one turn right heading free zero zero",
-   "s_from_start": 14.06,
+   "s_from_start": 9.53,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -388,7 +388,7 @@
    "transcript": "three zero zero i'll ask four two one",
    "audio_s": 3.66,
    "alt_transcript": "right heading three zero zero will ask four to one",
-   "s_from_start": 14.1,
+   "s_from_start": 9.86,
    "facts": [],
    "spark": {
     "kind": "none",
@@ -416,7 +416,7 @@
   "model": "muse-glimmer-30b",
   "pfd": {
    "read": {
-    "ias": 185,
+    "ias": null,
     "selected_altitude": 7000,
     "thrust_mode": "MCP SPD"
    },
@@ -428,5 +428,5 @@
   "onboard": true,
   "api.meta.ai:443": "refused: PermissionError"
  },
- "recorded": "2026-11-04 16:25:25 IST"
+ "recorded": "2026-11-04 23:03:11 IST"
 }

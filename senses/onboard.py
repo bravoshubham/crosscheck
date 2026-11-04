@@ -28,11 +28,15 @@ def local_client(timeout: float = 120) -> httpx.AsyncClient:
 
 
 async def glimmer_json(prompt: str, schema: dict, image_b64: str | None = None, num_predict: int = 200,
-                       client: httpx.AsyncClient | None = None) -> tuple[str, dict]:
-    """One local Glimmer call held to a JSON schema, thinking off. Returns (reply text, counters)."""
-    msg = {"role": "user", "content": prompt, **({"images": [image_b64]} if image_b64 else {})}
+                       client: httpx.AsyncClient | None = None, system: bool = False) -> tuple[str, dict]:
+    """One local Glimmer call held to a JSON schema, thinking off. Returns (reply text, counters).
+    system=True sends the prompt as the system message and the image alone after it: with X-Plane
+    flying, 2.7 s a final-lane read against 3.0 s with the prompt and the image together."""
+    images = {"images": [image_b64]} if image_b64 else {}
+    msgs = ([{"role": "system", "content": prompt}, {"role": "user", "content": "", **images}] if system else
+            [{"role": "user", "content": prompt, **images}])
     body = {"model": GLIMMER_MODEL, "stream": False, "think": False, "keep_alive": "60m", "format": schema,
-            "options": {"temperature": 0, "num_predict": num_predict, "num_ctx": 4096}, "messages": [msg]}
+            "options": {"temperature": 0, "num_predict": num_predict, "num_ctx": 4096}, "messages": msgs}
     own = client is None
     client = client or local_client()
     try:

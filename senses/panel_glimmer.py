@@ -54,9 +54,9 @@ def parts(pfd: Image.Image) -> Image.Image:
     return out.resize((int(out.width * SCALE), int(out.height * SCALE)), Image.LANCZOS)
 
 
-# The fast lane, for final approach (brain/live.py): only what the autothrottle alert needs, the
-# mode boxes over the speed tape, and a shorter answer. Every third read on final is still the
-# whole set of parts, so altitude and selected altitude keep arriving.
+# The fast lane, the mode boxes over the speed tape: the reader on final until the final lane below
+# replaced it (two reads in three, too slow for the autothrottle alert); kept as the comparison in
+# eval/panel_final_lane.py.
 FAST_PROMPT = (
     "These are two parts of a Boeing 737 primary flight display (PFD): on top the three flight mode boxes, below the speed "
     'tape. Reply with JSON only: {"r": "speed/selected speed", "m": [thrust mode, roll mode, pitch mode]}, for example '
@@ -79,6 +79,57 @@ async def read_frame_glimmer_fast(frame: Image.Image, client: httpx.AsyncClient 
     p = _plausible(parse(text, ("ias", "selected_speed")))
     reading = PanelReading(ias=p["ias"], selected_speed=p["selected_speed"], fma=p["fma"] or ["", "", ""])
     reading.raw = {"glimmer_fast": text}
+    return reading, usage
+
+
+# The final lane, for final approach on a GPU the simulator is also using: the smallest image that
+# still carries the autothrottle alert, the selected speed and the speed box on the left, the thrust
+# and pitch mode boxes on the right. The answer is one JSON string held to a pattern, about a third
+# of the reply tokens of separate JSON fields (with the simulator running each token costs ~45 ms):
+# numbers 2-3 digits or "?" (the speed box's rolling digit once came back as "1232"), and each mode
+# box only its own column's modes, so a pitch mode cannot be read into the thrust box. The prompt
+# goes as the system message (senses/onboard.py). With X-Plane flying: 2.15 s a read, against 3.0 s
+# for the fast lane and 3.4 s for the whole set of parts.
+FINAL = {"selected_speed": (30, 55, 140, 115), "speed": (15, 335, 145, 445), "thrust": (140, 0, 290, 110), "pitch": (425, 0, 580, 110)}
+THRUST_MODES = ["MCP SPD", "FMC SPD", "THR HLD", "RETARD", "N1", "GA", "ARM"]
+PITCH_MODES = ["MCP SPD", "TO/GA", "CWS P", "ALT HOLD", "ALT ACQ", "VNAV PTH", "VNAV SPD", "VNAV ALT", "V/S", "G/S", "FLARE"]
+_NUM, _ONE = "([0-9]{2,3}|[?])", lambda modes: "(" + "|".join([""] + [re.escape(m).replace("\\ ", " ") for m in modes]) + ")"
+FINAL_SCHEMA = {"type": "string", "pattern": f"^{_NUM};{_NUM};{_ONE(THRUST_MODES)};{_ONE(PITCH_MODES)}$"}
+FINAL_PROMPT = (
+    "Four parts of a Boeing 737 primary flight display (PFD): on the left the magenta selected speed above the speed box, "
+    'on the right the thrust mode box and the pitch mode box. Reply with one JSON string only: "selected speed;speed;thrust '
+    'mode;pitch mode", for example "142;141;MCP SPD;G/S". speed = the number in the speed box. A mode is the green text '
+    'in its box, nothing for a box with no green text: the thrust box is empty when the autothrottle is off '
+    '("142;141;;ALT HOLD"). ? for a number you cannot read.')
+
+
+def final_parts(pfd: Image.Image) -> Image.Image:
+    sel, sp, thr, pit = (pfd.crop(FINAL[k]) for k in ("selected_speed", "speed", "thrust", "pitch"))
+    out = Image.new("RGB", (sp.width + 10 + thr.width + 10 + pit.width, sel.height + 10 + sp.height), "black")
+    out.paste(sel, (0, 0))
+    out.paste(sp, (0, sel.height + 10))
+    out.paste(thr, (sp.width + 10, 0))
+    out.paste(pit, (sp.width + 10 + thr.width + 10, 0))
+    return out
+
+
+async def read_frame_glimmer_final(frame: Image.Image, client: httpx.AsyncClient | None = None) -> tuple[PanelReading, dict]:
+    """Speed, selected speed, thrust and pitch mode; the roll mode is not read (None), so it is
+    neither a mode nor a blank box. A reply that does not parse reads nothing."""
+    text, usage = await glimmer_json(FINAL_PROMPT, FINAL_SCHEMA, jpeg_b64(final_parts(frame.crop(CALIBRATION["pfd"]))),
+                                     num_predict=30, client=client, system=True)
+    m = re.search(r'".*"', text, re.S)
+    try:
+        v = str(json.loads(m.group())).split(";") if m else []
+    except json.JSONDecodeError:
+        v = []
+    ok = len(v) == 4
+    num = lambda i: v[i] if ok and v[i].isdigit() else None
+    p = _plausible({"ias": num(1), "selected_speed": num(0), "selected_altitude": None, "altitude": None,
+                    "fma": [v[2], "", v[3]] if ok else None})
+    fma = [p["fma"][0], None, p["fma"][2]] if p["fma"] else None
+    reading = PanelReading(ias=p["ias"], selected_speed=p["selected_speed"], fma=fma or ["", "", ""])
+    reading.raw = {"glimmer_final": text}
     return reading, usage
 
 

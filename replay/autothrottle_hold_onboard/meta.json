@@ -4,8 +4,8 @@
  "panel_reader": "muse-glimmer",
  "aircraft": "B738",
  "airport": "KPDX 10R",
- "t_start": 1793784618.477186,
- "t_fault": 1793784643.478462,
+ "t_start": 1793812454.91218,
+ "t_fault": 1793812479.914546,
  "fact_time": "captured",
  "target_kt": 145.0,
  "quiet_s": 25,
@@ -15,7 +15,7 @@
   "model": "muse-glimmer-30b",
   "pfd": {
    "read": {
-    "ias": 150,
+    "ias": 148,
     "selected_altitude": 2500,
     "thrust_mode": "MCP SPD"
    },
@@ -27,6 +27,5 @@
   "onboard": true,
   "api.meta.ai:443": "refused: PermissionError"
  },
- "recorded": "2026-11-04 15:01:29 IST",
- "known_result": "fail: on board on the test computer Muse Glimmer gives a reading every 4-6 s (the simulator holds most of the GPU), and this alert needs one every second or two: the callout came after speed was 10 kt low"
+ "recorded": "2026-11-04 22:45:27 IST"
 }
